@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>湯船トラベル | お風呂で選ぶ、日本の宿。風呂・トイレ別の温泉宿予約(デモ)</title>
+<meta name="description" content="風呂・トイレ別(セパレート)の客室だけを掲載する、お風呂と温泉に特化した国内旅行予約サイト。貸切露天風呂・客室露天風呂・源泉かけ流しの宿を、お風呂の設備から検索できます。※デモサイト">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%A8%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header id="site-header"></header>
+
+<main>
+  <!-- ヒーロー -->
+  <section class="hero" id="hero">
+    <div class="wrap">
+      <span class="hero-kicker">♨ 風呂・トイレ別の客室だけを、全国から。</span>
+      <h1>お風呂で選ぶ、<br>日本の宿。</h1>
+      <p class="hero-lead">湯船トラベルに<strong>ユニットバスの部屋はありません</strong>。掲載しているのは、浴室とトイレが別々になった客室と、貸切露天風呂・客室露天風呂・源泉かけ流しの宿だけ。今夜の湯船から、旅を決めませんか。</p>
+
+      <!-- 検索パネル -->
+      <form class="search-panel" id="search-form" action="search.html" method="get" aria-label="宿の検索">
+        <div class="search-grid">
+          <div class="field">
+            <label for="f-area">エリア</label>
+            <select id="f-area" name="region">
+              <option value="">全国</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-date">チェックイン</label>
+            <input type="date" id="f-date" name="checkin">
+          </div>
+          <div class="field">
+            <label for="f-guests">人数</label>
+            <select id="f-guests" name="guests">
+              <option value="1">1名</option>
+              <option value="2" selected>2名</option>
+              <option value="3">3名</option>
+              <option value="4">4名</option>
+              <option value="5">5名</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-bath">お風呂タイプ</label>
+            <select id="f-bath" name="tag">
+              <option value="">こだわらない</option>
+              <option value="kashikiri_roten">貸切露天風呂</option>
+              <option value="kashikiri_uchi">貸切内風呂</option>
+              <option value="room_roten">客室露天風呂</option>
+              <option value="daiyokujo">大浴場</option>
+              <option value="gensen">源泉かけ流し</option>
+              <option value="nigori">にごり湯</option>
+            </select>
+          </div>
+          <div class="field field-submit">
+            <button type="submit" class="btn" id="hero-search-btn">検索する</button>
+          </div>
+        </div>
+        <div class="search-quick">
+          <span>人気の条件:</span>
+          <a class="qtag" href="search.html?tag=kashikiri_roten">貸切露天風呂</a>
+          <a class="qtag" href="search.html?tag=room_roten">客室露天風呂</a>
+          <a class="qtag" href="search.html?tag=gensen">源泉かけ流し</a>
+          <a class="qtag" href="search.html?tag=nigori">にごり湯</a>
+          <a class="qtag" href="search.html?tag=free_kashikiri">貸切風呂が無料</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- お風呂タイプから探す -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="en">Find by Bath</span>
+        <h2>お風呂タイプから探す</h2>
+        <p>行き先より先に、入りたいお風呂から。</p>
+      </div>
+      <div class="type-grid" id="type-grid"></div>
+    </div>
+  </section>
+
+  <!-- 今週のおすすめ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="en">Pickup</span>
+        <h2>いい湯の宿、今週の6軒</h2>
+        <p>編集部が「湯船」だけを基準に選びました。</p>
+      </div>
+      <div class="hcard-grid" id="pickup-grid"></div>
+    </div>
+  </section>
+
+  <!-- 温泉地から探す -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="en">Onsen Areas</span>
+        <h2>温泉地から探す</h2>
+      </div>
+      <div class="area-chips" id="area-chips"></div>
+    </div>
+  </section>
+
+  <!-- 掲載基準 -->
+  <section class="policy-band" id="policy">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="en">Our Standard</span>
+        <h2>湯船トラベルの掲載基準</h2>
+        <p>お風呂の時間を旅の主役にするために、掲載する客室を絞っています。</p>
+      </div>
+      <div class="policy-grid">
+        <div class="policy-card">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="8.5" height="16" rx="1.5"/><rect x="13" y="4" width="8.5" height="16" rx="1.5"/><path d="M8.5 12h.01M16 12h.01"/></svg></span>
+          <h3>1. 全室、風呂・トイレ別。</h3>
+          <p>掲載客室は浴室とトイレが完全に分かれた「セパレート」のみ。<span class="policy-x">ユニットバスの客室は、一室も掲載していません。</span></p>
+        </div>
+        <div class="policy-card">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 3c-1.5 2 1.5 3 0 5M12 3c-1.5 2 1.5 3 0 5M17 3c-1.5 2 1.5 3 0 5"/><path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2z"/></svg></span>
+          <h3>2. 洗い場のある浴室を。</h3>
+          <p>湯船の外で体を洗える「洗い場付き」浴室を基準に選定。かけ湯をして、ゆっくり浸かる。日本のお風呂の入り方ができる部屋だけです。</p>
+        </div>
+        <div class="policy-card">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3s6.5 7 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 10 12 3 12 3z"/></svg></span>
+          <h3>3. 湯の情報を、正直に。</h3>
+          <p>泉質・かけ流しか循環か・加水加温の有無まで、宿ごとに明記します。貸切風呂は料金と予約方法も掲載。着いてから困らせません。</p>
+        </div>
+      </div>
+      <p class="policy-note">※ 本サイトはデモです。掲載施設・料金はすべて架空ですが、この掲載基準そのものがサイトのコンセプトです。</p>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宿をさがす | 湯船トラベル(デモ)</title>
+<meta name="description" content="貸切露天風呂・客室露天風呂・源泉かけ流しなど、お風呂の設備から温泉宿を検索。掲載客室はすべて風呂・トイレ別です。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%A8%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header id="site-header"></header>
+
+<main>
+  <div class="wrap">
+    <div class="page-head">
+      <h1>宿をさがす</h1>
+      <p>すべての掲載客室が「風呂・トイレ別」。お風呂の条件を重ねて絞り込めます。</p>
+    </div>
+
+    <div class="search-layout">
+      <!-- フィルター -->
+      <div>
+        <button type="button" class="filters-toggle" id="filters-toggle" aria-expanded="false" aria-controls="filters">
+          絞り込み条件を開く
+        </button>
+        <aside class="filters" id="filters" aria-label="絞り込み条件">
+          <div class="filters-head">
+            <span>絞り込み</span>
+            <button type="button" id="clear-filters">条件をクリア</button>
+          </div>
+          <div class="fgroup">
+            <h3>キーワード</h3>
+            <input type="text" id="kw" placeholder="宿名・温泉地など" style="width:100%;height:40px;padding:0 10px;border:1.5px solid var(--line);border-radius:9px;">
+          </div>
+          <div class="fgroup">
+            <h3>エリア</h3>
+            <select id="f-region"><option value="">全国</option></select>
+          </div>
+          <div class="fgroup">
+            <h3>お風呂タイプ</h3>
+            <div id="fg-bath"></div>
+          </div>
+          <div class="fgroup">
+            <h3>お湯へのこだわり</h3>
+            <div id="fg-komori"></div>
+          </div>
+          <div class="fgroup">
+            <h3>泉質</h3>
+            <select id="f-spring"><option value="">指定しない</option></select>
+          </div>
+          <div class="fgroup">
+            <h3>1泊2食・1名あたり</h3>
+            <select id="f-price">
+              <option value="">上限なし</option>
+              <option value="20000">〜 ¥20,000</option>
+              <option value="25000">〜 ¥25,000</option>
+              <option value="30000">〜 ¥30,000</option>
+              <option value="40000">〜 ¥40,000</option>
+            </select>
+          </div>
+        </aside>
+      </div>
+
+      <!-- 結果 -->
+      <section aria-label="検索結果">
+        <div class="results-bar">
+          <p class="count"><strong id="result-count">0</strong>軒の宿が見つかりました</p>
+          <div class="sort">
+            <label for="f-sort">並び替え</label>
+            <select id="f-sort">
+              <option value="recommend">おすすめ順</option>
+              <option value="price_asc">料金が安い順</option>
+              <option value="price_desc">料金が高い順</option>
+              <option value="rating">評価が高い順</option>
+              <option value="reviews">クチコミが多い順</option>
+            </select>
+          </div>
+        </div>
+        <div class="active-filters" id="active-filters"></div>
+        <div id="results"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/search.js"></script>
+</body>
+</html>
