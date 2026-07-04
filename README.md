@@ -28,7 +28,16 @@ python3 -m http.server 8000
 # → http://localhost:8000 を開く
 ```
 
-`index.html` をブラウザで直接開いても動作します(GitHub Pages にそのままデプロイ可能)。
+`index.html` をブラウザで直接開いても動作します。
+
+## 公開(GitHub Pages)
+
+`main` ブランチが更新されるたびに、GitHub Actions(`.github/workflows/deploy-pages.yml`)が
+サイトを GitHub Pages へ自動デプロイします。
+
+- 公開URL: `https://ttomoi-afk.github.io/desktop-tutorial/`
+- リポジトリが **Public** であることが必要です(無料プランの場合)。
+  Private のままだと Setup Pages ステップが失敗します。
 
 ## 技術メモ
 
