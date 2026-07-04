@@ -41,6 +41,10 @@
     const cb = document.querySelector('input[name="tag"][value="' + t + '"]');
     if (cb) cb.checked = true;
   });
+  if (params.get('type')) {
+    const tr = document.querySelector('input[name="htype"][value="' + params.get('type') + '"]');
+    if (tr) tr.checked = true;
+  }
   if (params.get('region')) regionSel.value = params.get('region');
   if (params.get('spring')) springSel.value = params.get('spring');
   if (params.get('kw')) document.getElementById('kw').value = params.get('kw');
@@ -48,7 +52,9 @@
 
   /* ---------- 状態の取得 ---------- */
   function currentFilters() {
+    const typeSel = document.querySelector('input[name="htype"]:checked');
     return {
+      type: typeSel ? typeSel.value : '',
       tags: Array.prototype.slice.call(document.querySelectorAll('input[name="tag"]:checked')).map(function (c) { return c.value; }),
       region: regionSel.value,
       spring: springSel.value,
@@ -61,6 +67,7 @@
   /* ---------- 絞り込み ---------- */
   function applyFilters(f) {
     let list = d.HOTELS.slice();
+    if (f.type) list = list.filter(function (h) { return h.type === f.type; });
     if (f.region) list = list.filter(function (h) { return h.region === f.region; });
     if (f.spring) list = list.filter(function (h) { return h.spring === f.spring; });
     if (f.price) list = list.filter(function (h) { return h.minPrice <= Number(f.price); });
@@ -94,25 +101,26 @@
     const kashikiriText = h.kashikiri.length
       ? '貸切風呂 ' + h.kashikiri.length + 'つ' + (h.hasFreeKashikiri ? '(無料)' : '')
       : null;
+    const bathLine = h.springDetail ? h.springDetail.split('(')[0] : (h.bathLine || '洗い場付き浴室・トイレ別');
     const meta = [
-      ui.icon('steam') + ' ' + ui.esc(h.springDetail.split('(')[0]),
+      ui.icon('steam') + ' ' + ui.esc(bathLine),
       kashikiriText ? ui.icon('clock') + ' ' + kashikiriText : '',
       ui.icon('pin') + ' ' + ui.esc(h.access.split('/')[0]),
     ].filter(Boolean).map(function (m) { return '<span>' + m + '</span>'; }).join('');
     return '<a class="rcard" href="detail.html?id=' + ui.esc(h.id) + '">' +
       '  <div class="rcard-img" style="background-image:url(&quot;' + img + '&quot;)">' +
-      '    <span class="hcard-area">' + ui.icon('pin') + ui.esc(h.area) + '・' + ui.esc(h.onsen) + '</span>' +
+      '    <span class="hcard-area">' + ui.icon('pin') + ui.esc(h.area) + '・' + ui.esc(h.onsen || h.pref) + '</span>' +
       '  </div>' +
       '  <div class="rcard-body">' +
       '    <div class="rcard-top">' + ui.stars(h.rating) + '<span class="rev" style="font-size:12px;color:var(--ink-faint)">(' + h.reviews + '件)</span>' +
-      '      <span class="hcard-meta"><span class="spring">' + ui.esc(h.spring) + '</span></span></div>' +
+      '      <span class="hcard-meta">' + ui.typeChip(h) + (h.spring ? '<span class="spring">' + ui.esc(h.spring) + '</span>' : '') + '</span></div>' +
       '    <h3 class="rcard-name">' + ui.esc(h.name) + '</h3>' +
       '    <p class="rcard-catch">' + ui.esc(h.catch) + '</p>' +
       '    <div class="rcard-badges">' + ui.badge('全室 風呂・トイレ別', 'sep') + ui.tagBadges(h, 5) + '</div>' +
       '    <p class="rcard-desc">' + ui.esc(h.description) + '</p>' +
       '    <div class="rcard-foot">' +
       '      <div class="meta">' + meta + '</div>' +
-      '      <div class="rcard-price"><small>1泊2食・1名</small><strong>' + ui.yen(h.minPrice) + '</strong><small>〜</small></div>' +
+      '      <div class="rcard-price"><small>' + ui.priceLabel(h) + '</small><strong>' + ui.yen(h.minPrice) + '</strong><small>〜</small></div>' +
       '    </div>' +
       '  </div>' +
       '</a>';
@@ -125,6 +133,7 @@
 
   function activeFilterChips(f) {
     const chips = [];
+    if (f.type) chips.push({ label: d.TYPES[f.type] ? d.TYPES[f.type].label : f.type, kind: 'type' });
     f.tags.forEach(function (t) {
       chips.push({ label: d.TAGS[t] ? d.TAGS[t].label : t, kind: 'tag', value: t });
     });
@@ -154,6 +163,7 @@
 
     // URLを現在の条件で置き換え(共有できるように)
     const p = new URLSearchParams();
+    if (f.type) p.set('type', f.type);
     f.tags.forEach(function (t) { p.append('tag', t); });
     if (f.region) p.set('region', f.region);
     if (f.spring) p.set('spring', f.spring);
@@ -167,6 +177,9 @@
   document.querySelectorAll('input[name="tag"]').forEach(function (cb) {
     cb.addEventListener('change', render);
   });
+  document.querySelectorAll('input[name="htype"]').forEach(function (r) {
+    r.addEventListener('change', render);
+  });
   regionSel.addEventListener('change', render);
   springSel.addEventListener('change', render);
   document.getElementById('f-price').addEventListener('change', render);
@@ -179,6 +192,7 @@
 
   document.getElementById('clear-filters').addEventListener('click', function () {
     document.querySelectorAll('input[name="tag"]:checked').forEach(function (c) { c.checked = false; });
+    document.querySelector('input[name="htype"][value=""]').checked = true;
     regionSel.value = '';
     springSel.value = '';
     document.getElementById('kw').value = '';
@@ -193,7 +207,8 @@
     if (kind === 'tag') {
       const cb = document.querySelector('input[name="tag"][value="' + btn.getAttribute('data-value') + '"]');
       if (cb) cb.checked = false;
-    } else if (kind === 'region') regionSel.value = '';
+    } else if (kind === 'type') document.querySelector('input[name="htype"][value=""]').checked = true;
+    else if (kind === 'region') regionSel.value = '';
     else if (kind === 'spring') springSel.value = '';
     else if (kind === 'kw') document.getElementById('kw').value = '';
     else if (kind === 'price') document.getElementById('f-price').value = '';

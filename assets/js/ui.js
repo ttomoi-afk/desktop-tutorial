@@ -60,8 +60,8 @@
         '  </a>' +
         '  <nav class="gnav" aria-label="グローバルナビゲーション">' +
         '    <a href="search.html"' + (active === 'search' ? ' class="on"' : '') + '>宿をさがす</a>' +
-        '    <a href="search.html?tag=kashikiri_roten">貸切露天風呂</a>' +
-        '    <a href="search.html?tag=room_roten">客室露天</a>' +
+        '    <a href="search.html?type=onsen">温泉宿</a>' +
+        '    <a href="search.html?type=business">ビジネスホテル</a>' +
         '    <a href="index.html#policy">掲載基準</a>' +
         '  </nav>' +
         '  <span class="demo-chip" title="このサイトはデモです。実際の予約はできません。">DEMO</span>' +
@@ -80,6 +80,7 @@
         '    <a href="search.html?tag=kashikiri_roten">貸切露天風呂の宿</a>' +
         '    <a href="search.html?tag=room_roten">客室露天風呂の宿</a>' +
         '    <a href="search.html?tag=gensen">源泉かけ流しの宿</a>' +
+        '    <a href="search.html?type=business">風呂・トイレ別のビジネスホテル</a>' +
         '    <a href="index.html#policy">掲載基準について</a>' +
         '  </div>' +
         '  <p class="foot-note">※ 本サイトはポートフォリオ用のデモです。掲載施設・料金・クチコミはすべて架空であり、実際の予約はできません。</p>' +
@@ -111,27 +112,43 @@
       '<strong>' + rating.toFixed(1) + '</strong></span>';
   }
 
+  /* ---------- 宿タイプ・料金ラベル ---------- */
+  function typeChip(h) {
+    const t = D().TYPES[h.type];
+    return t ? '<span class="chip-type chip-type-' + h.type + '">' + esc(t.short) + '</span>' : '';
+  }
+  // 温泉宿は1泊2食、ビジネスホテルは素泊まりが基準料金
+  function priceLabel(h, forRoom) {
+    if (h.type === 'business') return forRoom ? '1泊 素泊まり・1名利用' : '素泊まり・1名';
+    return forRoom ? '1泊2食・1名(2名1室)' : '1泊2食・1名';
+  }
+
   /* ---------- 宿カード ---------- */
   function hotelCard(h) {
     const d = D();
     const img = d.sceneURI(h, 640, 400);
-    const bathBits = [];
-    if (h.kashikiri.length) bathBits.push('貸切風呂 ' + h.kashikiri.length + 'つ' + (h.hasFreeKashikiri ? '(無料)' : ''));
-    if (h.tags.indexOf('room_roten') !== -1) bathBits.push('客室露天あり');
-    if (h.tags.indexOf('gensen') !== -1) bathBits.push('源泉かけ流し');
+    let bathBits = [];
+    if (h.type === 'business') {
+      bathBits = [h.bathLine || '全室 洗い場付き浴室・トイレ別'];
+    } else {
+      if (h.kashikiri.length) bathBits.push('貸切風呂 ' + h.kashikiri.length + 'つ' + (h.hasFreeKashikiri ? '(無料)' : ''));
+      if (h.tags.indexOf('room_roten') !== -1) bathBits.push('客室露天あり');
+      if (h.tags.indexOf('gensen') !== -1) bathBits.push('源泉かけ流し');
+    }
     return '' +
       '<article class="hcard">' +
       '  <a class="hcard-link" href="detail.html?id=' + esc(h.id) + '" aria-label="' + esc(h.name) + ' の詳細">' +
       '    <div class="hcard-img" style="background-image:url(&quot;' + img + '&quot;)">' +
-      '      <span class="hcard-area">' + icon('pin') + esc(h.area) + '・' + esc(h.onsen) + '</span>' +
+      '      <span class="hcard-area">' + icon('pin') + esc(h.area) + '・' + esc(h.onsen || h.pref) + '</span>' +
       '    </div>' +
       '    <div class="hcard-body">' +
       '      <p class="hcard-catch">' + esc(h.catch) + '</p>' +
       '      <h3 class="hcard-name">' + esc(h.name) + '</h3>' +
-      '      <p class="hcard-meta">' + stars(h.rating) + '<span class="rev">(' + h.reviews + '件)</span><span class="spring">' + esc(h.spring) + '</span></p>' +
+      '      <p class="hcard-meta">' + stars(h.rating) + '<span class="rev">(' + h.reviews + '件)</span>' + typeChip(h) +
+      (h.spring ? '<span class="spring">' + esc(h.spring) + '</span>' : '') + '</p>' +
       '      <div class="hcard-badges">' + badge('全室 風呂・トイレ別', 'sep') + tagBadges(h, 3) + '</div>' +
       '      <p class="hcard-bath">' + icon('steam') + esc(bathBits.join(' / ')) + '</p>' +
-      '      <p class="hcard-price"><small>1泊2食・1名</small><strong>' + yen(h.minPrice) + '</strong><small>〜</small></p>' +
+      '      <p class="hcard-price"><small>' + priceLabel(h) + '</small><strong>' + yen(h.minPrice) + '</strong><small>〜</small></p>' +
       '    </div>' +
       '  </a>' +
       '</article>';
@@ -141,6 +158,7 @@
   window.YUBUNE.ui = {
     esc: esc, yen: yen, qs: qs, qsAll: qsAll,
     icon: icon, badge: badge, tagBadges: tagBadges, stars: stars,
+    typeChip: typeChip, priceLabel: priceLabel,
     hotelCard: hotelCard, renderChrome: renderChrome,
   };
 })();

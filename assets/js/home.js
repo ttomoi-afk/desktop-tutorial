@@ -50,8 +50,14 @@
       '<span class="count">' + countByTag(t.tag) + '軒</span></a>';
   }).join('');
 
-  /* おすすめ6軒(評価順) */
-  const pickup = d.HOTELS.slice().sort(function (a, b) { return b.rating - a.rating; }).slice(0, 6);
+  /* ビジネスホテル特集(評価順に6軒) */
+  const business = d.HOTELS.filter(function (h) { return h.type === 'business'; })
+    .sort(function (a, b) { return b.rating - a.rating; }).slice(0, 6);
+  document.getElementById('business-grid').innerHTML = business.map(ui.hotelCard).join('');
+
+  /* おすすめ温泉宿6軒(評価順) */
+  const pickup = d.HOTELS.filter(function (h) { return h.type === 'onsen'; })
+    .sort(function (a, b) { return b.rating - a.rating; }).slice(0, 6);
   document.getElementById('pickup-grid').innerHTML = pickup.map(ui.hotelCard).join('');
 
   /* 温泉地チップ */
