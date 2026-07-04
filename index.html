@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>湯船トラベル | お風呂で選ぶ、日本の宿。風呂・トイレ別の温泉宿予約(デモ)</title>
-<meta name="description" content="風呂・トイレ別(セパレート)の客室だけを掲載する、お風呂と温泉に特化した国内旅行予約サイト。貸切露天風呂・客室露天風呂・源泉かけ流しの宿を、お風呂の設備から検索できます。※デモサイト">
+<meta name="description" content="風呂・トイレ別(セパレート)の客室だけを掲載する、お風呂と温泉に特化した国内旅行予約サイト。貸切露天風呂・源泉かけ流しの温泉宿から、ユニットバスなしの都心ビジネスホテルまで、お風呂の設備から検索できます。※デモサイト">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%A8%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,11 +21,19 @@
     <div class="wrap">
       <span class="hero-kicker">♨ 風呂・トイレ別の客室だけを、全国から。</span>
       <h1>お風呂で選ぶ、<br>日本の宿。</h1>
-      <p class="hero-lead">湯船トラベルに<strong>ユニットバスの部屋はありません</strong>。掲載しているのは、浴室とトイレが別々になった客室と、貸切露天風呂・客室露天風呂・源泉かけ流しの宿だけ。今夜の湯船から、旅を決めませんか。</p>
+      <p class="hero-lead">湯船トラベルに<strong>ユニットバスの部屋はありません</strong>。貸切露天風呂・源泉かけ流しの温泉宿から、<strong>大浴場つきの都心ビジネスホテル</strong>まで——浴室とトイレが別々の客室だけを集めました。旅の夜も、出張の夜も、今夜の湯船から。</p>
 
       <!-- 検索パネル -->
       <form class="search-panel" id="search-form" action="search.html" method="get" aria-label="宿の検索">
         <div class="search-grid">
+          <div class="field">
+            <label for="f-type">宿タイプ</label>
+            <select id="f-type" name="type">
+              <option value="">すべて</option>
+              <option value="onsen">温泉宿・旅館</option>
+              <option value="business">ビジネスホテル</option>
+            </select>
+          </div>
           <div class="field">
             <label for="f-area">エリア</label>
             <select id="f-area" name="region">
@@ -54,6 +62,7 @@
               <option value="kashikiri_uchi">貸切内風呂</option>
               <option value="room_roten">客室露天風呂</option>
               <option value="daiyokujo">大浴場</option>
+              <option value="sauna">サウナ</option>
               <option value="gensen">源泉かけ流し</option>
               <option value="nigori">にごり湯</option>
             </select>
@@ -67,8 +76,8 @@
           <a class="qtag" href="search.html?tag=kashikiri_roten">貸切露天風呂</a>
           <a class="qtag" href="search.html?tag=room_roten">客室露天風呂</a>
           <a class="qtag" href="search.html?tag=gensen">源泉かけ流し</a>
-          <a class="qtag" href="search.html?tag=nigori">にごり湯</a>
-          <a class="qtag" href="search.html?tag=free_kashikiri">貸切風呂が無料</a>
+          <a class="qtag" href="search.html?type=business">出張向けビジネスホテル</a>
+          <a class="qtag" href="search.html?type=business&amp;tag=daiyokujo">大浴場つきビジネスホテル</a>
         </div>
       </form>
     </div>
@@ -86,12 +95,25 @@
     </div>
   </section>
 
-  <!-- 今週のおすすめ -->
+  <!-- ビジネスホテル特集 -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="en">Business Stay</span>
+        <h2>出張の夜も、湯船を諦めない</h2>
+        <p>都心のビジネスホテルも「風呂・トイレ別」の客室だけを厳選。大浴場・サウナつきも。</p>
+      </div>
+      <div class="hcard-grid" id="business-grid"></div>
+      <p class="section-more"><a class="btn btn-ghost" href="search.html?type=business">ビジネスホテルをすべて見る</a></p>
+    </div>
+  </section>
+
+  <!-- 今週のおすすめ(温泉宿) -->
   <section class="section">
     <div class="wrap">
       <div class="section-head">
         <span class="en">Pickup</span>
-        <h2>いい湯の宿、今週の6軒</h2>
+        <h2>いい湯の温泉宿、今週の6軒</h2>
         <p>編集部が「湯船」だけを基準に選びました。</p>
       </div>
       <div class="hcard-grid" id="pickup-grid"></div>
@@ -115,7 +137,7 @@
       <div class="section-head">
         <span class="en">Our Standard</span>
         <h2>湯船トラベルの掲載基準</h2>
-        <p>お風呂の時間を旅の主役にするために、掲載する客室を絞っています。</p>
+        <p>温泉旅館もビジネスホテルも、同じ基準で。お風呂の時間を旅の主役にするために、掲載する客室を絞っています。</p>
       </div>
       <div class="policy-grid">
         <div class="policy-card">

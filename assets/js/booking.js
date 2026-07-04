@@ -22,6 +22,19 @@
   const defIn = new Date(today); defIn.setDate(defIn.getDate() + 14);
   function iso(dt) { return dt.toISOString().slice(0, 10); }
 
+  /* 食事プラン(基準料金が温泉宿=2食付き、ビジネス=素泊まり) */
+  const MEALS = hotel.type === 'business'
+    ? [
+      { v: 'sudomari', label: '素泊まり(基本)', adj: 0 },
+      { v: 'breakfast', label: '朝食付き(+¥1,650/名)', adj: 1650 },
+    ]
+    : [
+      { v: '2shoku', label: '1泊2食付き(基本)', adj: 0 },
+      { v: 'breakfast', label: '朝食のみ(−¥3,000/名)', adj: -3000 },
+      { v: 'sudomari', label: '素泊まり(−¥6,000/名)', adj: -6000 },
+    ];
+  const defGuests = hotel.type === 'business' ? '1' : '2';
+
   /* 貸切風呂オプション(有料のものだけ枠として選択可能に) */
   const paidKashikiri = hotel.kashikiri.filter(function (k) { return k.fee.indexOf('無料') !== 0; });
   function feeYen(k) {
@@ -53,13 +66,13 @@
     '        </div>' +
     '        <div class="form-row">' +
     '          <div class="field"><label for="b-guests">人数(大人)</label>' +
-    '            <select id="b-guests"><option value="1">1名</option><option value="2" selected>2名</option><option value="3">3名</option><option value="4">4名</option></select></div>' +
+    '            <select id="b-guests">' + [1, 2, 3, 4].map(function (n) {
+      return '<option value="' + n + '"' + (String(n) === defGuests ? ' selected' : '') + '>' + n + '名</option>';
+    }).join('') + '</select></div>' +
     '          <div class="field"><label for="b-meal">お食事</label>' +
-    '            <select id="b-meal">' +
-    '              <option value="2shoku" selected>1泊2食付き(基本)</option>' +
-    '              <option value="breakfast">朝食のみ(−¥3,000/名)</option>' +
-    '              <option value="sudomari">素泊まり(−¥6,000/名)</option>' +
-    '            </select></div>' +
+    '            <select id="b-meal">' + MEALS.map(function (m, i) {
+      return '<option value="' + m.v + '"' + (i === 0 ? ' selected' : '') + '>' + ui.esc(m.label) + '</option>';
+    }).join('') + '</select></div>' +
     '        </div>' +
     '      </fieldset>' +
 
@@ -121,12 +134,12 @@
     '</div>';
 
   /* ---------- 料金計算 ---------- */
-  const MEAL_ADJ = { '2shoku': 0, 'breakfast': -3000, 'sudomari': -6000 };
   function calc() {
     const nights = Number(document.getElementById('b-nights').value);
     const guests = Number(document.getElementById('b-guests').value);
-    const meal = document.getElementById('b-meal').value;
-    const unit = room.price + MEAL_ADJ[meal];
+    const mealVal = document.getElementById('b-meal').value;
+    const meal = MEALS.filter(function (m) { return m.v === mealVal; })[0] || MEALS[0];
+    const unit = room.price + meal.adj;
     const stay = unit * guests * nights;
     const kSel = document.querySelector('input[name="kashikiri"]:checked');
     const kIdx = kSel && kSel.value !== '' ? Number(kSel.value) : -1;
@@ -186,7 +199,7 @@
       '  <p class="refno">予約番号 <strong>' + refNo + '</strong></p>' +
       '  <p>実際の予約は行われていません。本番環境では、ここで確認メールが送信されます。</p>' +
       '  <dl class="done-summary">' +
-      '    <dt>お宿</dt><dd>' + ui.esc(hotel.name) + '(' + ui.esc(hotel.onsen) + ')</dd>' +
+      '    <dt>お宿</dt><dd>' + ui.esc(hotel.name) + '(' + ui.esc(hotel.onsen || hotel.area) + ')</dd>' +
       '    <dt>お部屋</dt><dd>' + ui.esc(room.name) + ' — 風呂・トイレ別/' + ui.esc(room.bath.type) + '</dd>' +
       '    <dt>日程</dt><dd>' + dateLabel + ' から ' + c.nights + '泊・' + c.guests + '名</dd>' +
       (c.kIdx >= 0 ? '    <dt>貸切風呂</dt><dd>' + ui.esc(paidKashikiri[c.kIdx].name) + '(現地で時間帯を確定)</dd>' : '') +

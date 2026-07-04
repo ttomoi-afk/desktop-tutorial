@@ -19,7 +19,7 @@
   <div class="wrap">
     <div class="page-head">
       <h1>宿をさがす</h1>
-      <p>すべての掲載客室が「風呂・トイレ別」。お風呂の条件を重ねて絞り込めます。</p>
+      <p>温泉宿もビジネスホテルも、掲載客室はすべて「風呂・トイレ別」。お風呂の条件を重ねて絞り込めます。</p>
     </div>
 
     <div class="search-layout">
@@ -34,8 +34,14 @@
             <button type="button" id="clear-filters">条件をクリア</button>
           </div>
           <div class="fgroup">
+            <h3>宿タイプ</h3>
+            <label class="fcheck"><input type="radio" name="htype" value="" checked><span>すべて</span></label>
+            <label class="fcheck"><input type="radio" name="htype" value="onsen"><span>温泉宿・旅館</span></label>
+            <label class="fcheck"><input type="radio" name="htype" value="business"><span>ビジネスホテル</span></label>
+          </div>
+          <div class="fgroup">
             <h3>キーワード</h3>
-            <input type="text" id="kw" placeholder="宿名・温泉地など" style="width:100%;height:40px;padding:0 10px;border:1.5px solid var(--line);border-radius:9px;">
+            <input type="text" id="kw" placeholder="宿名・温泉地・駅名など" style="width:100%;height:40px;padding:0 10px;border:1.5px solid var(--line);border-radius:9px;">
           </div>
           <div class="fgroup">
             <h3>エリア</h3>

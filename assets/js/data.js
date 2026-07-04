@@ -115,6 +115,35 @@
     return s;
   }
 
+  function skyline(rng, w, h, yBase, color, winColor) {
+    // 都心のビル群のシルエット。winColor を渡すと灯りのついた窓を散らす
+    let s = '', wins = '';
+    let x = -10;
+    while (x < w) {
+      const bw = 42 + rng() * 62;
+      const bh = h * (0.18 + rng() * 0.38);
+      const y = yBase - bh;
+      s += '<rect x="' + x.toFixed(0) + '" y="' + y.toFixed(0) + '" width="' + bw.toFixed(0) + '" height="' + bh.toFixed(0) + '" fill="' + color + '"/>';
+      if (rng() > 0.72) { // 屋上のアンテナ
+        s += '<rect x="' + (x + bw / 2 - 1).toFixed(0) + '" y="' + (y - 14).toFixed(0) + '" width="2" height="14" fill="' + color + '"/>';
+      }
+      if (winColor) {
+        const cols = Math.min(4, Math.floor(bw / 15));
+        const rows = Math.min(6, Math.floor(bh / 20));
+        for (let c = 0; c < cols; c++) {
+          for (let r = 0; r < rows; r++) {
+            if (rng() > 0.55) continue; // 点灯している窓だけ描く
+            wins += '<rect x="' + (x + 8 + c * (bw - 14) / Math.max(1, cols)).toFixed(0) +
+              '" y="' + (y + 9 + r * (bh - 16) / Math.max(1, rows)).toFixed(0) +
+              '" width="5" height="7" rx="1" fill="' + winColor + '" fill-opacity="' + (0.55 + rng() * 0.4).toFixed(2) + '"/>';
+          }
+        }
+      }
+      x += bw + 5 + rng() * 12;
+    }
+    return s + wins;
+  }
+
   /**
    * 宿ごとの風景SVGを生成する
    * scene: mountain | sea | river | town | forest | snowtown | lake
@@ -188,6 +217,13 @@
             '" width="' + (30 + rng() * 60).toFixed(0) + '" height="2.5" rx="1.2" fill="' + pal.steam + '" fill-opacity="0.3"/>';
         }
         body += '<path d="' + closeDown(ridgePath(rng, w, h * 0.88, h * 0.05, 5), w, h) + '" fill="' + pal.near + '"/>';
+        break;
+      }
+      case 'city': {
+        body += sun;
+        body += skyline(rng, w, h, h * 0.78, pal.far, null);
+        body += skyline(rng, w, h, h * 1.0, pal.near, pal.sun);
+        if (prop.pal === 'snow') body += snowDots(rng, w, h, pal.steam);
         break;
       }
       default: { // mountain
@@ -693,19 +729,251 @@
         },
       ],
     },
+
+    /* ================= 都心のビジネスホテル =================
+       全室「風呂・トイレ別」。ユニットバスの客室は存在しない。
+       price は「1泊 素泊まり・1名利用」の料金(円)          */
+    {
+      id: 'yaesu-yubune-inn',
+      name: '湯船イン東京 八重洲',
+      kana: 'ゆぶねいんとうきょう やえす',
+      area: '東京駅・八重洲', pref: '東京都', region: '関東',
+      type: 'business',
+      onsen: null, spring: null, springDetail: null, efficacy: [],
+      gensenNote: '最上階大浴場:高濃度炭酸泉(人工)+白湯+ドライサウナ(15:00〜翌10:00)',
+      roomBathNote: '全室、洗い場付きバスルーム+深型浴槽120cm。トイレは温水洗浄便座つきで完全に独立。',
+      bathLine: '炭酸泉大浴場+サウナ/全室 洗い場付き浴室',
+      scene: 'city', pal: 'night',
+      rating: 4.5, reviews: 812,
+      tags: ['daiyokujo', 'sauna'],
+      catch: '出張の夜を、湯船で締める。東京駅徒歩4分。',
+      description: '東京駅八重洲口から徒歩4分のビジネスホテル。客室はすべて浴室・トイレ別で、湯船に浸かる前に体を洗える洗い場付き。最上階には炭酸泉の大浴場とサウナ。翌朝の会議までに、疲れを持ち越させません。',
+      kashikiri: [],
+      access: 'JR東京駅 八重洲北口より徒歩4分',
+      rooms: [
+        {
+          id: 'r1', name: 'シングル(洗い場付きバス)', capacity: '1名', size: '15㎡', price: 9800,
+          bath: { type: '内風呂(深型浴槽120cm)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: '大浴場・サウナ利用込み' },
+          features: ['セミダブルベッド', 'ワークデスク', '禁煙'],
+        },
+        {
+          id: 'r2', name: 'ダブル(洗い場付きバス)', capacity: '1〜2名', size: '18㎡', price: 11800,
+          bath: { type: '内風呂(深型浴槽120cm)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: '' },
+          features: ['ダブルベッド', 'ソファ', '禁煙'],
+        },
+        {
+          id: 'r3', name: 'コーナーツイン(ビューバス)', capacity: '1〜2名', size: '26㎡', price: 13800,
+          bath: { type: 'ビューバス(コーナー窓)・洗い場付き', tub: '広口浴槽', wash: true, view: '東京駅方面の夜景', onsenBath: false, note: '' },
+          features: ['ツインベッド', '角部屋', '禁煙'],
+        },
+      ],
+    },
+    {
+      id: 'shinjuku-fukayu',
+      name: 'ホテル深湯 新宿',
+      kana: 'ほてるふかゆ しんじゅく',
+      area: '新宿', pref: '東京都', region: '関東',
+      type: 'business',
+      onsen: '新宿温泉(自家源泉)', spring: '塩化物泉',
+      springDetail: 'ナトリウム-塩化物泉(地下1,200m汲み上げ・加温循環)',
+      efficacy: ['疲労回復', '冷え性', '肩こり'],
+      gensenNote: '最上階に天然温泉大浴場+外気浴テラス+オートロウリュサウナ',
+      roomBathNote: '全室、洗い場付きバスルームと独立トイレ。上層階はシティビューバス。',
+      bathLine: '都心の天然温泉大浴場+サウナ/全室セパレート',
+      scene: 'city', pal: 'indigo',
+      rating: 4.7, reviews: 623,
+      tags: ['daiyokujo', 'sauna', 'view_bath'],
+      catch: '超高層の谷間に、本物の温泉が湧いている。',
+      description: '新宿駅西口徒歩6分。地下1,200mから汲み上げる自家源泉の大浴場を最上階に備えたビジネスホテル。もちろん客室もすべて風呂・トイレ別。サウナ後は高層階の外気浴テラスへ。',
+      kashikiri: [],
+      access: 'JR新宿駅 西口より徒歩6分',
+      rooms: [
+        {
+          id: 'r1', name: 'シングル(洗い場付きバス)', capacity: '1名', size: '16㎡', price: 12800,
+          bath: { type: '内風呂(深型浴槽)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: '最上階の温泉大浴場利用込み' },
+          features: ['セミダブルベッド', 'デスク', '禁煙'],
+        },
+        {
+          id: 'r2', name: 'シティビューダブル(ビューバス)', capacity: '1〜2名', size: '22㎡', price: 15800,
+          bath: { type: 'ビューバス・洗い場付き', tub: '広口浴槽', wash: true, view: '新宿の夜景', onsenBath: false, note: '' },
+          features: ['ダブルベッド', '高層階', '禁煙'],
+        },
+      ],
+    },
+    {
+      id: 'nihonbashi-granbath',
+      name: 'グランバス日本橋',
+      kana: 'ぐらんばすにほんばし',
+      area: '日本橋', pref: '東京都', region: '関東',
+      type: 'business',
+      onsen: null, spring: null, springDetail: null, efficacy: [],
+      gensenNote: '大浴場はありません。そのぶん全室に170cmロング浴槽と洗い場、レインシャワーを。',
+      roomBathNote: '全室、足を伸ばせる170cmロング浴槽+洗い場+レインシャワー。トイレは完全に独立。',
+      bathLine: '全室170cmロング浴槽+洗い場/上層階ビューバス',
+      scene: 'city', pal: 'dusk',
+      rating: 4.6, reviews: 445,
+      tags: ['view_bath'],
+      catch: '大浴場より、ひとりの湯船。全室ロングバス。',
+      description: '「共同の大浴場より、部屋でひとり静かに浸かりたい」という声に応えた、客室の浴室に全振りしたホテル。170cmのロング浴槽で足を伸ばし、洗い場で体を洗う。ユニットバスは一室もありません。',
+      kashikiri: [],
+      access: '東京メトロ日本橋駅 A4出口より徒歩2分',
+      rooms: [
+        {
+          id: 'r1', name: 'モデレートダブル(ロングバス)', capacity: '1〜2名', size: '19㎡', price: 11800,
+          bath: { type: '内風呂(170cmロング浴槽)・洗い場付き', tub: 'ロング浴槽', wash: true, view: null, onsenBath: false, note: 'レインシャワー付き' },
+          features: ['ダブルベッド', 'バスソルト2種付き', '禁煙'],
+        },
+        {
+          id: 'r2', name: 'ハイフロアツイン(ビューバス)', capacity: '1〜2名', size: '25㎡', price: 14800,
+          bath: { type: 'ビューバス(170cmロング浴槽)・洗い場付き', tub: 'ロング浴槽', wash: true, view: '日本橋の夜景', onsenBath: false, note: '' },
+          features: ['ツインベッド', '12階以上確約', '禁煙'],
+        },
+      ],
+    },
+    {
+      id: 'susukino-yuyado-tower',
+      name: '湯宿タワー 札幌すすきの',
+      kana: 'ゆやどたわー さっぽろすすきの',
+      area: '札幌・すすきの', pref: '北海道', region: '北海道・東北',
+      type: 'business',
+      onsen: 'すすきの温泉(自家源泉)', spring: '塩化物泉',
+      springDetail: 'ナトリウム-塩化物泉(加温循環ろ過)',
+      efficacy: ['冷え性', '疲労回復', '神経痛'],
+      gensenNote: '最上階に天然温泉大浴場+雪見露天+2種サウナ(ドライ/ミスト)',
+      roomBathNote: '全室、洗い場付きバスルームと独立トイレ。連泊出張でも快適。',
+      bathLine: '天然温泉大浴場+雪見露天+サウナ2種',
+      scene: 'city', pal: 'snow',
+      rating: 4.8, reviews: 951,
+      tags: ['daiyokujo', 'roten', 'sauna', 'view_bath'],
+      catch: '粉雪の舞う露天が、繁華街の真上に。',
+      description: 'すすきの駅徒歩3分。最上階の天然温泉大浴場からは札幌の夜景、冬は雪見の露天も。客室は全室セパレート浴室で、〆パフェのあとでも部屋でゆっくり湯に浸かれます。',
+      kashikiri: [],
+      access: '地下鉄すすきの駅より徒歩3分',
+      rooms: [
+        {
+          id: 'r1', name: 'シングル(洗い場付きバス)', capacity: '1名', size: '15㎡', price: 8800,
+          bath: { type: '内風呂(深型浴槽)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: '最上階の温泉大浴場利用込み' },
+          features: ['セミダブルベッド', '加湿空気清浄機', '禁煙'],
+        },
+        {
+          id: 'r2', name: 'ツイン(洗い場付きバス)', capacity: '1〜2名', size: '21㎡', price: 10800,
+          bath: { type: '内風呂(深型浴槽)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: '' },
+          features: ['ツインベッド', '禁煙'],
+        },
+      ],
+    },
+    {
+      id: 'hakata-yuho',
+      name: 'ホテル湯歩 博多駅前',
+      kana: 'ほてるゆほ はかたえきまえ',
+      area: '博多', pref: '福岡県', region: '九州',
+      type: 'business',
+      onsen: null, spring: null, springDetail: null, efficacy: [],
+      gensenNote: '大浴場:高濃度炭酸泉(人工)+ドライサウナ。夜は湯上がりアイス、朝は博多の朝がゆを。',
+      roomBathNote: '全室、洗い場付きバスルームと独立トイレ。深夜チェックインでも湯船に浸かれます。',
+      bathLine: '炭酸泉大浴場+サウナ/湯上がりアイス無料',
+      scene: 'city', pal: 'dawn',
+      rating: 4.6, reviews: 702,
+      tags: ['daiyokujo', 'sauna'],
+      catch: '博多の夜は長い。それでも湯船は諦めない。',
+      description: '博多駅筑紫口から徒歩5分。中洲帰りの深夜でも、部屋の湯船か大浴場の炭酸泉でリセットできる出張の味方。全室風呂・トイレ別、ユニットバスはありません。',
+      kashikiri: [],
+      access: 'JR博多駅 筑紫口より徒歩5分',
+      rooms: [
+        {
+          id: 'r1', name: 'シングル(洗い場付きバス)', capacity: '1名', size: '14㎡', price: 8300,
+          bath: { type: '内風呂(深型浴槽)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: '大浴場・サウナ利用込み' },
+          features: ['セミダブルベッド', 'デスク', '禁煙'],
+        },
+        {
+          id: 'r2', name: 'ダブル(洗い場付きバス)', capacity: '1〜2名', size: '17㎡', price: 9800,
+          bath: { type: '内風呂(深型浴槽)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: '' },
+          features: ['ダブルベッド', '禁煙'],
+        },
+      ],
+    },
+    {
+      id: 'meieki-shiori',
+      name: 'しおりの湯 名駅ホテル',
+      kana: 'しおりのゆ めいえきほてる',
+      area: '名古屋駅', pref: '愛知県', region: '中部・北陸',
+      type: 'business',
+      onsen: null, spring: null, springDetail: null, efficacy: [],
+      gensenNote: '大浴場の代わりに、予約制のプライベートサウナ(水風呂・外気浴チェア付き)を1室。',
+      roomBathNote: '全室、檜調パネルの洗い場付き浴室+独立トイレ。バスピロー常備。',
+      bathLine: '貸切サウナ+全室 檜調の洗い場付き浴室',
+      scene: 'city', pal: 'mist',
+      rating: 4.4, reviews: 388,
+      tags: ['sauna'],
+      catch: '会議のあいだも、頭の中はサウナと湯船。',
+      description: '名古屋駅桜通口徒歩5分。客室の浴室は檜調パネルで、ビジネスホテルとは思えない湯屋の趣。予約制の貸切サウナで、ひとり静かにととのってから湯船へ。',
+      kashikiri: [
+        { name: '貸切サウナ「栞」', type: 'プライベートサウナ+水風呂', capacity: '〜2名', fee: '50分 3,300円', how: '公式予約時に事前予約可' },
+      ],
+      access: 'JR名古屋駅 桜通口より徒歩5分',
+      rooms: [
+        {
+          id: 'r1', name: 'シングル(檜調バス)', capacity: '1名', size: '15㎡', price: 9300,
+          bath: { type: '内風呂(檜調パネル)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: 'バスピロー・バスソルト付き' },
+          features: ['セミダブルベッド', 'デスク', '禁煙'],
+        },
+        {
+          id: 'r2', name: 'ツイン(檜調バス)', capacity: '1〜2名', size: '22㎡', price: 11300,
+          bath: { type: '内風呂(檜調パネル)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: '' },
+          features: ['ツインベッド', '禁煙'],
+        },
+      ],
+    },
+    {
+      id: 'umeda-yuya',
+      name: '湯屋ホテル 大阪梅田',
+      kana: 'ゆやほてる おおさかうめだ',
+      area: '梅田', pref: '大阪府', region: '関西',
+      type: 'business',
+      onsen: null, spring: null, springDetail: null, efficacy: [],
+      gensenNote: '大浴場:炭酸泉(人工)+塩サウナ(女性浴場はミストサウナ)。深夜2時まで。',
+      roomBathNote: '全室、洗い場付きバスルームと独立トイレ。バスタブは肩まで浸かれる深型。',
+      bathLine: '炭酸泉大浴場+塩サウナ/全室セパレート',
+      scene: 'city', pal: 'night',
+      rating: 4.5, reviews: 534,
+      tags: ['daiyokujo', 'sauna'],
+      catch: '梅田の雑踏を抜けたら、そこは湯屋。',
+      description: '梅田駅徒歩7分。1階は下足箱と暖簾、フロントは番台風——銭湯をモチーフにしたビジネスホテル。大浴場の炭酸泉と塩サウナ、そして全室セパレートの客室浴室で、出張の疲れを流します。',
+      kashikiri: [],
+      access: '大阪メトロ梅田駅より徒歩7分',
+      rooms: [
+        {
+          id: 'r1', name: 'シングル(洗い場付きバス)', capacity: '1名', size: '15㎡', price: 9600,
+          bath: { type: '内風呂(深型浴槽)・洗い場付き', tub: '深型浴槽', wash: true, view: null, onsenBath: false, note: '大浴場・サウナ利用込み' },
+          features: ['セミダブルベッド', 'デスク', '禁煙'],
+        },
+        {
+          id: 'r2', name: 'コーナーダブル(洗い場付きバス)', capacity: '1〜2名', size: '20㎡', price: 11600,
+          bath: { type: '内風呂(深型浴槽)・洗い場付き', tub: '深型浴槽', wash: true, view: '梅田の夜景', onsenBath: false, note: '' },
+          features: ['ダブルベッド', '角部屋', '禁煙'],
+        },
+      ],
+    },
   ];
 
   /* ---------- 派生データ ---------- */
   HOTELS.forEach(function (h) {
+    if (!h.type) h.type = 'onsen'; // 既定は温泉宿・旅館
     h.minPrice = Math.min.apply(null, h.rooms.map(function (r) { return r.price; }));
     h.hasFreeKashikiri = h.tags.indexOf('free_kashikiri') !== -1;
   });
+
+  const TYPES = {
+    onsen: { label: '温泉宿・旅館', short: '温泉宿' },
+    business: { label: 'ビジネスホテル', short: 'ビジネス' },
+  };
 
   /* ---------- 公開API ---------- */
   window.YUBUNE = window.YUBUNE || {};
   window.YUBUNE.data = {
     HOTELS: HOTELS,
     TAGS: TAGS,
+    TYPES: TYPES,
     SPRING_TYPES: SPRING_TYPES,
     REGIONS: REGIONS,
     sceneSVG: sceneSVG,

@@ -20,6 +20,17 @@
   /* ---------- クチコミ(お風呂目線の定型文を宿情報から生成) ---------- */
   function buildReviews(h) {
     const r = [];
+    if (h.type === 'business') {
+      r.push({ who: '30代・出張', rating: 5, text: '出張で月2回利用。ユニットバスに戻れない体になりました。洗い場で体を洗ってから湯船に浸かれるだけで、翌朝の疲れの残り方が違います。' });
+      if (h.tags.indexOf('daiyokujo') !== -1) {
+        r.push({ who: '40代・出張', rating: 5, text: 'チェックイン後すぐ大浴場へ。' + (h.tags.indexOf('sauna') !== -1 ? 'サウナ→水風呂→湯船の流れで、' : '') + '移動の疲れがリセットされました。部屋のトイレが浴室と別なのも地味に大事。' });
+      }
+      if (h.kashikiri.length) {
+        r.push({ who: '20代・ひとり旅', rating: 5, text: h.kashikiri[0].name + 'を利用。誰にも気を使わず、ひとりで静かにととのえる贅沢。予約してでも入る価値があります。' });
+      }
+      r.push({ who: '50代・出張', rating: 4, text: '深夜チェックインでも部屋の湯船にゆっくり浸かれるのがいい。浴室とトイレが別なので、朝の支度も同時進行できて助かります。' });
+      return r.slice(0, 3);
+    }
     if (h.tags.indexOf('room_roten') !== -1 || h.tags.indexOf('room_hanroten') !== -1) {
       r.push({ who: '40代・ご夫婦', rating: 5, text: '客室のお風呂が最高でした。夜と朝で景色が変わるので、滞在中に何度も入ってしまいました。洗い場も付いていて使いやすかったです。' });
     }
@@ -57,7 +68,7 @@
       '    </table>' +
       '    <div class="room-foot">' +
       '      <div class="meta"><span>' + ui.icon('person') + ' ' + ui.esc(room.capacity) + '</span><span>' + ui.icon('size') + ' ' + ui.esc(room.size) + '</span></div>' +
-      '      <div class="room-price"><small>1泊2食・1名(2名1室)</small><strong>' + ui.yen(room.price) + '</strong></div>' +
+      '      <div class="room-price"><small>' + ui.priceLabel(h, true) + '</small><strong>' + ui.yen(room.price) + '</strong></div>' +
       '      <a class="btn" href="booking.html?hotel=' + ui.esc(h.id) + '&room=' + ui.esc(room.id) + '">この部屋を予約</a>' +
       '    </div>' +
       '  </div>' +
@@ -84,7 +95,7 @@
     '<div class="wrap">' +
     '  <div class="detail-head">' +
     '    <p class="crumb"><a href="index.html">トップ</a> › <a href="search.html">宿をさがす</a> › ' + ui.esc(hotel.name) + '</p>' +
-    '    <p class="onsen-line">' + ui.icon('pin') + ui.esc(hotel.pref) + ' ' + ui.esc(hotel.area) + '・' + ui.esc(hotel.onsen) + '</p>' +
+    '    <p class="onsen-line">' + ui.icon('pin') + ui.esc(hotel.pref) + ' ' + ui.esc(hotel.area) + (hotel.onsen ? '・' + ui.esc(hotel.onsen) : '') + ' ' + ui.typeChip(hotel) + '</p>' +
     '    <h1>' + ui.esc(hotel.name) + '</h1>' +
     '    <p class="kana">' + ui.esc(hotel.kana) + '</p>' +
     '    <div class="meta">' + ui.stars(hotel.rating) + '<span>クチコミ ' + hotel.reviews + '件</span><span>' + ui.esc(hotel.access) + '</span></div>' +
@@ -97,18 +108,19 @@
     '    <div class="detail-main">' +
 
     '      <section class="dsection" aria-labelledby="h-onsen">' +
-    '        <h2 id="h-onsen">' + ui.icon('drop') + '温泉・お湯のこと</h2>' +
+    '        <h2 id="h-onsen">' + ui.icon('drop') + (hotel.spring ? '温泉・お湯のこと' : '大浴場・お風呂のこと') + '</h2>' +
     '        <div class="onsen-spec">' +
-    '          <div class="spec-card"><h4>泉質</h4><p>' + ui.esc(hotel.springDetail) + '</p></div>' +
-    '          <div class="spec-card"><h4>湯づかい</h4><p>' + ui.esc(hotel.gensenNote) + '</p></div>' +
-    '          <div class="spec-card" style="grid-column:1/-1"><h4>あう症状(一般的適応症の例)</h4>' +
-    '            <div class="efficacy-chips">' + hotel.efficacy.map(function (e) { return '<span>' + ui.esc(e) + '</span>'; }).join('') + '</div></div>' +
+    (hotel.spring ? '          <div class="spec-card"><h4>泉質</h4><p>' + ui.esc(hotel.springDetail) + '</p></div>' : '') +
+    '          <div class="spec-card"' + (hotel.spring ? '' : ' style="grid-column:1/-1"') + '><h4>' + (hotel.spring ? '湯づかい' : '浴場・サウナ') + '</h4><p>' + ui.esc(hotel.gensenNote) + '</p></div>' +
+    (hotel.roomBathNote ? '          <div class="spec-card" style="grid-column:1/-1"><h4>客室の浴室</h4><p>' + ui.esc(hotel.roomBathNote) + '</p></div>' : '') +
+    (hotel.efficacy.length ? '          <div class="spec-card" style="grid-column:1/-1"><h4>あう症状(一般的適応症の例)</h4>' +
+    '            <div class="efficacy-chips">' + hotel.efficacy.map(function (e) { return '<span>' + ui.esc(e) + '</span>'; }).join('') + '</div></div>' : '') +
     '        </div>' +
     '      </section>' +
 
     (hotel.kashikiri.length ?
       '      <section class="dsection" aria-labelledby="h-kashikiri">' +
-      '        <h2 id="h-kashikiri">' + ui.icon('steam') + '貸切風呂(' + hotel.kashikiri.length + 'つ)</h2>' +
+      '        <h2 id="h-kashikiri">' + ui.icon('steam') + (hotel.type === 'business' ? '貸切風呂・サウナ' : '貸切風呂') + '(' + hotel.kashikiri.length + 'つ)</h2>' +
       '        <div class="kashikiri-list">' + hotel.kashikiri.map(kashikiriCard).join('') + '</div>' +
       '      </section>' : '') +
 
@@ -127,12 +139,13 @@
 
     '    <aside>' +
     '      <div class="side-panel">' +
-    '        <p class="price-line"><small>1泊2食・1名(2名1室)</small><strong>' + ui.yen(hotel.minPrice) + '</strong><small>〜</small></p>' +
+    '        <p class="price-line"><small>' + ui.priceLabel(hotel, true) + '</small><strong>' + ui.yen(hotel.minPrice) + '</strong><small>〜</small></p>' +
     '        <ul class="side-facts">' +
     '          <li>' + ui.icon('check') + '全客室が風呂・トイレ別(セパレート)</li>' +
     '          <li>' + ui.icon('check') + '全浴室に洗い場あり</li>' +
-    (hotel.kashikiri.length ? '          <li>' + ui.icon('check') + '貸切風呂 ' + hotel.kashikiri.length + 'つ' + (hotel.hasFreeKashikiri ? '(無料)' : '') + '</li>' : '') +
+    (hotel.kashikiri.length ? '          <li>' + ui.icon('check') + (hotel.type === 'business' ? '貸切風呂・サウナ ' : '貸切風呂 ') + hotel.kashikiri.length + 'つ' + (hotel.hasFreeKashikiri ? '(無料)' : '') + '</li>' : '') +
     (hotel.tags.indexOf('gensen') !== -1 ? '          <li>' + ui.icon('check') + '源泉かけ流し</li>' : '') +
+    (hotel.type === 'business' && hotel.tags.indexOf('daiyokujo') !== -1 ? '          <li>' + ui.icon('check') + '大浴場あり' + (hotel.tags.indexOf('sauna') !== -1 ? '(サウナ併設)' : '') + '</li>' : '') +
     '          <li>' + ui.icon('pin') + ui.esc(hotel.access) + '</li>' +
     '        </ul>' +
     '        <a class="btn btn-lg btn-block" href="#h-rooms">客室を選んで予約する</a>' +
