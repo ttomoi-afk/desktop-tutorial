@@ -46,8 +46,9 @@
     '<div class="wrap">' +
     '  <div class="page-head">' +
     '    <p class="crumb"><a href="index.html">トップ</a> › <a href="detail.html?id=' + ui.esc(hotel.id) + '">' + ui.esc(hotel.name) + '</a> › ご予約</p>' +
-    '    <h1>ご予約手続き</h1>' +
-    '    <p>デモサイトのため、実際の予約・決済は行われません。</p>' +
+    '    <h1>ご予約手続き(デモ)</h1>' +
+    '    <p>本サイトは非公式のデモのため、実際の予約・決済は行われません。' +
+    (hotel.official ? '実際のご予約は <a href="' + ui.esc(hotel.official) + '" target="_blank" rel="noopener noreferrer">公式サイト</a> をご利用ください。' : '') + '</p>' +
     '  </div>' +
     '  <div class="booking-layout">' +
 
@@ -197,7 +198,8 @@
       '  <div class="done-ic">' + ui.icon('check') + '</div>' +
       '  <h2>ご予約を承りました(デモ)</h2>' +
       '  <p class="refno">予約番号 <strong>' + refNo + '</strong></p>' +
-      '  <p>実際の予約は行われていません。本番環境では、ここで確認メールが送信されます。</p>' +
+      '  <p>これはデモです。実際の予約は行われていません。' +
+      (hotel.official ? '実際のご予約は <a href="' + ui.esc(hotel.official) + '" target="_blank" rel="noopener noreferrer">公式サイト</a> からどうぞ。' : '') + '</p>' +
       '  <dl class="done-summary">' +
       '    <dt>お宿</dt><dd>' + ui.esc(hotel.name) + '(' + ui.esc(hotel.onsen || hotel.area) + ')</dd>' +
       '    <dt>お部屋</dt><dd>' + ui.esc(room.name) + ' — 風呂・トイレ別/' + ui.esc(room.bath.type) + '</dd>' +

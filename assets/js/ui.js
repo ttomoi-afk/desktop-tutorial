@@ -73,7 +73,7 @@
         '<div class="wrap foot-in">' +
         '  <div class="foot-brand">' +
         '    <span class="brand-mark">' + LOGO_SVG + '</span>' +
-        '    <div><strong>湯船トラベル</strong><p>風呂・トイレ別の客室と、貸切露天風呂の宿だけを集めた温泉予約サイト(デモ)。</p></div>' +
+        '    <div><strong>湯船トラベル</strong><p>風呂・トイレ別の客室と、貸切露天風呂・大浴場の宿を集めた温泉・お風呂特化の予約サイト(デモ)。</p></div>' +
         '  </div>' +
         '  <div class="foot-links">' +
         '    <a href="search.html">宿をさがす</a>' +
@@ -83,7 +83,7 @@
         '    <a href="search.html?type=business">風呂・トイレ別のビジネスホテル</a>' +
         '    <a href="index.html#policy">掲載基準について</a>' +
         '  </div>' +
-        '  <p class="foot-note">※ 本サイトはポートフォリオ用のデモです。掲載施設・料金・クチコミはすべて架空であり、実際の予約はできません。</p>' +
+        '  <p class="foot-note">※ 本サイトは非公式のポートフォリオ用デモです。掲載施設は実在しますが、当サイトは各施設と提携・関係はありません。掲載内容は公式サイト等の公開情報を基にした参考情報で、料金・設備・泉質等は変更される場合があります。最新情報は必ず各施設の公式サイトでご確認ください。当サイトでの予約・決済はできません。</p>' +
         '</div>';
     }
   }
@@ -117,10 +117,10 @@
     const t = D().TYPES[h.type];
     return t ? '<span class="chip-type chip-type-' + h.type + '">' + esc(t.short) + '</span>' : '';
   }
-  // 温泉宿は1泊2食、ビジネスホテルは素泊まりが基準料金
+  // 温泉宿は1泊2食、ビジネスホテルは素泊まりが基準の「参考料金」
   function priceLabel(h, forRoom) {
-    if (h.type === 'business') return forRoom ? '1泊 素泊まり・1名利用' : '素泊まり・1名';
-    return forRoom ? '1泊2食・1名(2名1室)' : '1泊2食・1名';
+    if (h.type === 'business') return forRoom ? '参考 素泊まり・1名利用' : '参考 素泊まり・1名';
+    return forRoom ? '参考 1泊2食・1名(2名1室)' : '参考 1泊2食・1名';
   }
 
   /* ---------- 宿カード ---------- */
@@ -144,7 +144,7 @@
       '    <div class="hcard-body">' +
       '      <p class="hcard-catch">' + esc(h.catch) + '</p>' +
       '      <h3 class="hcard-name">' + esc(h.name) + '</h3>' +
-      '      <p class="hcard-meta">' + stars(h.rating) + '<span class="rev">(' + h.reviews + '件)</span>' + typeChip(h) +
+      '      <p class="hcard-meta">' + (h.rating ? stars(h.rating) + '<span class="rev">(' + h.reviews + '件)</span>' : '') + typeChip(h) +
       (h.spring ? '<span class="spring">' + esc(h.spring) + '</span>' : '') + '</p>' +
       '      <div class="hcard-badges">' + badge('全室 風呂・トイレ別', 'sep') + tagBadges(h, 3) + '</div>' +
       '      <p class="hcard-bath">' + icon('steam') + esc(bathBits.join(' / ')) + '</p>' +
