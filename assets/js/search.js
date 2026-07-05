@@ -85,12 +85,8 @@
     switch (f.sort) {
       case 'price_asc': list.sort(function (a, b) { return a.minPrice - b.minPrice; }); break;
       case 'price_desc': list.sort(function (a, b) { return b.minPrice - a.minPrice; }); break;
-      case 'rating': list.sort(function (a, b) { return b.rating - a.rating; }); break;
-      case 'reviews': list.sort(function (a, b) { return b.reviews - a.reviews; }); break;
-      default: // おすすめ順: 評価×クチコミ数の対数
-        list.sort(function (a, b) {
-          return (b.rating * Math.log(b.reviews + 1)) - (a.rating * Math.log(a.reviews + 1));
-        });
+      default: // おすすめ順: 編集部の掲載順(データ定義順)
+        break;
     }
     return list;
   }
@@ -112,7 +108,7 @@
       '    <span class="hcard-area">' + ui.icon('pin') + ui.esc(h.area) + '・' + ui.esc(h.onsen || h.pref) + '</span>' +
       '  </div>' +
       '  <div class="rcard-body">' +
-      '    <div class="rcard-top">' + ui.stars(h.rating) + '<span class="rev" style="font-size:12px;color:var(--ink-faint)">(' + h.reviews + '件)</span>' +
+      '    <div class="rcard-top">' + (h.rating ? ui.stars(h.rating) + '<span class="rev" style="font-size:12px;color:var(--ink-faint)">(' + h.reviews + '件)</span>' : '') +
       '      <span class="hcard-meta">' + ui.typeChip(h) + (h.spring ? '<span class="spring">' + ui.esc(h.spring) + '</span>' : '') + '</span></div>' +
       '    <h3 class="rcard-name">' + ui.esc(h.name) + '</h3>' +
       '    <p class="rcard-catch">' + ui.esc(h.catch) + '</p>' +

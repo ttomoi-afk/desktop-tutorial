@@ -17,33 +17,16 @@
 
   document.title = hotel.name + '(' + hotel.onsen + ')| 湯船トラベル(デモ)';
 
-  /* ---------- クチコミ(お風呂目線の定型文を宿情報から生成) ---------- */
-  function buildReviews(h) {
+  /* ---------- お風呂の見どころ(公開情報を基にした編集部メモ) ----------
+     クチコミの捏造はしない。データの highlights(事実ベース)を表示する */
+  function buildHighlights(h) {
+    if (h.highlights && h.highlights.length) return h.highlights;
+    // highlights 未設定の宿はタグから機械的に事実だけを列挙
     const r = [];
-    if (h.type === 'business') {
-      r.push({ who: '30代・出張', rating: 5, text: '出張で月2回利用。ユニットバスに戻れない体になりました。洗い場で体を洗ってから湯船に浸かれるだけで、翌朝の疲れの残り方が違います。' });
-      if (h.tags.indexOf('daiyokujo') !== -1) {
-        r.push({ who: '40代・出張', rating: 5, text: 'チェックイン後すぐ大浴場へ。' + (h.tags.indexOf('sauna') !== -1 ? 'サウナ→水風呂→湯船の流れで、' : '') + '移動の疲れがリセットされました。部屋のトイレが浴室と別なのも地味に大事。' });
-      }
-      if (h.kashikiri.length) {
-        r.push({ who: '20代・ひとり旅', rating: 5, text: h.kashikiri[0].name + 'を利用。誰にも気を使わず、ひとりで静かにととのえる贅沢。予約してでも入る価値があります。' });
-      }
-      r.push({ who: '50代・出張', rating: 4, text: '深夜チェックインでも部屋の湯船にゆっくり浸かれるのがいい。浴室とトイレが別なので、朝の支度も同時進行できて助かります。' });
-      return r.slice(0, 3);
-    }
-    if (h.tags.indexOf('room_roten') !== -1 || h.tags.indexOf('room_hanroten') !== -1) {
-      r.push({ who: '40代・ご夫婦', rating: 5, text: '客室のお風呂が最高でした。夜と朝で景色が変わるので、滞在中に何度も入ってしまいました。洗い場も付いていて使いやすかったです。' });
-    }
-    if (h.kashikiri.length) {
-      r.push({ who: '30代・子連れ旅', rating: 5, text: '貸切風呂(' + h.kashikiri[0].name + ')を利用。子どもがいても周りを気にせずゆっくり入れました。' + (h.hasFreeKashikiri ? '無料なのも嬉しい。' : '料金分の価値はあります。') });
-    }
-    if (h.tags.indexOf('gensen') !== -1) {
-      r.push({ who: '50代・ひとり旅', rating: 4, text: 'かけ流しの湯は鮮度が違います。' + h.spring + 'らしい浴感で、湯上がりもポカポカ。トイレが浴室と別なのは、やはり快適でした。' });
-    }
-    if (r.length < 3) {
-      r.push({ who: '20代・カップル', rating: 4, text: '「ユニットバスじゃない」を条件に探してここに決めました。正解でした。部屋のお風呂に洗い場があるだけで、こんなに快適だとは。' });
-    }
-    return r.slice(0, 3);
+    if (h.kashikiri.length) r.push('貸切風呂が' + h.kashikiri.length + 'つ' + (h.hasFreeKashikiri ? '(無料)' : '') + '。');
+    if (h.tags.indexOf('room_roten') !== -1) r.push('露天風呂付き客室あり。');
+    if (h.tags.indexOf('gensen') !== -1) r.push('源泉かけ流しの浴槽あり。');
+    return r;
   }
 
   /* ---------- 客室カード ---------- */
@@ -61,10 +44,10 @@
       '    <div class="room-badges">' + bathBadges + '</div>' +
       '    <table class="room-spec">' +
       '      <tr><th>浴室</th><td>' + ui.esc(room.bath.type) + (room.bath.note ? '<br><small style="color:var(--ink-soft)">' + ui.esc(room.bath.note) + '</small>' : '') + '</td></tr>' +
-      '      <tr><th>浴室とトイレ</th><td class="ok">' + ui.icon('check') + ' 完全セパレート(独立トイレ・温水洗浄便座)</td></tr>' +
-      '      <tr><th>洗い場</th><td>' + (room.bath.wash ? '<span class="ok">' + ui.icon('check') + ' あり</span>(浴室内で体を洗えます)' : 'なし') + '</td></tr>' +
+      '      <tr><th>浴室とトイレ</th><td class="ok">' + ui.icon('check') + ' 別々(セパレート)</td></tr>' +
+      '      <tr><th>洗い場</th><td>' + (room.bath.wash === true ? '<span class="ok">' + ui.icon('check') + ' あり</span>(浴室内で体を洗えます)' : room.bath.wash === false ? 'なし' : '未確認(公式サイトでご確認ください)') + '</td></tr>' +
       '      <tr><th>広さ・定員</th><td>' + ui.esc(room.size) + ' / ' + ui.esc(room.capacity) + '</td></tr>' +
-      '      <tr><th>設備</th><td>' + room.features.map(ui.esc).join('・') + '</td></tr>' +
+      (room.features && room.features.length ? '      <tr><th>設備</th><td>' + room.features.map(ui.esc).join('・') + '</td></tr>' : '') +
       '    </table>' +
       '    <div class="room-foot">' +
       '      <div class="meta"><span>' + ui.icon('person') + ' ' + ui.esc(room.capacity) + '</span><span>' + ui.icon('size') + ' ' + ui.esc(room.size) + '</span></div>' +
@@ -88,7 +71,7 @@
 
   /* ---------- 描画 ---------- */
   const heroImg = d.sceneURI(hotel, 1600, 560);
-  const reviews = buildReviews(hotel);
+  const highlights = buildHighlights(hotel);
 
   root.innerHTML =
     '<div class="detail-hero" style="background-image:url(&quot;' + heroImg + '&quot;)" role="img" aria-label="' + ui.esc(hotel.area) + 'の風景イメージ"></div>' +
@@ -98,7 +81,7 @@
     '    <p class="onsen-line">' + ui.icon('pin') + ui.esc(hotel.pref) + ' ' + ui.esc(hotel.area) + (hotel.onsen ? '・' + ui.esc(hotel.onsen) : '') + ' ' + ui.typeChip(hotel) + '</p>' +
     '    <h1>' + ui.esc(hotel.name) + '</h1>' +
     '    <p class="kana">' + ui.esc(hotel.kana) + '</p>' +
-    '    <div class="meta">' + ui.stars(hotel.rating) + '<span>クチコミ ' + hotel.reviews + '件</span><span>' + ui.esc(hotel.access) + '</span></div>' +
+    '    <div class="meta">' + (hotel.rating ? ui.stars(hotel.rating) + '<span>クチコミ ' + hotel.reviews + '件</span>' : '') + '<span>' + ui.esc(hotel.access) + '</span></div>' +
     '    <div class="badges">' + ui.badge('全室 風呂・トイレ別', 'sep') + ui.tagBadges(hotel) + '</div>' +
     '    <p class="detail-catch">' + ui.esc(hotel.catch) + '</p>' +
     '    <p class="detail-desc">' + ui.esc(hotel.description) + '</p>' +
@@ -129,12 +112,24 @@
     '        ' + hotel.rooms.map(function (r) { return roomCard(hotel, r); }).join('') +
     '      </section>' +
 
-    '      <section class="dsection" aria-labelledby="h-review">' +
-    '        <h2 id="h-review">' + ui.icon('person') + 'お風呂のクチコミ</h2>' +
-    '        ' + reviews.map(function (r) {
-      return '<div class="review-card"><div class="rhead">' + ui.stars(r.rating) + '<span>' + ui.esc(r.who) + '</span></div><p>' + ui.esc(r.text) + '</p></div>';
-    }).join('') +
-    '      </section>' +
+    (highlights.length ?
+      '      <section class="dsection" aria-labelledby="h-review">' +
+      '        <h2 id="h-review">' + ui.icon('view') + 'お風呂の見どころ<small style="font-size:12px;color:var(--ink-soft);font-family:var(--sans);margin-left:6px">公開情報を基にした編集部メモ</small></h2>' +
+      highlights.map(function (t) {
+        return '<div class="review-card"><p>' + ui.icon('check') + ' ' + ui.esc(t) + '</p></div>';
+      }).join('') +
+      '      </section>' : '') +
+
+    (hotel.sources && hotel.sources.length ?
+      '      <section class="dsection" aria-labelledby="h-sources">' +
+      '        <details class="source-box"><summary>出典・参考情報(' + hotel.sources.length + '件)</summary><ul class="source-list">' +
+      hotel.sources.map(function (s) {
+        return '<li><a href="' + ui.esc(s) + '" target="_blank" rel="noopener noreferrer">' + ui.esc(s) + '</a></li>';
+      }).join('') +
+      '        </ul>' +
+      (hotel.uncertain ? '<p><strong>確認できていない点:</strong> ' + ui.esc(hotel.uncertain) + '</p>' : '') +
+      '        <p>掲載内容は上記の公開情報を基にした参考値です(調査時点)。最新情報は公式サイトをご確認ください。</p></details>' +
+      '      </section>' : '') +
     '    </div>' +
 
     '    <aside>' +
@@ -148,8 +143,9 @@
     (hotel.type === 'business' && hotel.tags.indexOf('daiyokujo') !== -1 ? '          <li>' + ui.icon('check') + '大浴場あり' + (hotel.tags.indexOf('sauna') !== -1 ? '(サウナ併設)' : '') + '</li>' : '') +
     '          <li>' + ui.icon('pin') + ui.esc(hotel.access) + '</li>' +
     '        </ul>' +
-    '        <a class="btn btn-lg btn-block" href="#h-rooms">客室を選んで予約する</a>' +
-    '        <p class="side-note">※ デモサイトのため実際の予約はできません。日付を選んでも在庫は常に「空室」です。</p>' +
+    '        <a class="btn btn-lg btn-block" href="#h-rooms">客室を選んで予約する(デモ)</a>' +
+    (hotel.official ? '        <a class="btn btn-ghost btn-block" style="margin-top:8px" href="' + ui.esc(hotel.official) + '" target="_blank" rel="noopener noreferrer">公式サイトで最新情報を見る</a>' : '') +
+    '        <p class="side-note">※ 本サイトは非公式のデモです。掲載内容は公開情報を基にした参考値で、料金・設備は変動します。実際のご予約・最新情報は公式サイトでご確認ください。</p>' +
     '      </div>' +
     '    </aside>' +
     '  </div>' +
