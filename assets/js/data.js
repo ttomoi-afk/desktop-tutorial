@@ -1683,6 +1683,586 @@
               }
           ],
           "bathLine": "運び湯の天然温泉大浴場+サウナ/セパレート客室"
+      },
+      {
+          "id": "mgh-nihonbashi-premier",
+          "name": "三井ガーデンホテル日本橋プレミア",
+          "kana": "みついがーでんほてるにほんばしぷれみあ",
+          "area": "東京・日本橋",
+          "pref": "東京都",
+          "region": "関東",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "宿泊者専用の無料大浴場を併設。檜の香る浴槽と寝湯を備えた癒しの空間で、温泉・サウナはない(利用時間15:00〜25:00/6:00〜9:00)。",
+          "roomBathNote": "全室でバス・トイレ・洗面台を分離した3点セパレート設計。モデレートダブル(20㎡)のみ浴槽なしのシャワーブース仕様で、その他の客室は洗い場・シャワースペース付きバスタブとレイン+ハンドシャワーを備える。",
+          "scene": "city",
+          "pal": "night",
+          "tags": [
+              "daiyokujo"
+          ],
+          "catch": "三越前・新日本橋駅直結、全室水回り3点分離と檜香る大浴場を備えた日本橋の上質ビジネスホテル。",
+          "description": "2018年9月13日開業。OVOL日本橋ビルの9階にテラスと中庭を望むロビー、10〜15階に全264室を配し、客室はすべて20㎡以上でバス・トイレ・洗面を分離した居住性重視の設計。宿泊者専用の大浴場(檜の浴槽・寝湯、温泉ではない)を備え、三越前駅・新日本橋駅直結で東京駅からも徒歩圏という立地が強み。",
+          "kashikiri": [],
+          "access": "東京メトロ銀座線・半蔵門線「三越前」駅 地下通路直結、JR総武快速線「新日本橋」駅 地下直結、JR「東京」駅から徒歩約11分",
+          "official": "https://www.gardenhotels.co.jp/nihonbashi-premier/",
+          "highlights": [
+              "檜の香る宿泊者専用大浴場(寝湯あり、サウナ・温泉ではない)",
+              "全室20㎡以上・バス/トイレ/洗面の3点分離",
+              "三越前駅地下通路直結・新日本橋駅直結、東京駅から徒歩約11分",
+              "テラスと中庭を望む9階ロビー・ラウンジ"
+          ],
+          "sources": [
+              "https://www.gardenhotels.co.jp/nihonbashi-premier/",
+              "https://www.gardenhotels.co.jp/nihonbashi-premier/bath/",
+              "https://www.gardenhotels.co.jp/nihonbashi-premier/room/",
+              "https://www.mitsuifudosan.co.jp/corporate/news/2018/0906/",
+              "https://www.jtb.co.jp/kokunai-hotel/htl/4011013/",
+              "https://www.ikyu.com/00002511/"
+          ],
+          "uncertain": "料金は予約サイトの素泊まり2名最安(約29,400円/室≒14,700円/人)からの1名利用・平日推定で時期変動が大きい。大浴場の所在階は未確認。現行「モデレートダブル」(20㎡)は浴槽なしシャワーブース仕様のためroomsから除外。コーナーツインの広さ・定員は予約サイト掲載情報で公式ページでは未確認。",
+          "verified": false,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "モデレートクイーン",
+                  "capacity": "1〜2名",
+                  "size": "23.5平米",
+                  "price": 25000,
+                  "bath": {
+                      "type": "内風呂(洗い場・レインシャワー付き)・トイレ独立・洗面独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "モデレートツイン",
+                  "capacity": "1〜2名",
+                  "size": "26.4平米",
+                  "price": 28000,
+                  "bath": {
+                      "type": "内風呂(洗い場・レインシャワー付き)・トイレ独立・洗面独立",
+                      "wash": true,
+                      "view": "中央通り側",
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r3",
+                  "name": "コーナーツイン",
+                  "capacity": "2名",
+                  "size": "29.5平米",
+                  "price": 31000,
+                  "bath": {
+                      "type": "内風呂(洗い場付き)・トイレ独立・洗面独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "檜の大浴場+全室バス・トイレ・洗面3点分離"
+      },
+      {
+          "id": "millennium-mgh-tokyo",
+          "name": "ミレニアム 三井ガーデンホテル 東京",
+          "kana": "みれにあむ みついがーでんほてる とうきょう",
+          "area": "東京・銀座(東銀座)",
+          "pref": "東京都",
+          "region": "関東",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "大浴場はなく、客室バスルームの質を重視するタイプ。ほとんどの客室が洗い場付き浴槽とレイン+ハンドの2ウェイシャワーを備えたセパレート水回りで、客室でゆったり入浴できる。",
+          "roomBathNote": "セントラルダブル(シャワーブースのみ)とアクセシブルルームを除き、洗い場付きバスルーム・トイレ・洗面台が独立した3点分離。バスタブは足を伸ばせるサイズでレインシャワー付き。",
+          "scene": "city",
+          "pal": "dusk",
+          "tags": [],
+          "catch": "東銀座駅徒歩1分・歌舞伎座至近、洗い場付きバスと3点独立の水回りが快適な銀座のスタイリッシュホテル。",
+          "description": "2014年12月17日開業、地上14階・地下1階、全329室。ミレニアム&コプソーン ホテルズとのダブルブランドで、銀座四丁目交差点と歌舞伎座のすぐそばに建つ。大浴場はないが、セントラルダブル等を除く客室は洗い場付き浴槽・トイレ・洗面台が独立しており、禅の庭を意識したアジアン・ミニマリズムのロビーも特徴。",
+          "kashikiri": [],
+          "access": "東京メトロ日比谷線・都営浅草線「東銀座」駅A1出口から徒歩約1分、東京メトロ「銀座」駅A5出口から徒歩約2分(銀座四丁目交差点・歌舞伎座至近)",
+          "official": "https://www.gardenhotels.co.jp/millennium-tokyo/",
+          "highlights": [
+              "東銀座駅A1出口徒歩約1分・銀座駅A5出口徒歩約2分の好立地",
+              "ほぼ全室で洗い場付き浴槽+バス・トイレ・洗面の3点独立",
+              "歌舞伎座・銀座四丁目交差点至近で観劇や買物に至便",
+              "禅寺の庭を意識したアジアン・ミニマリズムの空間デザイン"
+          ],
+          "sources": [
+              "https://www.gardenhotels.co.jp/millennium-tokyo/",
+              "https://www.gardenhotels.co.jp/millennium-tokyo/room/",
+              "https://www.mitsuifudosan.co.jp/corporate/news/2014/1215/",
+              "https://www.jalan.net/yad303560/",
+              "https://www.jtb.co.jp/kokunai-hotel/htl/4012058/",
+              "https://www.mitsuifudosan.co.jp/corporate/news/2019/0917/"
+          ],
+          "uncertain": "重要: 依頼前提の『三井ガーデンホテル銀座五丁目=旧ミレニアム(2023年リブランド)』は確認できなかった。2026年7月時点で本ホテルは『ミレニアム 三井ガーデンホテル 東京』名で営業中(公式サイト・じゃらん・一休等いずれも現行掲載)。『三井ガーデンホテル銀座五丁目』(中央区銀座5-13-15)は2019年9月26日新規開業・338室・2階大浴場付きの近接した別ホテルで、その標準客室はユニットバスのため『バス・トイレ・洗面独立』条件に合致しない。依頼の特徴(東銀座・水回り独立・洗い場付きバス)に一致する本ホテルを現名称で収録した。料金は素泊まり2名最安(約31,000〜35,000円/室)からの1名利用・平日推定。スーペリアツイン等上位客室の面積(37.7㎡等)は単一情報源のためroomsに未収録。大浴場なしの判断は、グループ公式が銀座五丁目(2019年)を『銀座エリアのグループホテル初の大浴場』と紹介していることに基づく。",
+          "verified": false,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "モデレートクイーン",
+                  "capacity": "1〜2名",
+                  "size": "21.5平米",
+                  "price": 23000,
+                  "bath": {
+                      "type": "内風呂(洗い場・レインシャワー付き)・トイレ独立・洗面独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "モデレートツイン",
+                  "capacity": "1〜2名",
+                  "size": "26平米",
+                  "price": 26000,
+                  "bath": {
+                      "type": "内風呂(洗い場・レインシャワー付き)・トイレ独立・洗面独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "大浴場なし/ほぼ全室 洗い場付きバス・水回り3点独立"
+      },
+      {
+          "id": "mgh-jingugaien-premier",
+          "name": "三井ガーデンホテル神宮外苑の杜プレミア",
+          "kana": "みついがーでんほてるじんぐうがいえんのもりぷれみあ",
+          "area": "東京・神宮外苑",
+          "pref": "東京都",
+          "region": "関東",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "2階に宿泊者専用の大浴場(無料)を備える。旧明治神宮外苑水泳場で使われていた石やタイルをインスタレーションとして生かしたアートな浴場空間で、温泉・サウナはない。",
+          "roomBathNote": "客室の水回りは洗い場付き浴槽の浴室・トイレ・洗面台が独立した3点セパレート。モデレートツインは独立洗面台で2名同時の身支度がしやすく、全客室にバルコニーが付く。",
+          "scene": "city",
+          "pal": "mist",
+          "tags": [
+              "daiyokujo"
+          ],
+          "catch": "国立競技場駅徒歩1分、全室バルコニー付き・水回り3点独立、プールの記憶を宿す大浴場を備えた外苑の杜のホテル。",
+          "description": "2019年11月22日開業、地上13階・全362室(全9タイプ)で全客室にバルコニーが付く。水回りは洗い場付き浴槽・トイレ・洗面台の3点独立で、2階の宿泊者専用大浴場は旧明治神宮外苑水泳場の石やタイルをアートに生かした空間(温泉・サウナなし)。国立競技場に隣接し、部屋やルーフトップから競技場や外苑の緑を望める。",
+          "kashikiri": [],
+          "access": "都営大江戸線「国立競技場」駅A2出口から徒歩約1分、JR総武線「千駄ケ谷」駅から徒歩約5分・「信濃町」駅から徒歩約6分",
+          "official": "https://www.gardenhotels.co.jp/jingugaientokyo-premier/",
+          "highlights": [
+              "都営大江戸線・国立競技場駅A2出口から徒歩約1分",
+              "全362室バルコニー付き、部屋により国立競技場や外苑の杜を望む",
+              "旧外苑プールの石・タイルをインスタレーションに生かした2階大浴場",
+              "13階ルーフトップテラス・2階フィットネスルーム"
+          ],
+          "sources": [
+              "https://www.gardenhotels.co.jp/jingugaientokyo-premier/",
+              "https://www.gardenhotels.co.jp/jingugaientokyo-premier/bath/",
+              "https://www.mitsuifudosan.co.jp/corporate/news/2019/1112_01/",
+              "https://www.jalan.net/yad331571/",
+              "https://www.ozmall.co.jp/travel/stay/925/room/7440/",
+              "https://www.jtb.co.jp/kokunai-hotel/htl/4016095/"
+          ],
+          "uncertain": "料金は比較サイト最安(19,726円〜)等からの1名利用・平日推定で変動が大きい。大浴場の営業時間は未確認。『温泉ではない』は公式・予約サイトに温泉表記がないことによる判断。デラックスツイン(38平米)やジュニアスイート(50平米超)など上位客室は定員・眺望区分が未確認のためroomsに未収録。最安クラスのモデレート(18.5平米・バス/トイレ別)も存在するが名称表記が情報源により揺れるため未収録。",
+          "verified": false,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "モデレートクイーン",
+                  "capacity": "1〜2名",
+                  "size": "22平米",
+                  "price": 17000,
+                  "bath": {
+                      "type": "内風呂(洗い場付き)・トイレ独立・洗面独立、バルコニー付き",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "モデレートツイン",
+                  "capacity": "1〜2名",
+                  "size": "24.7平米",
+                  "price": 19000,
+                  "bath": {
+                      "type": "内風呂(洗い場付き)・トイレ独立・独立洗面台、バルコニー付き",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "大浴場+水回り3点独立・全室バルコニー付き"
+      },
+      {
+          "id": "yaenomidori-tokyo",
+          "name": "ホテル八重の翠東京",
+          "kana": "ほてるやえのみどりとうきょう",
+          "area": "東京・八丁堀(八重洲)",
+          "pref": "東京都",
+          "region": "関東",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "大浴場はなし(公式案内)。その分、バリアフリールームを除く全客室でバス・トイレ・洗面台が独立した3点独立水回りを採用し、広めの洗い場付きバスタブに入浴剤付きでゆったり入浴できる。",
+          "roomBathNote": "ユニバーサル(バリアフリー)ルームを除く全室がバス・トイレ・洗面3点独立。浴室は洗い場付きで、DHC和美容シリーズ「WAGOKORO」(ナチュラルユズジンジャーの香り)のバスアメニティを用意。",
+          "scene": "city",
+          "pal": "dawn",
+          "tags": [],
+          "catch": "「日本の美しさを重ねる」がテーマ、全室3点独立水回りの和テイストホテル。",
+          "description": "2020年7月6日開業、阪急阪神第一ホテルグループ加盟の全218室のホテル。最上階にフロント・ロビーと日本庭園を配し、和の意匠でまとめられている。バリアフリールームを除く全室でバス・トイレ・洗面が独立し、洗い場付きバスタブとDHC「WAGOKORO」アメニティ、シモンズ製ベッドを備える。",
+          "kashikiri": [],
+          "access": "東京メトロ日比谷線八丁堀駅A5出口より徒歩約3分、茅場町駅も徒歩圏、JR東京駅八重洲口より徒歩約12分(住所: 中央区八丁堀2-13-1)",
+          "official": "https://yaenomidori.jp/",
+          "highlights": [
+              "バリアフリールームを除く全室がバス・トイレ・洗面の3点独立水回り",
+              "広めの洗い場付きバスタブと客室備え付けの入浴剤",
+              "DHC和美容シリーズ「WAGOKORO」のバスアメニティ",
+              "最上階のロビー・日本庭園と東京駅徒歩圏の立地"
+          ],
+          "sources": [
+              "https://yaenomidori.jp/",
+              "https://yaenomidori.jp/rooms/",
+              "https://yaenomidori.jp/faq/",
+              "https://www.hankyu-hotel.com/en/hotel/ch/yaenomidori",
+              "https://prtimes.jp/main/html/rd/p/000002607.000002504.html",
+              "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178005"
+          ],
+          "uncertain": "モデレートダブル・ツインのpriceApproxは楽天トラベル掲載の素泊まり2名利用室料下限(税込23,000円/23,400円〜)に基づく概算で、1名利用時の実売価格はプラン・時期により変動。スタンダードシングルは素泊まり税込16,490円〜を確認。一部予約サイトに「スーペリアシングルの一部客室は3点独立でない」旨の記載があり、公式FAQの「バリアフリールームを除き3点独立」との差異は未解消。アメニティ表記は媒体によりWAGOKORO/WAGOCOROの揺れあり。",
+          "verified": false,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダードシングル",
+                  "capacity": "1名",
+                  "size": "17平米",
+                  "price": 16000,
+                  "bath": {
+                      "type": "バス・トイレ・洗面3点独立、洗い場付きバスタブ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "モデレートダブル",
+                  "capacity": "1〜2名",
+                  "size": "18平米",
+                  "price": 23000,
+                  "bath": {
+                      "type": "バス・トイレ・洗面3点独立、洗い場付きバスタブ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r3",
+                  "name": "モデレートツイン",
+                  "capacity": "1〜2名",
+                  "size": "22平米",
+                  "price": 23000,
+                  "bath": {
+                      "type": "バス・トイレ・洗面3点独立、洗い場付きバスタブ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "全室 バス・トイレ・洗面3点独立+洗い場付きバス"
+      },
+      {
+          "id": "musse-ginza-meitetsu",
+          "name": "ホテルミュッセ銀座名鉄",
+          "kana": "ほてるみゅっせぎんざめいてつ",
+          "area": "東京・銀座",
+          "pref": "東京都",
+          "region": "関東",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "大浴場はなく、客室の浴室でくつろぐスタイル。ユニバーサルルームを除く全室がバス・トイレ別で、洗い場付きバスタブとドイツ・グローエ社製「ユーフォリア」シャワーヘッドを備える。",
+          "roomBathNote": "ユニバーサルルームを除く全室がバス・トイレセパレート。一般客室は1216サイズ、上位・最上階客室は1416サイズの浴室にバスタブ・洗い場・オーバーヘッドシャワーを完備。",
+          "scene": "city",
+          "pal": "indigo",
+          "tags": [],
+          "catch": "銀座7丁目で全室「洗い場付きバス・トイレ別」を実現した宿泊特化型ホテル。",
+          "description": "2018年3月開業、名鉄インホテルグループの上位ブランド。ユニバーサルルームを除く全14タイプの客室がバス・トイレ別で、洗い場付きバスタブとグローエ製シャワー、英国スランバーランド社製ベッドを備える。2階レストラン「銀座朝食ラボ」では職人手作りの小鉢ビュッフェと黄金出汁のしゃぶしゃぶが朝食の名物。",
+          "kashikiri": [],
+          "access": "東京メトロ銀座駅A3出口・東銀座駅A1出口、JR・都営浅草線新橋駅より各徒歩約6分(住所: 中央区銀座7-12-9)",
+          "official": "https://www.m-inn.com/musse/ginza/",
+          "highlights": [
+              "ユニバーサルルームを除く全室バス・トイレ別+洗い場付きバスタブ",
+              "グローエ社製「ユーフォリア」シャワーヘッド(客室ごとに異なる全5色)",
+              "朝食「銀座朝食ラボ」の黄金出汁しゃぶしゃぶと小鉢ビュッフェ",
+              "銀座・東銀座・新橋の3駅からいずれも徒歩約6分"
+          ],
+          "sources": [
+              "https://www.m-inn.com/musse/ginza/",
+              "https://www.m-inn.com/musse/ginza/rooms/",
+              "https://www.jalan.net/yad304618/",
+              "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/165557"
+          ],
+          "uncertain": "料金は変動制で、直近の実勢は素泊まり1名利用17,269円〜(比較サイト調べ)。モデレートダブル・スーペリアツインのpriceApproxは2名室料レンジ(素泊まり約17,500〜25,000円)からの1名利用概算で、客室タイプ別の1名利用料金は個別未確認。大浴場なしは予約サイト施設情報ベース(公式FAQページ本文は直接確認できず)。",
+          "verified": false,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "モデレートシングル",
+                  "capacity": "1名",
+                  "size": "14.1平米",
+                  "price": 17000,
+                  "bath": {
+                      "type": "バス・トイレ別、洗い場付きバスタブ(1216サイズ)+グローエ製シャワー",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "モデレートダブル",
+                  "capacity": "1〜2名",
+                  "size": "17.4平米",
+                  "price": 19000,
+                  "bath": {
+                      "type": "バス・トイレ別、洗い場付きバスタブ+オーバーヘッドシャワー",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r3",
+                  "name": "スーペリアツイン",
+                  "capacity": "1〜2名",
+                  "size": "20.9平米",
+                  "price": 22000,
+                  "bath": {
+                      "type": "バス・トイレ別、洗い場付きバスタブ+オーバーヘッドシャワー",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "全室 洗い場付きバス+独立トイレ(ユニバーサル除く)"
+      },
+      {
+          "id": "richmond-premier-asakusa",
+          "name": "リッチモンドホテルプレミア浅草",
+          "kana": "りっちもんどほてるぷれみああさくさ",
+          "area": "東京・浅草",
+          "pref": "東京都",
+          "region": "関東",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "温泉・大浴場はなく、入浴は客室のバスルーム。上位カテゴリー(ビュー/プレミアビュー/コーナー)は浴槽と洗い場を備えたバス・トイレ・洗面独立の浴室で、徒歩約5分の浅草ROX「まつり湯」入浴券付き宿泊プランも販売されている。",
+          "roomBathNote": "バス・トイレ・洗面台の3点独立は「ビュールーム」「プレミアビュールーム」「コーナールーム」の上位カテゴリーのみ(公式明記)。シングル・ダブル(18㎡)やスタンダードツイン(21㎡)など標準客室はバス・トイレ一体型。",
+          "scene": "city",
+          "pal": "dusk",
+          "tags": [],
+          "catch": "浅草寺徒歩4分・TX浅草駅徒歩1分、スカイツリーと浅草寺を望むビュー客室がバス・トイレ独立の9タイプ270室ホテル",
+          "description": "2015年12月開業、リッチモンドホテルの上位ブランド「プレミア」の9タイプ・全270室。ビュールーム・プレミアビュールーム・コーナールームはバス・トイレ・洗面台が独立し、プレミアビューツインからは東京スカイツリーと浅草寺五重塔を同時に望める。5階のプレミアラウンジでは約80種の和洋朝食ビュッフェを提供し、窓からスカイツリーと五重塔を眺められる。",
+          "kashikiri": [],
+          "access": "つくばエクスプレス浅草駅A1出口より徒歩約1分、東京メトロ銀座線・都営浅草線・東武線の浅草駅より徒歩約8分。浅草寺本堂へ徒歩約4分・雷門へ徒歩約6分",
+          "official": "https://richmondhotel.jp/asakusa-international/",
+          "highlights": [
+              "プレミアビューツイン(27㎡)からスカイツリーと浅草寺五重塔を一望",
+              "ビュー/プレミアビュー/コーナーの3カテゴリーはバス・トイレ・洗面台が独立",
+              "つくばエクスプレス浅草駅A1出口徒歩約1分・浅草寺徒歩約4分",
+              "5階プレミアラウンジの約80種朝食ビュッフェ"
+          ],
+          "sources": [
+              "https://richmondhotel.jp/asakusa-international/rooms/",
+              "https://richmondhotel.jp/asakusa-international/access/",
+              "https://richmondhotel.jp/asakusa-international/guide/",
+              "https://www.jalan.net/yad377748/",
+              "https://watahote.com/entry/richmond-asakusapremier2"
+          ],
+          "uncertain": "現公式名称は「リッチモンドホテルプレミア浅草」(旧称「リッチモンドホテルプレミア浅草インターナショナル」表記の予約サイトも残存)。minPriceApproxはOTA最安(素泊まり2名1室15,804円〜)の1名換算で、1名利用なら約14,000円〜。客室タイプ別priceApproxは変動制のため概算(公式・OTAで個別未確認)。洗い場は プレミアビューツインが宿泊記で確認済み、ビューツインはクチコミベース、コーナーツインは未確認。公式発表により2026年7〜9月は一部改装工事(騒音の可能性)、2026年10月1日〜11月8日は全館休館予定。",
+          "verified": false,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "ビューツイン",
+                  "capacity": "2〜3名",
+                  "size": "27平米",
+                  "price": 10000,
+                  "bath": {
+                      "type": "バス・トイレ・洗面台の3点独立",
+                      "wash": true,
+                      "view": "東京スカイツリー",
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "プレミアビューツイン",
+                  "capacity": "2〜3名",
+                  "size": "27平米",
+                  "price": 11000,
+                  "bath": {
+                      "type": "浴槽+洗い場付きバスルーム・トイレ・洗面台の3点独立",
+                      "wash": true,
+                      "view": "東京スカイツリー・浅草寺五重塔",
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r3",
+                  "name": "コーナーツイン",
+                  "capacity": "1〜3名",
+                  "size": "33平米",
+                  "price": 12000,
+                  "bath": {
+                      "type": "バス・トイレ・洗面台の3点独立",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "ビュー・コーナー系客室はバス・トイレ・洗面が3点独立(大浴場なし)"
+      },
+      {
+          "id": "asakusa-tobu-hotel",
+          "name": "浅草東武ホテル",
+          "kana": "あさくさとうぶほてる",
+          "area": "東京・浅草",
+          "pref": "東京都",
+          "region": "関東",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "温泉・大浴場はないが、大半の客室が洗い場付きバスルーム・トイレ・洗面台の3点独立構成で、客室内で洗い場を使ってゆったり湯船に浸かれるのが特徴。",
+          "roomBathNote": "全253室で機能性を重視し、洗い場付きバスルーム・トイレ・洗面台の独立式を採用(一部客室を除く)。ツイン以上は浴槽+洗い場付きの3点セパレート、16㎡のダブルAはバスタブなしのシャワーブース(水回り自体は独立)。",
+          "scene": "city",
+          "pal": "night",
+          "tags": [],
+          "catch": "東武浅草駅正面・雷門徒歩1分、ほぼ全室が洗い場付きバス・トイレ・洗面3点独立の2020年開業ホテル",
+          "description": "2020年10月8日開業、東武スカイツリーライン浅草駅の目の前で雷門へも徒歩約1分の全253室。全室2名以上対応で、大半の客室が洗い場付きバスルーム・トイレ・洗面台の独立構成を採用している。トリプル・フォースの客室やハローキティルームもあり、観光・ファミリー利用にも使いやすい。",
+          "kashikiri": [],
+          "access": "東武スカイツリーライン浅草駅正面口より徒歩約30秒(駅正面)、東京メトロ銀座線浅草駅7番出口より徒歩約1分、都営浅草線浅草駅A5出口より徒歩約3分。雷門へ徒歩約1分",
+          "official": "https://www.tobuhotel.co.jp/asakusa/",
+          "highlights": [
+              "東武浅草駅正面口から徒歩約30秒・雷門へ徒歩約1分の駅前立地",
+              "大半の客室で洗い場付きバスルーム・トイレ・洗面台が3点独立",
+              "コンフォートツイン(25㎡)はスカイツリー側で高層階なら眺望が期待できる",
+              "和テーマのハローキティルーム(開業時、東京23区唯一)やトリプル・フォースも用意"
+          ],
+          "sources": [
+              "https://www.tobuhotel.co.jp/asakusa/stay/index.html",
+              "https://www.tobuhotel.co.jp/asakusa/stay/comfort.html",
+              "https://www.tobuhotel.co.jp/asakusa/access/index.html",
+              "https://www.ikyu.com/00081995/",
+              "https://www.hoteresonline.com/articles/9099",
+              "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/179075"
+          ],
+          "uncertain": "客室タイプ別priceApproxは変動制の概算(ツインA=楽天素泊まり2名1室24,650円〜、コンフォートツイン=OTA2名26,730円〜の1名換算。ツインBは同水準と推定で個別未確認)。minPriceApproxはOTA最安(素泊まり2名1室18,400円〜、最安はシャワーのみのダブルA)の1名換算。コンフォートツインのスカイツリービューは確約なし。ダブルBがダブルA同様シャワーブースのみかは個別未確認。大浴場なしは公式施設案内にスパ・大浴場の記載がないことおよび客室浴室を訴求する公式説明による。",
+          "verified": false,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "ツインA",
+                  "capacity": "1〜2名",
+                  "size": "20平米",
+                  "price": 12000,
+                  "bath": {
+                      "type": "洗い場付きバスルーム・トイレ・洗面台の3点独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "ツインB",
+                  "capacity": "1〜2名",
+                  "size": "21平米",
+                  "price": 12000,
+                  "bath": {
+                      "type": "洗い場付きバスルーム・トイレ・洗面台の3点独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r3",
+                  "name": "コンフォートツイン",
+                  "capacity": "1〜3名",
+                  "size": "25平米",
+                  "price": 13000,
+                  "bath": {
+                      "type": "洗い場付きバスルーム(大きめ浴槽)・トイレ・洗面台の3点独立",
+                      "wash": true,
+                      "view": "東京スカイツリー(高層階のみ・確約なし)",
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "ほぼ全室が洗い場付きバス・トイレ・洗面の3点独立(大浴場なし)"
       }
   ];
 
