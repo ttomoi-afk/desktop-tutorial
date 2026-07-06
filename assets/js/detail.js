@@ -91,10 +91,10 @@
     '    <div class="detail-main">' +
 
     '      <section class="dsection" aria-labelledby="h-onsen">' +
-    '        <h2 id="h-onsen">' + ui.icon('drop') + (hotel.spring ? '温泉・お湯のこと' : '大浴場・お風呂のこと') + '</h2>' +
+    '        <h2 id="h-onsen">' + ui.icon('drop') + (hotel.spring ? '温泉・お湯のこと' : hotel.tags.indexOf('daiyokujo') !== -1 ? '大浴場・お風呂のこと' : 'お風呂のこと') + '</h2>' +
     '        <div class="onsen-spec">' +
     (hotel.spring ? '          <div class="spec-card"><h4>泉質</h4><p>' + ui.esc(hotel.springDetail) + '</p></div>' : '') +
-    '          <div class="spec-card"' + (hotel.spring ? '' : ' style="grid-column:1/-1"') + '><h4>' + (hotel.spring ? '湯づかい' : '浴場・サウナ') + '</h4><p>' + ui.esc(hotel.gensenNote) + '</p></div>' +
+    '          <div class="spec-card"' + (hotel.spring ? '' : ' style="grid-column:1/-1"') + '><h4>' + (hotel.spring ? '湯づかい' : hotel.tags.indexOf('daiyokujo') !== -1 ? '浴場・サウナ' : '浴室について') + '</h4><p>' + ui.esc(hotel.gensenNote) + '</p></div>' +
     (hotel.roomBathNote ? '          <div class="spec-card" style="grid-column:1/-1"><h4>客室の浴室</h4><p>' + ui.esc(hotel.roomBathNote) + '</p></div>' : '') +
     (hotel.efficacy.length ? '          <div class="spec-card" style="grid-column:1/-1"><h4>あう症状(一般的適応症の例)</h4>' +
     '            <div class="efficacy-chips">' + hotel.efficacy.map(function (e) { return '<span>' + ui.esc(e) + '</span>'; }).join('') + '</div></div>' : '') +
