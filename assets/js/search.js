@@ -113,7 +113,7 @@
       '      <span class="hcard-meta">' + ui.typeChip(h) + (h.spring ? '<span class="spring">' + ui.esc(h.spring) + '</span>' : '') + '</span></div>' +
       '    <h3 class="rcard-name">' + ui.esc(h.name) + '</h3>' +
       '    <p class="rcard-catch">' + ui.esc(h.catch) + '</p>' +
-      '    <div class="rcard-badges">' + ui.badge('全室 風呂・トイレ別', 'sep') + ui.tagBadges(h, 5) + '</div>' +
+      '    <div class="rcard-badges">' + ui.sepBadge(h) + ui.tagBadges(h, 5) + '</div>' +
       '    <p class="rcard-desc">' + ui.esc(h.description) + '</p>' +
       '    <div class="rcard-foot">' +
       '      <div class="meta">' + meta + '</div>' +

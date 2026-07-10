@@ -29,23 +29,32 @@
     return r;
   }
 
+  /* 客室に浴室がない(入浴は大浴場・外湯)タイプか */
+  function noBath(room) { return /浴室なし/.test(room.bath.type); }
+
   /* ---------- 客室カード ---------- */
   function roomCard(h, room) {
     const img = d.bathTileSVG(h, room, 460, 380);
-    const bathBadges =
-      ui.badge('風呂・トイレ別', 'sep') +
-      (room.bath.wash ? ui.badge('洗い場付き') : '') +
-      (room.bath.onsenBath ? ui.badge('客室風呂も温泉', 'onsen') : '') +
-      (room.bath.view ? ui.badge(ui.esc(room.bath.view) + 'ビュー', 'room') : '');
+    const isNo = noBath(room);
+    const bathBadges = isNo
+      ? ui.badge('入浴は大浴場・外湯', 'sep')
+      : ui.badge('風呂・トイレ別', 'sep') +
+        (room.bath.wash ? ui.badge('洗い場付き') : '') +
+        (room.bath.onsenBath ? ui.badge('客室風呂も温泉', 'onsen') : '') +
+        (room.bath.view ? ui.badge(ui.esc(room.bath.view) + 'ビュー', 'room') : '');
+    const specRows = isNo
+      ? '      <tr><th>入浴</th><td>' + ui.esc(room.bath.type) + (room.bath.note ? '<br><small style="color:var(--ink-soft)">' + ui.esc(room.bath.note) + '</small>' : '') + '</td></tr>' +
+        '      <tr><th>客室内のトイレ</th><td class="ok">' + ui.icon('check') + ' あり(浴槽とトイレが同室のユニットバスではありません)</td></tr>'
+      : '      <tr><th>浴室</th><td>' + ui.esc(room.bath.type) + (room.bath.note ? '<br><small style="color:var(--ink-soft)">' + ui.esc(room.bath.note) + '</small>' : '') + '</td></tr>' +
+        '      <tr><th>浴室とトイレ</th><td class="ok">' + ui.icon('check') + ' 別々(セパレート)</td></tr>' +
+        '      <tr><th>洗い場</th><td>' + (room.bath.wash === true ? '<span class="ok">' + ui.icon('check') + ' あり</span>(浴室内で体を洗えます)' : room.bath.wash === false ? 'なし(浴槽なしのシャワーブース等)' : '未確認(公式サイトでご確認ください)') + '</td></tr>';
     return '<article class="room-card" id="' + ui.esc(room.id) + '">' +
       '  <div class="room-img" style="background-image:url(&quot;' + img + '&quot;)" role="img" aria-label="' + ui.esc(room.bath.type) + 'のイメージ"></div>' +
       '  <div class="room-body">' +
       '    <h3>' + ui.esc(room.name) + '</h3>' +
       '    <div class="room-badges">' + bathBadges + '</div>' +
       '    <table class="room-spec">' +
-      '      <tr><th>浴室</th><td>' + ui.esc(room.bath.type) + (room.bath.note ? '<br><small style="color:var(--ink-soft)">' + ui.esc(room.bath.note) + '</small>' : '') + '</td></tr>' +
-      '      <tr><th>浴室とトイレ</th><td class="ok">' + ui.icon('check') + ' 別々(セパレート)</td></tr>' +
-      '      <tr><th>洗い場</th><td>' + (room.bath.wash === true ? '<span class="ok">' + ui.icon('check') + ' あり</span>(浴室内で体を洗えます)' : room.bath.wash === false ? 'なし' : '未確認(公式サイトでご確認ください)') + '</td></tr>' +
+      specRows +
       '      <tr><th>広さ・定員</th><td>' + ui.esc(room.size) + ' / ' + ui.esc(room.capacity) + '</td></tr>' +
       (room.features && room.features.length ? '      <tr><th>設備</th><td>' + room.features.map(ui.esc).join('・') + '</td></tr>' : '') +
       '    </table>' +
@@ -73,6 +82,15 @@
   const heroImg = d.sceneURI(hotel, 1600, 560);
   const highlights = buildHighlights(hotel);
 
+  // 洗い場の事実表示: 客室浴室が全て洗い場付き(wash===true)のときのみ断定する
+  const bathRooms = hotel.rooms.filter(function (r) { return !noBath(r); });
+  const allWash = bathRooms.length > 0 && bathRooms.every(function (r) { return r.bath.wash === true; });
+  const hasDaiyokujo = hotel.tags.indexOf('daiyokujo') !== -1;
+  const washFact = allWash ? '全客室の浴室に洗い場あり'
+    : hasDaiyokujo ? '大浴場でゆっくり(洗い場付き)'
+    : hotel.noRoomBath ? '入浴は貸切風呂・外湯めぐりで'
+    : '客室の浴室で湯船に浸かれます';
+
   root.innerHTML =
     '<div class="detail-hero" style="background-image:url(&quot;' + heroImg + '&quot;)" role="img" aria-label="' + ui.esc(hotel.area) + 'の風景イメージ"></div>' +
     '<div class="wrap">' +
@@ -82,7 +100,7 @@
     '    <h1>' + ui.esc(hotel.name) + '</h1>' +
     '    <p class="kana">' + ui.esc(hotel.kana) + '</p>' +
     '    <div class="meta">' + (hotel.rating ? ui.stars(hotel.rating) + '<span>クチコミ ' + hotel.reviews + '件</span>' : '') + '<span>' + ui.esc(hotel.access) + '</span></div>' +
-    '    <div class="badges">' + ui.badge('全室 風呂・トイレ別', 'sep') + ui.tagBadges(hotel) + '</div>' +
+    '    <div class="badges">' + ui.sepBadge(hotel) + ui.tagBadges(hotel) + '</div>' +
     '    <p class="detail-catch">' + ui.esc(hotel.catch) + '</p>' +
     '    <p class="detail-desc">' + ui.esc(hotel.description) + '</p>' +
     '  </div>' +
@@ -108,7 +126,7 @@
       '      </section>' : '') +
 
     '      <section class="dsection" aria-labelledby="h-rooms">' +
-    '        <h2 id="h-rooms">' + ui.icon('bath') + '客室を選ぶ<small style="font-size:12px;color:var(--ink-soft);font-family:var(--sans);margin-left:6px">すべて風呂・トイレ別の客室です</small></h2>' +
+    '        <h2 id="h-rooms">' + ui.icon('bath') + '客室を選ぶ<small style="font-size:12px;color:var(--ink-soft);font-family:var(--sans);margin-left:6px">' + (hotel.noRoomBath ? '客室にユニットバスはありません(入浴は大浴場・外湯)' : 'すべて風呂・トイレ別の客室です') + '</small></h2>' +
     '        ' + hotel.rooms.map(function (r) { return roomCard(hotel, r); }).join('') +
     '      </section>' +
 
@@ -137,15 +155,15 @@
     '        <p class="price-line"><small>' + ui.priceLabel(hotel, true) + '</small><strong>' + ui.yen(hotel.minPrice) + '</strong><small>〜</small></p>' +
     '        <p class="rk-price" id="rk-price"></p>' +
     '        <ul class="side-facts">' +
-    '          <li>' + ui.icon('check') + '全客室が風呂・トイレ別(セパレート)</li>' +
-    '          <li>' + ui.icon('check') + '全浴室に洗い場あり</li>' +
+    '          <li>' + ui.icon('check') + (hotel.noRoomBath ? '客室はトイレ付・ユニットバスなし(入浴は大浴場・外湯)' : '全客室が風呂・トイレ別(セパレート)') + '</li>' +
+    '          <li>' + ui.icon('check') + washFact + '</li>' +
     (hotel.kashikiri.length ? '          <li>' + ui.icon('check') + (hotel.type === 'business' ? '貸切風呂・サウナ ' : '貸切風呂 ') + hotel.kashikiri.length + 'つ' + (hotel.hasFreeKashikiri ? '(無料)' : '') + '</li>' : '') +
     (hotel.tags.indexOf('gensen') !== -1 ? '          <li>' + ui.icon('check') + '源泉かけ流し</li>' : '') +
     (hotel.type === 'business' && hotel.tags.indexOf('daiyokujo') !== -1 ? '          <li>' + ui.icon('check') + '大浴場あり' + (hotel.tags.indexOf('sauna') !== -1 ? '(サウナ併設)' : '') + '</li>' : '') +
     '          <li>' + ui.icon('pin') + ui.esc(hotel.access) + '</li>' +
     '        </ul>' +
     '        ' + ui.bookingCtas(hotel, false) +
-    '        <a class="btn-ghost btn btn-block" style="margin-top:8px;border-color:var(--line);color:var(--ink-soft)" href="#h-rooms">風呂・トイレ別の客室を見る</a>' +
+    '        <a class="btn-ghost btn btn-block" style="margin-top:8px;border-color:var(--line);color:var(--ink-soft)" href="#h-rooms">' + (hotel.noRoomBath ? '客室を見る' : '風呂・トイレ別の客室を見る') + '</a>' +
     '        <p class="side-note">※ ご予約は楽天トラベル・公式サイトなど外部サイトで行います(送客型β版)。掲載内容は公開情報を基にした参考値で、料金・設備は変動します。</p>' +
     '      </div>' +
     '    </aside>' +

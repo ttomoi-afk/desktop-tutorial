@@ -2921,6 +2921,9 @@
     if (!h.type) h.type = 'onsen'; // 既定は温泉宿・旅館
     h.minPrice = Math.min.apply(null, h.rooms.map(function (r) { return r.price; }));
     h.hasFreeKashikiri = h.tags.indexOf('free_kashikiri') !== -1;
+    // 全客室が「客室に浴室なし(入浴は大浴場・外湯)」型か(城崎の外湯文化宿など)。
+    // この場合も客室内にユニットバスは無いが「風呂・トイレ別」の文言は使わない。
+    h.noRoomBath = h.rooms.every(function (r) { return r.bath && /浴室なし/.test(r.bath.type); });
   });
 
   const TYPES = {

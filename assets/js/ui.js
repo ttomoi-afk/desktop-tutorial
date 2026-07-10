@@ -147,6 +147,10 @@
     const t = D().TYPES[h.type];
     return t ? '<span class="chip-type chip-type-' + h.type + '">' + esc(t.short) + '</span>' : '';
   }
+  // 「風呂・トイレ別」バッジ。客室に浴室がない(大浴場・外湯利用)型は文言を変える。
+  function sepBadge(h) {
+    return badge(h.noRoomBath ? 'ユニットバスなし' : '全室 風呂・トイレ別', 'sep');
+  }
   // 温泉宿は1泊2食、ビジネスホテルは素泊まりが基準の「参考料金」
   function priceLabel(h, forRoom) {
     if (h.type === 'business') return forRoom ? '参考 素泊まり・1名利用' : '参考 素泊まり・1名';
@@ -176,7 +180,7 @@
       '      <h3 class="hcard-name">' + esc(h.name) + '</h3>' +
       '      <p class="hcard-meta">' + (h.rating ? stars(h.rating) + '<span class="rev">(' + h.reviews + '件)</span>' : '') + typeChip(h) +
       (h.spring ? '<span class="spring">' + esc(h.spring) + '</span>' : '') + '</p>' +
-      '      <div class="hcard-badges">' + badge('全室 風呂・トイレ別', 'sep') + tagBadges(h, 3) + '</div>' +
+      '      <div class="hcard-badges">' + sepBadge(h) + tagBadges(h, 3) + '</div>' +
       '      <p class="hcard-bath">' + icon('steam') + esc(bathBits.join(' / ')) + '</p>' +
       '      <p class="hcard-price"><small>' + priceLabel(h) + '</small><strong>' + yen(h.minPrice) + '</strong><small>〜</small></p>' +
       '    </div>' +
@@ -194,7 +198,7 @@
   window.YUBUNE.ui = {
     esc: esc, yen: yen, qs: qs, qsAll: qsAll,
     icon: icon, badge: badge, tagBadges: tagBadges, stars: stars,
-    typeChip: typeChip, priceLabel: priceLabel,
+    typeChip: typeChip, priceLabel: priceLabel, sepBadge: sepBadge,
     affiliateUrl: affiliateUrl, bookingCtas: bookingCtas,
     hotelCard: hotelCard, renderChrome: renderChrome,
   };
