@@ -26,7 +26,8 @@
       <h1 style="font-family:var(--serif);font-size:22px">楽天トラベルAPI 疎通テスト</h1>
       <p style="font-size:13px;color:var(--ink-soft);margin:6px 0 10px">
         このページは <code>ttomoi-afk.github.io</code>(楽天側で許可済みのドメイン)上でAPIが使えるかを確認します。
-        ローカルや他ドメインで開くと失敗するのが正常です。
+        ローカルや他ドメインで開くと失敗するのが正常です。<br>
+        エンドポイント: <code id="ep"></code>
       </p>
       <div id="results"><div class="test-item"><h3>実行中…</h3></div></div>
       <p style="font-size:12px;color:var(--ink-faint)">結果をスクリーンショットで共有してください。</p>
@@ -46,6 +47,7 @@
   function esc(s) { return String(s).replace(/</g, '&lt;'); }
 
   var rk = window.YUBUNE.rakuten;
+  document.getElementById('ep').textContent = rk.API_BASE;
 
   // テスト1: 施設情報取得(強羅花扇 hotelNo=79294)
   rk.hotelInfo(79294).then(function (data) {
@@ -57,7 +59,8 @@
     } catch (e) { name = JSON.stringify(data).slice(0, 200); }
     var ok = !data.error;
     out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: ok ? 'pass' : 'fail', status: ok ? 'PASS' : 'FAIL',
-      detail: ok ? '取得できた施設名: ' + esc(name) : 'error: ' + esc(data.error) + ' / ' + esc(data.error_description || '') });
+      detail: (ok ? '取得できた施設名: ' + esc(name) : 'error: ' + esc(data.error) + ' / ' + esc(data.error_description || '')) +
+        '(transport: ' + esc(data.__transport || '-') + ')' });
     render();
   }).catch(function (e) {
     out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: 'fail', status: 'FAIL',

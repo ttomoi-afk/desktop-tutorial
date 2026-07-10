@@ -8,7 +8,7 @@
  * GET /api/vacancy?hotelNo=79294&checkin=2026-08-01&checkout=2026-08-02&adults=2
  */
 const RAKUTEN_ENDPOINT =
-  'https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426';
+  'https://openapi.rakuten.co.jp/engine/api/Travel/VacantHotelSearch/20170426';
 
 module.exports = async function handler(req, res) {
   const appId = process.env.RAKUTEN_APP_ID;
