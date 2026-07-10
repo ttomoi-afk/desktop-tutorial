@@ -2307,6 +2307,612 @@
           "bathLine": "ほぼ全室が洗い場付きバス・トイレ・洗面の3点独立(大浴場なし)",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/179075",
           "rakutenHotelNo": 179075
+      },
+      {
+          "id": "nono-namba",
+          "name": "天然温泉 花風の湯 御宿 野乃なんば",
+          "kana": "てんねんおんせん はなかぜのゆ おんやど のの なんば",
+          "area": "大阪・なんば(日本橋)",
+          "pref": "大阪府",
+          "region": "関西",
+          "type": "business",
+          "onsen": "花風の湯(奈良県生駒市からの運び湯)",
+          "spring": null,
+          "springDetail": "ラドン温泉(公称。温泉分析書上の正式泉質名は未確認)",
+          "efficacy": [
+              "筋肉痛",
+              "関節痛",
+              "神経痛",
+              "冷え性",
+              "疲労回復",
+              "五十肩"
+          ],
+          "gensenNote": "2階に男女別大浴場「花風の湯」。内湯は奈良県生駒市から運び入れる天然温泉(ラドン温泉)で、竹の装飾に照明が灯る半露天の岩風呂(外湯)・水風呂・ドライサウナを併設。営業は15:00〜翌10:00(サウナのみ深夜1:00〜5:00休止)。湯上がりアイスや乳酸菌飲料、21:30〜23:00の夜鳴きそばの無料サービスがある。",
+          "roomBathNote": "全館畳敷きで、玄関で靴を脱いで過ごす和風ホテル。客室は浴槽のないシャワーブース・洗面・温水洗浄便座付きトイレを分けた構成で、ユニットバスではない。湯船は2階大浴場の利用が前提。",
+          "scene": "city",
+          "pal": "dusk",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "iwaburo"
+          ],
+          "catch": "日本橋駅徒歩1分・全館畳敷き。天然温泉「花風の湯」の半露天岩風呂とサウナを備えたドーミーイン系の和風ホテル。",
+          "description": "道頓堀へも歩ける日本橋駅前に建つ、ドーミーイン系の和風プレミアムホテル。館内はすべて畳敷きで、素足のまま過ごせる。2階の男女別大浴場「花風の湯」は奈良県生駒市から運ぶ天然温泉(ラドン温泉)で、半露天の岩風呂・水風呂・ドライサウナつき。客室はシャワーブースとトイレが独立し、名物の夜鳴きそばも無料。",
+          "kashikiri": [],
+          "access": "Osaka Metro堺筋線・千日前線/近鉄「日本橋駅」から徒歩約1分。なんば駅・道頓堀へも徒歩圏。",
+          "official": "https://dormy-hotels.com/dormyinn/hotels/nono_nanba/",
+          "highlights": [
+              "奈良県生駒市から湯を運び入れる天然温泉(ラドン温泉)の内湯",
+              "竹の装飾に照明が灯る半露天の岩風呂(外湯)と水風呂・ドライサウナ",
+              "全館畳敷き・靴を脱いで過ごす和風の造りで、湯上がりも素足のまま",
+              "湯上がりアイス・乳酸菌飲料、21:30〜23:00の夜鳴きそば無料サービス"
+          ],
+          "sources": [
+              "https://dormy-hotels.com/dormyinn/hotels/nono_nanba/",
+              "https://dormy-hotels.com/dormyinn/hotels/nono_nanba/spa/",
+              "https://dormy-hotels.com/dormyinn/hotels/nono_nanba/rooms/",
+              "https://travel.rakuten.co.jp/HOTEL/158346/158346_onsen.html",
+              "https://www.jalan.net/yad395730/",
+              "https://kansai-hocance.com/hotels-nono-nanba/"
+          ],
+          "uncertain": "公式サイトが調査環境のプロキシ制限で直接閲覧できず、公式ページの内容は検索エンジン経由のスニペットと予約サイト・宿泊レビューで照合確認した。泉質は「ラドン温泉」の公称のみで、温泉分析書上の正式泉質名は未確認。適応症は楽天トラベル・Yahoo!トラベルの施設提供情報によるもので、公式サイト上の明文は未確認。料金は素泊まり最安(2名1室19,500円=1名約9,750円、1名利用16,500円〜/価格.com)に基づく参考値で、クイーンは同水準からの推定。開業を2020年9月とする情報があるが一次情報は未確認。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "コンパクトツイン",
+                  "capacity": "1〜2名",
+                  "size": "18〜18.7平米",
+                  "price": 9800,
+                  "bath": {
+                      "type": "シャワーブース(浴槽なし)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "シャワーブース・洗面・温水洗浄便座付きトイレを分けた構成。湯船は2階大浴場で"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "クイーン",
+                  "capacity": "1〜2名",
+                  "size": "22.4平米",
+                  "price": 10500,
+                  "bath": {
+                      "type": "シャワーブース(浴槽なし)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "幅160cmベッド。シャワーブースとトイレは独立(料金は推定)"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "天然温泉の大浴場+半露天岩風呂+サウナ/シャワーブース+独立トイレ",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/158346",
+          "rakutenHotelNo": 158346
+      },
+      {
+          "id": "dormyinn-namba-annex",
+          "name": "天然温泉 朝霧の湯 ドーミーインPREMIUMなんばANNEX",
+          "kana": "てんねんおんせん あさぎりのゆ どーみーいんぷれみあむなんばあねっくす",
+          "area": "大阪・なんば(東心斎橋)",
+          "pref": "大阪府",
+          "region": "関西",
+          "type": "business",
+          "onsen": "朝霧の湯(大阪府四條畷市からの運び湯)",
+          "spring": "放射能泉",
+          "springDetail": "単純弱放射能冷鉱泉(JTB掲載の泉質情報による)",
+          "efficacy": [
+              "筋肉痛",
+              "関節痛",
+              "神経痛"
+          ],
+          "gensenNote": "最上階13階に男女別大浴場「朝霧の湯」。内湯は大阪府四條畷市から運ぶ天然温泉(単純弱放射能冷鉱泉)で、外気浴ができる外湯の岩風呂、チラー付きの水風呂(約15℃)、テレビ付き2段の高温ドライサウナ(約89℃)を完備。営業は15:00〜翌10:00(サウナのみ深夜1:00〜5:00休止)。",
+          "roomBathNote": "客室は浴槽のないシャワーブースと温水洗浄便座付きトイレを分けて配置した構成で、ユニットバスではない。湯船は最上階大浴場の利用が前提。",
+          "scene": "city",
+          "pal": "night",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "iwaburo"
+          ],
+          "catch": "最上階13階の天然温泉「朝霧の湯」で外気浴とテレビ付き高温サウナ。日本橋・長堀橋駅徒歩5分のドーミーイン別館。",
+          "description": "2018年8月開業・151室のドーミーインPREMIUMなんばの別館。最上階13階の男女別大浴場「朝霧の湯」は四條畷市から運ぶ天然温泉(単純弱放射能冷鉱泉)で、外気浴できる岩風呂の外湯、チラー付き水風呂、テレビ付きの2段高温ドライサウナを備える。客室はシャワーブースとトイレが独立した構成で、ミナミ観光の拠点にも便利。",
+          "kashikiri": [],
+          "access": "Osaka Metro堺筋線・千日前線/近鉄「日本橋駅」2番出口から徒歩約5分、堺筋線「長堀橋駅」7番出口から徒歩約5分。",
+          "official": "https://dormy-hotels.com/dormyinn/hotels/nanba_ax/",
+          "highlights": [
+              "最上階13階・男女別の天然温泉大浴場「朝霧の湯」(四條畷市からの運び湯)",
+              "外気浴ができる外湯の岩風呂——男湯からはあべのハルカス方面の眺めも",
+              "テレビ付き2段の高温ドライサウナ(約89℃)とチラー付き水風呂(約15℃)",
+              "15:00〜翌10:00営業で、夜も朝も湯船に浸かれる(サウナは1:00〜5:00休止)"
+          ],
+          "sources": [
+              "https://dormy-hotels.com/dormyinn/hotels/nanba_ax/",
+              "https://dormy-hotels.com/dormyinn/hotels/nanba_ax/spa/",
+              "https://dormy-hotels.com/dormyinn/hotels/nanba_ax/rooms/",
+              "https://www.jalan.net/yad375670/",
+              "https://sauna-ikitai.com/saunas/6873",
+              "https://kansai-sanpo.com/dormy-namba-annex/"
+          ],
+          "uncertain": "公式サイトが調査環境のプロキシ制限で直接閲覧できず、内容は検索スニペット・予約サイト・サウナイキタイ・宿泊記で照合確認した。泉質名「単純弱放射能冷鉱泉」と適応症はJTB掲載の施設情報によるもので、温泉分析書は未確認。料金は素泊まり最安(2名15,454円=1名約7,727円、1名利用13,500円〜/価格.com系)に基づく参考値。デラックスクイーンは同水準からの推定。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "ダブル",
+                  "capacity": "1〜2名",
+                  "size": "約16.1平米",
+                  "price": 7700,
+                  "bath": {
+                      "type": "シャワーブース(浴槽なし)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "浴槽なしのシャワーブースとトイレが独立。湯船は13階大浴場で"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "デラックスクイーン",
+                  "capacity": "1〜2名",
+                  "size": "23平米",
+                  "price": 8500,
+                  "bath": {
+                      "type": "シャワーブース(浴槽なし)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "23平米のゆとりあるクイーン。バスタブはなくシャワーブース+独立トイレ(料金は推定)"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "最上階の天然温泉大浴場+外気浴の岩風呂+サウナ/シャワーブース+独立トイレ",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/167717",
+          "rakutenHotelNo": 167717
+      },
+      {
+          "id": "liber-hotel-osaka",
+          "name": "リーベルホテル大阪",
+          "kana": "りーべるほてるおおさか",
+          "area": "大阪・ベイエリア(此花区)",
+          "pref": "大阪府",
+          "region": "関西",
+          "type": "business",
+          "onsen": "大阪桜島温泉",
+          "spring": "単純温泉",
+          "springDetail": "単純温泉(弱アルカリ性・低張性。溶存物質約0.46g/kg)",
+          "efficacy": [],
+          "gensenNote": "3階に天然温泉大浴場「RIVERSIDE SPA」。地下約1,000mから汲み上げる大阪桜島温泉(単純温泉)で、安治川を望む露天風呂、ドライサウナ・ミストサウナを備え、女湯には炭酸風呂と最大水深1mの深湯「三深の湯」がある。営業は朝6:00〜9:00と11:00〜24:00の2部制(時期・曜日により変動の情報あり)。3歳以下は利用不可で、客室タブレットから混雑状況を確認できる。",
+          "roomBathNote": "スーペリアツイン(33平米)以上の客室は洗い場付きバスルームでバスとトイレがセパレート(予約サイトの客室情報に明記)。スタンダード(26平米)は浴槽のないレインシャワーのシャワーブースのため、湯船重視なら大浴場かスーペリア以上を。ユニットバスの客室はない。",
+          "scene": "river",
+          "pal": "dusk",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "sauna"
+          ],
+          "catch": "JR桜島駅前・全760室。天然温泉「大阪桜島温泉」の大浴場と露天風呂、スーペリア以上は洗い場付きバスの都市型リゾート。",
+          "description": "2019年11月開業・全760室の大型ホテル(旧称:リーベルホテル アット ユニバーサル・スタジオ・ジャパン)。JRゆめ咲線「桜島駅」から徒歩約1分。3階の「RIVERSIDE SPA」は地下約1,000mから汲む天然温泉「大阪桜島温泉」で、安治川を望む露天風呂とサウナ、女湯の炭酸風呂・深湯を備える。スーペリアツイン(33平米)以上は洗い場付きバスルームでバス・トイレ別。",
+          "kashikiri": [],
+          "access": "JRゆめ咲線「桜島駅」から徒歩約1分(ユニバーサルシティ駅から1駅)。",
+          "official": "https://hotel-liber.jp/",
+          "highlights": [
+              "地下約1,000mから汲み上げる天然温泉「大阪桜島温泉」(単純温泉・弱アルカリ性)",
+              "安治川を望む露天風呂とドライサウナ・ミストサウナ",
+              "女湯には炭酸風呂と、立って浸かる最大水深1mの深湯「三深の湯」",
+              "スーペリアツイン(33平米)以上は洗い場付きバスルームでバス・トイレセパレート"
+          ],
+          "sources": [
+              "https://hotel-liber.jp/spa/spa/",
+              "https://travel.yahoo.co.jp/00002636/room/",
+              "https://onsen.nifty.com/oosakashinai-onsen/onsen016587/",
+              "https://travel.rakuten.co.jp/HOTEL/172378/172378_onsen.html",
+              "https://www.atpress.ne.jp/news/390237",
+              "https://yutai.jafnavi.jp/facility-detail/111127X01217"
+          ],
+          "uncertain": "スパの営業時間は情報源により差があり(11:00開始とする現行案内と14:00開始とする旧情報)、朝6:00〜9:00+11:00〜24:00を採用したが公式での最終確認を推奨。泉質別適応症は未確認のため記載しない。料金はスーペリアツイン素泊まりの最安例(2名15,000円=1名7,500円)からプラン次第で1名10,600円以上と幅があり、1名10,000円を目安とした。デラックスは推定。2024年4月1日に現名称へ変更。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スーペリアツイン",
+                  "capacity": "2〜4名",
+                  "size": "33平米",
+                  "price": 10000,
+                  "bath": {
+                      "type": "洗い場付きバスルーム(バス・トイレセパレート)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "予約サイトの客室情報に「全室洗い場付バスルーム」と明記のタイプ"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "デラックス",
+                  "capacity": "2〜3名",
+                  "size": "49平米",
+                  "price": 15000,
+                  "bath": {
+                      "type": "洗い場付きバスルーム(バス・トイレセパレート)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "49平米・66平米のタイプあり(料金は推定)"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "天然温泉の大浴場+露天+サウナ/スーペリア以上は洗い場付きバス・トイレ別",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/172378",
+          "rakutenHotelNo": 172378
+      },
+      {
+          "id": "art-osaka-baytower",
+          "name": "アートホテル大阪ベイタワー",
+          "kana": "あーとほてるおおさかべいたわー",
+          "area": "大阪・弁天町(ベイエリア)",
+          "pref": "大阪府",
+          "region": "関西",
+          "type": "business",
+          "onsen": "空庭温泉 OSAKA BAY TOWER(隣接・別料金)",
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "館内に大浴場はなく、同じ大阪ベイタワー内・徒歩2〜3分の関西最大級の温泉型テーマパーク「空庭温泉 OSAKA BAY TOWER」(別施設・別料金、11:00〜23:00・月1回程度の不定休)を利用するスタイル。空庭温泉は弱アルカリ性の天然温泉(単純温泉)で、露天風呂や炭酸泉など約9種の風呂とサウナ(約86℃・ロウリュあり)・水風呂(約16℃)を備える。宿泊者はフロントで優待券の配布があり、入館券付き宿泊プランも選べる(入湯税150円は現地払い)。",
+          "roomBathNote": "客室は全室23階以上。スタンダード系はユニットバスのため掲載対象外とし、公式にバス・トイレセパレートと明記されたデラックストリプル(38平米〜・23/24階)、スカイフロアデラックストリプル(46〜50階)、キッズルーム(34平米)のみを掲載する。宿泊レビューでも洗い場のある浴室と独立トイレが確認されている。",
+          "scene": "sea",
+          "pal": "indigo",
+          "tags": [],
+          "catch": "弁天町駅直結・地上200mのタワーホテル。関西最大級の温泉テーマパーク「空庭温泉」を優待利用でき、バス・トイレ別の客室も。",
+          "description": "51階建て・地上200mの大阪ベイタワー上層階を占める高層ホテルで、客室はすべて23階以上。館内に大浴場はないが、徒歩2〜3分の関西最大級の温泉型テーマパーク「空庭温泉」(別料金)で湯めぐりができ、宿泊者への優待券配布や入館券付きプランもある。掲載客室はバス・トイレセパレートが公式に明記されたデラックストリプル(38平米〜)とキッズルーム(34平米)に限定した。",
+          "kashikiri": [],
+          "access": "JR大阪環状線・Osaka Metro中央線「弁天町駅」直結(空庭温泉へ徒歩約2〜3分)。",
+          "official": "https://www.osaka-baytower.com/",
+          "highlights": [
+              "徒歩2〜3分の「空庭温泉」は露天風呂や炭酸泉など約9種の湯が揃う関西最大級の温泉型テーマパーク(別料金)",
+              "空庭温泉の湯は弱アルカリ性の天然温泉(単純温泉)で、サウナ(約86℃・ロウリュあり)と水風呂も",
+              "宿泊者はフロントで空庭温泉の優待券がもらえ、入館券付きプランも選べる",
+              "デラックストリプルとキッズルームは洗い場のある浴室と独立トイレのセパレート構成"
+          ],
+          "sources": [
+              "https://www.osaka-baytower.com/rooms/",
+              "https://iconia.co.jp/rooms-hotel-art-hotel-osaka-bay-tower-osaka",
+              "https://travel.rakuten.co.jp/HOTEL/164935/164935_onsen.html",
+              "https://onsen.nifty.com/oosakashinai-onsen/onsen016221/",
+              "https://fishand.tips/hotel/ART_HOTEL_Osaka_Bay_Tower/",
+              "https://osaka-info.jp/spot/art-hotel-osaka-baytower/"
+          ],
+          "uncertain": "スタンダード系客室はユニットバスのため、掲載はバス・トイレセパレートが確認できたタイプに限定した。デラックストリプルの料金は「トリプル3名利用・素泊まり」のプラン一覧(1名あたり約13,600〜27,000円、45日前早期予約で約9,600円〜/近畿日本ツーリスト系)に基づく参考値で、部屋名までの完全な一致は取れていない。キッズルームは信頼できる素泊まり価格を確認できず料金表には載せない。空庭温泉の優待券の割引額、温泉分析書・適応症は未確認。営業時間・休館日は変動する。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "デラックストリプル",
+                  "capacity": "2〜3名",
+                  "size": "38平米〜",
+                  "price": 13500,
+                  "bath": {
+                      "type": "内風呂・洗い場付き(バス・トイレセパレート)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "幅120cmベッド3台・23/24階。46〜50階確約の「スカイフロアデラックストリプル」もセパレート。料金は3名利用時の1名あたり参考値(早期予約で約9,600円〜の例も)"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "隣接「空庭温泉」(天然温泉・露天・サウナ)を優待利用/バス・トイレ別の客室タイプあり",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/164935",
+          "rakutenHotelNo": 164935
+      },
+      {
+          "id": "mgh-osaka-premier",
+          "name": "三井ガーデンホテル大阪プレミア",
+          "kana": "みついがーでんほてるおおさかぷれみあ",
+          "area": "大阪・中之島",
+          "pref": "大阪府",
+          "region": "関西",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "最上階16階のスパフロアに男女別大浴場。天然温泉ではなく人工炭酸泉で、女性浴場は坪庭に面したジャグジーバスとパウダールーム付き、男性浴場は庭園に面した造り(各収容約30名)。サウナはない。利用時間は15:00〜25:00/朝6:00〜9:00。",
+          "roomBathNote": "全271室がフローリング仕様で、洗面・浴室・トイレを分離した造り(公式明記)。ツイン系は洗い場付きのバスタブ、22平米のクイーン系は浴槽のないシャワーブース(浴室・洗面・トイレの分離は同じ)。ユニットバスの客室は確認されていない。",
+          "scene": "river",
+          "pal": "dawn",
+          "tags": [
+              "daiyokujo"
+          ],
+          "catch": "中之島の水辺に建つ全271室。最上階16階に人工炭酸泉の大浴場、客室は全室 洗面・浴室・トイレ分離。",
+          "description": "2014年開業、京阪「渡辺橋駅」徒歩3分・中之島の16階建てホテル。全271室がフローリング仕様で、洗面・浴室・トイレを分離した造り。ツイン系は洗い場付きバスタブ、22平米のクイーン系はシャワーブース。最上階16階には緑を望む男女別大浴場(人工炭酸泉・女性側はジャグジー付き)を備え、都会にいながら湯船中心の滞在ができる。",
+          "kashikiri": [],
+          "access": "京阪中之島線「渡辺橋駅」から徒歩約3分、Osaka Metro四つ橋線「肥後橋駅」2番出口から徒歩約5分。JR大阪駅から無料シャトルバスあり(約10分)。",
+          "official": "https://www.gardenhotels.co.jp/osaka-premier/",
+          "highlights": [
+              "最上階16階のスパフロアに男女別大浴場(人工炭酸泉・各収容約30名)",
+              "女性浴場は坪庭に面したジャグジーバスとパウダールーム付き",
+              "全室フローリングで洗面・浴室・トイレが分離、ツイン系は洗い場付きバスタブ",
+              "大浴場は15:00〜25:00・朝6:00〜9:00に利用できる(サウナなし)"
+          ],
+          "sources": [
+              "https://www.gardenhotels.co.jp/osaka-premier/room/",
+              "https://www.gardenhotels.co.jp/osaka-premier/bath/",
+              "https://www.yukoyuko.net/2756/bath",
+              "https://travel.yahoo.co.jp/00001974/room/",
+              "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/144957",
+              "https://hotel.his-j.com/hotel/info/1000003222"
+          ],
+          "uncertain": "公式サイトが調査環境のプロキシ制限で直接閲覧できず、内容は検索スニペット・予約サイト・宿泊記で照合確認した。予約サイトによっては幅140cmベッドの部屋を「スタンダードダブル(シャワーブース)/(バスタブ)」など別名称で表記しており、タイプ名はサイトにより異なる。料金はJTB系プラン下限(2名1室・1名7,735円)とトラベルコ最安12,048円を参考にした変動制の目安で、スーペリアツインは推定を含む。アクセシブルルーム等の例外タイプの浴室構成は未確認。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スーペリアツイン",
+                  "capacity": "1〜2名",
+                  "size": "26〜28平米",
+                  "price": 12000,
+                  "bath": {
+                      "type": "内風呂・洗い場付き(浴室・洗面・トイレ3点分離)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "宿泊記に洗い場付き・大きめ浴槽の記載"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "モデレートクイーン",
+                  "capacity": "1〜2名",
+                  "size": "22平米",
+                  "price": 8000,
+                  "bath": {
+                      "type": "シャワーブース(浴槽なし・浴室/洗面/トイレ分離)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "湯船は最上階の大浴場で"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "最上階の人工炭酸泉大浴場/全室 洗面・浴室・トイレ分離",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/144957",
+          "rakutenHotelNo": 144957
+      },
+      {
+          "id": "karaksa-shin-osaka",
+          "name": "からくさホテルグランデ新大阪タワー",
+          "kana": "からくさほてるぐらんでしんおおさかたわー",
+          "area": "大阪・新大阪",
+          "pref": "大阪府",
+          "region": "関西",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "4階に宿泊者専用の男女別大浴場(天然温泉ではない)。サウナ・水風呂・ととのい椅子を併設し、営業は15:00〜25:00/朝5:00〜10:00。客室のテレビ・タブレットから混雑状況を確認できる。",
+          "roomBathNote": "客室は浴室(バスタブまたはシャワーブース)・洗面・トイレを分けたセパレート設計(公式明記)で、ユニットバスではない。バスタブの有無はタイプにより異なり、スタンダードダブルはバスタブ付き(宿泊記では浴槽横に洗い場の記述)、スタンダードツインなどはシャワーブースのみ。",
+          "scene": "city",
+          "pal": "mist",
+          "tags": [
+              "daiyokujo",
+              "sauna"
+          ],
+          "catch": "新大阪駅徒歩約5分・24階建て396室。大浴場+サウナ完備、客室は浴室・洗面・トイレのセパレート設計。",
+          "description": "2019年11月開業、JR・Osaka Metro新大阪駅から徒歩約5分の24階建て・全396室のタワーホテル。4階に宿泊者専用の男女別大浴場とサウナ・水風呂を備え、客室は浴室・洗面・トイレを分けたセパレート設計。バスタブ付きのスタンダードダブルから、15階以上・35平米で最大4名のハイフロアプレミアツインまで、新幹線利用の前泊・後泊にも使いやすい。",
+          "kashikiri": [],
+          "access": "JR・Osaka Metro御堂筋線「新大阪駅」から徒歩約5分。",
+          "official": "https://karaksahotels.com/shin_osaka/",
+          "highlights": [
+              "4階に宿泊者専用の男女別大浴場——サウナ・水風呂・ととのい椅子付き",
+              "大浴場は15:00〜25:00/朝5:00〜10:00と、深夜・早朝も入れる",
+              "客室は浴室・洗面・トイレが同時に使えるセパレート設計(公式明記)",
+              "スタンダードダブルはバスタブ付き(宿泊記に浴槽横の洗い場の記述)"
+          ],
+          "sources": [
+              "https://karaksahotels.com/shin_osaka/room/room1/",
+              "https://karaksahotels.com/shin_osaka/room/room9/",
+              "https://karaksahotels.com/shin_osaka/facility/",
+              "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/176602",
+              "https://sauna-ikitai.com/saunas/7824",
+              "https://travel.yahoo.co.jp/00081834/"
+          ],
+          "uncertain": "「洗い場付き」の公式明文は未確認(公式表記は浴室・洗面・トイレのセパレートまで)。スタンダードダブルの洗い場は宿泊記の浴室描写(バスタブ横に洗い場)に基づき、ハイフロアプレミアツインの洗い場有無は未確認。料金はJTB系下限(1名4,250円)や直前割の例(2名7,069円=1名約3,535円)を踏まえた参考値で、日により大きく変動する。スタンダードツイン等シャワーブースのみのタイプは料金表に載せていない。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダードダブル",
+                  "capacity": "1〜2名",
+                  "size": "15平米",
+                  "price": 5000,
+                  "bath": {
+                      "type": "バスタブ付き浴室(浴室・洗面・トイレ セパレート)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "宿泊記にバスタブ横の洗い場の記述。幅140cmベッド"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "ハイフロアプレミアツイン",
+                  "capacity": "1〜4名",
+                  "size": "35平米",
+                  "price": 9000,
+                  "bath": {
+                      "type": "浴槽付きバスルーム・洗面・トイレ セパレート",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "15階以上のコーナールーム。洗い場の有無は未確認(料金は推定)"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "大浴場+サウナ/浴室・洗面・トイレのセパレート客室",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/176602",
+          "rakutenHotelNo": 176602
+      },
+      {
+          "id": "royal-classic-osaka",
+          "name": "ホテルロイヤルクラシック大阪",
+          "kana": "ほてるろいやるくらしっくおおさか",
+          "area": "大阪・なんば",
+          "pref": "大阪府",
+          "region": "関西",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": null,
+          "roomBathNote": "全客室に「洗い場付きのゆったりとしたバスルーム」を備えると公式に明記され、バスルームとトイレは別。口コミでも「浴槽と洗うスペースが広い」「バス・トイレが分かれて使いやすい」と確認でき、ユニットバスではない。大浴場はないぶん、客室のお風呂で完結できる造り。",
+          "scene": "city",
+          "pal": "dawn",
+          "tags": [],
+          "catch": "なんば駅直結・隈研吾デザインのミュージアムホテル。全客室が洗い場付きバスルーム+独立トイレ。",
+          "description": "旧新歌舞伎座の跡地に2019年12月開業した全150室のホテル。Osaka Metroなんば駅12番出口直結で、南海・近鉄・阪神の難波駅からも徒歩圏。建築家・隈研吾のデザインで、館内には100点を超える美術品を展示。スタンダードでも25.6〜31平米と広く、全客室に洗い場付きバスルームと独立トイレを備える。大浴場はない。",
+          "kashikiri": [],
+          "access": "Osaka Metro御堂筋線「なんば駅」12番出口直結。南海・近鉄・阪神「難波駅」から徒歩約1〜4分。",
+          "official": "https://hotel-royalclassic.jp/",
+          "highlights": [
+              "全客室に洗い場付きのゆったりとしたバスルーム(公式明記)・トイレは独立",
+              "スタンダードダブルでも25.6平米〜、ツインは30平米〜と浴室にゆとり",
+              "「ユニットバスが多い中、別々で落ち着く」と口コミでもお風呂が高評価",
+              "隈研吾デザインの館内に100点超のアート。湯上がりの美術館さんぽも"
+          ],
+          "sources": [
+              "https://hotel-royalclassic.jp/stay",
+              "https://hotel-royalclassic.jp/stay/standard",
+              "https://hotel-royalclassic.jp/floor-guide",
+              "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178414",
+              "https://digi-hotel.com/domestic/osaka/bathroom.html",
+              "https://www.tour.ne.jp/j_hotel/49591/"
+          ],
+          "uncertain": "大浴場なしは公式フロアガイドに温浴施設の記載がないことによる判断(明文の否定は未確認)。ビューバス付き客室への言及が一部にあるが、該当タイプを特定できず掲載を見送った。料金は素泊まり最安(2名1室32,810円=1名約16,405円/価格.com)に基づく参考値で、早期予約では1名約11,645円の例もある。時期・イベントにより大きく変動する。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダードダブル",
+                  "capacity": "1〜2名",
+                  "size": "25.6〜31平米",
+                  "price": 16000,
+                  "bath": {
+                      "type": "洗い場付きバスルーム・トイレ独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "全24室"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "スタンダードツイン",
+                  "capacity": "1〜2名",
+                  "size": "30〜31平米",
+                  "price": 16000,
+                  "bath": {
+                      "type": "洗い場付きバスルーム・トイレ独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "全81室"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "全室 洗い場付きバスルーム+独立トイレ(大浴場なし)",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178414",
+          "rakutenHotelNo": 178414
+      },
+      {
+          "id": "centara-grand-osaka",
+          "name": "センタラグランドホテル大阪",
+          "kana": "せんたらぐらんどほてるおおさか",
+          "area": "大阪・なんば",
+          "pref": "大阪府",
+          "region": "関西",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": null,
+          "roomBathNote": "客室は浴室(バスタブ+レインシャワー等)とトイレが独立した構成で、ユニットバスではない(取材レポと日英の宿泊者口コミで確認)。洗面まで含む「3点独立」の公式明文は確認できていないため、独立トイレ+バスタブ付き浴室として掲載する。",
+          "scene": "city",
+          "pal": "indigo",
+          "tags": [],
+          "catch": "タイ発センタラの日本1号ホテル。なんばパークス サウスの33階建てで、客室はバスタブ付き浴室+独立トイレ。",
+          "description": "2023年7月、なんばパークス サウスに開業した33階建て・全515室のホテル。南海なんば駅から徒歩約4分。客室は優(6〜9階)・麗(10〜25階)・雅クラブ(26〜31階)のフロア構成で27平米以上を確保し、浴室とトイレが独立。デラックス(約30平米)は深めのバスタブと天井レインシャワーを備える。大浴場はなく、タイ式トリートメントのスパを併設。",
+          "kashikiri": [],
+          "access": "南海「なんば駅」から徒歩約4分、Osaka Metro「なんば駅」から徒歩約8分(なんばパークス サウス内)。",
+          "official": "https://www.centarahotelsresorts.com/centaragrand/cgoj",
+          "highlights": [
+              "客室はバスタブ付き浴室と独立トイレのセパレート構成(日英の口コミで確認)",
+              "デラックス(約30平米)は深めのバスタブ+天井レインシャワーの2WAYシャワー",
+              "全室27平米以上。高層の雅クラブフロア(26〜31階)からは大阪の眺望",
+              "タイ式トリートメントの「スパ・センバリー」(10:00〜22:00)を併設(大浴場はなし)"
+          ],
+          "sources": [
+              "https://www.centarahotelsresorts.com/centaragrand/cgoj/accommodation",
+              "https://travel.yahoo.co.jp/00003032/room/",
+              "https://fishand.tips/hotel/Centara_Grand_Osaka/",
+              "https://stay-usj.com/centara-osaka",
+              "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/187118"
+          ],
+          "uncertain": "「バス・洗面・トイレの3点独立」とする取材レポがあるが公式サイトの明文では確認できず、本サイトでは浴室・トイレの独立までを確実情報として扱う。全27タイプ共通かも未確認で、掲載は確認できたスーペリア/デラックス系のみ。料金は素泊まり最安(2名1室36,053円=1名約18,026円/価格.com系)に基づく参考値で、デラックスは同水準からの推定。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スーペリア(キング/ツイン)",
+                  "capacity": "1〜2名",
+                  "size": "約27平米",
+                  "price": 18000,
+                  "bath": {
+                      "type": "バスタブ付き浴室・トイレ独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "口コミに「身体を洗うスペース+ゆったりバスタブ」。6〜9階の優フロアなど"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "デラックス(キング/ツイン)",
+                  "capacity": "1〜2名",
+                  "size": "約30平米",
+                  "price": 21000,
+                  "bath": {
+                      "type": "バスタブ+レインシャワーの浴室・トイレ独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "天井レインシャワー+ハンドシャワー。10〜25階の麗フロアなど(料金は推定)"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "バスタブ+レインシャワーの浴室と独立トイレ(大浴場なし)",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/187118",
+          "rakutenHotelNo": 187118
       }
   ];
 
@@ -2319,7 +2925,7 @@
 
   const TYPES = {
     onsen: { label: '温泉宿・旅館', short: '温泉宿' },
-    business: { label: 'ビジネスホテル', short: 'ビジネス' },
+    business: { label: 'ビジネス・シティホテル', short: 'ビジネス/シティ' },
   };
 
   /* ---------- 公開API ---------- */
