@@ -37,9 +37,9 @@
     return API_BASE + endpoint + '?' + q.toString();
   }
 
-  /* fetch(CORS)優先 → 失敗したら JSONP にフォールバック */
-  function request(endpoint, params) {
-    var url = buildUrl(endpoint, params);
+  /* fetch(CORS)優先 → 失敗したら JSONP にフォールバック。
+     レート制限(429)は1.6秒待って1回だけ再試行(新基盤は約1リクエスト/秒)。 */
+  function requestOnce(url) {
     return fetch(url).then(function (res) {
       return res.json().then(function (j) {
         if (j && typeof j === 'object') j.__transport = 'fetch';
@@ -50,6 +50,23 @@
         if (j && typeof j === 'object') j.__transport = 'jsonp';
         return j;
       });
+    });
+  }
+  function isRateLimited(data) {
+    return !!(data && (data.statusCode === 429 || (data.errors && data.errors.errorCode === 429)));
+  }
+  function isApiError(data) {
+    if (!data) return true;
+    if (data.error || data.errors) return true;
+    if (typeof data.statusCode === 'number' && data.statusCode >= 400) return true;
+    return false;
+  }
+  function request(endpoint, params) {
+    var url = buildUrl(endpoint, params);
+    return requestOnce(url).then(function (data) {
+      if (!isRateLimited(data)) return data;
+      return new Promise(function (resolve) { setTimeout(resolve, 1600); })
+        .then(function () { return requestOnce(url); });
     });
   }
 
@@ -86,7 +103,7 @@
       adultNum: '2',
       hits: '10',
     }).then(function (data) {
-      if (!data || data.error || data.errors) return null;
+      if (isApiError(data)) return null;
       var min = collectMinTotal(data, null);
       return min === null ? null : { total: min, checkin: fmtDate(checkin) };
     }).catch(function () { return null; });
@@ -97,5 +114,5 @@
     return request('SimpleHotelSearch/20170426', { hotelNo: String(hotelNo) });
   }
 
-  window.YUBUNE.rakuten = { minCharge: minCharge, hotelInfo: hotelInfo, API_BASE: API_BASE, _jsonp: jsonp, _buildUrl: buildUrl };
+  window.YUBUNE.rakuten = { minCharge: minCharge, hotelInfo: hotelInfo, isApiError: isApiError, API_BASE: API_BASE, _jsonp: jsonp, _buildUrl: buildUrl };
 })();
