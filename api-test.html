@@ -56,45 +56,52 @@
     render();
   }
 
-  // テスト1: 施設情報取得(強羅花扇 hotelNo=79294)
-  rk.hotelInfo(79294).then(function (data) {
-    var raw = JSON.stringify(data).slice(0, 300);
-    var hasErr = !data || data.error || data.errors;
-    var name = '';
-    if (!hasErr) {
-      try {
-        var h = data.hotels && data.hotels[0];
-        var basic = Array.isArray(h.hotel) ? h.hotel[0].hotelBasicInfo : (h.hotel && h.hotel[0]);
-        name = basic ? (basic.hotelName || '') : '';
-      } catch (e) { name = ''; }
-    }
-    var ok = !hasErr;
-    var errMsg = '';
-    if (hasErr) {
-      errMsg = data.errors ? (data.errors.errorCode + ': ' + (data.errors.errorMessage || '')) :
-        (data.error + ' / ' + (data.error_description || ''));
-    }
-    out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: ok ? 'pass' : 'fail', status: ok ? 'PASS' : 'FAIL',
-      detail: (ok ? '取得できた施設名: ' + esc(name || raw) : 'エラー: ' + esc(errMsg)) +
-        '\n(transport: ' + esc(data.__transport || '-') + ')\nraw: ' + esc(raw) });
-    render();
-  }).catch(function (e) {
-    out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: 'fail', status: 'FAIL',
-      detail: '通信エラー: ' + esc(e.message) + '(キー無効・Allowed websites 未許可・ネットワークのいずれか)' });
-    render();
-  });
+  // レート制限(約1リクエスト/秒)を避けるためテストは順次実行する
+  function test1() {
+    return rk.hotelInfo(79294).then(function (data) {
+      var raw = JSON.stringify(data).slice(0, 300);
+      var hasErr = rk.isApiError(data);
+      var name = '';
+      if (!hasErr) {
+        try {
+          var h = data.hotels && data.hotels[0];
+          var basic = Array.isArray(h.hotel) ? h.hotel[0].hotelBasicInfo : (h.hotel && h.hotel[0]);
+          name = basic ? (basic.hotelName || '') : '';
+        } catch (e) { name = ''; }
+      }
+      var errMsg = '';
+      if (hasErr) {
+        errMsg = data.errors ? (data.errors.errorCode + ': ' + (data.errors.errorMessage || '')) :
+          (typeof data.statusCode === 'number' ? data.statusCode + ': ' + (data.message || '') :
+            data.error + ' / ' + (data.error_description || ''));
+      }
+      out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: hasErr ? 'fail' : 'pass', status: hasErr ? 'FAIL' : 'PASS',
+        detail: (hasErr ? 'エラー: ' + esc(errMsg) : '取得できた施設名: ' + esc(name || raw)) +
+          '\n(transport: ' + esc(data.__transport || '-') + ')\nraw: ' + esc(raw) });
+      render();
+    }).catch(function (e) {
+      out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: 'fail', status: 'FAIL',
+        detail: '通信エラー: ' + esc(e.message) + '(キー無効・Allowed websites 未許可・ネットワークのいずれか)' });
+      render();
+    });
+  }
 
-  // テスト2: 空室最低価格(2週間後・1泊・2名)
-  rk.minCharge(79294).then(function (r) {
-    if (r) {
-      out.push({ name: 'テスト2: 空室最低価格(VacantHotelSearch)', cls: 'pass', status: 'PASS',
-        detail: r.checkin + ' 泊・2名1室の最低合計: ¥' + r.total.toLocaleString('ja-JP') });
-    } else {
-      out.push({ name: 'テスト2: 空室最低価格(VacantHotelSearch)', cls: 'fail', status: '取得なし',
-        detail: '空室なし or エラー(テスト1がPASSならAPIは有効。満室の可能性)' });
-    }
-    render();
-  });
+  function test2() {
+    return rk.minCharge(79294).then(function (r) {
+      if (r) {
+        out.push({ name: 'テスト2: 空室最低価格(VacantHotelSearch)', cls: 'pass', status: 'PASS',
+          detail: r.checkin + ' 泊・2名1室の最低合計: ¥' + r.total.toLocaleString('ja-JP') });
+      } else {
+        out.push({ name: 'テスト2: 空室最低価格(VacantHotelSearch)', cls: 'fail', status: '取得なし',
+          detail: '空室なし or エラー(テスト1がPASSならAPIは有効。満室の可能性)' });
+      }
+      render();
+    });
+  }
+
+  test1().then(function () {
+    return new Promise(function (resolve) { setTimeout(resolve, 1600); });
+  }).then(test2);
 })();
 </script>
 </body>
