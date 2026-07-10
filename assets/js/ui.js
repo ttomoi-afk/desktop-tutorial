@@ -19,20 +19,20 @@
       encodeURIComponent(url) + '&m=' + encodeURIComponent(url);
   }
 
-  /* 送客CTA(楽天トラベル+公式サイト)。small=trueで客室カード用の小型ボタン */
+  /* 送客CTA。アフィリエイト報酬が発生する楽天トラベルを主導線として強調し、
+     公式サイトは控えめなテキストリンクにする。small=trueで客室カード用の小型表示 */
   function bookingCtas(h, small) {
-    const smallStyle = ' style="height:40px;padding:0 16px;font-size:13.5px"';
     let html = '';
     if (h.rakutenUrl) {
-      html += '<a class="btn' + (small ? '' : ' btn-lg btn-block') + '"' + (small ? smallStyle : '') +
+      html += '<a class="btn btn-rakuten' + (small ? ' btn-cta-s' : ' btn-lg btn-block') + '"' +
         ' href="' + esc(affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored">' +
-        (small ? '楽天トラベル' : '楽天トラベルで空室・料金を見る') + '</a>';
+        (small ? '楽天トラベルで予約' : '楽天トラベルで予約する') + '</a>';
     }
     if (h.official) {
-      html += '<a class="btn btn-ghost' + (small ? '' : ' btn-block') + '"' +
-        (small ? smallStyle : ' style="margin-top:8px"') +
-        ' href="' + esc(h.official) + '" target="_blank" rel="noopener noreferrer">' +
-        (small ? '公式サイト' : '公式サイトで予約') + '</a>';
+      html += '<a class="official-link" href="' + esc(h.official) + '" target="_blank" rel="noopener noreferrer">公式サイトで確認</a>';
+    }
+    if (!small && h.rakutenUrl) {
+      html += '<p class="cta-note">PR:楽天トラベルへのリンクはアフィリエイトです(ご予約で当サイトに紹介料が入る場合があります)。</p>';
     }
     return html;
   }
@@ -181,6 +181,12 @@
       '      <p class="hcard-price"><small>' + priceLabel(h) + '</small><strong>' + yen(h.minPrice) + '</strong><small>〜</small></p>' +
       '    </div>' +
       '  </a>' +
+      '  <div class="hcard-cta">' +
+      (h.rakutenUrl
+        ? '<a class="btn btn-rakuten" href="' + esc(affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored">楽天トラベルで予約</a>' +
+          '<span class="pr-tag" title="楽天アフィリエイトのリンクです">PR</span>'
+        : '<a class="btn btn-ghost" href="detail.html?id=' + esc(h.id) + '">詳細を見る</a>') +
+      '  </div>' +
       '</article>';
   }
 

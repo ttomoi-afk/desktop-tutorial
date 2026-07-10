@@ -103,7 +103,8 @@
       kashikiriText ? ui.icon('clock') + ' ' + kashikiriText : '',
       ui.icon('pin') + ' ' + ui.esc(h.access.split('/')[0]),
     ].filter(Boolean).map(function (m) { return '<span>' + m + '</span>'; }).join('');
-    return '<a class="rcard" href="detail.html?id=' + ui.esc(h.id) + '">' +
+    return '<article class="rcard-shell">' +
+      '<a class="rcard" href="detail.html?id=' + ui.esc(h.id) + '">' +
       '  <div class="rcard-img" style="background-image:url(&quot;' + img + '&quot;)">' +
       '    <span class="hcard-area">' + ui.icon('pin') + ui.esc(h.area) + '・' + ui.esc(h.onsen || h.pref) + '</span>' +
       '  </div>' +
@@ -119,7 +120,15 @@
       '      <div class="rcard-price"><small>' + ui.priceLabel(h) + '</small><strong>' + ui.yen(h.minPrice) + '</strong><small>〜</small></div>' +
       '    </div>' +
       '  </div>' +
-      '</a>';
+      '</a>' +
+      '<div class="rcard-cta">' +
+      (h.rakutenUrl
+        ? '<span class="pr-tag" title="楽天アフィリエイトのリンクです">PR</span>' +
+          '<span class="rcard-cta-note">空室・最新料金は楽天トラベルで確認できます</span>' +
+          '<a class="btn btn-rakuten" href="' + ui.esc(ui.affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored">楽天トラベルで予約</a>'
+        : '<a class="btn btn-ghost" href="detail.html?id=' + ui.esc(h.id) + '">詳細を見る</a>') +
+      '</div>' +
+      '</article>';
   }
 
   /* ---------- 描画 ---------- */
