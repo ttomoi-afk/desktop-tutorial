@@ -2319,7 +2319,7 @@
 
   const TYPES = {
     onsen: { label: '温泉宿・旅館', short: '温泉宿' },
-    business: { label: 'ビジネスホテル', short: 'ビジネス' },
+    business: { label: 'ビジネス・シティホテル', short: 'ビジネス/シティ' },
   };
 
   /* ---------- 公開API ---------- */

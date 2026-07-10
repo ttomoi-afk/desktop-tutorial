@@ -91,7 +91,7 @@
         '  <nav class="gnav" aria-label="グローバルナビゲーション">' +
         '    <a href="search.html"' + (active === 'search' ? ' class="on"' : '') + '>宿をさがす</a>' +
         '    <a href="search.html?type=onsen">温泉宿</a>' +
-        '    <a href="search.html?type=business">ビジネスホテル</a>' +
+        '    <a href="search.html?type=business">ビジネス・シティホテル</a>' +
         '    <a href="index.html#policy">掲載基準</a>' +
         '  </nav>' +
         '  <span class="demo-chip" title="送客型のβ版です。掲載情報は公開情報を基にした参考値で、予約は楽天トラベル・公式サイトなど外部サイトで行います。">β版</span>' +
@@ -110,7 +110,7 @@
         '    <a href="search.html?tag=kashikiri_roten">貸切露天風呂の宿</a>' +
         '    <a href="search.html?tag=room_roten">客室露天風呂の宿</a>' +
         '    <a href="search.html?tag=gensen">源泉かけ流しの宿</a>' +
-        '    <a href="search.html?type=business">風呂・トイレ別のビジネスホテル</a>' +
+        '    <a href="search.html?type=business">風呂・トイレ別のビジネス・シティホテル</a>' +
         '    <a href="index.html#policy">掲載基準について</a>' +
         '  </div>' +
         '  <p class="foot-note">※ 本サイトは送客型のβ版です。掲載施設は実在しますが、当サイトは各施設と提携・関係はありません。掲載内容は公式サイト等の公開情報を基にした参考情報で、料金・設備・泉質等は変更される場合があります。最新情報・ご予約は楽天トラベルまたは各施設の公式サイトでご確認ください。楽天トラベルへのリンクには楽天アフィリエイトを利用しています(リンク経由のご予約で当サイトに紹介料が入る場合があります)。</p>' +
