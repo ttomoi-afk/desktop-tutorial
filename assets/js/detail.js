@@ -52,7 +52,7 @@
       '    <div class="room-foot">' +
       '      <div class="meta"><span>' + ui.icon('person') + ' ' + ui.esc(room.capacity) + '</span><span>' + ui.icon('size') + ' ' + ui.esc(room.size) + '</span></div>' +
       '      <div class="room-price"><small>' + ui.priceLabel(h, true) + '</small><strong>' + ui.yen(room.price) + '</strong></div>' +
-      '      <a class="btn" href="booking.html?hotel=' + ui.esc(h.id) + '&room=' + ui.esc(room.id) + '">この部屋を予約</a>' +
+      '      ' + ui.bookingCtas(h, true) +
       '    </div>' +
       '  </div>' +
       '</article>';
@@ -143,9 +143,9 @@
     (hotel.type === 'business' && hotel.tags.indexOf('daiyokujo') !== -1 ? '          <li>' + ui.icon('check') + '大浴場あり' + (hotel.tags.indexOf('sauna') !== -1 ? '(サウナ併設)' : '') + '</li>' : '') +
     '          <li>' + ui.icon('pin') + ui.esc(hotel.access) + '</li>' +
     '        </ul>' +
-    '        <a class="btn btn-lg btn-block" href="#h-rooms">客室を選んで予約する(デモ)</a>' +
-    (hotel.official ? '        <a class="btn btn-ghost btn-block" style="margin-top:8px" href="' + ui.esc(hotel.official) + '" target="_blank" rel="noopener noreferrer">公式サイトで最新情報を見る</a>' : '') +
-    '        <p class="side-note">※ 本サイトは非公式のデモです。掲載内容は公開情報を基にした参考値で、料金・設備は変動します。実際のご予約・最新情報は公式サイトでご確認ください。</p>' +
+    '        ' + ui.bookingCtas(hotel, false) +
+    '        <a class="btn-ghost btn btn-block" style="margin-top:8px;border-color:var(--line);color:var(--ink-soft)" href="#h-rooms">風呂・トイレ別の客室を見る</a>' +
+    '        <p class="side-note">※ ご予約は楽天トラベル・公式サイトなど外部サイトで行います(送客型β版)。掲載内容は公開情報を基にした参考値で、料金・設備は変動します。</p>' +
     '      </div>' +
     '    </aside>' +
     '  </div>' +

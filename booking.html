@@ -3,26 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ご予約 | 湯船トラベル(デモ)</title>
-<meta name="description" content="ご予約手続き(デモ)。実際の予約はできません。">
+<title>ご案内 | 湯船トラベル</title>
+<meta name="robots" content="noindex">
+<!-- Phase 1(送客型)への移行に伴い、サイト内予約デモは廃止しました。
+     ご予約は各宿詳細ページから楽天トラベル・公式サイトへ。 -->
+<meta http-equiv="refresh" content="3; url=index.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%A8%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<header id="site-header"></header>
-
-<main id="booking-root">
-  <!-- JSで描画 -->
+<main>
+  <div class="wrap">
+    <div class="done-box">
+      <h2>予約ページは外部サイトに移行しました</h2>
+      <p>湯船トラベルは送客型に切り替わりました。ご予約は各宿の詳細ページから、楽天トラベルまたは公式サイトでお願いします。</p>
+      <p style="margin-top:8px;color:var(--ink-faint)">3秒後にトップページへ移動します。</p>
+      <a class="btn" href="index.html">トップページへ</a>
+    </div>
+  </div>
 </main>
-
-<footer id="site-footer"></footer>
-
-<script src="assets/js/data.js"></script>
-<script src="assets/js/ui.js"></script>
-<script src="assets/js/booking.js"></script>
+<script>
+  // 旧URL(booking.html?hotel=xxx)からは該当の宿詳細へ誘導
+  (function () {
+    var hotel = new URLSearchParams(location.search).get('hotel');
+    if (hotel) location.replace('detail.html?id=' + encodeURIComponent(hotel));
+  })();
+</script>
 </body>
 </html>
