@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>楽天API 疎通テスト | 湯船トラベル</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%A8%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .test-box { max-width: 720px; margin: 40px auto; background: var(--card); border: 1px solid var(--line-soft); border-radius: 14px; padding: 24px; }
+  .test-item { border-left: 4px solid var(--line); padding: 10px 14px; margin: 12px 0; background: var(--paper); border-radius: 0 8px 8px 0; }
+  .test-item.pass { border-left-color: var(--teal); }
+  .test-item.fail { border-left-color: var(--accent); }
+  .test-item h3 { font-size: 14px; margin-bottom: 4px; }
+  .test-item pre { font-size: 11px; overflow-x: auto; color: var(--ink-soft); white-space: pre-wrap; word-break: break-all; }
+  .status { font-weight: 700; }
+  .pass .status { color: var(--teal); }
+  .fail .status { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <div class="wrap">
+    <div class="test-box">
+      <h1 style="font-family:var(--serif);font-size:22px">楽天トラベルAPI 疎通テスト</h1>
+      <p style="font-size:13px;color:var(--ink-soft);margin:6px 0 10px">
+        このページは <code>ttomoi-afk.github.io</code>(楽天側で許可済みのドメイン)上でAPIが使えるかを確認します。
+        ローカルや他ドメインで開くと失敗するのが正常です。
+      </p>
+      <div id="results"><div class="test-item"><h3>実行中…</h3></div></div>
+      <p style="font-size:12px;color:var(--ink-faint)">結果をスクリーンショットで共有してください。</p>
+    </div>
+  </div>
+</main>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/rakuten.js"></script>
+<script>
+(function () {
+  var out = [];
+  function render() {
+    document.getElementById('results').innerHTML = out.map(function (t) {
+      return '<div class="test-item ' + t.cls + '"><h3>' + t.name + ' — <span class="status">' + t.status + '</span></h3><pre>' + t.detail + '</pre></div>';
+    }).join('');
+  }
+  function esc(s) { return String(s).replace(/</g, '&lt;'); }
+
+  var rk = window.YUBUNE.rakuten;
+
+  // テスト1: 施設情報取得(強羅花扇 hotelNo=79294)
+  rk.hotelInfo(79294).then(function (data) {
+    var name = '';
+    try {
+      var h = data.hotels && data.hotels[0];
+      var basic = Array.isArray(h.hotel) ? h.hotel[0].hotelBasicInfo : (h.hotel && h.hotel[0]);
+      name = basic ? (basic.hotelName || JSON.stringify(basic).slice(0, 80)) : JSON.stringify(data).slice(0, 120);
+    } catch (e) { name = JSON.stringify(data).slice(0, 200); }
+    var ok = !data.error;
+    out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: ok ? 'pass' : 'fail', status: ok ? 'PASS' : 'FAIL',
+      detail: ok ? '取得できた施設名: ' + esc(name) : 'error: ' + esc(data.error) + ' / ' + esc(data.error_description || '') });
+    render();
+  }).catch(function (e) {
+    out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: 'fail', status: 'FAIL',
+      detail: '通信エラー: ' + esc(e.message) + '(アプリID無効・Allowed websites 未許可・ネットワークのいずれか)' });
+    render();
+  });
+
+  // テスト2: 空室最低価格(2週間後・1泊・2名)
+  rk.minCharge(79294).then(function (r) {
+    if (r) {
+      out.push({ name: 'テスト2: 空室最低価格(VacantHotelSearch)', cls: 'pass', status: 'PASS',
+        detail: r.checkin + ' 泊・2名1室の最低合計: ¥' + r.total.toLocaleString('ja-JP') });
+    } else {
+      out.push({ name: 'テスト2: 空室最低価格(VacantHotelSearch)', cls: 'fail', status: '取得なし',
+        detail: '空室なし or エラー(テスト1がPASSならAPIは有効。満室の可能性)' });
+    }
+    render();
+  });
+})();
+</script>
+</body>
+</html>

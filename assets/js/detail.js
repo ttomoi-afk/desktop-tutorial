@@ -135,6 +135,7 @@
     '    <aside>' +
     '      <div class="side-panel">' +
     '        <p class="price-line"><small>' + ui.priceLabel(hotel, true) + '</small><strong>' + ui.yen(hotel.minPrice) + '</strong><small>〜</small></p>' +
+    '        <p class="rk-price" id="rk-price"></p>' +
     '        <ul class="side-facts">' +
     '          <li>' + ui.icon('check') + '全客室が風呂・トイレ別(セパレート)</li>' +
     '          <li>' + ui.icon('check') + '全浴室に洗い場あり</li>' +
@@ -150,4 +151,15 @@
     '    </aside>' +
     '  </div>' +
     '</div>';
+
+  /* ---------- 楽天トラベルの空室最低価格(取れたときだけ表示) ---------- */
+  if (hotel.rakutenHotelNo && window.YUBUNE.rakuten) {
+    window.YUBUNE.rakuten.minCharge(hotel.rakutenHotelNo).then(function (r) {
+      var el = document.getElementById('rk-price');
+      if (!el || !r) return;
+      var d = r.checkin.split('-');
+      el.innerHTML = ui.icon('clock') + ' 楽天トラベルの空室最低価格(' +
+        Number(d[1]) + '/' + Number(d[2]) + '泊・2名1室 合計): <strong>' + ui.yen(r.total) + '</strong>';
+    });
+  }
 })();

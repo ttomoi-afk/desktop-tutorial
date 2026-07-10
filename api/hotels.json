@@ -112,7 +112,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/79294/79294.html"
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/79294/79294.html",
+   "rakutenHotelNo": 79294
   },
   {
    "id": "kusatsu-naraya",
@@ -228,7 +229,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/70807/70807.html",
+   "rakutenHotelNo": 70807
   },
   {
    "id": "yufuin-musouen",
@@ -341,7 +343,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/44815/44815.html",
+   "rakutenHotelNo": 44815
   },
   {
    "id": "kurokawa-ikoi",
@@ -419,7 +422,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/55943/55943.html",
+   "rakutenHotelNo": 55943
   },
   {
    "id": "kinosaki-nishimuraya",
@@ -514,7 +518,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/75399/75399.html",
+   "rakutenHotelNo": 75399
   },
   {
    "id": "ginzan-ginzanso",
@@ -599,7 +604,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/111234/111234.html",
+   "rakutenHotelNo": 111234
   },
   {
    "id": "noboribetsu-bourou",
@@ -677,7 +683,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/51198/51198.html",
+   "rakutenHotelNo": 51198
   },
   {
    "id": "nyuto-tsurunoyu-bekkan",
@@ -762,7 +769,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/147944/147944.html",
+   "rakutenHotelNo": 147944
   },
   {
    "id": "gero-suimeikan",
@@ -878,7 +886,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/8886/8886.html",
+   "rakutenHotelNo": 8886
   },
   {
    "id": "wakura-notoraku",
@@ -960,7 +969,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/39556/39556.html",
+   "rakutenHotelNo": 39556
   },
   {
    "id": "dogo-funaya",
@@ -1043,7 +1053,8 @@
      "features": []
     }
    ],
-   "rakutenUrl": null
+   "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/11332/11332.html",
+   "rakutenHotelNo": 11332
   },
   {
    "id": "yuen-shinjuku",
@@ -1146,7 +1157,8 @@
     }
    ],
    "bathLine": "箱根からの運び湯・最上階露天/シャワーブース+独立トイレ",
-   "rakutenUrl": null
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/172443",
+   "rakutenHotelNo": 172443
   },
   {
    "id": "dormyinn-kanda",
@@ -1238,7 +1250,8 @@
     }
    ],
    "bathLine": "超軟水の大浴場+露天+高温サウナ/シャワーブース+独立トイレ",
-   "rakutenUrl": null
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/161040",
+   "rakutenHotelNo": 161040
   },
   {
    "id": "dormyinn-sapporo",
@@ -1314,7 +1327,8 @@
     }
    ],
    "bathLine": "檜の半露天・炭酸風呂・高温サウナ/セパレート客室",
-   "rakutenUrl": null
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/14019",
+   "rakutenHotelNo": 14019
   },
   {
    "id": "dormyinn-nagoya-sakae",
@@ -1391,7 +1405,8 @@
     }
    ],
    "bathLine": "運び湯の天然温泉大浴場+サウナ/セパレート客室",
-   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/147710"
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/147710",
+   "rakutenHotelNo": 147710
   },
   {
    "id": "mgh-nihonbashi-premier",
@@ -1481,7 +1496,8 @@
     }
    ],
    "bathLine": "檜の大浴場+全室バス・トイレ・洗面3点分離",
-   "rakutenUrl": null
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/166107",
+   "rakutenHotelNo": 166107
   },
   {
    "id": "millennium-mgh-tokyo",
@@ -1554,7 +1570,8 @@
     }
    ],
    "bathLine": "大浴場なし/ほぼ全室 洗い場付きバス・水回り3点独立",
-   "rakutenUrl": null
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/147093",
+   "rakutenHotelNo": 147093
   },
   {
    "id": "mgh-jingugaien-premier",
@@ -1629,7 +1646,8 @@
     }
    ],
    "bathLine": "大浴場+水回り3点独立・全室バルコニー付き",
-   "rakutenUrl": null
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/173094",
+   "rakutenHotelNo": 173094
   },
   {
    "id": "yaenomidori-tokyo",
@@ -1717,7 +1735,8 @@
     }
    ],
    "bathLine": "全室 バス・トイレ・洗面3点独立+洗い場付きバス",
-   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178005"
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178005",
+   "rakutenHotelNo": 178005
   },
   {
    "id": "musse-ginza-meitetsu",
@@ -1803,7 +1822,8 @@
     }
    ],
    "bathLine": "全室 洗い場付きバス+独立トイレ(ユニバーサル除く)",
-   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/165557"
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/165557",
+   "rakutenHotelNo": 165557
   },
   {
    "id": "richmond-premier-asakusa",
@@ -1890,7 +1910,8 @@
     }
    ],
    "bathLine": "ビュー・コーナー系客室はバス・トイレ・洗面が3点独立(大浴場なし)",
-   "rakutenUrl": null
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/149160",
+   "rakutenHotelNo": 149160
   },
   {
    "id": "asakusa-tobu-hotel",
@@ -1978,7 +1999,8 @@
     }
    ],
    "bathLine": "ほぼ全室が洗い場付きバス・トイレ・洗面の3点独立(大浴場なし)",
-   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/179075"
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/179075",
+   "rakutenHotelNo": 179075
   }
  ]
 }
