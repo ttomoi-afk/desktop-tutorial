@@ -7,6 +7,37 @@
 
   const D = function () { return window.YUBUNE.data; };
 
+  /* =========================================================
+     送客(Phase 1)設定
+     楽天アフィリエイトIDを取得したら下の定数に設定するだけで
+     楽天トラベルへのリンクが計測付きリンクに切り替わる。
+     ========================================================= */
+  const RAKUTEN_AFFILIATE_ID = ''; // 例: '1a2b3c4d.5e6f7g8h.xxxxxxx'
+
+  function affiliateUrl(url) {
+    if (!RAKUTEN_AFFILIATE_ID) return url;
+    return 'https://hb.afl.rakuten.co.jp/hgc/' + RAKUTEN_AFFILIATE_ID + '/?pc=' +
+      encodeURIComponent(url) + '&m=' + encodeURIComponent(url);
+  }
+
+  /* 送客CTA(楽天トラベル+公式サイト)。small=trueで客室カード用の小型ボタン */
+  function bookingCtas(h, small) {
+    const smallStyle = ' style="height:40px;padding:0 16px;font-size:13.5px"';
+    let html = '';
+    if (h.rakutenUrl) {
+      html += '<a class="btn' + (small ? '' : ' btn-lg btn-block') + '"' + (small ? smallStyle : '') +
+        ' href="' + esc(affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored">' +
+        (small ? '楽天トラベル' : '楽天トラベルで空室・料金を見る') + '</a>';
+    }
+    if (h.official) {
+      html += '<a class="btn btn-ghost' + (small ? '' : ' btn-block') + '"' +
+        (small ? smallStyle : ' style="margin-top:8px"') +
+        ' href="' + esc(h.official) + '" target="_blank" rel="noopener noreferrer">' +
+        (small ? '公式サイト' : '公式サイトで予約') + '</a>';
+    }
+    return html;
+  }
+
   /* ---------- ヘルパー ---------- */
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -64,7 +95,7 @@
         '    <a href="search.html?type=business">ビジネスホテル</a>' +
         '    <a href="index.html#policy">掲載基準</a>' +
         '  </nav>' +
-        '  <span class="demo-chip" title="このサイトはデモです。実際の予約はできません。">DEMO</span>' +
+        '  <span class="demo-chip" title="送客型のβ版です。掲載情報は公開情報を基にした参考値で、予約は楽天トラベル・公式サイトなど外部サイトで行います。">β版</span>' +
         '</div>';
     }
     const footer = document.getElementById('site-footer');
@@ -73,7 +104,7 @@
         '<div class="wrap foot-in">' +
         '  <div class="foot-brand">' +
         '    <span class="brand-mark">' + LOGO_SVG + '</span>' +
-        '    <div><strong>湯船トラベル</strong><p>風呂・トイレ別の客室と、貸切露天風呂・大浴場の宿を集めた温泉・お風呂特化の予約サイト(デモ)。</p></div>' +
+        '    <div><strong>湯船トラベル</strong><p>風呂・トイレ別の客室と、貸切露天風呂・大浴場の宿を集めた温泉・お風呂特化の宿検索サイト(β)。</p></div>' +
         '  </div>' +
         '  <div class="foot-links">' +
         '    <a href="search.html">宿をさがす</a>' +
@@ -83,7 +114,7 @@
         '    <a href="search.html?type=business">風呂・トイレ別のビジネスホテル</a>' +
         '    <a href="index.html#policy">掲載基準について</a>' +
         '  </div>' +
-        '  <p class="foot-note">※ 本サイトは非公式のポートフォリオ用デモです。掲載施設は実在しますが、当サイトは各施設と提携・関係はありません。掲載内容は公式サイト等の公開情報を基にした参考情報で、料金・設備・泉質等は変更される場合があります。最新情報は必ず各施設の公式サイトでご確認ください。当サイトでの予約・決済はできません。</p>' +
+        '  <p class="foot-note">※ 本サイトは送客型のβ版です。掲載施設は実在しますが、当サイトは各施設と提携・関係はありません。掲載内容は公式サイト等の公開情報を基にした参考情報で、料金・設備・泉質等は変更される場合があります。最新情報・ご予約は楽天トラベルまたは各施設の公式サイトでご確認ください。外部予約サイトへの送客にはアフィリエイトプログラムを利用する場合があります。</p>' +
         '</div>';
     }
   }
@@ -159,6 +190,7 @@
     esc: esc, yen: yen, qs: qs, qsAll: qsAll,
     icon: icon, badge: badge, tagBadges: tagBadges, stars: stars,
     typeChip: typeChip, priceLabel: priceLabel,
+    affiliateUrl: affiliateUrl, bookingCtas: bookingCtas,
     hotelCard: hotelCard, renderChrome: renderChrome,
   };
 })();
