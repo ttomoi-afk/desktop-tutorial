@@ -240,12 +240,13 @@ input, select { font-family: inherit; font-size: 14px; }
    ========================================================= */
 .hcard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .hcard {
+  display: flex; flex-direction: column;
   background: var(--card); border-radius: var(--radius); overflow: hidden;
   border: 1px solid var(--line-soft); box-shadow: var(--shadow-s);
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .hcard:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-.hcard-link { display: block; color: inherit; }
+.hcard-link { display: block; color: inherit; flex: 1; }
 .hcard-link:hover { color: inherit; }
 .hcard-img {
   position: relative; aspect-ratio: 16 / 10;
@@ -662,6 +663,44 @@ input, select { font-family: inherit; font-size: 14px; }
   .kcard { grid-template-columns: auto 1fr; }
   .kcard .fee { grid-column: 2; text-align: left; }
   .kcard .fee strong { display: inline; margin-right: 8px; }
+}
+
+/* ---------- 送客CTA(楽天トラベルを主導線として強調) ---------- */
+.btn-rakuten { background: #bf0000; }
+.btn-rakuten:hover { background: #9c0000; }
+.btn-cta-s { height: 40px; padding: 0 16px; font-size: 13.5px; }
+.pr-tag {
+  flex: none; font-size: 10px; font-weight: 700; color: var(--ink-faint);
+  border: 1px solid var(--line); border-radius: 4px; padding: 1.5px 5px; letter-spacing: .08em;
+}
+.official-link {
+  display: block; text-align: center; margin-top: 10px;
+  font-size: 13px; color: var(--ink-soft);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.official-link:hover { color: var(--indigo-deep); }
+.room-foot .official-link { display: inline-flex; margin-top: 0; font-size: 12.5px; align-self: center; }
+.cta-note { font-size: 10.5px; color: var(--ink-faint); margin-top: 8px; line-height: 1.7; }
+
+/* 縦型カード(トップ等)のCTA行 */
+.hcard-cta { display: flex; align-items: center; gap: 8px; padding: 0 16px 14px; }
+.hcard-cta .btn { flex: 1; height: 42px; font-size: 13.5px; padding: 0 12px; }
+
+/* 横型カード(検索結果)のCTAバー */
+.rcard-shell { margin-bottom: 16px; }
+.rcard-shell .rcard { margin-bottom: 0; border-radius: var(--radius) var(--radius) 0 0; border-bottom: none; }
+.rcard-shell .rcard:hover { transform: none; }
+.rcard-cta {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px 10px 20px;
+  background: var(--card); border: 1px solid var(--line-soft); border-top: 1px dashed var(--line);
+  border-radius: 0 0 var(--radius) var(--radius); box-shadow: var(--shadow-s);
+}
+.rcard-cta-note { font-size: 12px; color: var(--ink-soft); }
+.rcard-cta .btn { margin-left: auto; height: 42px; font-size: 14px; padding: 0 22px; flex: none; }
+@media (max-width: 640px) {
+  .rcard-cta { flex-wrap: wrap; padding: 10px 14px; }
+  .rcard-cta-note { display: none; }
+  .rcard-cta .btn { flex: 1; margin-left: 0; }
 }
 
 /* アクセシビリティ: フォーカス可視 */
