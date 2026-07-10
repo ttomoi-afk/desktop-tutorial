@@ -49,22 +49,38 @@
   var rk = window.YUBUNE.rakuten;
   document.getElementById('ep').textContent = rk.API_BASE;
 
+  var cfg = window.YUBUNE.config || {};
+  if (!cfg.RAKUTEN_ACCESS_KEY) {
+    out.push({ name: '設定チェック', cls: 'fail', status: '未設定',
+      detail: 'RAKUTEN_ACCESS_KEY(pk_ で始まるアクセスキー)が未設定です。楽天ウェブサービスのアプリ詳細画面から取得して config.js に設定してください。' });
+    render();
+  }
+
   // テスト1: 施設情報取得(強羅花扇 hotelNo=79294)
   rk.hotelInfo(79294).then(function (data) {
+    var raw = JSON.stringify(data).slice(0, 300);
+    var hasErr = !data || data.error || data.errors;
     var name = '';
-    try {
-      var h = data.hotels && data.hotels[0];
-      var basic = Array.isArray(h.hotel) ? h.hotel[0].hotelBasicInfo : (h.hotel && h.hotel[0]);
-      name = basic ? (basic.hotelName || JSON.stringify(basic).slice(0, 80)) : JSON.stringify(data).slice(0, 120);
-    } catch (e) { name = JSON.stringify(data).slice(0, 200); }
-    var ok = !data.error;
+    if (!hasErr) {
+      try {
+        var h = data.hotels && data.hotels[0];
+        var basic = Array.isArray(h.hotel) ? h.hotel[0].hotelBasicInfo : (h.hotel && h.hotel[0]);
+        name = basic ? (basic.hotelName || '') : '';
+      } catch (e) { name = ''; }
+    }
+    var ok = !hasErr;
+    var errMsg = '';
+    if (hasErr) {
+      errMsg = data.errors ? (data.errors.errorCode + ': ' + (data.errors.errorMessage || '')) :
+        (data.error + ' / ' + (data.error_description || ''));
+    }
     out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: ok ? 'pass' : 'fail', status: ok ? 'PASS' : 'FAIL',
-      detail: (ok ? '取得できた施設名: ' + esc(name) : 'error: ' + esc(data.error) + ' / ' + esc(data.error_description || '')) +
-        '(transport: ' + esc(data.__transport || '-') + ')' });
+      detail: (ok ? '取得できた施設名: ' + esc(name || raw) : 'エラー: ' + esc(errMsg)) +
+        '\n(transport: ' + esc(data.__transport || '-') + ')\nraw: ' + esc(raw) });
     render();
   }).catch(function (e) {
     out.push({ name: 'テスト1: 施設情報取得(SimpleHotelSearch)', cls: 'fail', status: 'FAIL',
-      detail: '通信エラー: ' + esc(e.message) + '(アプリID無効・Allowed websites 未許可・ネットワークのいずれか)' });
+      detail: '通信エラー: ' + esc(e.message) + '(キー無効・Allowed websites 未許可・ネットワークのいずれか)' });
     render();
   });
 

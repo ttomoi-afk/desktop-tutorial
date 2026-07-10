@@ -8,15 +8,14 @@
   const D = function () { return window.YUBUNE.data; };
 
   /* =========================================================
-     送客(Phase 1)設定
-     楽天アフィリエイトIDを取得したら下の定数に設定するだけで
-     楽天トラベルへのリンクが計測付きリンクに切り替わる。
+     送客(Phase 1)
+     楽天アフィリエイトID等の設定は assets/js/config.js に集約。
+     IDが設定されていれば計測付きリンクに切り替わる。
      ========================================================= */
-  const RAKUTEN_AFFILIATE_ID = '55a5744e.ac0d6e79.55a5744f.28b59c5c';
-
   function affiliateUrl(url) {
-    if (!RAKUTEN_AFFILIATE_ID) return url;
-    return 'https://hb.afl.rakuten.co.jp/hgc/' + RAKUTEN_AFFILIATE_ID + '/?pc=' +
+    const id = (window.YUBUNE.config || {}).RAKUTEN_AFFILIATE_ID;
+    if (!id) return url;
+    return 'https://hb.afl.rakuten.co.jp/hgc/' + id + '/?pc=' +
       encodeURIComponent(url) + '&m=' + encodeURIComponent(url);
   }
 
