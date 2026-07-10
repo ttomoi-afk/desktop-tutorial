@@ -29,8 +29,11 @@
   }
 
   function buildUrl(endpoint, params) {
-    var appId = (window.YUBUNE.config || {}).RAKUTEN_APP_ID;
-    var q = new URLSearchParams(Object.assign({ applicationId: appId, format: 'json' }, params));
+    var cfg = window.YUBUNE.config || {};
+    var base = { applicationId: cfg.RAKUTEN_APP_ID, format: 'json' };
+    if (cfg.RAKUTEN_ACCESS_KEY) base.accessKey = cfg.RAKUTEN_ACCESS_KEY;
+    if (cfg.RAKUTEN_AFFILIATE_ID) base.affiliateId = cfg.RAKUTEN_AFFILIATE_ID;
+    var q = new URLSearchParams(Object.assign(base, params));
     return API_BASE + endpoint + '?' + q.toString();
   }
 
@@ -83,7 +86,7 @@
       adultNum: '2',
       hits: '10',
     }).then(function (data) {
-      if (!data || data.error) return null;
+      if (!data || data.error || data.errors) return null;
       var min = collectMinTotal(data, null);
       return min === null ? null : { total: min, checkin: fmtDate(checkin) };
     }).catch(function () { return null; });
