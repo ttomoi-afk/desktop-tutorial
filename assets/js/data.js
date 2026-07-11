@@ -304,7 +304,7 @@
 
   const SPRING_TYPES = ['単純温泉', '塩化物泉', '炭酸水素塩泉', '硫酸塩泉', '硫黄泉', '酸性泉', '含鉄泉', '放射能泉'];
 
-  const REGIONS = ['北海道・東北', '関東', '中部・北陸', '関西', '中国・四国', '九州'];
+  const REGIONS = ['北海道・東北', '関東', '中部・北陸', '関西', '中国・四国', '九州', '沖縄'];
 
   /* =========================================================
      宿データ(実在施設・公開情報を基にした参考値)
@@ -4751,6 +4751,754 @@
           "bathLine": "源泉かけ流し天然温泉『濱泉』(露天・フィンランドサウナ・家族風呂)/スパフロア和室は専有温泉露天+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1524",
           "rakutenHotelNo": 1524
+      },
+      {
+          "id": "senagajima-hotel",
+          "name": "琉球温泉 瀬長島ホテル",
+          "kana": "りゅうきゅうおんせん せながじまほてる",
+          "area": "沖縄・瀬長島(豊見城市)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": "琉球温泉 龍神の湯",
+          "spring": "塩化物泉",
+          "springDetail": "ナトリウム-塩化物強塩泉",
+          "efficacy": [
+              "神経痛",
+              "筋肉痛",
+              "関節痛",
+              "五十肩",
+              "慢性消化器病",
+              "冷え性",
+              "疲労回復",
+              "健康増進"
+          ],
+          "gensenNote": "地下約1000mから湧く天然温泉「龍神の湯」。展望大露天風呂に壺湯・岩湯・寝湯・立ち湯を備え、西海岸・那覇空港第2滑走路・慶良間に沈む夕日を望む。サウナあり(ロウリュイベント実施)。営業6:00〜24:00(最終受付23:00)、年中無休。毎分約500L・約50℃と公式・るるぶ等に記載。宿泊者は無料で利用可(日帰りは大人2,000円)。",
+          "roomBathNote": "客室は独立型トイレ+バスルームのバス・トイレ別が基本(公式・じゃらん等)。温泉露天風呂付和洋室は専用露天が源泉かけ流しで室内シャワーも独立。ただし按司ダブル(20㎡)はユニットバスと明記されるため掲載対象外。",
+          "scene": "sea",
+          "pal": "sea",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "view_bath",
+              "gensen",
+              "room_roten"
+          ],
+          "catch": "那覇空港15分。地下1000mの天然温泉「龍神の湯」を望む大露天と、バス・トイレ別客室(源泉かけ流し露天付も)。",
+          "description": "瀬長島の高台に建つ温泉リゾート。展望大露天風呂「龍神の湯」はナトリウム-塩化物強塩泉の天然温泉で、壺湯・寝湯・立ち湯や慶良間に沈む夕日、那覇空港の滑走路を望む。サウナ・ロウリュも実施。客室は独立トイレのバス・トイレ別が中心で、源泉かけ流し露天風呂付の和洋室もある。",
+          "kashikiri": [],
+          "access": "那覇空港から車で約15分。豊見城市瀬長島。無料送迎シャトルあり。",
+          "official": "https://www.resorts.co.jp/senaga",
+          "highlights": [
+              "天然温泉「龍神の湯」は地下約1000mから湧くナトリウム-塩化物強塩泉。毎分約500L・約50℃(公式・るるぶ)",
+              "西海岸・那覇空港第2滑走路・慶良間に沈む夕日を望む大露天風呂。壺湯・岩湯・寝湯・立ち湯を備える",
+              "サウナあり(ロウリュイベント実施)。営業6:00〜24:00(最終受付23:00)・年中無休",
+              "客室は独立トイレのバス・トイレ別が基本。温泉露天風呂付和洋室は専用露天が源泉かけ流し(按司ダブルはユニットバスのため対象外)"
+          ],
+          "sources": [
+              "https://www.resorts.co.jp/senaga",
+              "https://www.resorts.co.jp/senaga/ryujinhotspring",
+              "https://www.resorts.co.jp/senaga/guestroom",
+              "https://travel.rakuten.co.jp/HOTEL/139989/139989_onsen.html",
+              "https://onsen.nifty.com/naha-onsen/onsen011116/",
+              "https://rurubu.jp/andmore/spot/70002576"
+          ],
+          "uncertain": "客室ごとの洗い場の有無は公式に明記が乏しく未確認(wash=null)。料金は価格比較サイト等の2名1室素泊まりを1名換算した参考値で、季節・プランで大きく変動(按司ツインは2名31,030円=1名約15,520円、温泉露天付和洋室は2名39,670円=1名約19,840円の実測スニペットあり)。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "按司DXツイン/エアポートビュー",
+                  "capacity": "2名",
+                  "size": "36平米",
+                  "price": 16000,
+                  "bath": {
+                      "type": "バスタブ+独立トイレ(バス・トイレ別)",
+                      "wash": null,
+                      "view": "エアポートビュー",
+                      "onsenBath": false,
+                      "note": "最上階クラブフロア。トイレは独立型"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "按司ツイン/エアポートビュー",
+                  "capacity": "2名",
+                  "size": "28平米",
+                  "price": 15520,
+                  "bath": {
+                      "type": "ビューバス+独立トイレ(バス・トイレ別)",
+                      "wash": null,
+                      "view": "エアポートビュー",
+                      "onsenBath": false,
+                      "note": "バルコニー・テラス付。眺望の良いビューバス"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r3",
+                  "name": "温泉露天風呂付和洋室(オーシャン/エアポートビュー)",
+                  "capacity": "2〜4名",
+                  "size": "38平米",
+                  "price": 19840,
+                  "bath": {
+                      "type": "源泉かけ流し温泉露天風呂+室内シャワー+独立トイレ",
+                      "wash": true,
+                      "view": "オーシャン/エアポートビュー",
+                      "onsenBath": true,
+                      "note": "専用露天は源泉かけ流し。室内シャワーとトイレは独立"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "天然温泉「龍神の湯」の展望大露天風呂/客室はバス・トイレ別(源泉かけ流し露天付タイプも)",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/139989",
+          "rakutenHotelNo": 139989
+      },
+      {
+          "id": "loisir-hotel-naha",
+          "name": "ロワジールホテル 那覇",
+          "kana": "ろわじーるほてる なは",
+          "area": "沖縄・那覇(西)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": "三重城温泉 島人の湯",
+          "spring": "塩化物泉",
+          "springDetail": "含よう素-ナトリウム-塩化物泉(化石海水)",
+          "efficacy": [],
+          "gensenNote": "本館2階『三重城温泉 島人の湯』は那覇市内で唯一の源泉掛け流し天然温泉(2021年リニューアル)。約800万年前の化石海水が地熱で温まったもので高い保温効果。大浴場・露天風呂・水風呂・うたせ湯・全身シャワー・サウナを備える。営業時間は未確認。",
+          "roomBathNote": "本館のエグゼクティブ等上位客室は『洗い場付の独立型バスルーム』+独立トイレでバス・トイレ別(公式・各予約サイト)。一方、本館スーペリアツインおよび別館(イースト館)スタンダードツインはユニットバスと確認されるため、上位タイプのみ掲載対象。",
+          "scene": "sea",
+          "pal": "indigo",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "gensen"
+          ],
+          "catch": "那覇の街なかで源泉掛け流し。化石海水の天然温泉「島人の湯」と、洗い場付き独立バスの上位客室。",
+          "description": "那覇・三重城の海沿いに建つ大型ホテル。本館2階の天然温泉「三重城温泉 島人の湯」は約800万年前の化石海水を源泉とする含よう素-ナトリウム-塩化物泉で、那覇市内唯一の源泉掛け流し。大浴場・露天・サウナを完備。本館のエグゼクティブ等上位客室は洗い場付き独立バスルーム+独立トイレ。",
+          "kashikiri": [],
+          "access": "那覇空港から車で約15分。ゆいレール旭橋駅から徒歩圏。那覇市西。",
+          "official": "https://www.loisir-naha.com/",
+          "highlights": [
+              "本館2階『三重城温泉 島人の湯』は那覇市内唯一の源泉掛け流し天然温泉(2021年リニューアル)",
+              "泉質は含よう素-ナトリウム-塩化物泉。約800万年前の化石海水が地熱で温まったもので高い保温効果",
+              "大浴場・露天風呂・水風呂・うたせ湯・全身シャワー・サウナを備える",
+              "本館エグゼクティブ等上位客室は洗い場付き独立バスルーム+独立トイレ(本館スーペリア/別館スタンダードはユニットバス)"
+          ],
+          "sources": [
+              "https://www.loisir-naha.com/",
+              "https://www.loisir-naha.com/shimanchu/",
+              "https://www.loisir-naha.com/mainbuilding/rooms/",
+              "https://www.okinawastory.jp/spot/10017102",
+              "https://travel.rakuten.co.jp/HOTEL/16443/gallery.html"
+          ],
+          "uncertain": "エグゼクティブツインの正確な広さは未確認(約31平米と推定)。デラックスツイン(34㎡)・和室(約32㎡)の洗い場付き独立バス該否は上位グレードとして推定だが未確定のため非掲載。島人の湯の営業時間・入浴料、公式の適応症一覧は未取得。料金はエグゼクティブ帯の参考値(推定)で、スーペリア/別館の安価帯(1名6,000〜9,000円台)はユニットバスのため非対象。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "エグゼクティブキング(本館)",
+                  "capacity": "1〜3名",
+                  "size": "32平米",
+                  "price": 13000,
+                  "bath": {
+                      "type": "洗い場付き独立型バスルーム+独立トイレ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "キング幅240cm。ReFa等アメニティ"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "エグゼクティブツイン(本館)",
+                  "capacity": "2〜3名",
+                  "size": "約31平米(要確認)",
+                  "price": 13000,
+                  "bath": {
+                      "type": "洗い場付き独立型バスルーム+独立トイレ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "バルコニー付。広さは要確認"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "那覇市内唯一の源泉掛け流し天然温泉「島人の湯」/上位客室はバス・トイレ別(洗い場付)",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/16443",
+          "rakutenHotelNo": 16443
+      },
+      {
+          "id": "oriental-hotel-okinawa",
+          "name": "オリエンタルホテル 沖縄リゾート&スパ",
+          "kana": "おりえんたるほてる おきなわりぞーとあんどすぱ",
+          "area": "沖縄・名護(喜瀬)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "コーラルスパの大浴場は5種の浴槽+水風呂+ドライサウナ+外気浴で、奥に露天スペース(露天ジャグジー)。高台立地で東シナ海のサンセットを望む。※天然温泉ではなく人工の温浴施設(口コミでも『温泉ではない』)。宿泊者は1,500円で当日15:00〜翌11:00に使い放題。",
+          "roomBathNote": "2024年春に全288室を改装。公式スーペリア紹介で『トイレとバスルームが独立』、宿泊記でファミリールームはバスタブと洗い場が分離・ダブルシンクと確認でバス・トイレ別。旧マリオット期の一部レビューに3点一体型(浴室内トイレ)の記述もあり、改装前情報に注意。",
+          "scene": "sea",
+          "pal": "dusk",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "view_bath"
+          ],
+          "catch": "やんばるの入口・名護の高台リゾート。5種の湯とサウナの大浴場スパ、44㎡超のバス・トイレ別客室。",
+          "description": "名護市喜瀬の高台に建つリゾート(2021年マリオットからリブランド、2024年全室改装)。コーラルスパの大浴場は5種の浴槽・水風呂・ドライサウナ・外気浴と露天ジャグジーを備え、東シナ海のサンセットを望む(天然温泉ではない)。客室は44㎡超が中心で、トイレとバスルームが独立したバス・トイレ別。",
+          "kashikiri": [],
+          "access": "那覇空港から車で約70分。名護市喜瀬。沖縄自動車道許田ICから約10分。",
+          "official": "https://www.okinawa.oriental-hotels.com/",
+          "highlights": [
+              "コーラルスパの大浴場は5種の浴槽+水風呂+ドライサウナ+外気浴。奥に露天スペース(天然温泉ではない)",
+              "高台立地で東シナ海のサンセットを望む露天ジャグジー",
+              "2024年春に全288室を改装。スーペリアはトイレとバスルームが独立したバス・トイレ別",
+              "ファミリールームはダブルシンク+バスタブと洗い場が分離、レイン&ハンドシャワー"
+          ],
+          "sources": [
+              "https://www.okinawa.oriental-hotels.com/",
+              "https://www.okinawa.oriental-hotels.com/rooms/type/high_floor/",
+              "https://www.okinawa.oriental-hotels.com/facilities/spa/",
+              "https://www.jtb.co.jp/kokunai-hotel/htl/8710010/bath/",
+              "https://travel.rakuten.co.jp/HOTEL/182630/review.html"
+          ],
+          "uncertain": "大浴場スパは天然温泉ではないため onsen/spring は null。スーペリアの洗い場は『仕切られたシャワースペース』型で、旧マリオット期の3点一体型レビューも残るため wash はやや不確実。料金は素泊まり参考値(じゃらんで2名27,872円=1名約13,936円、公式帯で1名21,000〜30,500円の幅)で季節変動大。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スーペリアルーム",
+                  "capacity": "2〜5名",
+                  "size": "44.6平米",
+                  "price": 16000,
+                  "bath": {
+                      "type": "独立トイレ+バスルーム(仕切られたシャワースペース付き)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "2024年改装。トイレとバスルームが独立"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "エグゼクティブツイン(14〜15F)",
+                  "capacity": "2〜3名",
+                  "size": "44.6平米",
+                  "price": 20000,
+                  "bath": {
+                      "type": "独立トイレ+バスルーム(洗い場付)",
+                      "wash": true,
+                      "view": "オーシャンビュー",
+                      "onsenBath": false,
+                      "note": "高層階。東シナ海ビュー"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "5種の湯と露天・サウナの大浴場スパ(天然温泉ではない)/改装済み客室はバス・トイレ別",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/182630",
+          "rakutenHotelNo": 182630
+      },
+      {
+          "id": "hyatt-regency-seragaki",
+          "name": "ハイアット リージェンシー 瀬良垣アイランド 沖縄",
+          "kana": "はいあっとりーじぇんしー せらがきあいらんど おきなわ",
+          "area": "沖縄・恩納村(瀬良垣)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "屋内外プールや海水ラグーン、スパ『はなり』が中心のリゾートで、大浴場・天然温泉はない。入浴は客室の洗い場付きバスルームで行う。",
+          "roomBathNote": "客室は入って右手が洗い場付きバスルーム、左手が個室の独立トイレでバス・トイレ別(複数の宿泊記)。水回り・エントランス・居室は扉で仕切り可。バスタブに肘置き、シャワーはハンドタイプ。オープンエアバルコニー付き。",
+          "scene": "sea",
+          "pal": "dawn",
+          "tags": [],
+          "catch": "瀬良垣島まるごとのリゾート。全室オーシャンビュー、洗い場付きバス+独立個室トイレのバス・トイレ別。",
+          "description": "恩納村・瀬良垣島に建つ全343室のリゾート(The Island/The Beach House)。屋内外プールや海水ラグーン、スパ『はなり』が中心で、大浴場・天然温泉はない。客室は洗い場付きバスルームと個室の独立トイレが分かれたバス・トイレ別で、オープンエアバルコニーから海を望む。",
+          "kashikiri": [],
+          "access": "那覇空港から車で約60分。恩納村瀬良垣。沖縄自動車道屋嘉ICから約15分。",
+          "official": "https://www.hyatt.com/hyatt-regency/okaro-hyatt-regency-seragaki-island-okinawa",
+          "highlights": [
+              "客室は洗い場付きバスルームと独立した個室トイレのバス・トイレ別。水回りは扉で仕切り可",
+              "バスタブに肘置き、シャワーはハンドタイプ。オープンエアバルコニー付き",
+              "大浴場・天然温泉はなし。スパ『はなり』と屋内外プール・海水ラグーン中心のリゾート",
+              "瀬良垣島まるごとのリゾートで全客室オーシャンビュー(スタンダードツイン38㎡〜)"
+          ],
+          "sources": [
+              "https://www.hyatt.com/hyatt-regency/okaro-hyatt-regency-seragaki-island-okinawa",
+              "https://hyattregencyseragaki.jp/activity/facility/pool",
+              "https://www.timeless-travel.jp/hyatt-regency-seragaki-bath.html",
+              "https://travelog.blog/hyattroom/",
+              "https://www.jalan.net/yad383182/room/"
+          ],
+          "uncertain": "大浴場・天然温泉が無いため、当サイトの温泉・大浴場テーマには部分的にしか合致しない(バス・トイレ別+洗い場は明確に該当するため掲載、tagsは空・gensenNoteは客室風呂中心)。料金は素泊まり参考値(最安2名19,570円=1名約9,785円のスニペットあり、通常は上振れ)。プール期はリゾートフィー1名330円。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダードツイン",
+                  "capacity": "2〜3名",
+                  "size": "38平米",
+                  "price": 15000,
+                  "bath": {
+                      "type": "洗い場付きバスルーム+独立個室トイレ",
+                      "wash": true,
+                      "view": "瀬良垣漁港/恩納岳側",
+                      "onsenBath": false,
+                      "note": "オープンエアバルコニー付。シャワーはハンドタイプ"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "スタンダードツイン ラグーンビュー",
+                  "capacity": "2〜3名",
+                  "size": "38平米",
+                  "price": 17000,
+                  "bath": {
+                      "type": "洗い場付きバスルーム+独立個室トイレ",
+                      "wash": true,
+                      "view": "ラグーン/西海岸側",
+                      "onsenBath": false,
+                      "note": "万座毛方面の海側眺望"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "客室はバス・トイレ別(洗い場付+独立個室トイレ)/大浴場・温泉はなくスパ・プール中心のリゾート",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/166320",
+          "rakutenHotelNo": 166320
+      },
+      {
+          "id": "orion-motobu",
+          "name": "オリオンホテル モトブ リゾート&スパ",
+          "kana": "おりおんほてる もとぶ りぞーとあんどすぱ",
+          "area": "沖縄・本部(美ら海)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": "ジュラ紀温泉 美ら海の湯",
+          "spring": "塩化物泉",
+          "springDetail": "ナトリウム-塩化物強塩泉(高張性中性低温泉)",
+          "efficacy": [
+              "神経痛",
+              "筋肉痛",
+              "関節痛",
+              "五十肩",
+              "慢性消化器病",
+              "冷え性",
+              "疲労回復",
+              "健康増進",
+              "慢性皮膚病",
+              "慢性婦人病"
+          ],
+          "gensenNote": "オーシャンウイング5階『ジュラ紀温泉 美ら海の湯』は地下約1500m・約2億年以上前の地層に由来する天然温泉(加温)。泉質はナトリウム-塩化物強塩泉(源泉温度30.9℃・pH7.3・湧出量約250L/分)。内湯と半露天から東シナ海・伊江島を一望、サウナ(ドライ・スチーム)併設。男女日替わり入替。営業6:00〜10:00/15:00〜23:00。宿泊者1,650円(クラブウイング宿泊者は滞在中無料)。",
+          "roomBathNote": "全客室50㎡以上のオーシャンフロント。公式・予約サイトの客室設備で『シャワーと浴槽(別々)』、口コミで『風呂とトイレが別で広い』と確認。温水洗浄トイレ。バス・トイレ別。",
+          "scene": "sea",
+          "pal": "night",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "view_bath",
+              "gensen"
+          ],
+          "catch": "美ら海水族館すぐ。約2億年前の地層由来「ジュラ紀温泉 美ら海の湯」と、全室50㎡超のバス・トイレ別。",
+          "description": "本部・美ら海エリアの全客室オーシャンフロントリゾート。5階の天然温泉『ジュラ紀温泉 美ら海の湯』は地下1500m・約2億年前の地層に由来するナトリウム-塩化物強塩泉で、内湯と半露天から東シナ海・伊江島を望む。サウナ併設。客室は50㎡以上で浴槽とシャワーが別・温水洗浄トイレのバス・トイレ別。",
+          "kashikiri": [],
+          "access": "那覇空港から車で約2時間。本部町(美ら海水族館まで車約7分)。",
+          "official": "https://www.okinawaresort-orion.com/",
+          "highlights": [
+              "5階『ジュラ紀温泉 美ら海の湯』は地下1500m・約2億年以上前の地層に由来する天然温泉(加温)",
+              "泉質はナトリウム-塩化物強塩泉(高張性中性低温泉)。内湯と半露天から東シナ海・伊江島を一望",
+              "サウナ(ドライ・スチーム)あり。男女日替わり入替、6:00〜10:00/15:00〜23:00(宿泊者1,650円、クラブウイングは無料)",
+              "全室50㎡以上のオーシャンフロント。浴槽とシャワーが別・温水洗浄トイレでバス・トイレ別"
+          ],
+          "sources": [
+              "https://www.okinawaresort-orion.com/",
+              "https://www.okinawaresort-orion.com/onsen/",
+              "https://travel.rakuten.co.jp/HOTEL/145419/145419_onsen.html",
+              "https://rurubu.jp/andmore/spot/70002578",
+              "https://travel.yahoo.co.jp/00002000/room/"
+          ],
+          "uncertain": "温泉は宿泊者でも有料(1,650円/クラブウイングは無料)である点に注意。泉質は出典により『ナトリウム-塩化物強塩泉(高張性中性低温泉)』と『ナトリウム・塩化物炭酸水素塩泉』の記載差があり、公式・るるぶの前者を採用。客室名は2026/4/1に改称(オーシャンツイン→オーシャンデラックス等)。各室の正確な広さ(50㎡『以上』のみ確認)と料金は参考値で季節変動大。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "オーシャンデラックス(旧オーシャンツイン)",
+                  "capacity": "2〜3名",
+                  "size": "50平米以上",
+                  "price": 16000,
+                  "bath": {
+                      "type": "バスタブ+独立シャワー+独立トイレ(バス・トイレ別)",
+                      "wash": true,
+                      "view": "オーシャンフロント",
+                      "onsenBath": false,
+                      "note": "全室オーシャンフロント。浴槽とシャワーが別"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "オーシャンプレミアコーナーツイン(旧デラックスオーシャンツイン)",
+                  "capacity": "2〜3名",
+                  "size": "50平米以上",
+                  "price": 19000,
+                  "bath": {
+                      "type": "バスタブ+独立シャワー+独立トイレ(バス・トイレ別)",
+                      "wash": true,
+                      "view": "オーシャンフロント(角部屋)",
+                      "onsenBath": false,
+                      "note": "角部屋で眺望良好"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "ジュラ紀温泉「美ら海の湯」の半露天&サウナ/全室オーシャンフロントでバス・トイレ別",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/145419",
+          "rakutenHotelNo": 145419
+      },
+      {
+          "id": "naha-central-rikkarikka",
+          "name": "COMMUNITY&SPA 那覇セントラルホテル",
+          "kana": "こみゅにてぃあんどすぱ なはせんとらるほてる",
+          "area": "沖縄・那覇(国際通り/牧志)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": "天然温泉 りっかりっか湯",
+          "spring": "塩化物泉",
+          "springDetail": "ナトリウム-塩化物泉",
+          "efficacy": [],
+          "gensenNote": "館内併設の天然温泉『りっかりっか湯』。約10種の湯船+ドライ/スチーム/塩の3サウナ+岩盤浴『楽美岩洞』。男女浴場(紫雲泉/桃源泉)は毎日入替。営業6:00〜23:00(最終22:30)。宿泊者は滞在中利用可(プランにより無料)。",
+          "roomBathNote": "メインタワー『パーシャルハリウッドツイン』はレインシャワー付シャワーブース+独立洗面台+独立トイレのセパレート(浴槽なし)。スイート(ジュニア/セントラル)もバス・トイレ別。それ以外の客室はユニットバスのため対象外。",
+          "scene": "city",
+          "pal": "night",
+          "tags": [
+              "daiyokujo",
+              "sauna",
+              "gensen"
+          ],
+          "catch": "国際通り徒歩1分。県内でも貴重な天然温泉『りっかりっか湯』を滞在中に堪能でき、シャワーブース独立のセパレート客室に泊まれる宿。",
+          "description": "国際通りから徒歩1分、ゆいレール美栄橋駅5分。那覇では希少な天然温泉『りっかりっか湯』(ナトリウム-塩化物泉)を併設し、約10種の湯船と3種サウナ・岩盤浴を宿泊者は滞在中利用可。メインタワーのパーシャルハリウッドツインはレインシャワーのシャワーブースと独立トイレのセパレート仕様で、湯船は温泉で存分に楽しめる。",
+          "kashikiri": [],
+          "access": "ゆいレール美栄橋駅 徒歩約5分/国際通り徒歩1分(那覇市牧志2-16-36)",
+          "official": "https://www.nahacen.com/",
+          "highlights": [
+              "館内併設の天然温泉『りっかりっか湯』(ナトリウム-塩化物泉)を宿泊者が利用可",
+              "約10種の湯船+ドライ/スチーム/塩の3サウナ+岩盤浴『楽美岩洞』、男女浴場は毎日入替",
+              "メインタワー『パーシャルハリウッドツイン』はシャワーブース+独立トイレのセパレート",
+              "国際通り徒歩1分・ゆいレール美栄橋駅徒歩5分の観光拠点に好適"
+          ],
+          "sources": [
+              "https://www.nahacen.com/rikka/index.html",
+              "https://www.nahacen.com/room/maintower/index.html",
+              "https://travel.rakuten.co.jp/HOTEL/196/196_onsen.html",
+              "https://onsen.nifty.com/naha-onsen/onsen012614/",
+              "https://bibo-log.com/?p=3936"
+          ],
+          "uncertain": "料金は各予約サイトの素泊まり最安(2名1室 約8,300円〜)を1名換算した参考値で時期変動大。パーシャルハリウッドツインは浴槽なし(入浴は温泉利用前提)。スイート(ジュニア/セントラル)もセパレートだが広さ・料金は未確認。温泉の効能は公式に明記が無く泉質(ナトリウム-塩化物泉)のみ確認。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "メインタワー パーシャルハリウッドツイン",
+                  "capacity": "3〜4名",
+                  "size": "25㎡",
+                  "price": 6500,
+                  "bath": {
+                      "type": "レインシャワー付シャワーブース(浴槽なし)+独立洗面台+独立トイレのセパレート",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "客室に浴槽は無し。入浴は併設の天然温泉りっかりっか湯を利用。"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "国際通り徒歩1分。天然温泉『りっかりっか湯』を滞在中利用可+シャワーブース独立のセパレート客室",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/196",
+          "rakutenHotelNo": 196
+      },
+      {
+          "id": "hewitt-resort-naha",
+          "name": "ヒューイットリゾート那覇",
+          "kana": "ひゅーいっとりぞーとなは",
+          "area": "沖縄・那覇(安里/国際通り)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "大浴場・温泉・サウナは無し(JTB施設情報『大浴場:設備なし』)。水回りの目玉は13階の全長16mインフィニティ・エッジ・プール(夏季8:00〜20:00頃、冬季は温水)。",
+          "roomBathNote": "全331室がバス・洗面・トイレ独立の3点セパレート。浴室は洗い場付き(バスチェア備付)、スタンダードツイン以上は独立洗面台。",
+          "scene": "city",
+          "pal": "dusk",
+          "tags": [],
+          "catch": "全331室がバス・洗面・トイレ独立の3点セパレート。屋上には那覇市街を望む全長16mのインフィニティプール。",
+          "description": "2021年開業、ゆいレール安里駅徒歩3分・国際通りすぐ。全客室がバス・洗面・トイレの3点独立セパレートで、浴室は洗い場付き。13階には那覇市街を一望する全長16mのインフィニティ・エッジ・プール(季節営業)。1階『TIIDA』の約170種朝食ビュッフェも人気。共用大浴場・温泉は無い。",
+          "kashikiri": [],
+          "access": "ゆいレール安里駅 徒歩約3分/国際通り徒歩約30秒(那覇市安里2-5-16)",
+          "official": "https://hewitt-resort.com/naha/",
+          "highlights": [
+              "全331室がバス・洗面・トイレ独立の3点セパレート、浴室は洗い場付き",
+              "13階に全長16mのインフィニティ・エッジ・プール(夏季8:00〜20:00頃)",
+              "ゆいレール安里駅徒歩3分、国際通り徒歩約30秒の好立地",
+              "1F『TIIDA』の約170種朝食ビュッフェ(無料プランあり)"
+          ],
+          "sources": [
+              "https://hewitt-resort.com/naha/room/",
+              "https://hewitt-resort.com/naha/facilities/",
+              "https://travel.rakuten.co.jp/HOTEL/181785/review.html",
+              "https://www.jalan.net/yad300680/",
+              "https://icotto.jp/hotels-10874/"
+          ],
+          "uncertain": "料金はトラベルコ/HIS等の素泊まり最安(2名1室 約13,000円〜)を1名換算した参考値で時期変動大。大浴場・サウナ・温泉は無し(JTB『大浴場:設備なし』)。プール利用は季節・有料の場合あり。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダードダブル",
+                  "capacity": "1〜2名",
+                  "size": "20㎡",
+                  "price": 8000,
+                  "bath": {
+                      "type": "内風呂+独立洗面+独立トイレの3点セパレート(洗い場付き)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "スタンダードツイン",
+                  "capacity": "2〜4名",
+                  "size": "26㎡(25〜27㎡)",
+                  "price": 9000,
+                  "bath": {
+                      "type": "内風呂+独立洗面台+独立トイレの3点セパレート(洗い場付き)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "洗面台が独立し洗い場も広め。"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "全客室バス・トイレ別(洗い場付き)+屋上インフィニティプール",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/181785",
+          "rakutenHotelNo": 181785
+      },
+      {
+          "id": "novotel-okinawa-naha",
+          "name": "ノボテル沖縄那覇",
+          "kana": "のぼてるおきなわなは",
+          "area": "沖縄・那覇(首里/松川)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "大浴場は無し(じゃらん公式Q&A 2022/2更新で『大浴場はございません』)。水回りの目玉は那覇市街を望むインフィニティプール(季節営業)+キッズプール。",
+          "roomBathNote": "デラックスツイン(34㎡)以上の上位客室は、洗面台の奥にシャワールームとバスタブが分かれ、トイレも独立したセパレート仕様(洗い場付き)。標準のスタンダードツイン(24㎡)はバス・トイレ一体型のユニットバスのため、掲載はデラックス以上に限定。",
+          "scene": "city",
+          "pal": "mist",
+          "tags": [],
+          "catch": "首里の高台に建つアコー系アップスケール。客室はシャワー室+バスタブとトイレが分かれたセパレート仕様。",
+          "description": "首里・松川の高台に建つノボテル。デラックスツイン以上の客室は洗面奥にシャワールームとバスタブがあり、トイレも独立したセパレート仕様(洗い場付き)で34㎡と広い(標準ツインはユニットバスのため掲載対象外)。那覇市街を一望するインフィニティプールやプレミアラウンジ、24時間ジム、キッズクラブを備える。世界遺産・首里城公園まで徒歩約15分。大浴場は無い。",
+          "kashikiri": [],
+          "access": "那覇空港から車約25分/ゆいレール安里駅からタクシー約5分/首里城公園 徒歩約15分(那覇市松川40)",
+          "official": "https://www.novotelokinawanaha.jp/",
+          "highlights": [
+              "デラックス以上はシャワールーム+バスタブとトイレが分離のセパレート(洗い場付き。標準ツインはユニットバス)",
+              "那覇市街を望むインフィニティプール(季節営業)+キッズプール",
+              "世界遺産・首里城公園まで徒歩約15分",
+              "全室シモンズベッド、上層階プレミアラウンジ・24時間ジム"
+          ],
+          "sources": [
+              "https://www.novotelokinawanaha.jp/rooms/",
+              "https://www.jalan.net/yad377388/qa/0005871078.html",
+              "https://travel.rakuten.co.jp/HOTEL/167519/review.html",
+              "https://www.timeless-travel.jp/novotel-okinawa-naha.html",
+              "https://all.accor.com/hotel/B2P9/index.en.shtml"
+          ],
+          "uncertain": "料金は素泊まり最安(2名1室 約11,700円〜)を1名換算した参考値で時期変動大。標準のスタンダードツイン(24㎡)は公式がバス・トイレ一体型のユニットバスと明記しており、掲載はデラックスツイン以上(セパレート・洗い場付き)に限定した。大浴場は無し。モノレール駅から徒歩圏外でタクシー利用が前提。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "デラックスルーム(ツイン)",
+                  "capacity": "2〜4名",
+                  "size": "34㎡",
+                  "price": 7500,
+                  "bath": {
+                      "type": "シャワールーム+バスタブが独立、トイレも別(洗い場付き)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "洗面台の奥にシャワー室とバスタブが分かれる構成。"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "首里高台のインフィニティプール/デラックス以上はシャワー室+バスタブとトイレが分離のセパレート",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/167519",
+          "rakutenHotelNo": 167519
+      },
+      {
+          "id": "jr-blossom-naha",
+          "name": "JR九州ホテル ブラッサム那覇",
+          "kana": "じぇいあーるきゅうしゅうほてる ぶらっさむなは",
+          "area": "沖縄・那覇(国際通り/牧志)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "共用の大浴場は無し。入浴は客室の洗い場付きバスルームで、広めの浴槽が特徴。",
+          "roomBathNote": "全室バス・トイレ別(洗い場付きバスルーム)。広めの浴槽でくつろげ、プレミアムツインは那覇の街を望むビューバス。全室シモンズベッド。",
+          "scene": "city",
+          "pal": "indigo",
+          "tags": [],
+          "catch": "国際通り徒歩1分。全室バス・トイレ別(洗い場付き)で広めの浴槽。最上階に宿泊者専用ライブラリラウンジ。",
+          "description": "ゆいレール美栄橋駅徒歩5分、国際通り徒歩1分。全室ツイン・ダブルで、バスルームは全室洗い場付き・トイレ別。広めの浴槽でゆったり入浴でき、プレミアムツインは那覇の街を望むビューバス。全室シモンズベッド、最上階に宿泊者専用ライブラリラウンジを備える。共用大浴場は無い。",
+          "kashikiri": [],
+          "access": "ゆいレール美栄橋駅 徒歩約5分/牧志駅 徒歩約6分/国際通り徒歩1分(那覇市牧志2-16-1)",
+          "official": "https://www.jrk-hotels.co.jp/Naha/",
+          "highlights": [
+              "全室バス・トイレ別(洗い場付きバスルーム)、広めの浴槽",
+              "プレミアムツインは那覇の街を望むビューバス",
+              "国際通り徒歩1分・ゆいレール美栄橋駅徒歩5分",
+              "全室シモンズベッド、最上階に宿泊者専用ライブラリラウンジ"
+          ],
+          "sources": [
+              "https://www.jrk-hotels.co.jp/Naha/",
+              "https://www.jrk-hotels.co.jp/Naha/access/",
+              "https://travel.rakuten.co.jp/HOTEL/160939/review.html",
+              "https://www.jalan.net/yad348492/",
+              "https://www.ikyu.com/00081295/"
+          ],
+          "uncertain": "客室の広さ(平米)は公式に数値が掲載されておらず推定値。料金は素泊まり最安(2名1室 約14,300円〜)を1名換算した参考値で時期変動大。共用大浴場は無し。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダードダブル",
+                  "capacity": "1〜2名",
+                  "size": "約20㎡(推定・公式非掲載)",
+                  "price": 8000,
+                  "bath": {
+                      "type": "洗い場付き内風呂+独立トイレ(バス・トイレ別)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "広めの浴槽。"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "プレミアムツイン(ビューバス)",
+                  "capacity": "2〜3名",
+                  "size": "約26㎡(推定・公式非掲載)",
+                  "price": 12000,
+                  "bath": {
+                      "type": "眺望のビューバス(洗い場付き)+独立トイレ(バス・トイレ別)",
+                      "wash": true,
+                      "view": "那覇市街",
+                      "onsenBath": false,
+                      "note": "浴室から那覇の街並みを望むビューバス。"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "国際通り徒歩1分。全室バス・トイレ別(洗い場付き)の上質ビジネスホテル",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/160939",
+          "rakutenHotelNo": 160939
+      },
+      {
+          "id": "daiwa-roynet-naha-kokusaidori",
+          "name": "ダイワロイネットホテル那覇国際通り",
+          "kana": "だいわろいねっとほてるなはこくさいどおり",
+          "area": "沖縄・那覇(国際通り/牧志)",
+          "pref": "沖縄県",
+          "region": "沖縄",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "自館の大浴場は無し。国際通りの天然温泉『りっかりっか湯』は隣接の那覇セントラルホテルの施設で、当館併設ではない(施設名の混同に注意)。",
+          "roomBathNote": "2025年2月に全面リニューアル。約52㎡の『ファミリーフォース』はバス・トイレ完全セパレート+洗面台2台。一方で標準の『スタンダードダブル』(18.2㎡)等はユニットバスのため対象はセパレート客室に限定。",
+          "scene": "city",
+          "pal": "dawn",
+          "tags": [],
+          "catch": "牧志駅直結・2025年2月リニューアル。約52㎡のファミリーフォースはバス・トイレ完全セパレート+洗面台2台。",
+          "description": "ゆいレール牧志駅にデッキ直結、国際通り沿いの複合施設内。2025年2月に全客室リニューアル。約52㎡の『ファミリーフォース』はバス・トイレ完全セパレートで洗面台を2台備え4名利用に対応。ただし標準のダブル(18.2㎡)等はユニットバスのため、掲載対象はセパレート客室に限る。館内大浴場は無い。",
+          "kashikiri": [],
+          "access": "ゆいレール牧志駅 デッキ直結 徒歩約1分/国際通り沿い(那覇市安里2-1-1)",
+          "official": "https://www.daiwaroynet.jp/naha-kokusaidori/",
+          "highlights": [
+              "ゆいレール牧志駅にデッキ直結、国際通り沿いの複合施設内",
+              "『ファミリーフォース』(約52㎡)はバス・トイレ完全セパレート+洗面台2台",
+              "2025年2月に全客室リニューアル(5タイプ51室を新設)",
+              "標準のダブル等はユニットバス/天然温泉りっかりっか湯は別施設(那覇セントラルホテル)"
+          ],
+          "sources": [
+              "https://www.daiwaroynet.jp/naha-kokusaidori/room/",
+              "https://www.hoteresonline.com/articles/13963",
+              "https://travel.rakuten.co.jp/HOTEL/128440/review.html",
+              "https://www.jalan.net/yad304700/",
+              "https://note.com/japanhotelreview/n/n2965ad00ed3e"
+          ],
+          "uncertain": "セパレート確認はファミリーフォース(約52㎡)のみ。他の2025新設タイプの分離可否は未確認、標準ダブル(18.2㎡)はユニットバス。料金は素泊まり最安(2名1室 約11,500円〜、ファミリーは室料が高め)を1名換算した参考値で時期変動大。当館に大浴場は無く、りっかりっか湯は別施設(那覇セントラルホテル)である点に注意。洗い場の有無は未確認。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "ファミリーフォース",
+                  "capacity": "3〜4名",
+                  "size": "52㎡",
+                  "price": 9000,
+                  "bath": {
+                      "type": "バス・トイレ完全セパレート+洗面台2台",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "洗面台2台。洗い場の有無は未確認だがバスとトイレは別室。"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "牧志駅直結。ファミリーフォース(約52㎡)はバス・トイレ完全セパレート+洗面2台",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/128440",
+          "rakutenHotelNo": 128440
       }
   ];
 
