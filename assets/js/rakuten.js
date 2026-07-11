@@ -114,5 +114,25 @@
     return request('SimpleHotelSearch/20170426', { hotelNo: String(hotelNo) });
   }
 
-  window.YUBUNE.rakuten = { minCharge: minCharge, hotelInfo: hotelInfo, isApiError: isApiError, API_BASE: API_BASE, _jsonp: jsonp, _buildUrl: buildUrl };
+  /**
+   * 施設の代表画像URLを取得(楽天API利用規約の範囲内で、送客リンクとセットの
+   * ホットリンク表示に使う)。取れなければ null(例外は投げない)。
+   */
+  function hotelImages(hotelNo) {
+    return hotelInfo(hotelNo).then(function (data) {
+      if (isApiError(data)) return null;
+      try {
+        var h = data.hotels && data.hotels[0];
+        var basic = Array.isArray(h.hotel) ? h.hotel[0].hotelBasicInfo : null;
+        if (!basic) return null;
+        return {
+          image: basic.hotelImageUrl || null,
+          room: basic.roomImageUrl || null,
+          thumb: basic.hotelThumbnailUrl || null,
+        };
+      } catch (e) { return null; }
+    }).catch(function () { return null; });
+  }
+
+  window.YUBUNE.rakuten = { minCharge: minCharge, hotelInfo: hotelInfo, hotelImages: hotelImages, isApiError: isApiError, API_BASE: API_BASE, _jsonp: jsonp, _buildUrl: buildUrl };
 })();

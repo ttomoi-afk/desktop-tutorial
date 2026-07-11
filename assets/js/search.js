@@ -93,7 +93,6 @@
 
   /* ---------- 横型カード ---------- */
   function resultCard(h) {
-    const img = d.sceneURI(h, 600, 420);
     const kashikiriText = h.kashikiri.length
       ? '貸切風呂 ' + h.kashikiri.length + 'つ' + (h.hasFreeKashikiri ? '(無料)' : '')
       : null;
@@ -105,7 +104,7 @@
     ].filter(Boolean).map(function (m) { return '<span>' + m + '</span>'; }).join('');
     return '<article class="rcard-shell">' +
       '<a class="rcard" href="detail.html?id=' + ui.esc(h.id) + '">' +
-      '  <div class="rcard-img" style="background-image:url(&quot;' + img + '&quot;)">' +
+      '  <div class="rcard-img" style="background-image:' + ui.hotelBgAttr(h, 600, 420) + '">' +
       '    <span class="hcard-area">' + ui.icon('pin') + ui.esc(h.area) + '・' + ui.esc(h.onsen || h.pref) + '</span>' +
       '  </div>' +
       '  <div class="rcard-body">' +

@@ -113,7 +113,8 @@
         '    <a href="search.html?type=business">風呂・トイレ別のビジネス・シティホテル</a>' +
         '    <a href="index.html#policy">掲載基準について</a>' +
         '  </div>' +
-        '  <p class="foot-note">※ 本サイトは送客型のβ版です。掲載施設は実在しますが、当サイトは各施設と提携・関係はありません。掲載内容は公式サイト等の公開情報を基にした参考情報で、料金・設備・泉質等は変更される場合があります。最新情報・ご予約は楽天トラベルまたは各施設の公式サイトでご確認ください。楽天トラベルへのリンクには楽天アフィリエイトを利用しています(リンク経由のご予約で当サイトに紹介料が入る場合があります)。</p>' +
+        '  <p class="foot-note">※ 本サイトは送客型のβ版です。掲載施設は実在しますが、当サイトは各施設と提携・関係はありません。掲載内容は公式サイト等の公開情報を基にした参考情報で、料金・設備・泉質等は変更される場合があります。最新情報・ご予約は楽天トラベルまたは各施設の公式サイトでご確認ください。楽天トラベルへのリンクには楽天アフィリエイトを利用しています(リンク経由のご予約で当サイトに紹介料が入る場合があります)。ホテル画像・空室情報は楽天ウェブサービスから取得しています。</p>' +
+        '  <p class="foot-credit">Supported by Rakuten Developers</p>' +
         '</div>';
     }
   }
@@ -157,10 +158,26 @@
     return forRoom ? '参考 1泊2食・1名(2名1室)' : '参考 1泊2食・1名';
   }
 
+  /* ---------- 宿の画像 ----------
+     楽天APIの施設画像(data.jsのimg または詳細ページ閲覧時のlocalStorageキャッシュ)が
+     あれば写真を、無ければ生成風景を表示。CSSの多重背景により、写真URLが読み込めない
+     場合も下層の生成風景が自動で見える(壊れ画像にならない)。 */
+  function hotelPhoto(h) {
+    if (h.img) return h.img;
+    if (h.rakutenHotelNo) {
+      try { return localStorage.getItem('yubune_img_' + h.rakutenHotelNo) || null; } catch (e) { /* private mode等 */ }
+    }
+    return null;
+  }
+  // style属性用の background-image 値(&quot;区切り)を返す
+  function hotelBgAttr(h, w, hgt) {
+    const svg = 'url(&quot;' + D().sceneURI(h, w, hgt) + '&quot;)';
+    const photo = hotelPhoto(h);
+    return photo ? 'url(&quot;' + esc(photo) + '&quot;), ' + svg : svg;
+  }
+
   /* ---------- 宿カード ---------- */
   function hotelCard(h) {
-    const d = D();
-    const img = d.sceneURI(h, 640, 400);
     let bathBits = [];
     if (h.type === 'business') {
       bathBits = [h.bathLine || '全室 洗い場付き浴室・トイレ別'];
@@ -172,7 +189,7 @@
     return '' +
       '<article class="hcard">' +
       '  <a class="hcard-link" href="detail.html?id=' + esc(h.id) + '" aria-label="' + esc(h.name) + ' の詳細">' +
-      '    <div class="hcard-img" style="background-image:url(&quot;' + img + '&quot;)">' +
+      '    <div class="hcard-img" style="background-image:' + hotelBgAttr(h, 640, 400) + '">' +
       '      <span class="hcard-area">' + icon('pin') + esc(h.area) + '・' + esc(h.onsen || h.pref) + '</span>' +
       '    </div>' +
       '    <div class="hcard-body">' +
@@ -200,6 +217,7 @@
     icon: icon, badge: badge, tagBadges: tagBadges, stars: stars,
     typeChip: typeChip, priceLabel: priceLabel, sepBadge: sepBadge,
     affiliateUrl: affiliateUrl, bookingCtas: bookingCtas,
+    hotelPhoto: hotelPhoto, hotelBgAttr: hotelBgAttr,
     hotelCard: hotelCard, renderChrome: renderChrome,
   };
 })();

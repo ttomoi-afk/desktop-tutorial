@@ -79,7 +79,7 @@
   }
 
   /* ---------- 描画 ---------- */
-  const heroImg = d.sceneURI(hotel, 1600, 560);
+  const heroBg = ui.hotelBgAttr(hotel, 1600, 560);
   const highlights = buildHighlights(hotel);
 
   // 洗い場の事実表示: 客室浴室が全て洗い場付き(wash===true)のときのみ断定する
@@ -93,7 +93,7 @@
     : '客室の浴室で湯船に浸かれます';
 
   root.innerHTML =
-    '<div class="detail-hero" style="background-image:url(&quot;' + heroImg + '&quot;)" role="img" aria-label="' + ui.esc(hotel.area) + 'の風景イメージ"></div>' +
+    '<div class="detail-hero" style="background-image:' + heroBg + '" role="img" aria-label="' + ui.esc(hotel.area) + 'のイメージ"></div>' +
     '<div class="wrap">' +
     '  <div class="detail-head">' +
     '    <p class="crumb"><a href="index.html">トップ</a> › <a href="search.html">宿をさがす</a> › ' + ui.esc(hotel.name) + '</p>' +
@@ -171,14 +171,28 @@
     '  </div>' +
     '</div>';
 
-  /* ---------- 楽天トラベルの空室最低価格(取れたときだけ表示) ---------- */
+  /* ---------- 楽天APIで施設画像と空室最低価格を取得(取れたときだけ表示) ----------
+     レート制限(約1リクエスト/秒)のため、画像 → 1.2秒待ち → 価格 の順に直列実行 */
   if (hotel.rakutenHotelNo && window.YUBUNE.rakuten) {
-    window.YUBUNE.rakuten.minCharge(hotel.rakutenHotelNo).then(function (r) {
+    var rk = window.YUBUNE.rakuten;
+    var imageStep = hotel.img
+      ? Promise.resolve() // data.js に焼き込み済みならAPIを呼ばない
+      : rk.hotelImages(hotel.rakutenHotelNo).then(function (im) {
+          if (!im || !im.image) return;
+          try { localStorage.setItem('yubune_img_' + hotel.rakutenHotelNo, im.image); } catch (e) {}
+          var el = document.querySelector('.detail-hero');
+          if (el) el.style.backgroundImage = 'url("' + im.image + '"), ' + el.style.backgroundImage;
+        });
+    imageStep.then(function () {
+      return new Promise(function (r) { setTimeout(r, hotel.img ? 0 : 1200); });
+    }).then(function () {
+      return rk.minCharge(hotel.rakutenHotelNo);
+    }).then(function (r) {
       var el = document.getElementById('rk-price');
       if (!el || !r) return;
-      var d = r.checkin.split('-');
+      var d2 = r.checkin.split('-');
       el.innerHTML = ui.icon('clock') + ' 楽天トラベルの空室最低価格(' +
-        Number(d[1]) + '/' + Number(d[2]) + '泊・2名1室 合計): <strong>' + ui.yen(r.total) + '</strong>';
+        Number(d2[1]) + '/' + Number(d2[2]) + '泊・2名1室 合計): <strong>' + ui.yen(r.total) + '</strong>';
     });
   }
 })();

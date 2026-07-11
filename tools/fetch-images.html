@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>施設画像URLの一括取得 | 湯船トラベル(管理用)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%A8%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+  .box { max-width: 760px; margin: 40px auto; background: var(--card); border: 1px solid var(--line-soft); border-radius: 14px; padding: 24px; }
+  #st { font-weight: 700; margin: 12px 0; }
+  #bar { height: 8px; background: var(--line-soft); border-radius: 99px; overflow: hidden; margin-bottom: 16px; }
+  #bar i { display: block; height: 100%; width: 0; background: var(--teal); transition: width .3s; }
+  textarea { width: 100%; height: 260px; font-family: monospace; font-size: 11px; border: 1.5px solid var(--line); border-radius: 9px; padding: 10px; }
+  .miss { color: var(--accent); font-size: 12.5px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="wrap">
+    <div class="box">
+      <h1 style="font-family:var(--serif);font-size:22px">施設画像URLの一括取得(管理用)</h1>
+      <p style="font-size:13px;color:var(--ink-soft);margin:8px 0 14px">
+        楽天トラベルAPIから全掲載施設の代表画像URLを収集します(約1.2秒間隔・1〜2分)。
+        このページは <code>ttomoi-afk.github.io</code> 上で開いてください。
+        完了したら下のJSONをコピーして、チャットのClaudeに貼り付けてください。
+      </p>
+      <div id="bar"><i></i></div>
+      <p id="st">準備中…</p>
+      <textarea id="result" readonly placeholder="ここに結果のJSONが表示されます"></textarea>
+      <p style="margin-top:10px"><button class="btn" id="copy" disabled>結果をコピー</button></p>
+      <p class="miss" id="miss"></p>
+    </div>
+  </div>
+</main>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/rakuten.js"></script>
+<script>
+(async function () {
+  var d = window.YUBUNE.data, rk = window.YUBUNE.rakuten;
+  var st = document.getElementById('st'), bar = document.querySelector('#bar i');
+  var out = {}, missed = [];
+  var hs = d.HOTELS.filter(function (h) { return h.rakutenHotelNo; });
+
+  for (var i = 0; i < hs.length; i++) {
+    var h = hs[i];
+    st.textContent = (i + 1) + ' / ' + hs.length + ':' + h.name;
+    bar.style.width = Math.round(((i + 1) / hs.length) * 100) + '%';
+    var im = await rk.hotelImages(h.rakutenHotelNo);
+    if (im && im.image) { out[h.id] = im.image; } else { missed.push(h.name); }
+    await new Promise(function (r) { setTimeout(r, 1200); });
+  }
+
+  st.textContent = '完了: ' + Object.keys(out).length + ' / ' + hs.length + ' 軒の画像URLを取得しました。下のJSONをコピーしてチャットに貼り付けてください。';
+  document.getElementById('result').value = JSON.stringify(out, null, 1);
+  if (missed.length) document.getElementById('miss').textContent = '取得できなかった施設(再実行で取れることがあります): ' + missed.join(' / ');
+  var btn = document.getElementById('copy');
+  btn.disabled = false;
+  btn.onclick = function () {
+    var t = document.getElementById('result');
+    t.select();
+    navigator.clipboard ? navigator.clipboard.writeText(t.value) : document.execCommand('copy');
+    btn.textContent = 'コピーしました';
+  };
+})();
+</script>
+</body>
+</html>
