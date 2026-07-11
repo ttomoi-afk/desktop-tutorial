@@ -419,7 +419,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/79294/79294.html",
-          "rakutenHotelNo": 79294
+          "rakutenHotelNo": 79294,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/79294/79294.jpg"
       },
       {
           "id": "kusatsu-naraya",
@@ -536,7 +537,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/70807/70807.html",
-          "rakutenHotelNo": 70807
+          "rakutenHotelNo": 70807,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/70807/70807.jpg"
       },
       {
           "id": "yufuin-musouen",
@@ -650,7 +652,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/44815/44815.html",
-          "rakutenHotelNo": 44815
+          "rakutenHotelNo": 44815,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/44815/44815.jpg"
       },
       {
           "id": "kurokawa-ikoi",
@@ -729,7 +732,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/55943/55943.html",
-          "rakutenHotelNo": 55943
+          "rakutenHotelNo": 55943,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/55943/55943.jpg"
       },
       {
           "id": "kinosaki-nishimuraya",
@@ -825,7 +829,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/75399/75399.html",
-          "rakutenHotelNo": 75399
+          "rakutenHotelNo": 75399,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/75399/75399.jpg"
       },
       {
           "id": "ginzan-ginzanso",
@@ -911,7 +916,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/111234/111234.html",
-          "rakutenHotelNo": 111234
+          "rakutenHotelNo": 111234,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/111234/111234.jpg"
       },
       {
           "id": "noboribetsu-bourou",
@@ -990,7 +996,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/51198/51198.html",
-          "rakutenHotelNo": 51198
+          "rakutenHotelNo": 51198,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/51198/51198.jpg"
       },
       {
           "id": "nyuto-tsurunoyu-bekkan",
@@ -1076,7 +1083,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/147944/147944.html",
-          "rakutenHotelNo": 147944
+          "rakutenHotelNo": 147944,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/147944/147944.jpg"
       },
       {
           "id": "gero-suimeikan",
@@ -1193,7 +1201,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/8886/8886.html",
-          "rakutenHotelNo": 8886
+          "rakutenHotelNo": 8886,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/8886/8886.jpg"
       },
       {
           "id": "wakura-notoraku",
@@ -1276,7 +1285,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/39556/39556.html",
-          "rakutenHotelNo": 39556
+          "rakutenHotelNo": 39556,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/39556/39556.jpg"
       },
       {
           "id": "dogo-funaya",
@@ -1360,7 +1370,8 @@
               }
           ],
           "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/11332/11332.html",
-          "rakutenHotelNo": 11332
+          "rakutenHotelNo": 11332,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/11332/11332.jpg"
       },
       {
           "id": "yuen-shinjuku",
@@ -1464,7 +1475,8 @@
           ],
           "bathLine": "箱根からの運び湯・最上階露天/シャワーブース+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/172443",
-          "rakutenHotelNo": 172443
+          "rakutenHotelNo": 172443,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/172443/172443.jpg"
       },
       {
           "id": "dormyinn-kanda",
@@ -1557,7 +1569,8 @@
           ],
           "bathLine": "超軟水の大浴場+露天+高温サウナ/シャワーブース+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/161040",
-          "rakutenHotelNo": 161040
+          "rakutenHotelNo": 161040,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/161040/161040.jpg"
       },
       {
           "id": "dormyinn-sapporo",
@@ -1634,7 +1647,8 @@
           ],
           "bathLine": "檜の半露天・炭酸風呂・高温サウナ/セパレート客室",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/14019",
-          "rakutenHotelNo": 14019
+          "rakutenHotelNo": 14019,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/14019/14019.jpg"
       },
       {
           "id": "dormyinn-nagoya-sakae",
@@ -1712,7 +1726,8 @@
           ],
           "bathLine": "運び湯の天然温泉大浴場+サウナ/セパレート客室",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/147710",
-          "rakutenHotelNo": 147710
+          "rakutenHotelNo": 147710,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/147710/147710.jpg"
       },
       {
           "id": "mgh-nihonbashi-premier",
@@ -1803,7 +1818,8 @@
           ],
           "bathLine": "檜の大浴場+全室バス・トイレ・洗面3点分離",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/166107",
-          "rakutenHotelNo": 166107
+          "rakutenHotelNo": 166107,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/166107/166107.jpg"
       },
       {
           "id": "millennium-mgh-tokyo",
@@ -1877,7 +1893,8 @@
           ],
           "bathLine": "大浴場なし/ほぼ全室 洗い場付きバス・水回り3点独立",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/147093",
-          "rakutenHotelNo": 147093
+          "rakutenHotelNo": 147093,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/147093/147093.jpg"
       },
       {
           "id": "mgh-jingugaien-premier",
@@ -1953,7 +1970,8 @@
           ],
           "bathLine": "大浴場+水回り3点独立・全室バルコニー付き",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/173094",
-          "rakutenHotelNo": 173094
+          "rakutenHotelNo": 173094,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/173094/173094.jpg"
       },
       {
           "id": "yaenomidori-tokyo",
@@ -2042,7 +2060,8 @@
           ],
           "bathLine": "全室 バス・トイレ・洗面3点独立+洗い場付きバス",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178005",
-          "rakutenHotelNo": 178005
+          "rakutenHotelNo": 178005,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/178005/178005.jpg"
       },
       {
           "id": "musse-ginza-meitetsu",
@@ -2129,7 +2148,8 @@
           ],
           "bathLine": "全室 洗い場付きバス+独立トイレ(ユニバーサル除く)",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/165557",
-          "rakutenHotelNo": 165557
+          "rakutenHotelNo": 165557,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/165557/165557.jpg"
       },
       {
           "id": "richmond-premier-asakusa",
@@ -2217,7 +2237,8 @@
           ],
           "bathLine": "ビュー・コーナー系客室はバス・トイレ・洗面が3点独立(大浴場なし)",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/149160",
-          "rakutenHotelNo": 149160
+          "rakutenHotelNo": 149160,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/149160/149160.jpg"
       },
       {
           "id": "asakusa-tobu-hotel",
@@ -2306,7 +2327,8 @@
           ],
           "bathLine": "ほぼ全室が洗い場付きバス・トイレ・洗面の3点独立(大浴場なし)",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/179075",
-          "rakutenHotelNo": 179075
+          "rakutenHotelNo": 179075,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/179075/179075.jpg"
       },
       {
           "id": "nono-namba",
@@ -2392,7 +2414,8 @@
           ],
           "bathLine": "天然温泉の大浴場+半露天岩風呂+サウナ/シャワーブース+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/158346",
-          "rakutenHotelNo": 158346
+          "rakutenHotelNo": 158346,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/158346/158346.jpg"
       },
       {
           "id": "dormyinn-namba-annex",
@@ -2475,7 +2498,8 @@
           ],
           "bathLine": "最上階の天然温泉大浴場+外気浴の岩風呂+サウナ/シャワーブース+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/167717",
-          "rakutenHotelNo": 167717
+          "rakutenHotelNo": 167717,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/167717/167717.jpg"
       },
       {
           "id": "liber-hotel-osaka",
@@ -2553,7 +2577,8 @@
           ],
           "bathLine": "天然温泉の大浴場+露天+サウナ/スーペリア以上は洗い場付きバス・トイレ別",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/172378",
-          "rakutenHotelNo": 172378
+          "rakutenHotelNo": 172378,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/172378/172378.jpg"
       },
       {
           "id": "art-osaka-baytower",
@@ -2612,7 +2637,8 @@
           ],
           "bathLine": "隣接「空庭温泉」(天然温泉・露天・サウナ)を優待利用/バス・トイレ別の客室タイプあり",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/164935",
-          "rakutenHotelNo": 164935
+          "rakutenHotelNo": 164935,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/164935/164935.jpg"
       },
       {
           "id": "mgh-osaka-premier",
@@ -2688,7 +2714,8 @@
           ],
           "bathLine": "最上階の人工炭酸泉大浴場/全室 洗面・浴室・トイレ分離",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/144957",
-          "rakutenHotelNo": 144957
+          "rakutenHotelNo": 144957,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/144957/144957.jpg"
       },
       {
           "id": "karaksa-shin-osaka",
@@ -2765,7 +2792,8 @@
           ],
           "bathLine": "大浴場+サウナ/浴室・洗面・トイレのセパレート客室",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/176602",
-          "rakutenHotelNo": 176602
+          "rakutenHotelNo": 176602,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/176602/176602.jpg"
       },
       {
           "id": "royal-classic-osaka",
@@ -2839,7 +2867,8 @@
           ],
           "bathLine": "全室 洗い場付きバスルーム+独立トイレ(大浴場なし)",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178414",
-          "rakutenHotelNo": 178414
+          "rakutenHotelNo": 178414,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/178414/178414.jpg"
       },
       {
           "id": "centara-grand-osaka",
@@ -2912,7 +2941,8 @@
           ],
           "bathLine": "バスタブ+レインシャワーの浴室と独立トイレ(大浴場なし)",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/187118",
-          "rakutenHotelNo": 187118
+          "rakutenHotelNo": 187118,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/187118/187118.jpg"
       },
       {
           "id": "kyoto-kadensho",
@@ -3008,7 +3038,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/130702",
-          "rakutenHotelNo": 130702
+          "rakutenHotelNo": 130702,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/130702/130702.jpg"
       },
       {
           "id": "kyoto-sumiya-kihoan",
@@ -3102,7 +3133,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/9696",
-          "rakutenHotelNo": 9696
+          "rakutenHotelNo": 9696,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/9696/9696.jpg"
       },
       {
           "id": "kyoto-keburikawa",
@@ -3186,7 +3218,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/27783",
-          "rakutenHotelNo": 27783
+          "rakutenHotelNo": 27783,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/27783/27783.jpg"
       },
       {
           "id": "kyoto-mitsui",
@@ -3277,7 +3310,8 @@
           ],
           "bathLine": "自家源泉の温泉スパ(水着のサーマルスプリング・貸切個室温泉)/客室は大理石バス+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/182691",
-          "rakutenHotelNo": 182691
+          "rakutenHotelNo": 182691,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/182691/182691.jpg"
       },
       {
           "id": "kyoto-togetsutei",
@@ -3363,7 +3397,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/8838",
-          "rakutenHotelNo": 8838
+          "rakutenHotelNo": 8838,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/8838/8838.jpg"
       },
       {
           "id": "nono-kyoto-shichijo",
@@ -3461,7 +3496,8 @@
           ],
           "bathLine": "天然温泉大浴場（サウナ・岩風呂・水風呂）／客室はシャワーブース+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178613",
-          "rakutenHotelNo": 178613
+          "rakutenHotelNo": 178613,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/178613/178613.jpg"
       },
       {
           "id": "dormy-inn-premium-kyoto-ekimae",
@@ -3559,7 +3595,8 @@
           ],
           "bathLine": "最上階の天然温泉大浴場（露天・オートロウリュサウナ）／客室はシャワーブース+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/104701",
-          "rakutenHotelNo": 104701
+          "rakutenHotelNo": 104701,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/104701/104701.jpg"
       },
       {
           "id": "mgh-kyoto-kawaramachi-jokyoji",
@@ -3619,7 +3656,8 @@
           ],
           "bathLine": "館内大浴場（墨絵アート）でゆったり／客室はシャワーブース+独立トイレ+独立洗面",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/180045",
-          "rakutenHotelNo": 180045
+          "rakutenHotelNo": 180045,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/180045/180045.jpg"
       },
       {
           "id": "miyako-kyoto-hachijo",
@@ -3692,7 +3730,8 @@
           ],
           "bathLine": "客室に洗い場付きバスルーム（バス・トイレ別）／館内大浴場はなく近隣銭湯提携",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1160",
-          "rakutenHotelNo": 1160
+          "rakutenHotelNo": 1160,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/1160/1160.jpg"
       },
       {
           "id": "mgh-kyoto-shinmachi-bettei",
@@ -3767,7 +3806,8 @@
           ],
           "bathLine": "人工炭酸泉の大浴場（宿泊者無料）／上位客室はバス・パウダー・トイレの3点分離",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/144956",
-          "rakutenHotelNo": 144956
+          "rakutenHotelNo": 144956,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/144956/144956.jpg"
       },
       {
           "id": "the-thousand-kyoto",
@@ -3825,7 +3865,8 @@
           ],
           "bathLine": "客室に深い浴槽+レインシャワー・洗い場（バス・トイレ別）／館内に有料スパ（サウナ）",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/168608",
-          "rakutenHotelNo": 168608
+          "rakutenHotelNo": 168608,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/168608/168608.jpg"
       },
       {
           "id": "arima-nakanobo-zuien",
@@ -3917,7 +3958,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/25288",
-          "rakutenHotelNo": 25288
+          "rakutenHotelNo": 25288,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/25288/25288.jpg"
       },
       {
           "id": "arima-hyoe-koyokaku",
@@ -4016,7 +4058,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/8636",
-          "rakutenHotelNo": 8636
+          "rakutenHotelNo": 8636,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/8636/8636.jpg"
       },
       {
           "id": "arima-kinzan",
@@ -4101,7 +4144,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/53390",
-          "rakutenHotelNo": 53390
+          "rakutenHotelNo": 53390,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/53390/53390.jpg"
       },
       {
           "id": "arima-tosen-goshoboh",
@@ -4190,7 +4234,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/80572",
-          "rakutenHotelNo": 80572
+          "rakutenHotelNo": 80572,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/80572/80572.jpg"
       },
       {
           "id": "arima-grand-hotel",
@@ -4297,7 +4342,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/25128",
-          "rakutenHotelNo": 25128
+          "rakutenHotelNo": 25128,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/25128/25128.jpg"
       },
       {
           "id": "kinosaki-yamamotoya",
@@ -4390,7 +4436,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/28142",
-          "rakutenHotelNo": 28142
+          "rakutenHotelNo": 28142,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/28142/28142.jpg"
       },
       {
           "id": "kinosaki-mikuniya",
@@ -4465,7 +4512,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/70350",
-          "rakutenHotelNo": 70350
+          "rakutenHotelNo": 70350,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/70350/70350.jpg"
       },
       {
           "id": "yumura-izutsuya",
@@ -4568,7 +4616,8 @@
               }
           ],
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/19964",
-          "rakutenHotelNo": 19964
+          "rakutenHotelNo": 19964,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/19964/19964.jpg"
       },
       {
           "id": "dormyinn-kobe-motomachi",
@@ -4652,7 +4701,8 @@
           ],
           "bathLine": "14F天然温泉大浴場『浪漫湯』(露天・壺湯・高温サウナ)/客室はシャワーブース+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/179274",
-          "rakutenHotelNo": 179274
+          "rakutenHotelNo": 179274,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/179274/179274.jpg"
       },
       {
           "id": "kobe-bay-sheraton",
@@ -4750,7 +4800,8 @@
           ],
           "bathLine": "源泉かけ流し天然温泉『濱泉』(露天・フィンランドサウナ・家族風呂)/スパフロア和室は専有温泉露天+独立トイレ",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1524",
-          "rakutenHotelNo": 1524
+          "rakutenHotelNo": 1524,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/1524/1524.jpg"
       },
       {
           "id": "senagajima-hotel",
@@ -4855,7 +4906,8 @@
           ],
           "bathLine": "天然温泉「龍神の湯」の展望大露天風呂/客室はバス・トイレ別(源泉かけ流し露天付タイプも)",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/139989",
-          "rakutenHotelNo": 139989
+          "rakutenHotelNo": 139989,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/139989/139989.jpg"
       },
       {
           "id": "loisir-hotel-naha",
@@ -4933,7 +4985,8 @@
           ],
           "bathLine": "那覇市内唯一の源泉掛け流し天然温泉「島人の湯」/上位客室はバス・トイレ別(洗い場付)",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/16443",
-          "rakutenHotelNo": 16443
+          "rakutenHotelNo": 16443,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/16443/16443.jpg"
       },
       {
           "id": "oriental-hotel-okinawa",
@@ -5011,7 +5064,8 @@
           ],
           "bathLine": "5種の湯と露天・サウナの大浴場スパ(天然温泉ではない)/改装済み客室はバス・トイレ別",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/182630",
-          "rakutenHotelNo": 182630
+          "rakutenHotelNo": 182630,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/182630/182630.jpg"
       },
       {
           "id": "hyatt-regency-seragaki",
@@ -5084,7 +5138,8 @@
           ],
           "bathLine": "客室はバス・トイレ別(洗い場付+独立個室トイレ)/大浴場・温泉はなくスパ・プール中心のリゾート",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/166320",
-          "rakutenHotelNo": 166320
+          "rakutenHotelNo": 166320,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/166320/166320.jpg"
       },
       {
           "id": "orion-motobu",
@@ -5174,7 +5229,8 @@
           ],
           "bathLine": "ジュラ紀温泉「美ら海の湯」の半露天&サウナ/全室オーシャンフロントでバス・トイレ別",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/145419",
-          "rakutenHotelNo": 145419
+          "rakutenHotelNo": 145419,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/145419/145419.jpg"
       },
       {
           "id": "naha-central-rikkarikka",
@@ -5236,7 +5292,8 @@
           ],
           "bathLine": "国際通り徒歩1分。天然温泉『りっかりっか湯』を滞在中利用可+シャワーブース独立のセパレート客室",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/196",
-          "rakutenHotelNo": 196
+          "rakutenHotelNo": 196,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/196/196.jpg"
       },
       {
           "id": "hewitt-resort-naha",
@@ -5309,7 +5366,8 @@
           ],
           "bathLine": "全客室バス・トイレ別(洗い場付き)+屋上インフィニティプール",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/181785",
-          "rakutenHotelNo": 181785
+          "rakutenHotelNo": 181785,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/181785/181785.jpg"
       },
       {
           "id": "novotel-okinawa-naha",
@@ -5367,7 +5425,8 @@
           ],
           "bathLine": "首里高台のインフィニティプール/デラックス以上はシャワー室+バスタブとトイレが分離のセパレート",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/167519",
-          "rakutenHotelNo": 167519
+          "rakutenHotelNo": 167519,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/167519/167519.jpg"
       },
       {
           "id": "jr-blossom-naha",
@@ -5440,7 +5499,8 @@
           ],
           "bathLine": "国際通り徒歩1分。全室バス・トイレ別(洗い場付き)の上質ビジネスホテル",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/160939",
-          "rakutenHotelNo": 160939
+          "rakutenHotelNo": 160939,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/160939/160939.jpg"
       },
       {
           "id": "daiwa-roynet-naha-kokusaidori",
@@ -5498,7 +5558,8 @@
           ],
           "bathLine": "牧志駅直結。ファミリーフォース(約52㎡)はバス・トイレ完全セパレート+洗面2台",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/128440",
-          "rakutenHotelNo": 128440
+          "rakutenHotelNo": 128440,
+          "img": "https://img.travel.rakuten.co.jp/share/HOTEL/128440/128440.jpg"
       }
   ];
 
