@@ -86,9 +86,10 @@
   const bathRooms = hotel.rooms.filter(function (r) { return !noBath(r); });
   const allWash = bathRooms.length > 0 && bathRooms.every(function (r) { return r.bath.wash === true; });
   const hasDaiyokujo = hotel.tags.indexOf('daiyokujo') !== -1;
-  const washFact = allWash ? '全客室の浴室に洗い場あり'
+  const washFact = (allWash && !hotel.someNoRoomBath) ? '全客室の浴室に洗い場あり'
     : hasDaiyokujo ? '大浴場でゆっくり(洗い場付き)'
     : hotel.noRoomBath ? '入浴は貸切風呂・外湯めぐりで'
+    : allWash ? '浴室付き客室は洗い場あり'
     : '客室の浴室で湯船に浸かれます';
 
   root.innerHTML =
@@ -126,7 +127,7 @@
       '      </section>' : '') +
 
     '      <section class="dsection" aria-labelledby="h-rooms">' +
-    '        <h2 id="h-rooms">' + ui.icon('bath') + '客室を選ぶ<small style="font-size:12px;color:var(--ink-soft);font-family:var(--sans);margin-left:6px">' + (hotel.noRoomBath ? '客室にユニットバスはありません(入浴は大浴場・外湯)' : 'すべて風呂・トイレ別の客室です') + '</small></h2>' +
+    '        <h2 id="h-rooms">' + ui.icon('bath') + '客室を選ぶ<small style="font-size:12px;color:var(--ink-soft);font-family:var(--sans);margin-left:6px">' + (hotel.someNoRoomBath ? ('客室にユニットバスはありません' + (hotel.noRoomBath ? '(入浴は大浴場・外湯)' : '')) : 'すべて風呂・トイレ別の客室です') + '</small></h2>' +
     '        ' + hotel.rooms.map(function (r) { return roomCard(hotel, r); }).join('') +
     '      </section>' +
 
@@ -155,7 +156,7 @@
     '        <p class="price-line"><small>' + ui.priceLabel(hotel, true) + '</small><strong>' + ui.yen(hotel.minPrice) + '</strong><small>〜</small></p>' +
     '        <p class="rk-price" id="rk-price"></p>' +
     '        <ul class="side-facts">' +
-    '          <li>' + ui.icon('check') + (hotel.noRoomBath ? '客室はトイレ付・ユニットバスなし(入浴は大浴場・外湯)' : '全客室が風呂・トイレ別(セパレート)') + '</li>' +
+    '          <li>' + ui.icon('check') + (hotel.noRoomBath ? '客室はトイレ付・ユニットバスなし(入浴は大浴場・外湯)' : hotel.someNoRoomBath ? '客室はすべてユニットバスなし(浴室付き/大浴場利用の両タイプ)' : '全客室が風呂・トイレ別(セパレート)') + '</li>' +
     '          <li>' + ui.icon('check') + washFact + '</li>' +
     (hotel.kashikiri.length ? '          <li>' + ui.icon('check') + (hotel.type === 'business' ? '貸切風呂・サウナ ' : '貸切風呂 ') + hotel.kashikiri.length + 'つ' + (hotel.hasFreeKashikiri ? '(無料)' : '') + '</li>' : '') +
     (hotel.tags.indexOf('gensen') !== -1 ? '          <li>' + ui.icon('check') + '源泉かけ流し</li>' : '') +
@@ -163,7 +164,7 @@
     '          <li>' + ui.icon('pin') + ui.esc(hotel.access) + '</li>' +
     '        </ul>' +
     '        ' + ui.bookingCtas(hotel, false) +
-    '        <a class="btn-ghost btn btn-block" style="margin-top:8px;border-color:var(--line);color:var(--ink-soft)" href="#h-rooms">' + (hotel.noRoomBath ? '客室を見る' : '風呂・トイレ別の客室を見る') + '</a>' +
+    '        <a class="btn-ghost btn btn-block" style="margin-top:8px;border-color:var(--line);color:var(--ink-soft)" href="#h-rooms">' + (hotel.someNoRoomBath ? '客室を見る' : '風呂・トイレ別の客室を見る') + '</a>' +
     '        <p class="side-note">※ ご予約は楽天トラベル・公式サイトなど外部サイトで行います(送客型β版)。掲載内容は公開情報を基にした参考値で、料金・設備は変動します。</p>' +
     '      </div>' +
     '    </aside>' +
