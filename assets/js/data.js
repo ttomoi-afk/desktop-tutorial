@@ -2913,6 +2913,1844 @@
           "bathLine": "バスタブ+レインシャワーの浴室と独立トイレ(大浴場なし)",
           "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/187118",
           "rakutenHotelNo": 187118
+      },
+      {
+          "id": "kyoto-kadensho",
+          "name": "京都 嵐山温泉 花伝抄(共立リゾート)",
+          "kana": "きょうとあらしやまおんせん かでんしょう",
+          "area": "京都・嵐山",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "嵐山温泉",
+          "spring": "単純温泉",
+          "springDetail": "単純温泉(低張性弱アルカリ性温泉)泉温35.2℃・pH7.80",
+          "efficacy": [
+              "神経痛",
+              "筋肉痛",
+              "関節痛",
+              "五十肩",
+              "冷え症",
+              "疲労回復"
+          ],
+          "gensenNote": "大湯屋『平安の湯』は嵐山温泉の天然温泉(内湯・露天・サウナ)。源泉35.2℃と低温のため加温・循環とみられるが、かけ流し/循環の明記は未確認。湯めぐり小路の5つの貸切湯屋(茜の湯=ラジウム/竹庭の湯=炭酸/絹の湯=シルキー等、うち3つ露天)は演出湯で天然温泉ではない。",
+          "roomBathNote": "客室は約10タイプで浴室構成が分かれる。上位の『和洋スイート(バス付)35㎡』や最上階1室限定『露天風呂付和洋室37㎡』はバス・トイレ別(独立)。京モダンスーペリアダブル等はシャワーブースのみ、一部ツインはトイレ・シャワー一体のユニット式のため、掲載は上位和洋室に限定。",
+          "scene": "river",
+          "pal": "forest",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "free_kashikiri",
+              "kashikiri_roten",
+              "kashikiri_uchi",
+              "sauna",
+              "room_roten"
+          ],
+          "catch": "嵐山温泉の大湯屋と24時間無料の貸切湯屋5つ。バス・トイレ別の上位和洋室あり。",
+          "description": "阪急嵐山駅すぐ、共立リゾートの温泉旅館。嵐山温泉の大湯屋『平安の湯』に加え、露天3つを含む5つの貸切湯屋を宿泊者は無料・24時間利用できる。客室は約10タイプで、上位の和洋スイートや最上階の露天風呂付和洋室はバス・トイレ別。夕食はおばんざいビュッフェ。",
+          "kashikiri": [
+              {
+                  "name": "貸切湯屋5室(茜の湯・竹庭の湯・絹の湯ほか)",
+                  "type": "露天3・内湯2",
+                  "capacity": "家族向け",
+                  "fee": "無料(宿泊者)",
+                  "how": "予約不要、空いていれば24時間貸切利用(施錠式)"
+              }
+          ],
+          "access": "阪急嵐山駅から徒歩約1〜5分、嵐電嵐山駅も徒歩圏、JR京都駅から約30分",
+          "official": "https://dormy-hotels.com/resort/hotels/kadensho/",
+          "highlights": [
+              "嵐山温泉の大湯屋『平安の湯』(内湯・露天・サウナ)",
+              "露天3つを含む5つの貸切湯屋を宿泊者は無料・24時間利用可",
+              "茜の湯(ラジウム)・竹庭の湯(炭酸)・絹の湯(シルキー)など趣向の異なる湯",
+              "湯上がりアイスや夜鳴きそば等の無料サービス"
+          ],
+          "sources": [
+              "https://dormy-hotels.com/resort/hotels/kadensho/spa/",
+              "https://dormy-hotels.com/resort/hotels/kadensho/room/",
+              "https://www.yukoyuko.net/2678/bath",
+              "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/130702",
+              "https://www.ikyu.com/00001842/11693687/10300594/",
+              "https://www.jtb.co.jp/kokunai-hotel/htl/6240017/plan/"
+          ],
+          "uncertain": "掲載対象の和洋スイート/露天付和洋室の『バス・トイレ別』は予約サイト・紹介記事のスニペット記載に基づく(公式間取り図はWebFetch403で直接確認できず)。スーペリア・一部ツインはシャワーブースのみ/ユニット式のため掲載しない。客室露天が嵐山温泉かは未確認のためonsenBath=false扱い。料金は標準室の1泊2食・2名時13,000〜14,000円/人が確認範囲で、上位室(スイート・露天付)の価格は推定。 2026年5月に全客室リニューアル済み(シモンズ製ベッド導入)。公式FAQに「和洋スイートのトイレは客室タイプにより異なる」旨の記載があり、ご予約時にバス・トイレ別の該当タイプかご確認ください。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "和洋スイート(バス付)",
+                  "capacity": "2名",
+                  "size": "約35㎡(寝室+6畳和室)",
+                  "price": 28000,
+                  "bath": {
+                      "type": "内風呂(浴槽)+独立トイレ(バス・トイレ別)",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "上位和洋室。浴槽は温泉ではない見込み(温泉は大浴場・貸切湯屋)"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "露天風呂付和洋室(最上階1室限定)",
+                  "capacity": "2名",
+                  "size": "約37㎡",
+                  "price": 35000,
+                  "bath": {
+                      "type": "客室露天風呂+内風呂・独立トイレ(バス・トイレ別)",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "最上階1室限定。露天の温泉使用は未確認"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/130702",
+          "rakutenHotelNo": 130702
+      },
+      {
+          "id": "kyoto-sumiya-kihoan",
+          "name": "京都 湯の花温泉 すみや亀峰菴",
+          "kana": "きょうと ゆのはなおんせん すみやきほうあん",
+          "area": "京都・亀岡(湯の花温泉)",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "湯の花温泉",
+          "spring": "放射能泉",
+          "springDetail": "単純弱放射能温泉(天然ラジウム温泉)",
+          "efficacy": [
+              "神経痛",
+              "筋肉痛",
+              "関節痛",
+              "冷え性",
+              "疲労回復",
+              "痛風"
+          ],
+          "gensenNote": "湯の花温泉の単純弱放射能温泉(天然ラジウム)を掛け流し。湯舟には高野槇を使用。館内に大浴場・内湯、樹齢千年・直径1.6mの桜材を用いた露天風呂、自然に囲まれた貸切露天風呂(有料)を完備。露天風呂付客室・温泉内風呂付客室も温泉掛け流し。",
+          "roomBathNote": "客室は『山の菴』と温泉掛け流し露天風呂付『亀峰菴』等。露天風呂付客室(山のテラス・和室/ベッド44㎡、全4室)や清遊(68㎡洋室、温泉露天+ジャグジー+岩盤浴)はテラス/ウッドデッキに温泉露天風呂を備え、客室内に洗浄機付トイレを別途完備=屋外の湯船と室内トイレは別。温泉内風呂付客室も内風呂とトイレは別室。",
+          "scene": "forest",
+          "pal": "mist",
+          "tags": [
+              "room_roten",
+              "daiyokujo",
+              "roten",
+              "kashikiri_roten",
+              "gensen"
+          ],
+          "catch": "湯の花温泉の天然ラジウムを掛け流し。温泉露天風呂付客室とトイレは別。",
+          "description": "亀岡・湯の花温泉を代表する全25室の旅館。単純弱放射能泉(天然ラジウム)を掛け流し、高野槇の湯や樹齢千年の桜材露天が名物。温泉露天風呂付客室(山のテラス44㎡、清遊68㎡)は屋外の温泉露天と室内の洗浄機付トイレが別。自然に囲まれた貸切露天風呂(有料)もある。",
+          "kashikiri": [
+              {
+                  "name": "貸切露天風呂(自然に囲まれた露天)",
+                  "type": "露天",
+                  "capacity": "要確認",
+                  "fee": "有料(料金未確認)",
+                  "how": "宿泊者は有料で利用可(予約要確認)"
+              }
+          ],
+          "access": "JR亀岡駅から車(無料送迎あり)。湯の花温泉",
+          "official": "https://www.sumiya.ne.jp/",
+          "highlights": [
+              "単純弱放射能泉(天然ラジウム)を掛け流し",
+              "高野槇の湯舟/樹齢千年・直径1.6mの桜材を用いた露天風呂",
+              "温泉露天風呂付客室(山のテラス44㎡、清遊68㎡)",
+              "自然に囲まれた貸切露天風呂(有料)"
+          ],
+          "sources": [
+              "https://www.sumiya.ne.jp/",
+              "https://www.sumiya.ne.jp/room/terrace/",
+              "https://www.sumiya.ne.jp/room/seiyu/",
+              "http://yunohana-onsen.com/kihouan",
+              "https://www.kyotonikanpai.com/spot/07_01_kameoka/yunohana_onsen.php",
+              "https://travel.rakuten.co.jp/HOTEL/9696/9696_onsen.html"
+          ],
+          "uncertain": "貸切露天風呂の正式名称・料金・定員は未確認。客室の『バス・トイレ別』は屋外テラスの温泉露天+室内の洗浄機付トイレという構成に基づく判断(公式間取り図はWebFetch403で直接確認できず)。料金は2食付63,800円〜/2名(=31,900円/人)が確認範囲の下限で、露天付客室・清遊の価格は推定。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "山のテラス・和室(温泉露天風呂付)",
+                  "capacity": "2〜3名",
+                  "size": "約44㎡(和室10畳+ウッドデッキ)",
+                  "price": 48000,
+                  "bath": {
+                      "type": "客室温泉露天風呂(高野槇)+ウッドデッキ/室内に独立の洗浄機付トイレ",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "温泉掛け流し露天。全4室"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "温泉露天風呂付客室 清遊",
+                  "capacity": "2名",
+                  "size": "約68㎡(洋室)",
+                  "price": 78000,
+                  "bath": {
+                      "type": "温泉露天風呂+ジャグジー+岩盤浴/独立トイレ",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "掛け流し露天にジャグジー・岩盤浴を併設"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/9696",
+          "rakutenHotelNo": 9696
+      },
+      {
+          "id": "kyoto-keburikawa",
+          "name": "里山の休日 京都・烟河",
+          "kana": "さとやまのきゅうじつ きょうと けぶりかわ",
+          "area": "京都・亀岡(湯の花温泉)",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "湯の花温泉",
+          "spring": "放射能泉",
+          "springDetail": "弱アルカリ性・低張性・低温泉(単純弱放射能泉/天然ラジウム温泉)",
+          "efficacy": [
+              "神経痛",
+              "筋肉痛",
+              "関節痛",
+              "冷え性",
+              "痛風"
+          ],
+          "gensenNote": "天然ラジウムの湯の花温泉。男女別の畳敷き大浴場と岩風呂露天風呂を備える。特別客室『保豆山』はテラスの信楽焼五右衛門風呂に天然ラジウム湯の花温泉を注ぐ(=客室露天も温泉)。かけ流し/循環は未明記。",
+          "roomBathNote": "開放感のある露天風呂付特別客室は2タイプ。『保豆山(ほづやま)』は和モダンツイン+テラスに信楽焼の五右衛門風呂(温泉)、『PREMIUM comfort』は客室露天+サウナ付。屋外の露天風呂と室内の洗面・トイレは別。標準客室は構成が異なるため、掲載は露天風呂付特別客室に限定。",
+          "scene": "lake",
+          "pal": "forest",
+          "tags": [
+              "room_roten",
+              "daiyokujo",
+              "roten",
+              "iwaburo",
+              "sauna"
+          ],
+          "catch": "湯の花温泉の畳敷き大浴場。客室テラスの五右衛門風呂も天然温泉。",
+          "description": "亀岡・湯の花温泉の里山の宿。天然ラジウム温泉を男女別の畳敷き大浴場と岩風呂露天で楽しめる。特別客室『保豆山』はテラスの信楽焼五右衛門風呂に温泉を注ぎ、室内の洗面・トイレは別。『PREMIUM comfort』は客室露天+サウナ付。",
+          "kashikiri": [],
+          "access": "JR亀岡駅から送迎/バス。湯の花温泉",
+          "official": "https://www.kyoto-keburikawa.jp/",
+          "highlights": [
+              "男女別の畳敷き大浴場(滑りにくい畳敷き)",
+              "岩風呂露天風呂で朝夕の里山風景",
+              "客室『保豆山』テラスの信楽焼五右衛門風呂は天然ラジウム温泉",
+              "『PREMIUM comfort』は客室露天+サウナ付"
+          ],
+          "sources": [
+              "https://www.kyoto-keburikawa.jp/onsen/",
+              "https://www.kyoto-keburikawa.jp/rooms/bath/",
+              "https://travel.rakuten.co.jp/HOTEL/27783/27783_onsen.html",
+              "https://www.ikyu.com/en-us/00030997/",
+              "https://www.jalan.net/yad324935/"
+          ],
+          "uncertain": "客室トイレの詳細(洗浄機付か等)は未確認だが、露天は屋外テラスにあり室内トイレとは別。PREMIUM comfortの客室露天が温泉かは明記を確認できずonsenBath=false扱い。かけ流し/循環は未明記。料金は2名47,800円〜(=23,900円/人、標準室基準)が確認範囲で、露天付特別客室の価格は推定。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "温泉露天風呂付スイート 保豆山(ほづやま)",
+                  "capacity": "2名",
+                  "size": "和モダンツイン",
+                  "price": 38000,
+                  "bath": {
+                      "type": "テラスに信楽焼五右衛門風呂(天然ラジウム温泉)/室内に洗面・トイレ(別)",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "客室露天が天然温泉。全2タイプの特別客室の一つ"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "PREMIUM comfort(露天+サウナ付)",
+                  "capacity": "2名",
+                  "size": "和洋室",
+                  "price": 45000,
+                  "bath": {
+                      "type": "客室露天風呂+サウナ/室内トイレ別",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "露天+サウナ付。露天の温泉使用は要確認"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/27783",
+          "rakutenHotelNo": 27783
+      },
+      {
+          "id": "kyoto-mitsui",
+          "name": "HOTEL THE MITSUI KYOTO",
+          "kana": "ほてる ざ みつい きょうと",
+          "area": "京都・二条城前",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "business",
+          "onsen": "京都二条温泉(自家源泉)",
+          "spring": "塩化物泉",
+          "springDetail": "ナトリウム・カルシウム-塩化物温泉(地下約1,000mの自家源泉『京都二条温泉』)",
+          "efficacy": [
+              "きりきず",
+              "末梢循環障害",
+              "冷え性",
+              "皮膚乾燥症"
+          ],
+          "gensenNote": "地下約1,000mから湧く自家源泉『京都二条温泉』。館内『サーマルスプリング(THERMAL SPRING)』は畳敷き・水着着用で入る天然温泉の温浴施設(7:00〜23:00、最終22:30)。約100㎡のプライベート貸切個室温泉(ミストサウナ・パウダールーム・リビング・日本庭園付)も用意。温泉スイートは専用の天然温泉露天風呂付。裸で入る従来型の大浴場ではない点に留意。",
+          "roomBathNote": "全161室。バスルームは大理石で、独立したトイレ(バスルームとは別室)、ダブルシンク、レインシャワー、肩まで浸かれる深い浴槽を備える。複数の宿泊記が『トイレはバスルームと別(独立)』と確認。温泉スイート(101㎡〜)は専用の天然温泉露天風呂付。",
+          "scene": "town",
+          "pal": "dawn",
+          "tags": [
+              "gensen",
+              "room_roten",
+              "kashikiri_roten"
+          ],
+          "catch": "二条城前、地下1,000mの自家源泉。水着で入るサーマルスプリングと温泉スイート。",
+          "description": "二条城前に建つ5つ星。地下約1,000mの自家源泉『京都二条温泉』(ナトリウム・カルシウム-塩化物泉)を、水着着用のサーマルスプリングと約100㎡の貸切個室温泉で楽しめる。全161室は大理石バスルームで独立トイレ・ダブルシンク完備。温泉スイートは専用の天然温泉露天風呂付。",
+          "kashikiri": [
+              {
+                  "name": "プライベート温泉(貸切個室風呂)",
+                  "type": "貸切温泉(約100㎡、ミストサウナ・パウダールーム・リビング・日本庭園付)",
+                  "capacity": "要確認",
+                  "fee": "有料(料金未確認)",
+                  "how": "予約制"
+              }
+          ],
+          "access": "地下鉄東西線『二条城前』駅から徒歩約2分、JR『二条』駅も徒歩圏",
+          "official": "https://www.hotelthemitsui.com/",
+          "highlights": [
+              "地下約1,000mの自家源泉『京都二条温泉』(塩化物泉)",
+              "水着で入る天然温泉『サーマルスプリング』(畳敷き・7:00〜23:00)",
+              "約100㎡の貸切個室温泉(ミストサウナ・日本庭園付)",
+              "温泉スイート(101㎡〜)は専用の天然温泉露天風呂付"
+          ],
+          "sources": [
+              "https://www.hotelthemitsui.com/en/kyoto/thermal_springs-spa/thermal-spring/",
+              "https://spa.ikyu.com/660201/",
+              "https://travel.rakuten.co.jp/mytrip/howto/hotelthemitsui-guide",
+              "https://www.marriott.com/en-us/hotels/osalc-hotel-the-mitsui-kyoto-a-luxury-collection-hotel-and-spa/rooms/",
+              "https://rikei-miler.com/travel/hotel-kyoto-mitsui-nijoroom-bathroom/",
+              "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/182691"
+          ],
+          "uncertain": "課題に挙がった『都七氏』という呼称は確認できず、施設名は『サーマルスプリング』・源泉名は『京都二条温泉』。貸切個室温泉の料金は未確認。1泊2食プランは基本なく、料金は室料のみ2名126,500円〜(=63,250円/人)・朝食付136,620円〜が確認範囲で、priceは室料のみ基準(素泊まり相当)。温泉スイートの価格は推定。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "ニジョウルーム",
+                  "capacity": "2名",
+                  "size": "約50㎡",
+                  "price": 63250,
+                  "bath": {
+                      "type": "大理石バスルーム+独立トイレ(別室)+ダブルシンク+レインシャワー",
+                      "wash": null,
+                      "view": "二条城ビュー",
+                      "onsenBath": false,
+                      "note": "客室浴槽は温泉ではない(温泉はサーマルスプリング/貸切個室温泉)。priceは室料のみ/人"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "温泉スイート(Onsen Suite)",
+                  "capacity": "2名",
+                  "size": "101㎡〜",
+                  "price": 190000,
+                  "bath": {
+                      "type": "専用の天然温泉露天風呂+大理石バスルーム+独立トイレ",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "客室露天が自家源泉の天然温泉。価格は推定"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "自家源泉の温泉スパ(水着のサーマルスプリング・貸切個室温泉)/客室は大理石バス+独立トイレ",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/182691",
+          "rakutenHotelNo": 182691
+      },
+      {
+          "id": "kyoto-togetsutei",
+          "name": "京都 嵐山温泉 渡月亭",
+          "kana": "きょうと あらしやまおんせん とげつてい",
+          "area": "京都・嵐山",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "嵐山温泉",
+          "spring": "単純温泉",
+          "springDetail": "低張性弱アルカリ性単純温泉(嵐山温泉、2004年3月開湯)",
+          "efficacy": [],
+          "gensenNote": "秀山閣の大浴場『古都千年、雅の湯』は大理石と御影石造りで嵐山天然温泉(低張性弱アルカリ性単純泉、利用16:00〜24:00・6:00〜9:00)。貸切風呂『月読ノ湯』も嵐山天然温泉(定員4)。両館(秀山閣・碧川閣)は地下で連絡し碧川閣宿泊者も大浴場を利用可。客室の内風呂・露天・半露天は天然温泉ではない(=温泉は大浴場・貸切に限定)。",
+          "roomBathNote": "碧川閣の客室に露天風呂付/半露天檜風呂付タイプがある。例『清凉の間』は和室8畳+ベッド2台+茶室+半露天檜風呂+トイレ(定員1〜4)。露天風呂付客室は内風呂が檜、露天が信楽焼。客室に洗浄機付トイレを別途完備し、浴室とトイレは別。ただし客室風呂の湯は天然温泉ではない。",
+          "scene": "river",
+          "pal": "dusk",
+          "tags": [
+              "daiyokujo",
+              "kashikiri_uchi",
+              "room_roten",
+              "room_hanroten",
+              "hinoki"
+          ],
+          "catch": "嵐山温泉の大浴場と貸切『月読ノ湯』。碧川閣は檜内風呂+信楽焼露天でトイレ別。",
+          "description": "渡月橋近くの老舗旅館。秀山閣の大浴場『古都千年、雅の湯』と貸切風呂『月読ノ湯』で嵐山天然温泉(単純泉)を楽しめる。碧川閣の客室は檜の内風呂や信楽焼露天、半露天檜風呂を備え、洗浄機付トイレは別。客室風呂の湯は温泉ではない。",
+          "kashikiri": [
+              {
+                  "name": "月読ノ湯",
+                  "type": "貸切風呂(嵐山天然温泉)",
+                  "capacity": "〜4名",
+                  "fee": "45分2,750円/105分5,500円(税込)",
+                  "how": "予約制。夜16:00〜24:00(最終23:00)・朝6:00〜9:00(最終8:00)"
+              }
+          ],
+          "access": "阪急嵐山駅から徒歩約3分、嵐電(京福)嵐山駅・渡月橋近く",
+          "official": "https://www.togetsutei.co.jp/",
+          "highlights": [
+              "大浴場『古都千年、雅の湯』(大理石・御影石)で嵐山天然温泉",
+              "貸切風呂『月読ノ湯』(嵐山天然温泉、〜4名、45分2,750円)",
+              "碧川閣の客室は檜内風呂+信楽焼露天/半露天檜風呂",
+              "客室の洗浄機付トイレは浴室と別(バス・トイレ別)"
+          ],
+          "sources": [
+              "https://www.togetsutei.co.jp/room/",
+              "https://www.togetsutei.co.jp/room/hekisenkaku01.html",
+              "https://www.togetsutei.co.jp/room/hekisenkaku03.html",
+              "https://travel.rakuten.co.jp/HOTEL/8838/8838_onsen.html",
+              "https://www.ikyu.com/00000991/11096890/10239392/"
+          ],
+          "uncertain": "客室風呂(内風呂・露天・半露天)の湯は天然温泉ではないと公式明記のためonsenBath=false。碧川閣はエレベーターなし、『清凉の間』は子供利用不可。efficacy(適応症)は渡月亭源泉として個別に確認できず未記載。料金は2名47,300円〜(=23,650円/人)が下限で、露天付客室の価格は推定。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "碧川閣『清凉の間』(半露天檜風呂付客室)",
+                  "capacity": "2〜4名",
+                  "size": "和室8畳+ベッド2台+茶室",
+                  "price": 40000,
+                  "bath": {
+                      "type": "半露天檜風呂+独立トイレ(バス・トイレ別)",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "湯は天然温泉ではない。子供利用不可"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "碧川閣 露天風呂付客室",
+                  "capacity": "2名",
+                  "size": "和洋室",
+                  "price": 42000,
+                  "bath": {
+                      "type": "檜の内風呂+信楽焼の露天+独立の洗浄機付トイレ",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "客室風呂の湯は温泉ではない(温泉は大浴場・月読ノ湯)"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/8838",
+          "rakutenHotelNo": 8838
+      },
+      {
+          "id": "nono-kyoto-shichijo",
+          "name": "天然温泉 蓮花の湯 御宿 野乃 京都七条",
+          "kana": "てんねんおんせん れんげのゆ おんやど のの きょうとしちじょう",
+          "area": "京都・京都駅／七条",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "business",
+          "onsen": "蓮花の湯",
+          "spring": "単純温泉",
+          "springDetail": "アルカリ性単純温泉",
+          "efficacy": [
+              "神経痛",
+              "関節痛",
+              "冷え性",
+              "疲労回復"
+          ],
+          "gensenNote": "1・2階の2層構造の男女別天然温泉大浴場『蓮花の湯』。ヒノキ風呂・岩風呂・シルキー風呂・水風呂・高温サウナ、2階に瞑想浴『見想の湯』（ヒノキ浴槽）。営業15:00〜翌10:00。泉質アルカリ性単純温泉。",
+          "roomBathNote": "全館畳敷きの和風設計。客室は入口付近に独立洗面、内側にシャワーブース（浴槽なし）と温水洗浄便座付き独立トイレを配置。ビジネスホテル型ユニットバスではなく、シャワーブース+独立トイレで風呂・トイレ別。浴槽は大浴場利用が前提。",
+          "scene": "city",
+          "pal": "night",
+          "tags": [
+              "daiyokujo",
+              "gensen",
+              "sauna",
+              "iwaburo"
+          ],
+          "catch": "全館畳敷きの和空間で、アルカリ性単純温泉の大浴場とサウナを満喫。客室はシャワーブース+独立トイレ。",
+          "description": "JR京都駅中央口から徒歩約7分。ドーミーイン・御宿野乃系の和風プレミアムホテルで、館内は素足で歩ける畳敷き。1・2階2層構造の天然温泉大浴場『蓮花の湯』にサウナ・岩風呂・水風呂を備える。客室はユニットバスではなくシャワーブース+独立トイレ+独立洗面の風呂・トイレ別。",
+          "kashikiri": [],
+          "access": "JR『京都駅』中央口 徒歩約7分／地下鉄『京都駅』徒歩約2分／京阪『七条駅』徒歩約7分",
+          "official": "https://dormy-hotels.com/dormyinn/hotels/nono_kyoto/",
+          "highlights": [
+              "JR京都駅中央口から徒歩約7分、全館畳敷きの和風プレミアムホテル（ドーミーイン・御宿野乃系）",
+              "男女別天然温泉『蓮花の湯』を1・2階の2層構造で完備。ヒノキ風呂・岩風呂・水風呂・高温サウナ、2階に瞑想浴『見想の湯』",
+              "泉質はアルカリ性単純温泉。営業15:00〜翌10:00で滞在中の入浴が可能",
+              "夜鳴きそば（醤油ラーメン）無料サービスなどドーミーイン系のもてなし。客室はシャワーブース+独立トイレ+独立洗面"
+          ],
+          "sources": [
+              "https://dormy-hotels.com/dormyinn/hotels/nono_kyoto/spa/",
+              "https://dormy-hotels.com/dormyinn/hotels/nono_kyoto/rooms/",
+              "https://travel.rakuten.co.jp/HOTEL/178613/",
+              "https://www.jalan.net/yad385495/",
+              "https://www.jtb.co.jp/kokunai-hotel/htl/6336045/"
+          ],
+          "uncertain": "priceは素泊まり1名の参考値（推定・約11,000円）。実勢は日程・季節で変動し予約サイト要確認。露天風呂の有無は出典で明確に確認できず未タグ（岩風呂・サウナ・水風呂は確認済）。ブランド上『花蛍の湯』はドーミーインPREMIUM京都駅前の大浴場名で、当館の大浴場は『蓮花の湯』。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "ダブル",
+                  "capacity": "1〜2名",
+                  "size": "約17.2㎡",
+                  "price": 11000,
+                  "bath": {
+                      "type": "シャワーブース（浴槽なし）+独立トイレ+独立洗面",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "畳敷き。浴槽は大浴場利用が前提"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "ツイン",
+                  "capacity": "1〜2名",
+                  "size": "約22.3〜24.5㎡",
+                  "price": 11000,
+                  "bath": {
+                      "type": "シャワーブース（浴槽なし）+独立トイレ+独立洗面",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "畳敷き"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r3",
+                  "name": "トリプル",
+                  "capacity": "2〜3名",
+                  "size": "約34.4〜36.3㎡",
+                  "price": 11000,
+                  "bath": {
+                      "type": "シャワーブース（浴槽なし）+独立トイレ+独立洗面",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "畳敷き"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "天然温泉大浴場（サウナ・岩風呂・水風呂）／客室はシャワーブース+独立トイレ",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178613",
+          "rakutenHotelNo": 178613
+      },
+      {
+          "id": "dormy-inn-premium-kyoto-ekimae",
+          "name": "天然温泉 花蛍の湯 ドーミーインPREMIUM京都駅前",
+          "kana": "てんねんおんせん はなほたるのゆ どーみーいんぷれみあむきょうとえきまえ",
+          "area": "京都・京都駅前",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "business",
+          "onsen": "花蛍の湯",
+          "spring": "塩化物泉",
+          "springDetail": "ナトリウム－炭酸水素塩・塩化物温泉",
+          "efficacy": [
+              "神経痛",
+              "関節痛",
+              "冷え性",
+              "疲労回復"
+          ],
+          "gensenNote": "最上階9階に男女別天然温泉大浴場『花蛍の湯』。天然温泉の内湯・露天風呂・壺湯・水風呂（チラー付）・高温ドライサウナ（オートロウリュ／約20分毎に自動蒸気）。営業15:00〜翌10:00（サウナは深夜1:00〜5:00停止）。",
+          "roomBathNote": "客室はビジネスホテルにありがちなユニットバスではなく、シャワールーム・トイレ・洗面所がそれぞれ独立した空間。全室温水洗浄便座付トイレ、シャワーブース、全室シモンズ製ベッド。浴槽は大浴場利用が前提。",
+          "scene": "city",
+          "pal": "indigo",
+          "tags": [
+              "daiyokujo",
+              "gensen",
+              "roten",
+              "sauna"
+          ],
+          "catch": "9階最上階の天然温泉大浴場に露天とオートロウリュサウナ。客室は3分離でユニットバスなし。",
+          "description": "JR京都駅中央口から徒歩約3分。最上階9階の男女別天然温泉大浴場『花蛍の湯』に露天風呂・壺湯・水風呂・オートロウリュ付き高温サウナを備える。泉質はナトリウム-炭酸水素塩・塩化物温泉。客室はシャワールーム・トイレ・洗面が独立し、ユニットバスではない風呂・トイレ別。",
+          "kashikiri": [],
+          "access": "JR『京都駅』中央口 徒歩約3分",
+          "official": "https://dormy-hotels.com/dormyinn/hotels/kyoto/",
+          "highlights": [
+              "JR京都駅中央口から徒歩約3分。最上階9階に男女別天然温泉大浴場『花蛍の湯』",
+              "内湯・露天風呂・壺湯・チラー付水風呂・高温ドライサウナ（オートロウリュ）を完備",
+              "泉質はナトリウム-炭酸水素塩・塩化物温泉。営業15:00〜翌10:00（サウナは深夜停止）",
+              "客室はユニットバスではなくシャワールーム・トイレ・洗面が独立。全室シモンズ製ベッド"
+          ],
+          "sources": [
+              "https://dormy-hotels.com/dormyinn/hotels/kyoto/spa/",
+              "https://dormy-hotels.com/dormyinn/hotels/kyoto/rooms/",
+              "https://travel.rakuten.co.jp/HOTEL/104701/",
+              "https://www.jalan.net/yad324045/",
+              "https://www.ikyu.com/00080526/"
+          ],
+          "uncertain": "priceは素泊まり1名の参考値（推定・約10,000円）。日程・季節で変動し予約サイト要確認。泉質は楽天トラベル(104701)・公式で『ナトリウム-炭酸水素塩・塩化物温泉』、一部三者サイトは『アルカリ性単純泉』と記載しており差異あり（本データは楽天/公式表記を採用）。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "シングル",
+                  "capacity": "1名",
+                  "size": "約14.3㎡",
+                  "price": 10000,
+                  "bath": {
+                      "type": "シャワーブース（浴槽なし）+独立トイレ+独立洗面",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "浴槽は大浴場利用が前提"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "ダブル",
+                  "capacity": "1〜2名",
+                  "size": "約14.1〜15.0㎡",
+                  "price": 10000,
+                  "bath": {
+                      "type": "シャワーブース（浴槽なし）+独立トイレ+独立洗面",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r3",
+                  "name": "ツイン",
+                  "capacity": "1〜2名",
+                  "size": "約20.2〜21.7㎡",
+                  "price": 10000,
+                  "bath": {
+                      "type": "シャワーブース（浴槽なし）+独立トイレ+独立洗面",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": ""
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "最上階の天然温泉大浴場（露天・オートロウリュサウナ）／客室はシャワーブース+独立トイレ",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/104701",
+          "rakutenHotelNo": 104701
+      },
+      {
+          "id": "mgh-kyoto-kawaramachi-jokyoji",
+          "name": "三井ガーデンホテル京都河原町浄教寺",
+          "kana": "みついがーでんほてるきょうとかわらまちじょうきょうじ",
+          "area": "京都・四条河原町",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "宿泊者専用の館内大浴場（天然温泉ではない）。墨絵アートの光壁と清らかなBGMが特徴の広々とした浴槽。営業15:00〜翌10:00、宿泊者無料。露天風呂・サウナは出典で確認できず。",
+          "roomBathNote": "浄教寺の敷地に併設。客室は湯船（浴槽）を設けずシャワーブースのみで、トイレはシャワーと別、洗面台は居室側に独立配置（洗面・トイレ・シャワーの分離設計）。浴槽は館内大浴場を利用する想定で、ユニットバスではない風呂・トイレ別。",
+          "scene": "town",
+          "pal": "dusk",
+          "tags": [
+              "daiyokujo"
+          ],
+          "catch": "お寺併設。墨絵アートの館内大浴場で湯船を満喫、客室はシャワーブース+独立トイレの3分離。",
+          "description": "浄教寺の敷地に併設された三井ガーデンホテル。宿泊者専用の館内大浴場（墨絵アートの光壁・BGM、15:00〜翌10:00）で湯船にゆったり浸かれる。客室は浴槽を持たずシャワーブースのみだが、トイレ・洗面がそれぞれ独立した風呂・トイレ別設計で、全室24㎡以上とゆとりがある。",
+          "kashikiri": [],
+          "access": "阪急『京都河原町駅』より徒歩約6分／京阪『祇園四条駅』徒歩約8分（四条河原町エリア）",
+          "official": "https://www.gardenhotels.co.jp/kyoto-kawaramachi-jokyoji/",
+          "highlights": [
+              "浄教寺（お寺）の敷地に併設。宿泊者専用の館内大浴場（墨絵アートの光壁・BGM）を15:00〜翌10:00で利用可",
+              "客室はシャワーブース（浴槽なし）・独立トイレ・居室側の独立洗面に分かれた設計で風呂・トイレ別",
+              "全室24㎡以上でゆとりある広さ。朝のお勤め体験など寺ならではのプログラムあり",
+              "天然温泉ではないが、大浴場で湯船に浸かれる（客室はシャワーのみ）"
+          ],
+          "sources": [
+              "https://www.gardenhotels.co.jp/kyoto-kawaramachi-jokyoji/bath/",
+              "https://www.gardenhotels.co.jp/kyoto-kawaramachi-jokyoji/room/",
+              "https://travel.rakuten.co.jp/HOTEL/180045/",
+              "https://www.jalan.net/yad353828/",
+              "https://note.com/plusalpha_tyo/n/n3749a9b59e31"
+          ],
+          "uncertain": "priceは素泊まり1名の参考値（推定・約10,000円、2名1室換算）。大浴場の階数（2階との記載あり）・サウナ/露天の有無は出典で確定できず（本データでは露天・サウナ非掲載、天然温泉ではない）。アクセスの徒歩分数は概算。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダードタイプ（ツイン等）",
+                  "capacity": "2〜3名",
+                  "size": "約24㎡〜",
+                  "price": 10000,
+                  "bath": {
+                      "type": "シャワーブース（浴槽なし）+独立トイレ+独立洗面（3分離）",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "浴槽は館内大浴場を利用"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "館内大浴場（墨絵アート）でゆったり／客室はシャワーブース+独立トイレ+独立洗面",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/180045",
+          "rakutenHotelNo": 180045
+      },
+      {
+          "id": "miyako-kyoto-hachijo",
+          "name": "都ホテル 京都八条",
+          "kana": "みやこほてる きょうとはちじょう",
+          "area": "京都・京都駅八条口",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "館内に大浴場・温泉・サウナはなし。近隣銭湯と提携した『銭湯大作戦』プラン（銭湯入浴券+お風呂セット等）で徒歩約2分の大正湯・徒歩約7分の日の出湯など京都の銭湯を楽しめる。ブランドの温泉『三峨の湯』は出典で確認できず。",
+          "roomBathNote": "2023年リニューアルの本館プレミアムフロアに、バス・トイレセパレートで洗い場付きバスルームを備える客室あり（デラックスツイン31㎡・デラックスファミリールーム59㎡など）。当該タイプは浴室（浴槽+洗い場）とトイレが別。標準客室にはユニットバスタイプもあるため、セパレートタイプ限定掲載。",
+          "scene": "city",
+          "pal": "dawn",
+          "tags": [],
+          "catch": "京都駅八条口すぐ。リニューアル客室に洗い場付きバスルーム（バス・トイレ別）。館内浴場はなし。",
+          "description": "JR京都駅八条口から徒歩約2分の大型シティホテル。館内に大浴場・温泉はないが、2023年リニューアルのプレミアムフロア デラックスツイン（31㎡）等はバス・トイレセパレートで洗い場付きバスルームを備え、客室内で湯船にゆったり浸かれる。近隣銭湯と提携した『銭湯大作戦』プランも用意。",
+          "kashikiri": [],
+          "access": "JR『京都駅』八条口 徒歩約2分",
+          "official": "https://www.miyakohotels.ne.jp/kyoto-hachijo/",
+          "highlights": [
+              "JR京都駅八条口から徒歩約2分。新幹線利用に至便な大型シティホテル",
+              "2023年リニューアルのプレミアムフロア デラックスツイン（31㎡）等はバス・トイレセパレート＋洗い場付きバスルーム",
+              "デラックスファミリールーム（59㎡・最大6名）も洗い場付きバスルームを備える",
+              "館内に大浴場・温泉はなく、近隣銭湯と提携した『銭湯大作戦』プランで京都の銭湯を楽しめる"
+          ],
+          "sources": [
+              "https://www.miyakohotels.ne.jp/kyoto-hachijo/stay/renewpremiumfloor_deluxetwin/",
+              "https://www.miyakohotels.ne.jp/kyoto-hachijo/sentodaisakusen/",
+              "https://prtimes.jp/main/html/rd/p/000001207.000023303.html",
+              "https://travel.rakuten.co.jp/HOTEL/1160/",
+              "https://www.jalan.net/yad310077/"
+          ],
+          "uncertain": "課題文の天然温泉『三峨の湯』は複数検索で確認できず、当館は館内大浴場を持たず近隣銭湯提携（銭湯大作戦）を提供するため、温泉は掲載しない（捏造回避）。priceはデラックスツイン素泊まり1名の参考値（推定・約11,000円／2名換算）。標準客室は2名税込14,000円〜との記載があり最安帯はこれより低いが、洗い場付きセパレートは上位タイプのため高め。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "本館プレミアムフロア デラックスツイン",
+                  "capacity": "2〜3名",
+                  "size": "約31㎡",
+                  "price": 11000,
+                  "bath": {
+                      "type": "内風呂・洗い場付き（バス・トイレ別）",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "2023年リニューアル。KAO FIESTAアメニティ"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "デラックスファミリールーム",
+                  "capacity": "2〜6名",
+                  "size": "約59㎡",
+                  "price": 11000,
+                  "bath": {
+                      "type": "内風呂・洗い場付き（バス・トイレ別）",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "リビングスペース付き"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "客室に洗い場付きバスルーム（バス・トイレ別）／館内大浴場はなく近隣銭湯提携",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1160",
+          "rakutenHotelNo": 1160
+      },
+      {
+          "id": "mgh-kyoto-shinmachi-bettei",
+          "name": "三井ガーデンホテル京都新町 別邸",
+          "kana": "みついがーでんほてるきょうとしんまち べってい",
+          "area": "京都・四条烏丸",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "宿泊者無料の人工炭酸泉大浴場（天然温泉ではない）。落ち着いたタイル張りのモダンな浴場で、窓先の緑を眺めながら入浴できる。女性大浴場には西陣織クッションのパウダーコーナー。サウナはなし。",
+          "roomBathNote": "町家を再生した和モダンホテル。スーペリアツイン（27〜29㎡）・デラックスツイン（33㎡）はバスルーム（浴槽+シャワー）・パウダースペース・トイレの3点分離。当該タイプは浴室とトイレが別。より小型のスタンダードクイーン/ツイン（19〜22㎡）は分離仕様の確証がないためセパレート確認済タイプ限定掲載。",
+          "scene": "town",
+          "pal": "mist",
+          "tags": [
+              "daiyokujo"
+          ],
+          "catch": "町家再生の和モダン宿。人工炭酸泉の大浴場に、上位客室はバス・トイレ独立の3点分離。",
+          "description": "地下鉄四条駅・阪急烏丸駅から徒歩約7分。町家を再生した和モダンなホテルで、宿泊者無料の人工炭酸泉大浴場を備える。スーペリアツイン（27〜29㎡）・デラックスツイン（33㎡）はバスルーム・パウダースペース・トイレが独立した3点分離仕様で、客室でも湯船に浸かれる風呂・トイレ別。",
+          "kashikiri": [],
+          "access": "地下鉄烏丸線『四条駅』／阪急『烏丸駅』22番出口 徒歩約7分",
+          "official": "https://www.gardenhotels.co.jp/kyoto-shinmachi/",
+          "highlights": [
+              "地下鉄四条駅・阪急烏丸駅22番出口から徒歩約7分。町家を再生した和モダンなホテル",
+              "宿泊者無料の人工炭酸泉大浴場を完備（タイル張り・窓の緑を望む／サウナなし）",
+              "スーペリアツイン（27〜29㎡）・デラックスツイン（33㎡）はバスルーム・パウダー・トイレの3点分離",
+              "女性大浴場に西陣織クッションのパウダーコーナー。僧伽小野 京都新町別邸の朝食も好評"
+          ],
+          "sources": [
+              "https://www.gardenhotels.co.jp/kyoto-shinmachi/bath/",
+              "https://www.gardenhotels.co.jp/kyoto-shinmachi/room/superior-twin/",
+              "https://travel.rakuten.co.jp/HOTEL/144956/",
+              "https://www.jalan.net/yad376058/",
+              "https://hotelbank.jp/new-hotels/kyoto-gardenhotels-kyoto-shinmachi260222/"
+          ],
+          "uncertain": "priceはスーペリア/デラックス素泊まり1名の参考値（推定・約11,000円／2名換算）。大浴場は人工炭酸泉で天然温泉ではないためonsen/springはnull。3点分離は上位ツイン系で確認、スタンダードクイーン/スタンダードツイン（19〜22㎡）の分離仕様は未確認のため未掲載。大浴場営業時間は出典で未確認。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スーペリアツイン",
+                  "capacity": "2〜3名",
+                  "size": "約27〜29㎡",
+                  "price": 11000,
+                  "bath": {
+                      "type": "バスルーム（浴槽+シャワー）・パウダー・トイレの3点分離（バス・トイレ別）",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "和モダン内装"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "デラックスツイン",
+                  "capacity": "2名",
+                  "size": "約33㎡",
+                  "price": 11000,
+                  "bath": {
+                      "type": "バスルーム（浴槽+シャワー）・パウダー・トイレの3点分離（バス・トイレ別）",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "奥に小上がりを設えた客室"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "人工炭酸泉の大浴場（宿泊者無料）／上位客室はバス・パウダー・トイレの3点分離",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/144956",
+          "rakutenHotelNo": 144956
+      },
+      {
+          "id": "the-thousand-kyoto",
+          "name": "THE THOUSAND KYOTO",
+          "kana": "ざ・さうざんど きょうと",
+          "area": "京都・京都駅前",
+          "pref": "京都府",
+          "region": "関西",
+          "type": "business",
+          "onsen": null,
+          "spring": null,
+          "springDetail": null,
+          "efficacy": [],
+          "gensenNote": "館内『THE THOUSAND SPA』に内湯・ハーブサウナ・ドライサウナ・水風呂等を備えるが有料（宿泊者は入浴¥3,729／スパトリートメント利用時は無料、水風呂・ドライサウナは男性のみ）。無料で使える一般的な大浴場ではない点に注意。",
+          "roomBathNote": "全室37㎡以上。バス・トイレ・洗面がそれぞれ独立し、肩まで浸かれる深い浴槽とグローエ製レインシャワー・ヘッドシャワー、洗い場を備える上質なバスルーム。ユニットバスではなく明確な風呂・トイレ別で、客室内で湯船をしっかり楽しめる。",
+          "scene": "city",
+          "pal": "night",
+          "tags": [],
+          "catch": "京都駅徒歩2分のラグジュアリー。全室37㎡以上、深い浴槽+洗い場のバス・トイレ別客室。",
+          "description": "JR京都駅中央口から徒歩約2分、グッドデザイン賞のミニマルなラグジュアリーホテル。全室37㎡以上で、バス・トイレ・洗面が独立。肩まで浸かれる深い浴槽とグローエのレインシャワー・洗い場を備え、客室内で上質な湯浴みができる風呂・トイレ別。館内には有料のTHE THOUSAND SPAも。",
+          "kashikiri": [],
+          "access": "JR『京都駅』中央口 徒歩約2分",
+          "official": "https://www.keihanhotels-resorts.co.jp/the-thousand-kyoto/",
+          "highlights": [
+              "JR京都駅中央口から徒歩約2分。グッドデザイン賞（2019）のミニマルなラグジュアリーホテル",
+              "全室37㎡以上。バス・トイレ・洗面が独立し、肩まで浸かれる深い浴槽＋グローエのレインシャワー・洗い場付き",
+              "館内にTHE THOUSAND SPA（有料／内湯・ハーブサウナ・ドライサウナ・水風呂、スパ利用者は無料）",
+              "客室風呂そのものが上質で湯船にゆっくり浸かれる（入浴剤の備え付けはなく持参推奨）"
+          ],
+          "sources": [
+              "https://www.keihanhotels-resorts.co.jp/the-thousand-kyoto/",
+              "https://www.keihanhotels-resorts.co.jp/the-thousand-kyoto/spa/",
+              "https://www.keihanhotels-resorts.co.jp/the-thousand-kyoto/rooms/",
+              "https://travel.rakuten.co.jp/HOTEL/168608/",
+              "https://miraie.org/the-thousand-kyoto-review/"
+          ],
+          "uncertain": "priceは素泊まり1名の参考値（推定・約17,000円）。ラグジュアリー価格帯で日程・季節変動が大きく、朝食付き週末は19,200円〜との記載も。予約サイト要確認。THE THOUSAND SPAの浴場は有料（宿泊者¥3,729）で無料大浴場ではないためタグは付与せず、客室風呂を主軸に掲載。客室タイプ名は代表例（スタンダード37㎡）で、上位スイート等は別途。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダード（ツイン／キング）",
+                  "capacity": "1〜2名",
+                  "size": "約37㎡〜",
+                  "price": 17000,
+                  "bath": {
+                      "type": "内風呂（深い浴槽）+レインシャワー・洗い場、独立トイレ・独立洗面（バス・トイレ別）",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "グローエ製水栓。入浴剤は持参推奨"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "客室に深い浴槽+レインシャワー・洗い場（バス・トイレ別）／館内に有料スパ（サウナ）",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/168608",
+          "rakutenHotelNo": 168608
+      },
+      {
+          "id": "arima-nakanobo-zuien",
+          "name": "有馬温泉 中の坊 瑞苑",
+          "kana": "なかのぼう ずいえん",
+          "area": "有馬温泉",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "有馬温泉",
+          "spring": "含鉄泉",
+          "springDetail": "ナトリウム・塩化物強塩泉/含鉄強食塩泉(金泉)。銀泉も併有",
+          "efficacy": [
+              "胃腸病",
+              "婦人病",
+              "リウマチ",
+              "神経痛"
+          ],
+          "gensenNote": "大浴場「瑞泉」は有馬を代表する天神泉源から直引きの金泉。「爽泉」は中低温サウナ付きの内湯とミストサウナを備えた開放風呂。金泉の貸切風呂あり(要事前予約)。13歳未満お断りの大人専用宿。",
+          "roomBathNote": "露天風呂付客室は室内にシャワーブースと客室露天風呂(金泉または銀泉)を備え、トイレは独立(個室・ウォシュレット)。貴賓室「和光」は金泉・銀泉2つの客室露天付き(約120㎡)。ユニットバスではない。",
+          "scene": "mountain",
+          "pal": "dusk",
+          "tags": [
+              "room_roten",
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "gensen",
+              "nigori"
+          ],
+          "catch": "明治元年創業、13歳未満お断りの大人の隠れ宿。天神泉源の金泉と銀泉を静寂の中で。",
+          "description": "明治元年創業、13歳未満お断りの大人の隠れ宿。天神泉源の金泉を引く大浴場「瑞泉」と、サウナを備えた「爽泉」を有する。露天風呂付客室は金泉または銀泉を客室で楽しめ、貴賓室「和光」は金泉・銀泉2つの露天を備える。貸切風呂も利用可(要予約)。",
+          "kashikiri": [
+              {
+                  "name": "貸切風呂(金泉/銀泉)",
+                  "type": "要確認",
+                  "capacity": "要確認",
+                  "fee": "要問合せ(公表料金未確認)",
+                  "how": "到着前に宿へ直接電話予約"
+              }
+          ],
+          "access": "神戸電鉄有馬温泉駅より徒歩約7分(送迎応相談)",
+          "official": "https://www.zuien.jp/",
+          "highlights": [
+              "13歳未満お断りの大人専用宿(明治元年創業)",
+              "天神泉源から直引きの金泉大浴場「瑞泉」",
+              "中低温サウナ・ミストサウナを備えた「爽泉」",
+              "貴賓室「和光」は金泉・銀泉2つの客室露天付き(約120㎡)"
+          ],
+          "sources": [
+              "https://www.zuien.jp/",
+              "https://travel.rakuten.co.jp/HOTEL/25288/25288_onsen.html",
+              "https://www.jtb.co.jp/kokunai-hotel/htl/6435015/",
+              "https://www.jalan.net/yad342576/room/",
+              "https://note.com/guide_hotels/n/n07eb2a73e07f"
+          ],
+          "uncertain": "価格は1泊2食2名1室で総額86,100〜108,100円(=1名43,050〜54,050円)の公表帯から各室を推定。貸切風呂の正式名称・料金・定員・内湯/露天の別は未確認。貴賓室「和光」の料金は推定。適応症は有馬金泉(含鉄・塩化物泉)の一般的なもの。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "金泉露天付き 和室1間",
+                  "capacity": "3〜4名",
+                  "size": "約90㎡(和室+ベッド)",
+                  "price": 48000,
+                  "bath": {
+                      "type": "客室露天風呂(金泉)+室内シャワーブース",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "トイレは独立(ウォシュレット)。ユニットバスではない"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "金泉露天風呂付 和モダンデラックス(ツイン+リビング)",
+                  "capacity": "2〜3名",
+                  "size": "約56㎡",
+                  "price": 54000,
+                  "bath": {
+                      "type": "客室露天風呂(金泉)+室内シャワーブース",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "トイレ独立"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/25288",
+          "rakutenHotelNo": 25288
+      },
+      {
+          "id": "arima-hyoe-koyokaku",
+          "name": "有馬温泉 兵衛向陽閣",
+          "kana": "ひょうえ こうようかく",
+          "area": "有馬温泉",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "有馬温泉",
+          "spring": "含鉄泉",
+          "springDetail": "含鉄・ナトリウム-塩化物強塩高温泉(金泉)",
+          "efficacy": [
+              "筋肉痛",
+              "関節痛",
+              "神経痛",
+              "冷え性"
+          ],
+          "gensenNote": "全湯処が金泉。和風「一の湯」、ローマ風「二の湯」、湯治場風「三の湯」の3つの大浴場を日替わりで男女入替で楽しめる(露天・内湯)。金泉の貸切露天風呂「朝霧」「夕霧」(50分4,400円税込)あり。",
+          "roomBathNote": "標準和室は洗い場付きバス(内風呂)と独立の温水洗浄トイレでバス・トイレ別が基本(全129室)。特別室は2バス2トイレ+半露天。露天風呂付客室(西館最上階2室)は室内シャワーブース+テラス露天(温泉ではない)+独立トイレ。※15階の洋室ツインのみユニットバスのため掲載対象外。",
+          "scene": "town",
+          "pal": "night",
+          "tags": [
+              "kashikiri_roten",
+              "daiyokujo",
+              "roten",
+              "gensen",
+              "nigori",
+              "iwaburo"
+          ],
+          "catch": "太閤秀吉ゆかり700年超の老舗。金泉の3大浴場と金泉貸切露天が楽しめる有馬随一の湯処。",
+          "description": "太閤秀吉ゆかり、創業700年超の老舗旅館。和風「一の湯」・ローマ風「二の湯」・湯治場風「三の湯」の3つの金泉大浴場を日替わりで男女入替で楽しめる。客室は洗い場付きバスとトイレが別の造りが基本。金泉の貸切露天風呂「朝霧」「夕霧」も50分4,400円で利用できる。",
+          "kashikiri": [
+              {
+                  "name": "貸切露天風呂「朝霧」",
+                  "type": "露天(岩風呂)",
+                  "capacity": "〜4名(要確認)",
+                  "fee": "目安 50分 4,400円(税込・要確認)",
+                  "how": "宿泊者限定・予約制。営業 8:00-9:45/14:45-22:15"
+              },
+              {
+                  "name": "貸切露天風呂「夕霧」",
+                  "type": "露天(石造り)",
+                  "capacity": "〜4名(要確認)",
+                  "fee": "目安 50分 4,400円(税込・要確認)",
+                  "how": "宿泊者限定・予約制。営業 8:00-9:45/14:45-22:15"
+              }
+          ],
+          "access": "神戸電鉄有馬温泉駅より徒歩約5分/新神戸駅より送迎あり",
+          "official": "https://www.hyoe.co.jp/",
+          "highlights": [
+              "趣の異なる3つの金泉大浴場(一の湯・二の湯・三の湯、日替わりで男女入替)",
+              "金泉の貸切露天風呂「朝霧」「夕霧」(目安 50分4,400円税込・要確認)",
+              "標準客室は洗い場付きバスとトイレが別(全129室)",
+              "太閤秀吉ゆかり、創業700年超の老舗旅館"
+          ],
+          "sources": [
+              "https://www.hyoe.co.jp/",
+              "https://www.hyoe.co.jp/rooms/compare/",
+              "https://www.hyoe.co.jp/hotspa/private_bath/",
+              "https://www.hyoe.co.jp/hotspa/benefits/",
+              "https://travel.rakuten.co.jp/HOTEL/8636/8636_onsen.html"
+          ],
+          "uncertain": "価格は1泊2食2名で総額47,300円〜(=1名約23,650円〜)、ゆこゆこ1名26,400円〜の公表帯から推定。露天付客室・特別室の料金は推定。貸切露天の定員は未確認。貸切露天(朝霧・夕霧)の料金「50分4,400円」は要一次確認で、営業は8:00-9:45/14:45-22:15。大浴場は日替わりで男女入替。特別室の半露天が金泉かは未確認(onsenBath=falseで暫定)。掲載rooms はバス・トイレ別を確認できたタイプのみ(15階洋室ツインのユニットバスは掲載しない)。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダード和室(10畳)",
+                  "capacity": "2〜5名",
+                  "size": "10畳+広縁",
+                  "price": 26000,
+                  "bath": {
+                      "type": "洗い場付きバス(内風呂)+独立トイレ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "バス・トイレ別。客室風呂は温泉ではない(金泉は大浴場)"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "露天風呂付客室(和モダンツイン/西館最上階)",
+                  "capacity": "2名",
+                  "size": "和モダン",
+                  "price": 45000,
+                  "bath": {
+                      "type": "室内シャワーブース+テラス露天風呂+独立トイレ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "客室露天は温泉ではない。内風呂(浴槽)なし。全2室。料金は推定"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/8636",
+          "rakutenHotelNo": 8636
+      },
+      {
+          "id": "arima-kinzan",
+          "name": "有馬温泉 欽山",
+          "kana": "きんざん",
+          "area": "有馬温泉",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "有馬温泉",
+          "spring": "含鉄泉",
+          "springDetail": "含鉄-ナトリウム-塩化物温泉(金泉)、単純放射能冷鉱泉(銀泉)",
+          "efficacy": [
+              "神経痛",
+              "筋肉痛",
+              "関節痛",
+              "きりきず",
+              "やけど"
+          ],
+          "gensenNote": "金泉の大浴場「つづみの湯」「花の湯」は日替わり男女入替制で各露天付き。客室の専用露天風呂は銀泉。宿として独立した貸切風呂・家族風呂は設けていない。",
+          "roomBathNote": "新基準客室・銀泉半露天特別室(全12室)は銀泉の半露天風呂+ミストサウナを備え、トイレ・洗面所は独立、脱衣・洗い場は床暖房。窓ガラスの開閉で内湯/半露天に調整可。数寄屋造り客室もあり。ユニットバスではない。",
+          "scene": "forest",
+          "pal": "forest",
+          "tags": [
+              "room_roten",
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "gensen",
+              "nigori"
+          ],
+          "catch": "数寄屋造りの高級料亭旅館。金泉大浴場と銀泉露天付き客室で味わう侘び寂びの休日。",
+          "description": "数寄屋造りの佇まいが美しい高級料亭旅館。金泉の大浴場「つづみの湯」「花の湯」は日替わり男女入替で各露天付き。新基準客室・特別室は銀泉の半露天風呂を備え、トイレ・洗面所は独立。茶の湯の心でもてなす侘び寂びの空間で、会席料理と有馬の名湯を静かに味わえる。",
+          "kashikiri": [],
+          "access": "神戸電鉄有馬温泉駅より徒歩約5分",
+          "official": "https://www.kinzan.co.jp/",
+          "highlights": [
+              "金泉の大浴場「つづみの湯」「花の湯」(各露天付き、日替わり男女入替)",
+              "新基準客室・特別室は銀泉の半露天風呂+ミストサウナ付き",
+              "トイレ・洗面所が独立した客室設計",
+              "数寄屋造りの高級料亭旅館、会席料理"
+          ],
+          "sources": [
+              "https://www.kinzan.co.jp/",
+              "https://www.kinzan.co.jp/new_room/",
+              "https://www.kinzan.co.jp/spa/",
+              "https://travel.rakuten.co.jp/HOTEL/53390/53390_onsen.html",
+              "https://www.ikyu.com/00000542/"
+          ],
+          "uncertain": "価格は1泊2食2名で総額109,400〜116,600円〜(=1名約54,700〜58,300円〜)の公表帯から推定。100㎡タイプ・数寄屋造り客室の料金は推定。数寄屋造り客室の浴室構成(客室風呂の有無)は未確認のため掲載対象外とした。貸切風呂は無しと判断(公式・検索で確認されず)。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "銀泉半露天特別室(東館)",
+                  "capacity": "2〜3名",
+                  "size": "約63〜85㎡",
+                  "price": 58000,
+                  "bath": {
+                      "type": "銀泉の半露天風呂+ミストサウナ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "トイレ・洗面所は独立。窓の開閉で内湯/半露天に調整可"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "銀泉半露天特別室(100㎡タイプ)",
+                  "capacity": "2〜4名",
+                  "size": "約100㎡",
+                  "price": 70000,
+                  "bath": {
+                      "type": "銀泉の半露天風呂+ミストサウナ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "トイレ・洗面独立。料金は推定"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/53390",
+          "rakutenHotelNo": 53390
+      },
+      {
+          "id": "arima-tosen-goshoboh",
+          "name": "有馬温泉 陶泉 御所坊",
+          "kana": "とうせん ごしょぼう",
+          "area": "有馬温泉",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "有馬温泉",
+          "spring": "含鉄泉",
+          "springDetail": "含鉄・ナトリウム-塩化物強塩泉(金泉)、源泉かけ流し",
+          "efficacy": [
+              "神経痛",
+              "筋肉痛",
+              "冷え性"
+          ],
+          "gensenNote": "半混浴・半露天の大浴場「金郷泉(きんこせん)」は源泉100%かけ流しの金泉。別棟に貸切風呂「偲豊庵」(茶室付、御所泉源使用)。",
+          "roomBathNote": "1191年創業、有馬最古とされる登録有形文化財の宿(全16〜17室)。標準客室は客室内にウォシュレットトイレを備え入浴は大浴場「金郷泉」(客室内に浴室=ユニットバスなし)。最上位客室(約130㎡)は源泉かけ流しの金泉浴槽+トイレ2ヶ所で浴室・トイレ独立、サウナ付き。",
+          "scene": "town",
+          "pal": "dusk",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "gensen",
+              "nigori"
+          ],
+          "catch": "鎌倉創業・有馬最古の文化財旅館。金泉かけ流しの「金郷泉」と貸切「偲豊庵」。",
+          "description": "鎌倉時代1191年創業、有馬最古とされる登録有形文化財の宿。谷崎潤一郎や与謝野晶子も愛した木造建築で、半混浴・半露天の大浴場「金郷泉」は源泉100%かけ流しの金泉。標準客室は入浴を大浴場に委ね、最上位客室は金泉かけ流しの浴槽を備える。貸切風呂「偲豊庵」あり。",
+          "kashikiri": [
+              {
+                  "name": "偲豊庵(しほうあん)",
+                  "type": "貸切風呂(茶室付)",
+                  "capacity": "〜4名",
+                  "fee": "宿泊 60分5,500円/90分7,700円(+入湯税75円)",
+                  "how": "予約時に申込。本館から徒歩約3分、御所泉源使用"
+              }
+          ],
+          "access": "神戸電鉄有馬温泉駅より徒歩約5分",
+          "official": "https://goshoboh.com/",
+          "highlights": [
+              "1191年創業、有馬最古とされる登録有形文化財の宿",
+              "半混浴・半露天の大浴場「金郷泉」は源泉100%かけ流しの金泉",
+              "貸切風呂「偲豊庵」(茶室付、〜4名、宿泊60分5,500円)",
+              "谷崎潤一郎・与謝野晶子ら文豪が愛した木造建築"
+          ],
+          "sources": [
+              "https://goshoboh.com/",
+              "https://goshoboh.com/rooms/",
+              "https://goshoboh.com/spa/",
+              "https://www.kashikiri-onsen.com/kinki/hyougo/arima/goshobo.html",
+              "https://travel.rakuten.co.jp/HOTEL/80572/"
+          ],
+          "uncertain": "価格は1泊2食2名で総額75,800円〜(=1名約37,900円〜)の帯から推定。最上位金泉風呂付客室の料金は推定。客室総数は出典により16室/17室と差異。最古参の一部客室のトイレ有無は予約時要確認。efficacyは有馬金泉の一般効能。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "スタンダード客室(翠巒御坊 ほか)",
+                  "capacity": "2名",
+                  "size": "和室",
+                  "price": 38000,
+                  "bath": {
+                      "type": "客室に浴室なし(トイレは客室内・入浴は大浴場「金郷泉」)",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "客室内にユニットバスなし。ウォシュレットトイレは客室内"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "最上位スイート「心楽」(金泉かけ流し浴槽付)",
+                  "capacity": "2〜4名",
+                  "size": "約130㎡",
+                  "price": 70000,
+                  "bath": {
+                      "type": "客室に源泉かけ流しの金泉風呂+トイレ2ヶ所(浴室・トイレ独立)",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "サウナ付き。バス・トイレ別。料金は推定"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/80572",
+          "rakutenHotelNo": 80572
+      },
+      {
+          "id": "arima-grand-hotel",
+          "name": "有馬温泉 有馬グランドホテル",
+          "kana": "ありま ぐらんど ほてる",
+          "area": "有馬温泉",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "有馬温泉",
+          "spring": "含鉄泉",
+          "springDetail": "含鉄・ナトリウム-塩化物強塩泉(金泉)、ラドン泉(銀泉)",
+          "efficacy": [
+              "神経痛",
+              "冷え性",
+              "筋肉痛",
+              "関節痛"
+          ],
+          "gensenNote": "9階の展望大浴苑「雲海」(2272㎡)は金泉で丹波の山々を望む絶景。金泉の貸切家族風呂「曙」「朝陽」と露天「夕映えの湯」の3ヶ所、銀泉のプライベートスパ「朱音」「初音」も。",
+          "roomBathNote": "新館「別墅結楽」(2F大地・7F大空、全18室)は金泉または銀泉の客室露天風呂付きで、温水洗浄トイレと洗面が独立、シャワー/バスと分離。内風呂(浴槽)なしタイプもトイレは独立。掲載は別墅結楽の露天付客室に限定。",
+          "scene": "mountain",
+          "pal": "mist",
+          "tags": [
+              "kashikiri_roten",
+              "room_roten",
+              "daiyokujo",
+              "roten",
+              "view_bath",
+              "gensen",
+              "nigori"
+          ],
+          "catch": "9階展望大浴苑「雲海」から丹波の絶景。金泉・銀泉と露天付き客室「別墅結楽」。",
+          "description": "9階の展望大浴苑「雲海」(2272㎡)から丹波の山々を望む金泉の絶景大浴場が名物。金泉の貸切家族風呂「曙」「朝陽」、露天「夕映えの湯」、銀泉のプライベートスパも。新館「別墅結楽」全18室は金泉・銀泉の客室露天風呂付きで、温水洗浄トイレと洗面が独立した造り。",
+          "kashikiri": [
+              {
+                  "name": "夕映えの湯",
+                  "type": "露天(金泉)",
+                  "capacity": "要確認",
+                  "fee": "要確認(宿にて申込)",
+                  "how": "予約(要確認)"
+              },
+              {
+                  "name": "曙",
+                  "type": "貸切家族風呂(金泉)",
+                  "capacity": "要確認",
+                  "fee": "要確認(宿にて申込)",
+                  "how": "予約(要確認)"
+              },
+              {
+                  "name": "朝陽",
+                  "type": "貸切家族風呂(金泉)",
+                  "capacity": "要確認",
+                  "fee": "要確認(宿にて申込)",
+                  "how": "予約(要確認)"
+              }
+          ],
+          "access": "神戸電鉄有馬温泉駅より徒歩約12分/有馬温泉駅・バスセンターより送迎あり",
+          "official": "https://www.arima-gh.jp/",
+          "highlights": [
+              "9階の展望大浴苑「雲海」(2272㎡)は金泉+丹波の山々の絶景",
+              "金泉の貸切家族風呂3つ(「曙」「朝陽」「夕映えの湯」)",
+              "銀泉のプライベートスパ「朱音」「初音」",
+              "新館「別墅結楽」全18室は金泉・銀泉の客室露天付き"
+          ],
+          "sources": [
+              "https://www.arima-gh.jp/",
+              "https://www.jalan.net/yad313952/room/",
+              "https://travel.rakuten.co.jp/HOTEL/25128/25128_onsen.html",
+              "https://reserve.489ban.net/client/arima-gh/0/plan/room/22218/stay",
+              "https://www.jtb.co.jp/kokunai-hotel/htl/6435003/bath/"
+          ],
+          "uncertain": "別墅結楽の料金は楽天トラベルで1名74,800〜105,600円(税込)等と高め、本館標準室はじゃらん2名41,800円〜(=1名約20,900円〜)。各室価格は推定。貸切家族風呂の料金・定員・予約方法は未確認。本館標準室のバス・トイレ構成(ユニットバス有無)は未確認のため掲載は別墅結楽の露天付客室に限定。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "別墅結楽 2F 金泉露天付き和洋室(大地)",
+                  "capacity": "2〜3名",
+                  "size": "約119㎡(10畳+ツイン)",
+                  "price": 78000,
+                  "bath": {
+                      "type": "客室露天風呂(金泉)+シャワー/バス、温水洗浄トイレ独立",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "クラブフロア。トイレ・洗面独立。料金は推定"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "別墅結楽 7F 銀泉露天付き和洋室(大空)",
+                  "capacity": "2〜3名",
+                  "size": "約91㎡(9.5畳+ツイン)",
+                  "price": 68000,
+                  "bath": {
+                      "type": "客室露天風呂(銀泉)、内風呂なし、独立トイレ",
+                      "wash": true,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "内風呂(浴槽)なし・シャワーあり。トイレ独立。料金は推定"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/25128",
+          "rakutenHotelNo": 25128
+      },
+      {
+          "id": "kinosaki-yamamotoya",
+          "name": "城崎温泉 山本屋",
+          "kana": "きのさきおんせん やまもとや",
+          "area": "城崎温泉",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "城崎温泉",
+          "spring": "塩化物泉",
+          "springDetail": "ナトリウム・カルシウム-塩化物泉(城崎温泉の配湯)",
+          "efficacy": [
+              "きりきず",
+              "冷え性",
+              "末梢循環障害",
+              "胃腸機能の低下",
+              "疲労回復"
+          ],
+          "gensenNote": "館内大浴場は城崎温泉の配湯を使用し、内湯+露天(樽風呂)。別に完全予約制の貸切露天風呂を併設。かけ流し/循環の別は未確認。城崎名物の外湯7湯めぐりが徒歩圏(隣接する柳湯ほか300m圏に4湯)。",
+          "roomBathNote": "城崎温泉の条例により客室へ温泉は引けず、標準和室は客室内にトイレ(・洗面)のみで浴室を持たない(ユニットバス無し)。入浴は大浴場・貸切露天・外湯。半露天風呂付き特別室は10畳・内風呂なしで、半露天は沸かし湯・トイレは客室内で別。",
+          "scene": "town",
+          "pal": "night",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "kashikiri_roten",
+              "room_roten",
+              "yumeguri"
+          ],
+          "catch": "柳並木の中心に建つ創業約350年の老舗。客室はトイレ付で、湯は大浴場と外湯めぐりで愉しむ城崎の王道宿。",
+          "description": "城崎温泉の柳並木の中心に建つ創業約350年の老舗旅館。城崎の条例で客室へ温泉を引けないため標準和室は室内トイレのみで浴室を持たず(ユニットバス無し)、入浴は内湯・露天樽風呂の大浴場、完全予約制の貸切露天風呂、7つの外湯めぐりで行う。坪庭を望む半露天風呂付き特別室(沸かし湯)もある。",
+          "kashikiri": [
+              {
+                  "name": "貸切露天風呂",
+                  "type": "露天",
+                  "capacity": "要確認",
+                  "fee": "要確認",
+                  "how": "完全予約制"
+              }
+          ],
+          "access": "JR城崎温泉駅から徒歩約7分(柳並木沿い・温泉街の中心部)。7つの外湯めぐりに好立地",
+          "official": "https://www.kinosaki.com/",
+          "highlights": [
+              "創業約350年、城崎温泉の柳並木の中心に建つ老舗旅館(温泉街の中心・外湯めぐりに好立地)",
+              "内湯+露天(樽風呂)の大浴場と、完全予約制の貸切露天風呂を併設",
+              "半露天風呂付き特別室あり(坪庭を望む10畳・内風呂なし/半露天は条例により沸かし湯)",
+              "300m圏に外湯4湯、7つの外湯めぐりに好立地"
+          ],
+          "sources": [
+              "https://www.kinosaki.com/",
+              "https://www.kinosaki.com/rooms/",
+              "https://www.kinosaki.com/onsen/",
+              "https://www.jalan.net/yad333636/",
+              "https://travel.rakuten.co.jp/HOTEL/28142/28142_onsen.html",
+              "https://toyooka-tourism.com/recommend/onsen/kinosaki_insen/"
+          ],
+          "uncertain": "料金は2名税込48,400円〜(じゃらん/価格.com最安表示)を1名24,200円と算出(1泊2食)。特別室28,000円は『大人1名27,001〜28,000円』プランからの推定。大浴場のかけ流し/循環の別は未確認。特別室の半露天は沸かし湯(温泉ではない)。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "標準和室",
+                  "capacity": "2〜3名",
+                  "size": "和室(10畳前後)",
+                  "price": 24200,
+                  "bath": {
+                      "type": "客室に浴室なし(トイレは客室内・入浴は大浴場と外湯めぐり)",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "条例で客室へ温泉を引けず、室内はトイレ・洗面のみ。入浴は内湯・露天樽風呂の大浴場と外湯。ユニットバスは無い"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "半露天風呂付き特別室",
+                  "capacity": "2〜3名",
+                  "size": "10畳(内風呂なし)",
+                  "price": 28000,
+                  "bath": {
+                      "type": "客室半露天風呂(沸かし湯)・トイレ別",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "坪庭を望む半露天風呂付き。半露天は城崎の条例で温泉不可のため沸かし湯。トイレは客室内で浴室と別、ユニットバスではない"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/28142",
+          "rakutenHotelNo": 28142
+      },
+      {
+          "id": "kinosaki-mikuniya",
+          "name": "城崎温泉 心の宿 三國屋",
+          "kana": "きのさきおんせん こころのやど みくにや",
+          "area": "城崎温泉",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "城崎温泉",
+          "spring": "塩化物泉",
+          "springDetail": "ナトリウム・カルシウム-塩化物泉(城崎温泉の配湯)",
+          "efficacy": [
+              "きりきず",
+              "冷え性",
+              "筋肉・関節の慢性的な痛みやこわばり",
+              "胃腸機能の低下",
+              "疲労回復"
+          ],
+          "gensenNote": "大浴場は無し。館内に天然温泉の無料貸切風呂4ヶ所(福の湯・楽・花・夢/うち1つは最大8名可、花・夢は加水可)。宿泊者は予約制で無料利用。外湯『さとの湯』まで徒歩3分で外湯めぐりに好立地。",
+          "roomBathNote": "全12室が純和風で、洗浄機付トイレ+洗面を客室内に備えるが客室浴室(内湯)はない(ユニットバス無し)。入浴は4つの無料貸切風呂(天然温泉)と外湯めぐりで行う。夕食は部屋食。",
+          "scene": "town",
+          "pal": "indigo",
+          "tags": [
+              "kashikiri_uchi",
+              "yumeguri"
+          ],
+          "catch": "城崎温泉駅から徒歩3分。天然温泉の無料貸切風呂4ヶ所が自慢の全12室・部屋食の隠れ宿。",
+          "description": "城崎温泉駅から徒歩3分、全12室で夕食は部屋食の小規模な隠れ宿。館内に天然温泉の無料貸切風呂を4ヶ所備え1つは最大8名可。大浴場は無く、客室は洗浄機付トイレと洗面のみで浴室を持たない(ユニットバス無し)ため、入浴は貸切風呂と外湯めぐりで行う構成。",
+          "kashikiri": [
+              {
+                  "name": "福の湯・楽・花・夢(貸切風呂4ヶ所)",
+                  "type": "内湯(天然温泉)",
+                  "capacity": "最大8名(1ヶ所)",
+                  "fee": "無料",
+                  "how": "宿泊者専用・無料(予約不可・空いていれば利用可)、花と夢は加水可"
+              }
+          ],
+          "access": "JR城崎温泉駅から徒歩約3分。外湯『さとの湯』まで徒歩3分",
+          "official": "https://kinosaki3928.com/",
+          "highlights": [
+              "全12室・夕食は部屋食の小規模な隠れ宿(城崎温泉駅から徒歩3分)",
+              "天然温泉の無料貸切風呂4ヶ所(福の湯・楽・花・夢/1つは最大8名)",
+              "大浴場は無く、貸切風呂と外湯めぐりで湯めぐり(さとの湯まで徒歩3分)",
+              "全室に洗浄機付トイレ・洗面を備え、客室浴室はなくユニットバス無縁"
+          ],
+          "sources": [
+              "https://kinosaki3928.com/en/",
+              "https://www.kinosaki3928.com/sp/spa/index.html",
+              "https://travel.rakuten.co.jp/HOTEL/70350/70350_onsen.html",
+              "https://www.jalan.net/yad312761/",
+              "https://kinosaki-spa.gr.jp/stay/mikuniya/",
+              "https://toyooka-tourism.com/recommend/onsen/kinosaki_insen/"
+          ],
+          "uncertain": "1泊2食1名25,000円は城崎の部屋食・小規模旅館(カニ/但馬牛会席)の相場からの推定で、正確な最安総額は未取得。泉質は城崎温泉の一般泉質(ナトリウム・カルシウム-塩化物泉)。貸切風呂の各定員は1ヶ所が最大8名のほか詳細未確認。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "純和室(12室)",
+                  "capacity": "2〜4名",
+                  "size": "和室",
+                  "price": 25000,
+                  "bath": {
+                      "type": "客室に浴室なし(トイレは客室内・入浴は無料貸切風呂と外湯めぐり)",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "洗浄機付トイレ+洗面を客室内に備えるが客室浴室なし。入浴は館内4つの無料貸切風呂(天然温泉)と外湯。ユニットバスは無い"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/70350",
+          "rakutenHotelNo": 70350
+      },
+      {
+          "id": "yumura-izutsuya",
+          "name": "湯村温泉 佳泉郷 井づつや",
+          "kana": "ゆむらおんせん かせんきょう いづつや",
+          "area": "湯村温泉(新温泉町)",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "onsen",
+          "onsen": "湯村温泉",
+          "spring": "炭酸水素塩泉",
+          "springDetail": "ナトリウム-炭酸水素塩・硫酸塩泉/単純温泉(自家源泉)",
+          "efficacy": [
+              "神経痛",
+              "筋肉痛",
+              "冷え性",
+              "疲労回復"
+          ],
+          "gensenNote": "自家源泉を保有。屋上の展望桧風呂『和みの湯』、長寿の湯(大岩風呂)、露天風呂など多彩な浴場。貸切露天風呂(1000円)・家族風呂『寿ぎの湯』もあり。元湯『荒湯』は98℃・毎分470Lが湧く湯村温泉。全室の浴室・洗面まで温泉を配湯。",
+          "roomBathNote": "一般和室は『和室10畳+広縁+バス(温泉)+洗面所+トイレ』で、温泉の内風呂・洗面所・トイレがそれぞれ独立(ユニットバスではない)。ウォッシュレット完備。源泉温泉露天風呂付客室は客室露天が自家源泉で、トイレは別。",
+          "scene": "river",
+          "pal": "dusk",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "view_bath",
+              "hinoki",
+              "iwaburo",
+              "kashikiri_roten",
+              "kashikiri_uchi",
+              "room_roten",
+              "gensen"
+          ],
+          "catch": "荒湯湧く山陰・湯村温泉の大型湯宿。自家源泉を全室の内風呂・洗面まで配湯し、屋上展望桧風呂や貸切露天も充実。",
+          "description": "荒湯が湧く山陰・湯村温泉の大型湯宿。自家源泉を全客室の内風呂・洗面まで配湯し、一般和室は温泉の内風呂・洗面所・トイレがそれぞれ独立(ユニットバスではない)。屋上の展望桧風呂『和みの湯』や長寿の湯(大岩風呂)、貸切露天風呂、源泉露天付客室など湯の選択肢が豊富。",
+          "kashikiri": [
+              {
+                  "name": "貸切露天風呂",
+                  "type": "露天",
+                  "capacity": "要確認",
+                  "fee": "1000円",
+                  "how": "予約制"
+              },
+              {
+                  "name": "家族風呂 寿ぎの湯",
+                  "type": "内湯(バリアフリー)",
+                  "capacity": "要確認",
+                  "fee": "要確認(45分)",
+                  "how": "予約制"
+              }
+          ],
+          "access": "山陰・湯村温泉(兵庫県美方郡新温泉町湯)。JR八鹿駅・浜坂駅からバス。送迎の有無は要確認",
+          "official": "https://www.izutuya.com/",
+          "highlights": [
+              "創業元禄15年(1702年)、荒湯湧く山陰・湯村温泉の大型湯宿",
+              "自家源泉を全室の内風呂・洗面まで配湯(一般和室は温泉内風呂+洗面所+トイレが別)",
+              "屋上の展望桧風呂『和みの湯』、長寿の湯(大岩風呂)、露天など多彩な湯",
+              "源泉温泉露天風呂付客室11室、貸切露天風呂・家族風呂『寿ぎの湯』も"
+          ],
+          "sources": [
+              "https://www.izutuya.com/",
+              "https://www.izutuya.com/facility/outline/",
+              "https://www.izutuya.com/room/",
+              "https://www.yumura.gr.jp/izutuya/",
+              "https://travel.rakuten.co.jp/HOTEL/19964/19964_onsen.html",
+              "https://www.jalan.net/yad323146/"
+          ],
+          "uncertain": "一般和室15,400円は『2名税込30,800円〜』(『から』表示)の1名換算・1泊2食。源泉温泉露天風呂付客室30,000円は推定。客室内風呂の洗い場有無は未確認。効能は観光協会/公式記載。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "一般和室(48室)",
+                  "capacity": "2〜4名",
+                  "size": "和室10畳+広縁",
+                  "price": 15400,
+                  "bath": {
+                      "type": "内風呂(温泉)・洗面所・トイレが各々独立",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "和室10畳+広縁+バス(温泉)+洗面所+トイレ。自家源泉を客室浴室・洗面まで配湯。浴室とトイレは別空間でユニットバスではない。ウォッシュレット完備"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "源泉温泉露天風呂付客室(11室)",
+                  "capacity": "2〜3名",
+                  "size": "和室+露天",
+                  "price": 30000,
+                  "bath": {
+                      "type": "客室露天風呂(源泉温泉)/トイレ別",
+                      "wash": null,
+                      "view": null,
+                      "onsenBath": true,
+                      "note": "客室に自家源泉の温泉露天風呂。トイレは客室内で別。ユニットバスではない"
+                  },
+                  "features": []
+              }
+          ],
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/19964",
+          "rakutenHotelNo": 19964
+      },
+      {
+          "id": "dormyinn-kobe-motomachi",
+          "name": "天然温泉 浪漫湯 ドーミーイン神戸元町",
+          "kana": "てんねんおんせん ろまんのゆ どーみーいんこうべもとまち",
+          "area": "神戸・元町",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "business",
+          "onsen": "天然温泉「浪漫湯」",
+          "spring": "単純温泉",
+          "springDetail": "単純温泉(低張性・弱アルカリ性・低温泉)",
+          "efficacy": [
+              "筋肉・関節のこわばり",
+              "胃腸機能の低下",
+              "自律神経不安定症",
+              "疲労回復"
+          ],
+          "gensenNote": "14F最上階に男女別天然温泉大浴場『浪漫湯』。内湯(天然温泉)・露天風呂・露天壺風呂・強冷水風呂・高温サウナを備える。最上階ならではの空の吹き抜けのある露天が特徴。かけ流し/循環の別は未確認。",
+          "roomBathNote": "客室は独立洗面台・独立洗浄トイレ・シャワーブースが分離した近年のドーミーイン標準レイアウトで、3点ユニットバスではない。浴槽は客室になく、湯は14F大浴場で愉しむ。全室禁煙・温水洗浄機付トイレ・シモンズ製ベッド。",
+          "scene": "sea",
+          "pal": "indigo",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "gensen"
+          ],
+          "catch": "元町の天然温泉ビジネスホテル。全室シャワーブース+独立トイレで3点ユニットではなく、14F露天大浴場『浪漫湯』も。",
+          "description": "JR・阪神元町駅至近のドーミーイン。14F最上階に天然温泉大浴場『浪漫湯』(内湯・露天・壺風呂・高温サウナ)を備える。客室は独立洗面台・独立洗浄トイレ・シャワーブースが分離した近年のドーミーイン標準レイアウトで、3点ユニットバスではない。浴槽は無く入浴は大浴場中心。",
+          "kashikiri": [],
+          "access": "JR元町駅・阪神元町駅から徒歩圏(神戸市中央区)。三宮にも近い",
+          "official": "https://dormy-hotels.com/dormyinn/hotels/kobemotomachi/",
+          "highlights": [
+              "14F最上階の男女別天然温泉大浴場『浪漫湯』(内湯・露天・壺風呂・高温サウナ)",
+              "客室は独立洗面+独立洗浄トイレ+シャワーブースの分離レイアウト(3点ユニットではない)",
+              "JR・阪神元町駅至近のビジネスホテル(全室禁煙・シモンズ製ベッド)",
+              "泉質は単純温泉、素泊まり1名7,033円〜(時期変動)"
+          ],
+          "sources": [
+              "https://dormy-hotels.com/dormyinn/hotels/kobemotomachi/",
+              "https://dormy-hotels.com/dormyinn/hotels/kobemotomachi/rooms/",
+              "https://dormy-hotels.com/dormyinn/hotels/kobemotomachi/spa/",
+              "https://travel.rakuten.co.jp/HOTEL/179274/179274_onsen.html",
+              "https://www.jalan.net/yad369656/",
+              "https://dormytours.tank.jp/?p=1812"
+          ],
+          "uncertain": "名称は出典上『天然温泉 浪漫湯 ドーミーイン神戸元町』であり、“ドーミーインPREMIUM”/“潮騒の湯”は該当せず(正しくは通常ブランドのドーミーイン、温泉名は浪漫湯)。料金は1名素泊まり7,033円〜(時期変動)。ツイン12,000円は推定。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "セミダブルルーム",
+                  "capacity": "1名",
+                  "size": "14.7㎡",
+                  "price": 7033,
+                  "bath": {
+                      "type": "シャワーブース(浴槽なし)/独立洗浄トイレ・独立洗面",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "独立洗面台・トイレ・シャワーブースが分離したレイアウト。3点ユニットではない。浴槽は無く入浴は14F天然温泉大浴場"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "ツインルーム",
+                  "capacity": "2名",
+                  "size": "22.4㎡",
+                  "price": 12000,
+                  "bath": {
+                      "type": "シャワーブース(浴槽なし)/独立洗浄トイレ・独立洗面",
+                      "wash": false,
+                      "view": null,
+                      "onsenBath": false,
+                      "note": "セミダブルと同様の分離レイアウト(シャワーブース+独立トイレ)。ユニットバスではない"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "14F天然温泉大浴場『浪漫湯』(露天・壺湯・高温サウナ)/客室はシャワーブース+独立トイレ",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/179274",
+          "rakutenHotelNo": 179274
+      },
+      {
+          "id": "kobe-bay-sheraton",
+          "name": "神戸ベイシェラトン ホテル&タワーズ",
+          "kana": "こうべべいしぇらとん ほてるあんどたわーず",
+          "area": "神戸・六甲アイランド",
+          "pref": "兵庫県",
+          "region": "関西",
+          "type": "business",
+          "onsen": "神戸六甲温泉「濱泉」",
+          "spring": "塩化物泉",
+          "springDetail": "ナトリウム-塩化物泉(神戸六甲温泉「濱泉」/自家源泉・源泉かけ流し・茶褐色の黄金の湯)",
+          "efficacy": [
+              "神経痛",
+              "筋肉痛",
+              "関節痛",
+              "五十肩",
+              "冷え性",
+              "疲労回復"
+          ],
+          "gensenNote": "スクエア3Fの『神戸六甲温泉 濱泉』は地下1600mからの自家源泉100%源泉かけ流し(ナトリウム-塩化物泉、湧出53.8℃)。内湯・露天・水風呂・打たせ湯・寝湯・フィンランドサウナ・家族風呂を備え、スパフロアから専用EV直結。2025年12月グランドリニューアル。",
+          "roomBathNote": "スパフロアの専有温泉露天風呂付和室(La gran vista・67㎡=室内52+テラス15)は和室10帖+広縁+露天風呂付ウッドテラスで、自家源泉の温泉露天とトイレが別(ユニットバスではない)。ジャパニーズスパスイート(86㎡)も専有露天付き和室。掲載対象はスパフロア和室系タイプに限定。",
+          "scene": "sea",
+          "pal": "dusk",
+          "tags": [
+              "daiyokujo",
+              "roten",
+              "sauna",
+              "gensen",
+              "kashikiri_uchi",
+              "room_roten",
+              "hinoki",
+              "view_bath"
+          ],
+          "catch": "六甲アイランドの温泉リゾート。源泉かけ流し『濱泉』とスパフロアの専有温泉露天付和室で、風呂とトイレは別。",
+          "description": "六甲アイランドの温泉リゾート。自家源泉100%源泉かけ流しの天然温泉『神戸六甲温泉 濱泉』を擁し、スパフロアには専有温泉露天風呂付和室(La gran vista・67㎡)やジャパニーズスパスイートなど、浴室とトイレが分かれた和の客室を用意。2025年12月グランドリニューアル。",
+          "kashikiri": [
+              {
+                  "name": "家族風呂(濱泉)",
+                  "type": "貸切温泉",
+                  "capacity": "要確認",
+                  "fee": "要確認",
+                  "how": "予約制"
+              }
+          ],
+          "access": "六甲ライナー『アイランドセンター』駅直結、JR三ノ宮駅から約20分。神戸市東灘区向洋町(六甲アイランド)",
+          "official": "https://www.sheraton-kobe.co.jp/",
+          "highlights": [
+              "自家源泉100%源泉かけ流しの天然温泉『神戸六甲温泉 濱泉』(茶褐色の黄金の湯)",
+              "スパフロアに専有温泉露天風呂付和室(La gran vista・67㎡)やジャパニーズスパスイート",
+              "濱泉は内湯・露天・水風呂・打たせ湯・寝湯・フィンランドサウナ・家族風呂を備える",
+              "2025年12月グランドリニューアル、六甲ライナー『アイランドセンター』駅直結"
+          ],
+          "sources": [
+              "https://www.sheraton-kobe.co.jp/rooms/spa.php",
+              "https://www.sheraton-kobe.co.jp/spa/hamaizumi/",
+              "https://www.ikyu.com/00000099/10693242/10068732/",
+              "https://travel.rakuten.co.jp/HOTEL/1524/1524_onsen.html",
+              "https://www.sheraton-kobe.co.jp/access/",
+              "https://www.sheraton-kobe.co.jp/grand_renewal/"
+          ],
+          "uncertain": "分類はbusinessだが実態は温泉リゾート。La gran vista価格22,200円は一休『2名朝食付44,400円〜』の1名換算で、素泊まり単価ではない(じゃらんは2名65,760円=1名32,880円)。ジャパニーズスパスイート38,000円は推定(朝食付)。スパ客室の洗い場詳細・家族風呂料金は未確認。2025/12改装で客室構成が更新されている可能性。",
+          "verified": true,
+          "rooms": [
+              {
+                  "id": "r1",
+                  "name": "専有温泉露天風呂付和室「La gran vista」(スパフロア)",
+                  "capacity": "2〜3名",
+                  "size": "67㎡(室内52+テラス15)",
+                  "price": 22200,
+                  "bath": {
+                      "type": "専有温泉露天風呂(桧・自家源泉)/トイレ別",
+                      "wash": null,
+                      "view": "六甲アイランドの眺望",
+                      "onsenBath": true,
+                      "note": "和室10帖+広縁+露天風呂付ウッドテラス、6階。自家源泉の温泉露天。トイレは客室内で浴室と別、ユニットバスではない。価格は2名朝食付の1名換算"
+                  },
+                  "features": []
+              },
+              {
+                  "id": "r2",
+                  "name": "ジャパニーズスパスイート(スパフロア)",
+                  "capacity": "2〜4名",
+                  "size": "86㎡",
+                  "price": 38000,
+                  "bath": {
+                      "type": "専有露天風呂(自家源泉)付き和室/トイレ別",
+                      "wash": null,
+                      "view": "六甲アイランドの眺望",
+                      "onsenBath": true,
+                      "note": "専有露天風呂+テラスデッキ付き和室。濱泉直通EV。トイレ別。価格は推定(朝食付)"
+                  },
+                  "features": []
+              }
+          ],
+          "bathLine": "源泉かけ流し天然温泉『濱泉』(露天・フィンランドサウナ・家族風呂)/スパフロア和室は専有温泉露天+独立トイレ",
+          "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1524",
+          "rakutenHotelNo": 1524
       }
   ];
 
@@ -2921,6 +4759,12 @@
     if (!h.type) h.type = 'onsen'; // 既定は温泉宿・旅館
     h.minPrice = Math.min.apply(null, h.rooms.map(function (r) { return r.price; }));
     h.hasFreeKashikiri = h.tags.indexOf('free_kashikiri') !== -1;
+    // 客室に浴室がない(入浴は大浴場・外湯)タイプの判定。城崎の外湯文化宿など。
+    // noRoomBath: 全室が浴室なし / someNoRoomBath: 一部でも浴室なしの客室がある
+    // いずれも客室内にユニットバスは無いが「全室 風呂・トイレ別」とは言い切らない。
+    var noBath = function (r) { return r.bath && /浴室なし/.test(r.bath.type); };
+    h.noRoomBath = h.rooms.every(noBath);
+    h.someNoRoomBath = h.rooms.some(noBath);
   });
 
   const TYPES = {
