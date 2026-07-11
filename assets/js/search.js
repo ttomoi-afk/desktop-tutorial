@@ -125,7 +125,7 @@
       (h.rakutenUrl
         ? '<span class="pr-tag" title="楽天アフィリエイトのリンクです">PR</span>' +
           '<span class="rcard-cta-note">空室・最新料金は楽天トラベルで確認できます</span>' +
-          '<a class="btn btn-rakuten" href="' + ui.esc(ui.affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored">楽天トラベルで予約</a>'
+          '<a class="btn btn-rakuten" href="' + ui.esc(ui.affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored" title="楽天トラベルの予約ページへ移動します">予約</a>'
         : '<a class="btn btn-ghost" href="detail.html?id=' + ui.esc(h.id) + '">詳細を見る</a>') +
       '</div>' +
       '</article>';

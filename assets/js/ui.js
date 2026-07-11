@@ -25,8 +25,8 @@
     let html = '';
     if (h.rakutenUrl) {
       html += '<a class="btn btn-rakuten' + (small ? ' btn-cta-s' : ' btn-lg btn-block') + '"' +
-        ' href="' + esc(affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored">' +
-        (small ? '楽天トラベルで予約' : '楽天トラベルで予約する') + '</a>';
+        ' href="' + esc(affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored"' +
+        ' title="楽天トラベルの予約ページへ移動します">予約</a>';
     }
     if (h.official) {
       html += '<a class="official-link" href="' + esc(h.official) + '" target="_blank" rel="noopener noreferrer">公式サイトで確認</a>';
@@ -187,7 +187,7 @@
       '  </a>' +
       '  <div class="hcard-cta">' +
       (h.rakutenUrl
-        ? '<a class="btn btn-rakuten" href="' + esc(affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored">楽天トラベルで予約</a>' +
+        ? '<a class="btn btn-rakuten" href="' + esc(affiliateUrl(h.rakutenUrl)) + '" target="_blank" rel="noopener noreferrer sponsored" title="楽天トラベルの予約ページへ移動します">予約</a>' +
           '<span class="pr-tag" title="楽天アフィリエイトのリンクです">PR</span>'
         : '<a class="btn btn-ghost" href="detail.html?id=' + esc(h.id) + '">詳細を見る</a>') +
       '  </div>' +
