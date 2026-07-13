@@ -5613,5 +5613,866 @@
     "https://nnr-h.com/hotel/category/brands/solaria"
    ]
   }
+ },
+ {
+  "hotel": {
+   "id": "keio-plaza-sapporo",
+   "name": "京王プラザホテル札幌",
+   "kana": "けいおうぷらざほてるさっぽろ",
+   "area": "札幌・札幌駅",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": null,
+   "spring": null,
+   "springDetail": null,
+   "efficacy": [],
+   "sepScope": "partial",
+   "gensenNote": "館内に一般開放の大浴場・温泉はない。会員制スポーツ&フィットネス〈ペントセプト〉にサウナ(約100℃)・水風呂(約16.5℃)・ロウリュ・浴場があり、宿泊者は有料(3,000円/回)で利用可。天然温泉ではない。",
+   "roomBathNote": "標準客室はユニットバス。上位客室のコンフォートラージツイン(33.2平米・洗い場付き)、コンフォート4BED(洗面台2つ)、プレミアキングダブル(高層階コーナー・洗い場付き)等は洗い場付きでバス・トイレ別。全室セパレートではなく一部客室のみ。",
+   "bathLine": "館内大浴場なし/上位客室は洗い場付きでバス・トイレ別",
+   "tags": [],
+   "catch": "JR札幌駅至近のシティホテル。上位客室は洗い場付きでバス・トイレ別、標準はユニットバス。",
+   "description": "JR札幌駅西口徒歩約5分。館内に一般開放の大浴場・温泉はなく、会員制フィットネスにサウナ・浴場(有料)。コンフォートラージツイン等の上位客室は洗い場付きのバス・トイレ別で、標準客室はユニットバス。全室セパレートではない。",
+   "kashikiri": [],
+   "access": "JR札幌駅西口から徒歩約5分",
+   "official": "https://www.keioplaza-sapporo.co.jp/",
+   "highlights": [
+    "コンフォートラージツインは33.2平米・洗い場付きでバス・トイレ別",
+    "コンフォート4BEDはバス・トイレ別で洗面台2つ",
+    "館内大浴場・温泉はなし。会員制フィットネスにサウナ・浴場(宿泊者3,000円/回)",
+    "JR札幌駅西口から徒歩約5分の好立地"
+   ],
+   "sources": [
+    "https://www.keioplaza-sapporo.co.jp/hotels/room/comfort_large_twin.html",
+    "https://www.keioplaza-sapporo.co.jp/hotels/room/",
+    "https://www.jalan.net/yad350240/qa/0006225957.html",
+    "https://www.keioplaza-sapporo.co.jp/fitness/stay.html",
+    "https://travel.rakuten.co.jp/HOTEL/724/review.html"
+   ],
+   "uncertain": "料金は概算の参考値(素泊まり・1名)。確認できた最安は素泊まり2名1室8,666円(1名4,333円)=標準客室水準で、洗い場付き上位客室の確定料金は未確認。日程で変動。コンフォート4BED・プレミアキングダブルの正確な広さは未確認。フィットネスのサウナ・浴場は会員制施設で天然温泉ではない。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "コンフォートラージツイン",
+     "capacity": "1〜2名",
+     "size": "33.2平米",
+     "price": 13000,
+     "bath": {
+      "type": "内風呂・洗い場付き(バス・トイレ別)",
+      "wash": true,
+      "view": null,
+      "onsenBath": false,
+      "note": "広々としたバスルームで洗い場付き。バス・トイレ別"
+     }
+    },
+    {
+     "name": "プレミアキングダブル",
+     "capacity": "1〜2名",
+     "size": "高層階コーナー",
+     "price": 15000,
+     "bath": {
+      "type": "内風呂・洗い場付き(バス・トイレ別)",
+      "wash": true,
+      "view": null,
+      "onsenBath": false,
+      "note": "高層階コーナー。180cmキングベッド。洗い場付きバスルーム。広さは未確認"
+     }
+    }
+   ],
+   "rakutenHotelNo": 724,
+   "region": "北海道・東北",
+   "scene": "city",
+   "pal": "night",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/724",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/724/724.jpg"
+  },
+  "verify": {
+   "verdict": "OK",
+   "confidence": "high",
+   "rakutenNoConfirmed": true,
+   "sepScope": "partial",
+   "notes": [
+    "館内に一般開放の大浴場・温泉なし(会員制フィットネスのサウナは宿泊者3,300円/回の有料)",
+    "コンフォートラージツイン(33.2㎡)等の上位客室のみ洗い場付きバス・トイレ別、スーペリアラージツイン等の標準客室はユニットバス"
+   ]
+  }
+ },
+ {
+  "hotel": {
+   "id": "monterey-edelhof-sapporo",
+   "name": "ホテルモントレ エーデルホフ札幌",
+   "kana": "ほてるもんとれ えーでるほふさっぽろ",
+   "area": "札幌・札幌駅",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": "カルロビ・バリ・スパ(天然温泉)",
+   "spring": "塩化物泉",
+   "springDetail": "ナトリウム-塩化物泉(等張性弱アルカリ性低温泉)",
+   "efficacy": [
+    "神経痛",
+    "筋肉痛",
+    "関節痛",
+    "五十肩"
+   ],
+   "sepScope": "partial",
+   "gensenNote": "本館14階「カルロビ・バリ・スパ」は天然温泉(ナトリウム-塩化物泉)。ジャグジー・ジェットバス・サウナ・露天風呂を備え札幌市街を望む。加水・加温・循環ろ過あり。2024年10月1日より宿泊者は無料。営業7:00-10:00(最終9:30)/14:00-22:30(最終22:00)。",
+   "roomBathNote": "本館スタンダードツイン(約24平米)・ラージツイン(26平米)・スタンダードツイン(21.5平米)等はバス・トイレ一体のユニットバス。22階プレミアムフロアのスイートルーム(44平米)・プレミアムスイートルーム(64平米・角部屋)はバス・トイレ別。セパレートは一部上位スイートのみ。",
+   "bathLine": "14階に天然温泉スパ(露天・サウナ)/上位スイートはバス・トイレ別",
+   "tags": [
+    "daiyokujo",
+    "roten",
+    "sauna",
+    "view_bath",
+    "gensen"
+   ],
+   "catch": "14階に天然温泉スパ(塩化物泉・露天・サウナ)。上位スイートはバス・トイレ別。",
+   "description": "JR札幌駅南口徒歩約7分。14階「カルロビ・バリ・スパ」は天然温泉(ナトリウム-塩化物泉)で露天・サウナ・ジャグジー完備、2024年10月より宿泊者無料。標準客室はユニットバスだが、22階のスイート・プレミアムスイートはバス・トイレ別。",
+   "kashikiri": [],
+   "access": "JR札幌駅南口から徒歩約7分/地下鉄さっぽろ駅から徒歩約2分",
+   "official": "https://www.hotelmonterey.co.jp/edelhof/",
+   "highlights": [
+    "14階「カルロビ・バリ・スパ」は天然温泉(ナトリウム-塩化物泉)で露天・サウナ・ジャグジー",
+    "2024年10月1日より14階天然温泉スパは宿泊者無料",
+    "22階プレミアムフロアのスイート(44平米)・プレミアムスイート(64平米)はバス・トイレ別",
+    "全客室16階以上(地上60m〜)で札幌市街の眺望"
+   ],
+   "sources": [
+    "https://www.hotelmonterey.co.jp/edelhof/spa/",
+    "https://www.hotelmonterey.co.jp/edelhof/stay/room/466077ca3f8d1b2.html",
+    "https://www.jtb.co.jp/kokunai-hotel/htl/1529111/bath/",
+    "https://onsen.nifty.com/sapporo-onsen/onsen000258/",
+    "https://travel.rakuten.co.jp/HOTEL/7523/7523_onsen.html"
+   ],
+   "uncertain": "指定タスクの14階スパ名「スパ・アルパ」は出典で確認できず、実際の名称は『カルロビ・バリ・スパ(Karlovy Vary Spa)』。適応症は施設掲示の塩化物泉の一般適応として出典に記載。スイート料金は直接の出典が乏しく概算(参考:本館スタンダードツイン約24平米で1名11,590円前後の例あり)。スイート・プレミアムスイートの確定料金と洗い場有無は未確認のため wash=null。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "スイートルーム(22階)",
+     "capacity": "1〜2名",
+     "size": "44平米",
+     "price": 28000,
+     "bath": {
+      "type": "バス・トイレ別",
+      "wash": null,
+      "view": "札幌市街の眺望",
+      "onsenBath": false,
+      "note": "リビングと寝室が分かれる。ミラブルplus。バス・トイレ別。洗い場有無は未確認"
+     }
+    },
+    {
+     "name": "プレミアムスイートルーム(22階)",
+     "capacity": "1〜2名",
+     "size": "64平米",
+     "price": 42000,
+     "bath": {
+      "type": "バス・トイレ別",
+      "wash": null,
+      "view": "札幌中心街の眺望(角部屋2面窓)",
+      "onsenBath": false,
+      "note": "角部屋。天井が高くリビングとベッドエリアが分離。バス・トイレ別"
+     }
+    }
+   ],
+   "rakutenHotelNo": 7523,
+   "region": "北海道・東北",
+   "scene": "city",
+   "pal": "snow",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/7523",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/7523/7523.jpg"
+  },
+  "verify": {
+   "verdict": "OK",
+   "confidence": "high",
+   "rakutenNoConfirmed": true,
+   "sepScope": "partial",
+   "notes": [
+    "スパ名は「カルロビ・バリ・スパ」で確定(指定の「スパ・アルパ」は誤り)。天然温泉ナトリウム-塩化物泉・露天・サウナ",
+    "2024/10/1より宿泊者無料(日帰り一般営業は2024/3/31終了)。22階スイート/プレミアムスイートのみバス・トイレ別、標準はユニット"
+   ]
+  }
+ },
+ {
+  "hotel": {
+   "id": "mystays-premier-sapporo-park",
+   "name": "ホテルマイステイズプレミア札幌パーク",
+   "kana": "ほてるまいすていずぷれみあさっぽろぱーく",
+   "area": "札幌・中島公園",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": "パークサイド・スパ(天然温泉)",
+   "spring": "塩化物泉",
+   "springDetail": "ナトリウム-塩化物冷鉱泉",
+   "efficacy": [],
+   "sepScope": "partial",
+   "gensenNote": "「パークサイド・スパ」は天然温泉(ナトリウム-塩化物冷鉱泉)の男女別大浴場。御影石の主浴槽・ジェットバス・サウナ(約86℃)・水風呂(約20℃)、露天風呂は女性大浴場のみ。宿泊者無料、館内着で移動可。日帰り入浴は不可。",
+   "roomBathNote": "スタンダードルームはバス・トイレ・洗面が同一空間の3点ユニット(バス・トイレ別ではない)。20階以上のデラックスルーム(41平米)はトイレとバスルームが独立(バス・トイレ別)。セパレートは上位客室のみ。",
+   "bathLine": "天然温泉大浴場(パークサイド・スパ)/デラックスは独立バス・トイレ(標準はユニット)",
+   "tags": [
+    "daiyokujo",
+    "roten",
+    "sauna",
+    "gensen"
+   ],
+   "catch": "中島公園駅至近。天然温泉大浴場パークサイド・スパ。デラックスは独立バス・トイレ。",
+   "description": "地下鉄中島公園駅徒歩約2分。「パークサイド・スパ」はナトリウム-塩化物冷鉱泉の天然温泉で、ジェットバス・サウナ・露天(女性のみ)を備え宿泊者無料。標準客室は3点ユニットだが、41平米のデラックスはトイレとバスが独立。",
+   "kashikiri": [],
+   "access": "地下鉄南北線 中島公園駅1番出口から徒歩約2分",
+   "official": "https://www.mystays.com/hotel-mystays-premier-sapporo-park-hokkaido/",
+   "highlights": [
+    "天然温泉大浴場「パークサイド・スパ」(ナトリウム-塩化物冷鉱泉)は宿泊者無料",
+    "サウナ(約86℃)・水風呂(約20℃)、露天風呂は女性大浴場に完備",
+    "20階以上のデラックスルーム(41平米)はトイレとバスルームが独立",
+    "客室から館内着のまま温泉フロアへ移動可"
+   ],
+   "sources": [
+    "https://travel.rakuten.co.jp/HOTEL/5903/5903_onsen.html",
+    "https://sauna-ikitai.com/saunas/178",
+    "https://www.jtb.co.jp/kokunai-hotel/htl/1529103/bath/",
+    "https://travel.yahoo.co.jp/00000855/room/",
+    "https://www.gutabi.jp/hotel/base/899"
+   ],
+   "uncertain": "デラックスルームの『トイレとバスルーム独立』はレビュー・予約サイト記載に基づき、公式サイト(WebFetch 403)での一次確認は未取得。エグゼクティブルーム(51.6平米)のバス構成は未確認のため未掲載。料金は概算参考(素泊まり1名の例3,553〜10,500円、デラックスはそれ以上)。露天風呂は女性大浴場のみ。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "デラックスツイン(20階以上)",
+     "capacity": "1〜2名",
+     "size": "41平米",
+     "price": 13000,
+     "bath": {
+      "type": "トイレとバスルームが独立(バス・トイレ別)",
+      "wash": null,
+      "view": "高層階(20階以上)の眺望",
+      "onsenBath": false,
+      "note": "標準客室(3点ユニット)と異なりトイレ・バスが独立。出典はレビュー/予約サイト記載"
+     }
+    }
+   ],
+   "rakutenHotelNo": 5903,
+   "region": "北海道・東北",
+   "scene": "city",
+   "pal": "dawn",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/5903",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/5903/5903.jpg"
+  },
+  "verify": {
+   "verdict": "OK",
+   "confidence": "high",
+   "rakutenNoConfirmed": true,
+   "sepScope": "partial",
+   "notes": [
+    "天然温泉「パークサイド・スパ」(ナトリウム-塩化物冷鉱泉・宿泊者無料・女性側露天)",
+    "20階以上デラックス(41㎡)のみ独立バス・トイレ、標準は3点ユニット"
+   ]
+  }
+ },
+ {
+  "hotel": {
+   "id": "jr-tower-nikko-sapporo",
+   "name": "JRタワーホテル日航札幌",
+   "kana": "じぇいあーるたわーほてるにっこうさっぽろ",
+   "area": "札幌・札幌駅",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": "札幌駅温泉(スカイリゾートスパ プラウブラン)",
+   "spring": "塩化物泉",
+   "springDetail": "ナトリウム-塩化物温泉(低張性弱アルカリ性低温泉)",
+   "efficacy": [],
+   "sepScope": "partial",
+   "gensenNote": "22階「スカイリゾートスパ プラウブラン」は地上約100mの天然温泉(源泉名:札幌駅温泉、加温・循環ろ過)。温泉風呂・バイブラバス・フィンランドサウナ・水風呂、男性はマイナスイオンスチームサウナ、女性はテルマリウムサウナ等(露天風呂はなく内湯のみ)。営業12:00-23:00(最終22:30)。宿泊者入浴料2,150円(一般3,300円)。",
+   "roomBathNote": "全室バス・トイレ・シャワー付き。モデレートツイン等は洗い場付きで、バスと洗面・トイレをガラスドアで分離(バス・トイレ別)。ただし客室・プランによりユニットバスタイプ、または洗い場付きタイプのいずれかの案内となる場合がある。全室が均一にセパレートではない。",
+   "bathLine": "22階に天然温泉スパ(内湯・各種サウナ)/洗い場付き客室はバス・トイレ別",
+   "tags": [
+    "daiyokujo",
+    "sauna",
+    "view_bath",
+    "gensen"
+   ],
+   "catch": "JR札幌駅直結。22階に天然温泉スパ「プラウブラン」(内湯・サウナ)。洗い場付き客室はバス・トイレ別。",
+   "description": "JR札幌駅直結。22階「スカイリゾートスパ プラウブラン」は地上約100mの天然温泉(ナトリウム-塩化物泉・源泉名 札幌駅温泉)で内湯・各種サウナ完備(露天はなし)、宿泊者は2,150円。モデレートツイン等は洗い場付きでバスとトイレを分離。",
+   "kashikiri": [],
+   "access": "JR札幌駅直結(南口)",
+   "official": "https://www.jrhotels.co.jp/tower/",
+   "highlights": [
+    "22階「プラウブラン」は地上約100mの天然温泉(ナトリウム-塩化物泉)で内湯・各種サウナ完備(露天はなし)",
+    "宿泊者はスパ入浴料2,150円(一般3,300円)、スパ付き宿泊プランもあり",
+    "モデレートツインは洗い場付きでバスと洗面・トイレをガラスドアで分離",
+    "JR札幌駅直結、客室は高層階で眺望良好"
+   ],
+   "sources": [
+    "https://www.jrhotels.co.jp/tower/spa/",
+    "https://www.jrhotels.co.jp/tower/guestroom/moderate_twin.html",
+    "https://onsen.nifty.com/sapporo-onsen/onsen000245/",
+    "https://sauna-ikitai.com/saunas/155",
+    "https://travel.rakuten.co.jp/HOTEL/76941/review.html"
+   ],
+   "uncertain": "料金は概算参考(素泊まり最安2名1室21,945円=1名10,972円の例)。個別客室タイプの確定料金は未確認、日程変動。モデレートツインの正確な広さは未確認(コーナーツイン(モデレートフロア)は40平米)。同ホテルはプランにより『ユニットバス/洗い場付きのいずれか』案内があり、全室セパレート保証ではない点に注意。プラウブランは宿泊者も有料(2,150円)。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "コーナーツイン(モデレートフロア)",
+     "capacity": "1〜2名",
+     "size": "40平米",
+     "price": 16000,
+     "bath": {
+      "type": "洗い場付き(バス・トイレ別)",
+      "wash": true,
+      "view": "高層階の眺望",
+      "onsenBath": false,
+      "note": "角部屋。広さ40平米。バスと洗面・トイレをガラスドアで分離"
+     }
+    }
+   ],
+   "rakutenHotelNo": 76941,
+   "region": "北海道・東北",
+   "scene": "city",
+   "pal": "indigo",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/76941",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/76941/76941.jpg"
+  },
+  "verify": {
+   "verdict": "FIX→修正済み",
+   "confidence": "high",
+   "rakutenNoConfirmed": true,
+   "sepScope": "partial",
+   "notes": [
+    "「露天風呂」は誤り→プラウブランは露天がなく内湯のみ(温泉風呂・各種サウナ・水風呂)。tagsからroten除去・記述修正",
+    "天然温泉(源泉名 札幌駅温泉・ナトリウム-塩化物泉)、宿泊者2,150円有料。洗い場付き客室とユニットバスが混在しプランで異なる"
+   ]
+  }
+ },
+ {
+  "hotel": {
+   "id": "keio-prelia-sapporo",
+   "name": "京王プレリアホテル札幌",
+   "kana": "けいおうぷれりあほてるさっぽろ",
+   "area": "札幌・札幌駅",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": null,
+   "spring": null,
+   "springDetail": null,
+   "efficacy": [],
+   "sepScope": "partial",
+   "gensenNote": "2階に大浴場(横幅約9mのゆったりした湯舟、洗い場複数、女性大浴場に専用ラウンジ)。天然温泉ではない。露天風呂・サウナはなし。営業5:00-10:00/15:00-25:00。",
+   "roomBathNote": "15〜17階コンフォートフロアのコンフォートツイン(23平米)等は洗面台・トイレ・洗い場付きバスの三点分離(バス・トイレ別)。スーペリア・モデレート・スタンダードはバス・トイレ一体のユニットバス。セパレートは上位コンフォートフロアのみ。",
+   "bathLine": "2階に大浴場(温泉ではない)/コンフォートフロアはバス・トイレ別",
+   "tags": [
+    "daiyokujo"
+   ],
+   "catch": "JR札幌駅北口徒歩3分。2階に大浴場(温泉ではない)。コンフォートフロアはバス・トイレ別。",
+   "description": "JR札幌駅北口徒歩約3分。2階に横幅約9mの大浴場(天然温泉ではない、露天・サウナなし、女性側に専用ラウンジ)。スーペリア等はユニットバスだが、15〜17階コンフォートフロアのコンフォートツイン等は洗面・トイレ・洗い場付きバスの三点分離。",
+   "kashikiri": [],
+   "access": "JR札幌駅北口から徒歩約3分",
+   "official": "https://www.keioprelia.co.jp/sapporo/",
+   "highlights": [
+    "2階に横幅約9mの大浴場(女性大浴場は専用ラウンジ付き)。天然温泉ではない",
+    "コンフォートツイン(23平米)は洗面・トイレ・洗い場付きバスの三点分離",
+    "コンフォートフロアは15〜17階でミラブルzero等アメニティ充実",
+    "JR札幌駅北口から徒歩約3分"
+   ],
+   "sources": [
+    "https://www.keioprelia.co.jp/sapporo/bath/",
+    "https://www.keioprelia.co.jp/sapporo/rooms/include_spec/comfort-twin.php",
+    "https://www.jtb.co.jp/kokunai-hotel/htl/1529166/bath/",
+    "https://travel.rakuten.co.jp/HOTEL/172272/review.html",
+    "https://www.tabirai.net/hotel/hokkaido/info/hotel101000447/a-hotel101000447-00001/"
+   ],
+   "uncertain": "料金は概算参考(素泊まり1室15,870〜38,100円=1名7,940〜19,050円の幅)。コンフォートツインの確定料金は未確認、日程変動。2階大浴場は出典上『大浴場』表記で天然温泉の記載はなく温泉ではないと判断(人工温泉かは明記なし)。サウナ・露天は出典で否定。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "コンフォートツイン(15〜17階)",
+     "capacity": "1〜2名",
+     "size": "23平米",
+     "price": 13000,
+     "bath": {
+      "type": "洗面台・トイレ・洗い場付きバスの三点分離(バス・トイレ別)",
+      "wash": true,
+      "view": "北海道大学・手稲の山なみ等(高層階15〜17階)",
+      "onsenBath": false,
+      "note": "三点分離型。洗い場付きバス"
+     }
+    }
+   ],
+   "rakutenHotelNo": 172272,
+   "region": "北海道・東北",
+   "scene": "city",
+   "pal": "mist",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/172272",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/172272/172272.jpg"
+  },
+  "verify": {
+   "verdict": "OK",
+   "confidence": "high",
+   "rakutenNoConfirmed": true,
+   "sepScope": "partial",
+   "notes": [
+    "2階大浴場は天然温泉ではない(沸かし湯・露天サウナなし・浴槽1つ)",
+    "コンフォートフロア(15-17階)のみ三点分離、標準客室はユニットバス"
+   ]
+  }
+ },
+ {
+  "hotel": {
+   "id": "cross-hotel-sapporo",
+   "name": "クロスホテル札幌",
+   "kana": "くろすほてるさっぽろ",
+   "area": "札幌・大通/札幌駅",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": null,
+   "spring": null,
+   "springDetail": null,
+   "efficacy": [],
+   "sepScope": "partial",
+   "gensenNote": "最上階18階の展望大浴場。男女とも内風呂と屋根のない半露天風呂を備え、札幌の街並み・夜景を一望。パウダーコーナー・ラウンジ併設。営業16:00-25:00/6:00-9:00。天然温泉ではない。サウナはなし。",
+   "roomBathNote": "高層階クロスフロア(14〜17階)のツイン・ダブル・デラックスツイン(35〜44平米)はビューバス付きで、洗面所・トイレ・バスルームが各独立(完全セパレート、洗面台2つ)。スタンダードフロア(4〜13階)はシャワーブースのみ/浴槽なしの客室もあり、バス・トイレ別ではない。",
+   "bathLine": "最上階の展望大浴場(半露天)/クロスフロア客室はバス・トイレ別",
+   "tags": [
+    "daiyokujo",
+    "roten",
+    "view_bath"
+   ],
+   "catch": "最上階18階に展望大浴場(半露天)。クロスフロア客室はバス・トイレ別。",
+   "description": "JR札幌駅・大通の中間。最上階18階の展望大浴場は内風呂と屋根なし半露天を備え札幌の夜景を一望(温泉ではない・サウナなし)。14〜17階クロスフロアはビューバス付きで洗面・トイレ・バスが各独立。標準フロアはシャワーブースのみ。",
+   "kashikiri": [],
+   "access": "JR札幌駅から徒歩約5分(地下歩行空間直結)/大通エリア",
+   "official": "https://www.crosshotel.com/sapporo/",
+   "highlights": [
+    "最上階18階の展望大浴場は内風呂+屋根なし半露天で札幌の夜景を一望",
+    "クロスフロア(14〜17階)客室は洗面所・トイレ・バスルームが各独立(洗面台2つ)",
+    "クロスフロア客室は街を望むビューバス付き",
+    "スタンダードフロアはシャワーブースのみの客室あり(バス・トイレ別ではない)"
+   ],
+   "sources": [
+    "https://cross-sapporo.orixhotelsandresorts.com/contents/public-bath-daiyokujou/",
+    "https://cross-sapporo.orixhotelsandresorts.com/contents/cross-twin/",
+    "https://cross-sapporo.orixhotelsandresorts.com/contents/standard-twin/",
+    "https://www.jtb.co.jp/kokunai-hotel/htl/1529120/bath/",
+    "https://travel.rakuten.co.jp/HOTEL/67259/review.html"
+   ],
+   "uncertain": "展望大浴場は出典上『大浴場』表記で天然温泉の記載なし=温泉ではないと判断。料金は概算参考(素泊まり最安2名1室9,000円=1名4,500円はシャワーブースの標準フロア。クロスフロア デラックスツインはラウンジアクセス付ベーシックプランで2名66,314円=1名約33,157円の例)。クロスフロア ツイン/ダブルの洗い場有無は明記なくwash=null、デラックスは『バスタブと洗い場が分かれる』と記載。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "クロスフロア ツイン(14〜17階)",
+     "capacity": "1〜2名",
+     "size": "35平米",
+     "price": 26000,
+     "bath": {
+      "type": "ビューバス(内風呂)。洗面所・トイレ・バスルームが各独立(バス・トイレ別)",
+      "wash": null,
+      "view": "街の眺望(ビューバス)",
+      "onsenBath": false,
+      "note": "高層階14〜17階。洗面台2つ"
+     }
+    },
+    {
+     "name": "クロスフロア デラックスツイン(コーナー)",
+     "capacity": "1〜2名",
+     "size": "35平米",
+     "price": 33000,
+     "bath": {
+      "type": "ビューバス(内風呂)。バスタブと洗い場が分かれ、洗面所・トイレ・バスが各独立(バス・トイレ別)",
+      "wash": true,
+      "view": "街の眺望(コーナー・ビューバス)",
+      "onsenBath": false,
+      "note": "角部屋。ラウンジアクセス付プランの参考料金"
+     }
+    }
+   ],
+   "rakutenHotelNo": 67259,
+   "region": "北海道・東北",
+   "scene": "snowtown",
+   "pal": "snow",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/67259",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/67259/67259.jpg"
+  },
+  "verify": {
+   "verdict": "OK",
+   "confidence": "high",
+   "rakutenNoConfirmed": true,
+   "sepScope": "partial",
+   "notes": [
+    "18階展望大浴場は天然温泉ではない沸かし湯・サウナなし・空を見上げる半露天",
+    "クロスフロア(14-17階)のみビューバス付き三点独立、標準フロアはシャワーブース中心。※すすきの天然温泉 湯香郷は別施設(ジャスマックプラザ)で無関係"
+   ]
+  }
+ },
+ {
+  "hotel": {
+   "id": "hakodate-kokusai",
+   "name": "函館国際ホテル",
+   "kana": "はこだてこくさいほてる",
+   "area": "函館・ベイエリア(大手町)",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": "汐見の湯",
+   "spring": "塩化物泉",
+   "springDetail": "ナトリウム-塩化物強塩温泉(高張性中性高温泉)",
+   "efficacy": [
+    "打撲",
+    "神経痛",
+    "腰痛",
+    "疲労回復"
+   ],
+   "sepScope": "partial",
+   "gensenNote": "本館13階の天然温泉展望大浴場「汐見の湯」。泉質はナトリウム-塩化物強塩温泉(高張性中性高温泉)。露天風呂は男性側に設置(女性側は内湯中心)。眺望は函館港の夜景・朝焼け。入浴15:00〜25:00/翌5:00〜10:00。サウナの有無は未確認。",
+   "roomBathNote": "バス・トイレ別(洗い場付き浴室+独立洗面所)は東館のスーペリアファミリールーム/デラックスファミリールーム(33.5〜38平米・最大4名)で成立。本館・西館の一般客室は主にユニットバスのため非掲載(バス・トイレ別は一部客室のみ)。",
+   "bathLine": "13階・天然温泉展望「汐見の湯」(露天は男性側)/バス・トイレ別は東館ファミリー客室",
+   "tags": [
+    "daiyokujo",
+    "roten",
+    "view_bath",
+    "gensen"
+   ],
+   "catch": "函館港を望む13階天然温泉「汐見の湯」。バス・トイレ別は東館ファミリールームで叶う老舗シティホテル。",
+   "description": "JR函館駅から徒歩約8分、函館朝市・ベイエリアに近い老舗シティホテル。本館13階の天然温泉展望大浴場「汐見の湯」はナトリウム-塩化物強塩温泉で、男性側には露天風呂も。客室のバス・トイレ別(洗い場付き・独立洗面)は東館のファミリールームで成立し、本館・西館は主にユニットバス。",
+   "kashikiri": [],
+   "access": "JR函館駅から徒歩約8分。函館朝市・ベイエリアに隣接。",
+   "official": "https://hakodate-kokusai.jp/",
+   "highlights": [
+    "本館13階の天然温泉展望大浴場「汐見の湯」から函館港の夜景を一望(ナトリウム-塩化物強塩温泉)",
+    "露天風呂は男性側に設置、入浴15:00〜25:00・翌5:00〜10:00",
+    "バス・トイレ別(洗い場付き+独立洗面所)は東館のファミリールームで成立",
+    "JR函館駅徒歩約8分、函館朝市・ベイエリアに近い好立地"
+   ],
+   "sources": [
+    "https://hakodate-kokusai.jp/hot_spring/",
+    "https://hakodate-kokusai.jp/stay/",
+    "https://travel.rakuten.co.jp/HOTEL/1341/1341_onsen.html",
+    "https://www.jalan.net/yad322476/",
+    "https://www.yukoyuko.net/1869/plan/0011/0012"
+   ],
+   "uncertain": "料金は素泊まり1名参考。スーペリアファミリールームはゆこゆこ『ファミリープラン/素泊まり』7,050円〜(4名利用時1名)・トラベルコ最安10,904円〜を根拠に約11,000円と設定(時期・人数で変動)。デラックスファミリールームの正確な広さ・料金は未確認。『汐見の湯』が自家源泉か運び湯かは未確認。谷地頭温泉との接続は確認できず(別泉質)。サウナ有無・女性側露天の有無は未確認。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "スーペリアファミリールーム(東館)",
+     "capacity": "1〜4名",
+     "size": "33.5〜38平米",
+     "price": 11000,
+     "bath": {
+      "type": "内風呂・洗い場付き+独立洗面(バス・トイレ別)",
+      "wash": true,
+      "view": null,
+      "onsenBath": false,
+      "note": "大きめの浴槽と独立洗面所。正ベッド120cm×2+子ベッド100cm×2。デラックスファミリールームも同様にバス・トイレ別"
+     }
+    }
+   ],
+   "rakutenHotelNo": 1341,
+   "region": "北海道・東北",
+   "scene": "sea",
+   "pal": "dusk",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1341",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/1341/1341.jpg"
+  },
+  "verify": {
+   "verdict": "OK",
+   "confidence": "high",
+   "rakutenNoConfirmed": true,
+   "sepScope": "partial",
+   "notes": [
+    "本館13階「汐見の湯」は天然温泉(ナトリウム-塩化物強塩温泉・展望・男湯側露天)。谷地頭温泉引湯説は裏付けなく否定が妥当",
+    "バス・トイレ別は東館スーペリア/デラックスファミリールームのみ、本館・西館はユニット"
+   ]
+  }
+ },
+ {
+  "hotel": {
+   "id": "lavista-hakodate-bay",
+   "name": "ラビスタ函館ベイ",
+   "kana": "らびすたはこだてべい",
+   "area": "函館・ベイエリア(豊川町)",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": "海峡の湯",
+   "spring": "塩化物泉",
+   "springDetail": "ナトリウム-塩化物強塩泉",
+   "efficacy": [
+    "神経痛",
+    "筋肉痛",
+    "関節痛",
+    "冷え症",
+    "疲労回復"
+   ],
+   "gensenNote": "屋上13階の天然温泉展望大浴場「海峡の湯」。自家源泉かけ流し(一部循環ろ過)、ナトリウム-塩化物強塩泉で「温まりの湯」。内湯+露天風呂(岩・檜・陶器・樽の4種)+水風呂+サウナ(ドライ、ミストは女性大浴場のみ)。サウナは深夜1〜5時利用不可。函館山・港の夜景を望む。",
+   "roomBathNote": "全客室でトイレが独立(ウォシュレット)。スタンダードツイン(24〜25平米)はシャワーブース(浴槽なし)+独立トイレ・独立洗面。デラックスツイン/和洋室(33平米)はハンスグローエ製シャワーの洗い場付きバスルーム+独立トイレ。トイレ一体のユニットバス構成ではない。",
+   "bathLine": "屋上13階・自家源泉かけ流しの天然温泉「海峡の湯」+4種露天+サウナ/全室トイレ独立",
+   "tags": [
+    "daiyokujo",
+    "roten",
+    "sauna",
+    "view_bath",
+    "gensen"
+   ],
+   "catch": "屋上13階・自家源泉かけ流しの天然温泉「海峡の湯」と4種の露天。全室トイレ独立の共立リゾート。",
+   "description": "共立リゾートが運営する函館ベイエリアの温泉ホテル。屋上13階の天然温泉展望大浴場「海峡の湯」は自家源泉かけ流し(一部循環)で、岩・檜・陶器・樽の露天とサウナを備える。全客室でトイレが独立し、スタンダードはシャワーブース、デラックス以上は洗い場付きバスルーム。函館山・港の夜景も魅力。",
+   "kashikiri": [],
+   "access": "JR函館駅から徒歩約15分、市電「魚市場通」電停から徒歩約5分。金森赤レンガ倉庫至近のベイエリア。",
+   "official": "https://dormy-hotels.com/resort/hotels/la_hakodate/",
+   "highlights": [
+    "屋上13階の天然温泉展望大浴場「海峡の湯」は自家源泉かけ流し(一部循環)",
+    "岩・檜・陶器・樽の4種の露天風呂+サウナ(ドライ/ミストは女性大浴場のみ)",
+    "全客室でトイレが独立、デラックス以上は洗い場付きバスルーム",
+    "ナトリウム-塩化物強塩泉の「温まりの湯」、函館山・港の夜景"
+   ],
+   "sources": [
+    "https://dormy-hotels.com/resort/hotels/la_hakodate/hotspring/",
+    "https://dormy-hotels.com/resort/hotels/la_hakodate/rooms/",
+    "https://travel.rakuten.co.jp/HOTEL/69295/69295_onsen.html",
+    "https://www.jalan.net/yad313464/",
+    "https://www.yukoyuko.net/0145/plan"
+   ],
+   "uncertain": "料金は素泊まり1名参考。スタンダードは大人2名15,700円〜(1名約7,850円)・ゆこゆこ13,975円〜等を踏まえ約13,000円と設定。デラックス16,000円・和洋室17,000円は上位客室として推定(時期変動大)。別館『ラビスタ函館ベイANNEX』は本稿の対象外(別ホテル番号)。スタンダードのトイレ独立は複数の宿泊レビューで確認。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "スタンダードツイン",
+     "capacity": "1〜2名",
+     "size": "24〜25平米",
+     "price": 13000,
+     "bath": {
+      "type": "シャワーブース(浴槽なし)+独立トイレ・独立洗面",
+      "wash": false,
+      "view": null,
+      "onsenBath": false,
+      "note": "浴槽なし。トイレ(ウォシュレット)は独立。入浴は大浴場利用が前提"
+     }
+    },
+    {
+     "name": "デラックスツイン",
+     "capacity": "1〜3名",
+     "size": "33平米",
+     "price": 16000,
+     "bath": {
+      "type": "内風呂・洗い場付き(ハンスグローエ製シャワー)+独立トイレ",
+      "wash": true,
+      "view": null,
+      "onsenBath": false,
+      "note": "掘りごたつ・靴を脱ぐ設え、函館山眺望"
+     }
+    },
+    {
+     "name": "和洋室",
+     "capacity": "1〜4名",
+     "size": "33平米",
+     "price": 17000,
+     "bath": {
+      "type": "内風呂・洗い場付き+独立トイレ",
+      "wash": true,
+      "view": null,
+      "onsenBath": false,
+      "note": "4.5畳の畳スペース付き。最大4名"
+     }
+    }
+   ],
+   "rakutenHotelNo": 69295,
+   "region": "北海道・東北",
+   "scene": "sea",
+   "pal": "night",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/69295",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/69295/69295.jpg"
+  },
+  "verify": {
+   "verdict": "OK",
+   "confidence": "high",
+   "rakutenNoConfirmed": true,
+   "sepScope": "all",
+   "notes": [
+    "屋上13階「海峡の湯」自家源泉かけ流し(一部循環)・ナトリウム-塩化物強塩泉・4種露天・サウナ、宿泊者無料",
+    "全室トイレ独立=バス・トイレ別。ただし湯船(洗い場付きバス)は34㎡以上の上位のみ、スタンダードは湯船なしのシャワーブース"
+   ]
+  }
+ },
+ {
+  "hotel": {
+   "id": "century-marina-hakodate",
+   "name": "HOTEL&SPA センチュリーマリーナ函館",
+   "kana": "せんちゅりーまりーなはこだて",
+   "area": "函館・ベイエリア(大手町)",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": "天然温泉(ナトリウム-塩化物強塩泉)",
+   "spring": "塩化物泉",
+   "springDetail": "ナトリウム-塩化物強塩泉(泉温52.5℃・pH6.5・湧出量256L/分)",
+   "efficacy": [],
+   "gensenNote": "14・15階に位置する函館最大級の天然温泉(浴場内階段で階を移動)。ナトリウム-塩化物強塩泉、泉温52.5℃・pH6.5・湧出量256L/分、茶褐色の湯。15階は函館山・ベイエリアを望む天空露天(インフィニティ仕様「ステラデッキ」)。サウナは男湯=ロウリュサウナ(窓から眺望)、女湯=アロマミスト。入浴5:30〜24:30。",
+   "roomBathNote": "全客室でトイレが独立(洗面と同じオープン空間、ウォシュレット)。全20タイプ中、半数以上がシャワーブース(内風呂なし)+独立トイレ。デラックスツイン(30.4平米)等もシャワーのみ。プレミアムスイート等の一部上位客室にバスタブ付き(トイレ別)。トイレ一体のユニットバスではない。",
+   "bathLine": "14・15階・函館最大級の天然温泉/天空露天&ロウリュサウナ/全室トイレ独立",
+   "tags": [
+    "daiyokujo",
+    "roten",
+    "sauna",
+    "view_bath",
+    "gensen"
+   ],
+   "catch": "14・15階に函館最大級の天然温泉と天空露天。ロウリュサウナも楽しめるベイエリアのHOTEL&SPA。",
+   "description": "函館ベイエリア、JR函館駅徒歩約8分のHOTEL&SPA。14・15階に函館最大級の天然温泉を擁し、15階は天空露天のインフィニティスパ。ナトリウム-塩化物強塩泉の茶褐色湯で、ロウリュ/ミストサウナも。全室トイレ独立、客室の半数以上はシャワーブース、一部にバスタブ付き。",
+   "kashikiri": [],
+   "access": "JR函館駅から徒歩約8分。函館朝市・金森赤レンガ倉庫至近のベイエリア。",
+   "official": "https://www.centurymarina.com/",
+   "highlights": [
+    "14・15階の函館最大級の天然温泉、15階は函館山・ベイエリアを望む天空露天(インフィニティ仕様)",
+    "男湯ロウリュサウナ・女湯アロマミストサウナ、入浴5:30〜24:30",
+    "ナトリウム-塩化物強塩泉(茶褐色)、泉温52.5℃・湧出量256L/分",
+    "全室トイレ独立、客室の半数以上はシャワーブース(浴槽は一部上位客室)"
+   ],
+   "sources": [
+    "https://www.centurymarina.com/spa/",
+    "https://www.centurymarina.com/stay/",
+    "https://travel.rakuten.co.jp/HOTEL/168681/168681_onsen.html",
+    "https://www.jalan.net/yad348892/",
+    "https://onsenmeeting.com/archives/5112"
+   ],
+   "uncertain": "料金は素泊まり1名参考で、当該クラス(ラビスタ等)並みとして推定(スタンダード14,000円・デラックス16,000円)。公式・OTAでの具体的な素泊まり最安値は本調査では数値取得できず要確認。上位客室(バスタブ付き)の広さ・料金は未確認。正式名称は『HOTEL&SPA センチュリーマリーナ函館』(指定名の『プレミアム』はプレミアフロアの呼称の可能性)。大浴場の固有名称は確認できず。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "スタンダードフロア ツイン",
+     "capacity": "1〜2名",
+     "size": "24平米",
+     "price": 14000,
+     "bath": {
+      "type": "シャワーブース(内風呂なし)+独立トイレ",
+      "wash": false,
+      "view": null,
+      "onsenBath": false,
+      "note": "浴槽なし。トイレは洗面と同じオープン空間で独立。大浴場利用が前提"
+     }
+    },
+    {
+     "name": "スタンダードフロア デラックスツイン",
+     "capacity": "1〜3名",
+     "size": "30.4平米",
+     "price": 16000,
+     "bath": {
+      "type": "シャワーブース(浴槽なし)+独立トイレ",
+      "wash": false,
+      "view": null,
+      "onsenBath": false,
+      "note": "函館山側。最大3名。浴槽なし"
+     }
+    }
+   ],
+   "rakutenHotelNo": 168681,
+   "region": "北海道・東北",
+   "scene": "sea",
+   "pal": "indigo",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/168681",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/168681/168681.jpg"
+  },
+  "verify": {
+   "verdict": "OK",
+   "confidence": "high",
+   "rakutenNoConfirmed": true,
+   "sepScope": "all",
+   "notes": [
+    "正式名称は「HOTEL&SPA センチュリーマリーナ函館」(プレミアムは付かない=プレミアフロアの客室カテゴリ名)",
+    "14・15階の天然温泉・天空露天「ステラデッキ」・ロウリュサウナ(「オートロウリュ」は自動化まで確認できず緩和)。全室トイレ独立、半数以上はシャワーブース(湯船なし)"
+   ]
+  }
+ },
+ {
+  "hotel": {
+   "id": "hokkaido-hotel-obihiro",
+   "name": "森のスパリゾート 北海道ホテル",
+   "kana": "もりのすぱりぞーとほっかいどうほてる",
+   "area": "帯広市街",
+   "pref": "北海道",
+   "type": "business",
+   "onsen": "モール温泉",
+   "spring": "炭酸水素塩泉",
+   "springDetail": "ナトリウム-塩化物・炭酸水素塩泉(弱アルカリ性低張性高温泉/植物性モール温泉)",
+   "efficacy": [],
+   "gensenNote": "1階の大浴場は植物性モール温泉(ナトリウム-塩化物・炭酸水素塩泉/弱アルカリ性低張性高温泉)。湯口は源泉100%かけ流しで藻状の沈殿を含む「美人の湯」。温度違いの内湯3種・ジャグジー・露天風呂・水風呂(札内川伏流水)を備える。十勝サウナの聖地としてフィンランド式ロウリュ、十勝白樺の香り、独自の『モーリュ』等を提供。",
+   "roomBathNote": "トイレは全室独立(温水洗浄)、シャワーは全室完備。浴槽(洗い場付きバス)は一部客室のみ。フォレスト・スパツイン(45平米)やプレミアム・スパスイート(81平米)などモール温泉露天風呂付き客室も用意。標準客室の浴槽有無は客室により異なる。",
+   "bathLine": "1F・植物性モール温泉かけ流し+十勝サウナ(ロウリュ)/全室トイレ独立・洗い場付きは一部",
+   "tags": [
+    "daiyokujo",
+    "roten",
+    "sauna",
+    "gensen"
+   ],
+   "catch": "帯広の森に湧く植物性モール温泉かけ流しと十勝サウナ。露天風呂付客室も揃う森のスパリゾート。",
+   "description": "帯広市街の森に佇む森のスパリゾート。1階大浴場は源泉かけ流しの植物性モール温泉「美人の湯」で、露天・水風呂(札内川伏流水)と本格ロウリュサウナを備える十勝サウナの聖地。客室はトイレ全室独立、洗い場付きバスは一部、モール温泉露天風呂付き客室も選べる。",
+   "kashikiri": [],
+   "access": "JR帯広駅から車で約5分。",
+   "official": "https://www.hokkaidohotel.co.jp/",
+   "highlights": [
+    "1F大浴場は植物性モール温泉(源泉かけ流し)の「美人の湯」、湯に藻状の沈殿を含む濃い泉質",
+    "十勝サウナの聖地、フィンランド式ロウリュ+十勝白樺の香り、水風呂は札内川伏流水",
+    "モール温泉露天風呂付き客室も用意(フォレスト・スパツイン、プレミアム・スパスイート等)",
+    "客室はトイレ全室独立・温水洗浄、洗い場付きバスは一部客室"
+   ],
+   "sources": [
+    "https://www.hokkaidohotel.co.jp/stay/hotspring.html",
+    "https://www.hokkaidohotel.co.jp/stay/room/",
+    "https://travel.rakuten.co.jp/HOTEL/1019/1019_onsen.html",
+    "https://www.jalan.net/yad320984/",
+    "https://www.hokkaidohotel.co.jp/stay/room/superior_twin.html"
+   ],
+   "uncertain": "料金は素泊まり1名参考。スーペリアツインは1名(2名1室)10,400円〜・素泊まり最安6,750円/名・スーペリア朝食付先割7,830円〜を根拠に約11,000円。フォレスト・スパツイン30,000円/プレミアム・スパスイート45,000円は上位客室としての推定(正確な料金は未確認)。設備表記は『バス(一部)・トイレ(全室)・シャワー(全室)』で、標準客室の浴槽有無は客室により異なり要確認。泉質は情報源により『アルカリ性単純温泉』とも『ナトリウム-塩化物・炭酸水素塩泉』とも案内され揺れがある(いずれも植物性モール温泉・自家源泉)。露天風呂付き客室の室数は裏付けできず要確認(全117室)。",
+   "verified": true,
+   "rooms": [
+    {
+     "name": "スーペリアツイン",
+     "capacity": "1〜2名",
+     "size": "30平米",
+     "price": 11000,
+     "bath": {
+      "type": "シャワー+独立トイレ(温水洗浄)",
+      "wash": null,
+      "view": null,
+      "onsenBath": false,
+      "note": "トイレは全室独立。浴槽(洗い場付きバス)は一部客室のみで、当タイプの浴槽有無は要確認"
+     }
+    },
+    {
+     "name": "フォレスト・スパツイン",
+     "capacity": "1〜2名",
+     "size": "45平米",
+     "price": 30000,
+     "bath": {
+      "type": "モール温泉露天風呂+内風呂・洗い場付き+独立トイレ",
+      "wash": true,
+      "view": null,
+      "onsenBath": true,
+      "note": "客室露天風呂はモール温泉。テラス・暖炉付。料金は推定"
+     }
+    },
+    {
+     "name": "プレミアム・スパスイート",
+     "capacity": "1〜4名",
+     "size": "81平米",
+     "price": 45000,
+     "bath": {
+      "type": "モール温泉露天風呂+独立トイレ",
+      "wash": true,
+      "view": null,
+      "onsenBath": true,
+      "note": "モール温泉露天風呂・暖炉付スイート。最大4名。料金は推定"
+     }
+    }
+   ],
+   "rakutenHotelNo": 1019,
+   "region": "北海道・東北",
+   "scene": "forest",
+   "pal": "forest",
+   "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1019",
+   "img": "https://img.travel.rakuten.co.jp/share/HOTEL/1019/1019.jpg"
+  },
+  "verify": {
+   "verdict": "OK",
+   "confidence": "medium",
+   "rakutenNoConfirmed": true,
+   "sepScope": "all",
+   "notes": [
+    "植物性モール温泉・自家源泉100%(世界三大モール温泉の一つ・褐色)、十勝サウナ。全室トイレ独立・シャワー完備",
+    "「露天付き客室73室」は裏付けできず「一部客室」に修正(全117室)。泉質は単純温泉/炭酸水素塩泉と情報源で揺れがあり要確認"
+   ]
+  }
  }
 ]
