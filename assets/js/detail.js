@@ -127,7 +127,7 @@
       '      </section>' : '') +
 
     '      <section class="dsection" aria-labelledby="h-rooms">' +
-    '        <h2 id="h-rooms">' + ui.icon('bath') + '客室を選ぶ<small style="font-size:12px;color:var(--ink-soft);font-family:var(--sans);margin-left:6px">' + (hotel.someNoRoomBath ? ('客室にユニットバスはありません' + (hotel.noRoomBath ? '(入浴は大浴場・外湯)' : '')) : 'すべて風呂・トイレ別の客室です') + '</small></h2>' +
+    '        <h2 id="h-rooms">' + ui.icon('bath') + '客室を選ぶ<small style="font-size:12px;color:var(--ink-soft);font-family:var(--sans);margin-left:6px">' + (hotel.someNoRoomBath ? ('客室にユニットバスはありません' + (hotel.noRoomBath ? '(入浴は大浴場・外湯)' : '')) : hotel.sepScope === 'partial' ? '下記の客室タイプが風呂・トイレ別です(他にユニットバスの客室もあります)' : 'すべて風呂・トイレ別の客室です') + '</small></h2>' +
     '        ' + hotel.rooms.map(function (r) { return roomCard(hotel, r); }).join('') +
     '      </section>' +
 
@@ -156,7 +156,7 @@
     '        <p class="price-line"><small>' + ui.priceLabel(hotel, true) + '</small><strong>' + ui.yen(hotel.minPrice) + '</strong><small>〜</small></p>' +
     '        <p class="rk-price" id="rk-price"></p>' +
     '        <ul class="side-facts">' +
-    '          <li>' + ui.icon('check') + (hotel.noRoomBath ? '客室はトイレ付・ユニットバスなし(入浴は大浴場・外湯)' : hotel.someNoRoomBath ? '客室はすべてユニットバスなし(浴室付き/大浴場利用の両タイプ)' : '全客室が風呂・トイレ別(セパレート)') + '</li>' +
+    '          <li>' + ui.icon('check') + (hotel.noRoomBath ? '客室はトイレ付・ユニットバスなし(入浴は大浴場・外湯)' : hotel.someNoRoomBath ? '客室はすべてユニットバスなし(浴室付き/大浴場利用の両タイプ)' : hotel.sepScope === 'partial' ? '下記の客室タイプが風呂・トイレ別(他はユニットバス)' : '全客室が風呂・トイレ別(セパレート)') + '</li>' +
     '          <li>' + ui.icon('check') + washFact + '</li>' +
     (hotel.kashikiri.length ? '          <li>' + ui.icon('check') + (hotel.type === 'business' ? '貸切風呂・サウナ ' : '貸切風呂 ') + hotel.kashikiri.length + 'つ' + (hotel.hasFreeKashikiri ? '(無料)' : '') + '</li>' : '') +
     (hotel.tags.indexOf('gensen') !== -1 ? '          <li>' + ui.icon('check') + '源泉かけ流し</li>' : '') +

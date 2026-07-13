@@ -149,9 +149,13 @@
     const t = D().TYPES[h.type];
     return t ? '<span class="chip-type chip-type-' + h.type + '">' + esc(t.short) + '</span>' : '';
   }
-  // 「風呂・トイレ別」バッジ。浴室のない客室を含む宿は「ユニットバスなし」に。
+  // 「風呂・トイレ別」バッジ。浴室のない客室を含む宿は「ユニットバスなし」、
+  // 一部客室タイプのみセパレートの宿は「一部客室 風呂・トイレ別」に。
   function sepBadge(h) {
-    return badge(h.someNoRoomBath ? 'ユニットバスなし' : '全室 風呂・トイレ別', 'sep');
+    const label = h.someNoRoomBath ? 'ユニットバスなし'
+      : h.sepScope === 'partial' ? '一部客室 風呂・トイレ別'
+      : '全室 風呂・トイレ別';
+    return badge(label, 'sep');
   }
   // 温泉宿は1泊2食、ビジネスホテルは素泊まりが基準の「参考料金」
   function priceLabel(h, forRoom) {
