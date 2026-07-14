@@ -36,10 +36,12 @@ function decideMode() {
 }
 async function startSync() {
   const conn = currentConn();
-  const code = params.get('code') || conn.code || 'local';
+  const code = sanitizeCode(params.get('code') || conn.code || 'local');
   const mode = decideMode();
   await sync.connect({ mode, code, config: firebaseConfig });
 }
+// RTDB keys may not contain . # $ [ ] / — normalize team codes so any input is safe.
+function sanitizeCode(s) { return (String(s || '').trim().replace(/[.#$\[\]\/\s]+/g, '-').replace(/^-+|-+$/g, '')) || 'local'; }
 
 // ── boot ───────────────────────────────────────────────────────────────────
 store.subscribe(() => render());
@@ -385,7 +387,8 @@ function connBadgeClass() { const cloud = decideMode() === 'firebase'; if (!clou
 function connLabelText() { const cloud = decideMode() === 'firebase'; if (!cloud) return 'ローカル（この端末）'; return connState === 'synced' ? 'クラウド同期中' : connState === 'connecting' ? '接続中…' : connState === 'error' ? '接続エラー（ローカル継続）' : '未接続'; }
 
 async function joinTeam() {
-  const code = $('#set-code').value.trim(); if (!code) return;
+  const raw = $('#set-code').value.trim(); if (!raw) return;
+  const code = sanitizeCode(raw); $('#set-code').value = code;
   const conn = currentConn(); conn.code = code; LS.set('pms:conn', conn);
   await sync.connect({ mode: decideMode(), code, config: firebaseConfig });
   renderSettings();
