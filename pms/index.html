@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>プロジェクト管理シート</title>
+<meta name="description" content="6人チームの各自タスクを「概要 / 工程表 / メンバー別」で管理するチーム用スマホアプリ。ホーム画面に追加でき、Firebaseでリアルタイム共有。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f3f2f2">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="進行管理">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8B%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="stage">
+<div class="app" id="app">
+
+  <header class="app-top">
+    <button class="conn-badge c-local" id="connBadge" data-action="open-settings" aria-label="接続状態・設定"><span class="dot"></span>ローカル</button>
+    <button class="top-btn" data-action="open-settings" aria-label="設定">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg>設定
+    </button>
+  </header>
+
+  <div class="screens">
+    <section class="screen is-active" id="s-overview" role="tabpanel" aria-label="概要"><div id="ov-body"></div></section>
+    <section class="screen" id="s-gantt" role="tabpanel" aria-label="工程表" hidden><div id="ga-body"></div></section>
+    <section class="screen" id="s-member" role="tabpanel" aria-label="メンバー" hidden><div id="me-body"></div></section>
+  </div>
+
+  <button class="fab" data-action="add-task" aria-label="新規タスク">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+
+  <nav class="tabbar" role="tablist" aria-label="画面切替">
+    <button class="tab" data-action="tab" data-target="s-overview" role="tab" aria-selected="true">概要<span class="u"></span></button>
+    <button class="tab" data-action="tab" data-target="s-gantt" role="tab" aria-selected="false">工程表<span class="u"></span></button>
+    <button class="tab" data-action="tab" data-target="s-member" role="tab" aria-selected="false">メンバー<span class="u"></span></button>
+  </nav>
+
+  <!-- task editor -->
+  <div class="sheet-back" id="teSheetBack"></div>
+  <div class="sheet" id="teSheet" role="dialog" aria-modal="true" aria-labelledby="te-heading">
+    <div class="sheet-content">
+      <div class="sheet-grip" aria-hidden="true"></div>
+      <div class="sheet-head"><div class="sheet-title" id="te-heading">新規タスク</div><button class="sheet-close" data-action="close-task">閉じる</button></div>
+      <div class="field"><label for="te-title">タイトル</label><input class="input" id="te-title" placeholder="タスク名" autocomplete="off"></div>
+      <div class="field"><label for="te-project">案件</label><select class="input" id="te-project"></select>
+        <input class="input" id="te-newproj" placeholder="新しい案件名" hidden style="margin-top:8px" autocomplete="off"></div>
+      <div class="field"><label for="te-member">担当</label><select class="input" id="te-member"></select>
+        <input class="input" id="te-newmember" placeholder="新しいメンバー名" hidden style="margin-top:8px" autocomplete="off"></div>
+      <div class="row2">
+        <div class="field"><label for="te-start">開始日</label><input class="input" type="date" id="te-start"></div>
+        <div class="field"><label for="te-end">期限</label><input class="input" type="date" id="te-end"></div>
+      </div>
+      <div class="field"><label>ステータス</label>
+        <div class="seg-ctl" id="te-status">
+          <button type="button" class="seg-opt" data-status="none">未着手</button>
+          <button type="button" class="seg-opt" data-status="run">進行中</button>
+          <button type="button" class="seg-opt" data-status="rev">レビュー中</button>
+          <button type="button" class="seg-opt" data-status="done">完了</button>
+        </div></div>
+      <div class="field"><label for="te-pct">進捗率</label>
+        <div class="pct-field"><input type="range" id="te-pct" min="0" max="100" step="5" value="0"><span class="pct-val" id="te-pctlabel">0%</span></div></div>
+      <div class="sheet-actions">
+        <button class="btn btn-danger" id="te-delete" data-action="delete-task" hidden>削除</button>
+        <button class="btn btn-primary" style="margin-left:auto" data-action="save-task">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- settings (filled by JS) -->
+  <div class="sheet-back" id="setSheetBack"></div>
+  <div class="sheet" id="setSheet" role="dialog" aria-modal="true" aria-label="設定"><div class="sheet-content"></div></div>
+
+  <!-- entity editor: member / project (filled by JS, stacks above settings) -->
+  <div class="sheet-back z2" id="enSheetBack"></div>
+  <div class="sheet z2" id="enSheet" role="dialog" aria-modal="true" aria-label="編集"><div class="sheet-content"></div></div>
+
+  <input type="file" id="importFile" accept="application/json" hidden>
+
+</div>
+</div>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
