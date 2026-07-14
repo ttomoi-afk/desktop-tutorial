@@ -292,7 +292,8 @@ function openEntityEditor(kind, entity) {
   const title = (entity ? '編集' : '追加') + '：' + (isMember ? 'メンバー' : '案件');
   const body = isMember ? `
     <div class="field"><label>名前</label><input class="input" id="en-name" value="${esc(entity ? entity.name : '')}" placeholder="山田太郎"></div>
-    <div class="field"><label>イニシャル（丸に表示・1〜2文字）</label><input class="input" id="en-ini" maxlength="2" value="${esc(entity ? entity.ini : '')}" placeholder="山"></div>`
+    <div class="field"><label>イニシャル（丸に表示・1〜2文字）</label><input class="input" id="en-ini" maxlength="2" value="${esc(entity ? entity.ini : '')}" placeholder="山"></div>
+    <div class="field"><label>メールアドレス（期限通知の宛先・任意）</label><input class="input" id="en-email" type="email" value="${esc(entity ? (entity.email || '') : '')}" placeholder="taro@example.com" autocomplete="off"></div>`
     : `
     <div class="field"><label>案件名</label><input class="input" id="en-name" value="${esc(entity ? entity.name : '')}" placeholder="新規プロジェクト"></div>
     <div class="field"><label>最終目標（任意）</label><input class="input" id="en-goal" value="${esc(entity ? entity.goal : '')}" placeholder="例）9月末 リリース"></div>`;
@@ -314,7 +315,8 @@ function saveEntity() {
   const name = $('#en-name').value.trim(); if (!name) { $('#en-name').focus(); return; }
   if (kind === 'member') {
     const ini = ($('#en-ini').value.trim() || firstChar(name)).slice(0, 2);
-    pushPatch(store.upsertMember({ id: id || uid('m'), name, ini }));
+    const email = ($('#en-email').value || '').trim();
+    pushPatch(store.upsertMember({ id: id || uid('m'), name, ini, email }));
   } else {
     pushPatch(store.upsertProject({ id: id || uid('p'), name, goal: $('#en-goal').value.trim() }));
   }

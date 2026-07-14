@@ -63,6 +63,37 @@
 | `app.js` | 画面描画・編集・store と sync の橋渡し |
 | `firebase-config.js` | Firebase 構成（クラウド同期を使うとき記入） |
 | `manifest.webmanifest`, `sw.js`, `icon-*.png` | PWA（ホーム追加・オフライン） |
+| `notify/reminders.mjs` | 期限通知の送信スクリプト（GitHub Actions から実行） |
+| `../.github/workflows/task-reminders.yml` | 毎日の通知スケジュール |
+
+## タスク期限のメール通知（GitHub Actions）
+
+**毎朝 8:00 JST**に、その日が期限のタスク（＋期限を過ぎた未完了タスク）を、**担当者本人のメールアドレス**へ送ります。対象タスクがある人にだけ届きます。GitHub Actions のスケジュールで動くため**無料**、Firebase も無料プランのまま（匿名読み取りで参照）で動きます。
+
+**有効化の手順**
+
+1. **アプリでメンバーにメールアドレスを登録**：設定 →（メンバーの）編集 → メールアドレス。
+2. **GitHub にシークレットを登録**：リポジトリ → Settings → Secrets and variables → Actions → *New repository secret* で以下を作成。
+   | 名前 | 値 |
+   | --- | --- |
+   | `PMS_TEAM_CODE` | アプリで使っているチームコード（合言葉） |
+   | `SMTP_HOST` | 例）`smtp.gmail.com` |
+   | `SMTP_PORT` | 例）`465` |
+   | `SMTP_USER` | 送信元メールアドレス |
+   | `SMTP_PASS` | SMTP パスワード（下記） |
+   | `MAIL_FROM` | 差出人に表示するメールアドレス（通常 `SMTP_USER` と同じ） |
+3. **SMTP パスワードの用意**
+   - **Gmail / Google Workspace**：Google アカウント → セキュリティ → 2段階認証を有効化 → **アプリ パスワード**を生成し、それを `SMTP_PASS` に。`SMTP_HOST=smtp.gmail.com` / `SMTP_PORT=465`。
+     （Workspace 側でアプリ パスワードが禁止されている場合は下の代替をご利用ください。）
+   - **代替（Resend 等の無料メールAPI）**：`SMTP_HOST=smtp.resend.com` / `SMTP_PORT=465` / `SMTP_USER=resend` / `SMTP_PASS=<APIキー>` / `MAIL_FROM=<検証済みドメインのアドレス>`。
+4. **手動テスト**：Actions タブ → *Task deadline reminders* → **Run workflow** → `dry_run` に `true` を入れて実行。送信せずに「誰に何を送るか」をログで確認できます。問題なければ翌朝の自動送信を待つ（または `dry_run=false` で即送信）。
+
+**補足・注意**
+
+- スケジュールは UTC 基準（8:00 JST = 23:00 UTC）。GitHub の混雑時は数分〜十数分ずれることがあります。
+- **リポジトリが 60 日間更新されないと、GitHub の仕様でスケジュール実行が自動停止**します（その後に何かコミット/手動実行すれば再開）。
+- シークレット未設定のうちは、ジョブは「未設定のためスキップ」して**正常終了**します（赤いエラーにはなりません）。
+- メール未登録のメンバーは送信対象外（実行ログに一覧表示）。
 
 ## 注意
 
