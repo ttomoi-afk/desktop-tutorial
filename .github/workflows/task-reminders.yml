@@ -1,0 +1,41 @@
+name: Task deadline reminders
+
+# 毎日 08:00 JST（= 23:00 UTC）に、期限が本日/超過のタスクを担当者へメール通知。
+# 手動実行（Run workflow）では dry_run=true にすると、送信せず内容だけログ出力します。
+on:
+  schedule:
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'メール送信せず内容だけ表示 (true / false)'
+        default: 'false'
+
+concurrency:
+  group: task-reminders
+  cancel-in-progress: false
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        working-directory: pms/notify
+        run: npm install --no-audit --no-fund
+      - name: Send reminders
+        working-directory: pms/notify
+        env:
+          PMS_TEAM_CODE: ${{ secrets.PMS_TEAM_CODE }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          APP_URL: https://ttomoi-afk.github.io/desktop-tutorial/pms/
+          REMINDER_TZ: Asia/Tokyo
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: node reminders.mjs

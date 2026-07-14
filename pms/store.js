@@ -28,11 +28,11 @@ export function sampleState() {
   return {
     meta: { title: 'プロジェクト管理シート', team: 'チーム進行管理' },
     members: [
-      { id: 'm1', name: '竹田由佳',   ini: '由', order: 0 },
-      { id: 'm2', name: '岡野百合乃', ini: '百', order: 1 },
-      { id: 'm3', name: '滝川智春',   ini: '智', order: 2 },
-      { id: 'm4', name: '滝川共香',   ini: '共', order: 3 },
-      { id: 'm5', name: '友井大勢',   ini: '大', order: 4 },
+      { id: 'm1', name: '竹田由佳',   ini: '由', email: '', order: 0 },
+      { id: 'm2', name: '岡野百合乃', ini: '百', email: '', order: 1 },
+      { id: 'm3', name: '滝川智春',   ini: '智', email: '', order: 2 },
+      { id: 'm4', name: '滝川共香',   ini: '共', email: '', order: 3 },
+      { id: 'm5', name: '友井大勢',   ini: '大', email: '', order: 4 },
     ],
     projects: [
       { id: 'p1', name: '弟子屈チャレンジ',       goal: '9月末 現地イベント開催', order: 0 },

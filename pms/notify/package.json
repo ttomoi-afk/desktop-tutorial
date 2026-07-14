@@ -1,0 +1,9 @@
+{
+  "name": "pms-task-reminders",
+  "private": true,
+  "type": "module",
+  "description": "Daily task-deadline email reminders for プロジェクト管理シート (run by GitHub Actions).",
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
+}
