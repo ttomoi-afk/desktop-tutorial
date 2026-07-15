@@ -6,6 +6,7 @@ import {
 } from './store.js';
 import { createSync } from './sync.js';
 import { firebaseConfig, isConfigured } from './firebase-config.js';
+import { taskAddedText, taskDoneText, testText } from './notify/chat.mjs';
 
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -44,6 +45,47 @@ async function startSync() {
 }
 // RTDB keys may not contain . # $ [ ] / — normalize team codes so any input is safe.
 function sanitizeCode(s) { return (String(s || '').trim().replace(/[.#$\[\]\/\s]+/g, '-').replace(/^-+|-+$/g, '')) || 'local'; }
+
+// ── Google Chat (instant notifications) ─────────────────────────────────────
+// The webhook + toggles live in board meta, so configuring once covers the whole
+// team; the device that performs the action posts to the space. The daily digest
+// toggle is consumed server-side by notify/reminders.mjs.
+function appUrl() { return location.origin + location.pathname; }
+function chatConfig() {
+  const m = store.get().meta || {};
+  return { webhook: (m.chatWebhook || '').trim(), on: m.chatOn !== false, daily: !!m.chatDaily };
+}
+// Fire-and-forget POST. Google Chat's webhook host sends no CORS headers, so we
+// use a "simple" request (text/plain + no-cors) that the browser sends without a
+// preflight; the response is opaque (we can't read success), which is fine here.
+async function postToChat(webhook, text) {
+  if (!webhook || !text) return false;
+  try {
+    await fetch(webhook, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify({ text }) });
+    return true;
+  } catch (e) { console.warn('[pms] Google Chat post failed', e); return false; }
+}
+function memberNames(ids) {
+  const st = store.get();
+  return (ids || []).map((id) => { const m = st.members.find((x) => x.id === id); return m ? m.name : ''; }).filter(Boolean).join('、');
+}
+function notifyChatTaskAdded(t) {
+  const { webhook, on } = chatConfig(); if (!webhook || !on) return;
+  const st = store.get();
+  const proj = st.projects.find((p) => p.id === t.projectId);
+  const me = st.members.find((x) => x.id === myMemberId);
+  postToChat(webhook, taskAddedText({
+    projectName: proj ? proj.name : '—', title: t.title, who: memberNames(taskMembers(t)),
+    end: t.end, status: t.status, byName: me ? me.name : '', appUrl: appUrl(),
+  }));
+}
+function notifyChatTaskDone(t) {
+  const { webhook, on } = chatConfig(); if (!webhook || !on) return;
+  const st = store.get();
+  const proj = st.projects.find((p) => p.id === t.projectId);
+  const me = st.members.find((x) => x.id === myMemberId);
+  postToChat(webhook, taskDoneText({ projectName: proj ? proj.name : '—', title: t.title, byName: me ? me.name : '', appUrl: appUrl() }));
+}
 
 // ── boot ───────────────────────────────────────────────────────────────────
 store.subscribe(() => render());
@@ -385,10 +427,12 @@ function saveTask() {
   if (Date.parse(end) < Date.parse(start)) end = start;
   const status = getSeg($('#te-status'));
   const pct = clampPct(+$('#te-pct').value);
+  const prev = editingTaskId ? st.tasks.find((x) => x.id === editingTaskId) : null;
   const t = { id: editingTaskId || uid('t'), projectId, memberIds, title, start, end, status, pct };
   const isNew = !editingTaskId;
   pushPatch(store.upsertTask(t));
-  if (isNew) queueTaskAddNotice(t);
+  if (isNew) { queueTaskAddNotice(t); notifyChatTaskAdded(t); }
+  else if (prev && prev.status !== 'done' && status === 'done') notifyChatTaskDone(t);
   closeSheet('teSheet');
 }
 // On a NEW task, enqueue a notification request; the GitHub Actions queue job
@@ -471,12 +515,15 @@ function renderSettings() {
   const st = store.get();
   const conn = currentConn();
   const cloud = isConfigured(firebaseConfig);
+  const chat = chatConfig();
   const memberList = st.members.map((m) => `<div class="mgr-row"><span class="ava">${esc(m.ini)}</span><span class="mgr-name">${esc(m.name)}</span>
     <button class="mini-btn" data-action="edit-member" data-id="${m.id}">編集</button></div>`).join('') || '<div class="empty">なし</div>';
   const projList = st.projects.map((p) => `<div class="mgr-row"><span class="mgr-name">${esc(p.name)}</span>
     <button class="mini-btn" data-action="edit-project" data-id="${p.id}">編集</button></div>`).join('') || '<div class="empty">なし</div>';
   const optRow = (key, name, desc) => `<div class="opt-row"><div class="opt-row-text"><div class="opt-row-name">${name}</div><div class="opt-row-desc">${desc}</div></div>
     <label class="sw"><input type="checkbox" data-opt="${key}" ${opts[key] ? 'checked' : ''}><span class="track"></span><span class="knob"></span></label></div>`;
+  const chatRow = (key, name, desc, checked) => `<div class="opt-row"><div class="opt-row-text"><div class="opt-row-name">${name}</div><div class="opt-row-desc">${desc}</div></div>
+    <label class="sw"><input type="checkbox" data-chatopt="${key}" ${checked ? 'checked' : ''}><span class="track"></span><span class="knob"></span></label></div>`;
 
   $('#setSheet').querySelector('.sheet-content').innerHTML = `
     <div class="sheet-grip"></div>
@@ -499,6 +546,15 @@ function renderSettings() {
           ${st.members.map((m) => `<option value="${m.id}" ${m.id === myMemberId ? 'selected' : ''}>${esc(m.name)}</option>`).join('')}
         </select></div>
       <div class="conn-note">タスクを追加すると、その案件の参加メンバー（自分を除く）にメール通知が届きます（クラウド接続時・数分〜十数分後）。</div>
+    </div>
+
+    <div class="opt-group"><div class="opt-group-label">Google Chat 通知</div>
+      <div class="field"><label>Webhook URL（スペースの Webhook・全員で共有）</label>
+        <input class="input" id="set-chat-url" value="${esc(chat.webhook)}" placeholder="https://chat.googleapis.com/v1/spaces/…" autocomplete="off"></div>
+      ${chatRow('chatOn', 'タスクの追加・完了を即時通知', 'その場でスペースにメッセージを送信', chat.on)}
+      ${chatRow('chatDaily', '毎朝の締切サマリーも送信', '本日締切・期限超過を1通にまとめて自動送信', chat.daily)}
+      <div class="data-row"><button class="btn btn-secondary" data-action="chat-test">テスト送信</button></div>
+      <div class="conn-note">Google Chat のスペース →（スペース名）→ アプリと統合 → <b>Webhook を追加</b> で URL を作成し貼り付けます。この URL を知っていると誰でもスペースに投稿できるため、チームコードと同様に扱ってください。即時通知は投稿した端末から直接送られ、クラウド接続なしでも動きます。</div>
     </div>
 
     <div class="opt-group"><div class="opt-group-label">表示項目</div>
@@ -530,6 +586,23 @@ async function joinTeam() {
   const conn = currentConn(); conn.code = code; LS.set('pms:conn', conn);
   await sync.connect({ mode: decideMode(), code, config: firebaseConfig });
   renderSettings();
+}
+
+// ── Google Chat settings (webhook + toggles, shared via board meta) ──
+function saveChatSettings() {
+  const urlEl = $('#set-chat-url'); if (!urlEl) return;
+  const on = $('#setSheet').querySelector('input[data-chatopt="chatOn"]');
+  const daily = $('#setSheet').querySelector('input[data-chatopt="chatDaily"]');
+  pushPatch(store.setMeta({ chatWebhook: urlEl.value.trim(), chatOn: on ? on.checked : true, chatDaily: daily ? daily.checked : false }));
+}
+function sendChatTest() {
+  const urlEl = $('#set-chat-url'); const webhook = urlEl ? urlEl.value.trim() : '';
+  if (!webhook) { alert('先に Webhook URL を入力してください。'); if (urlEl) urlEl.focus(); return; }
+  if (!/^https:\/\/chat\.googleapis\.com\//.test(webhook)
+    && !confirm('Google Chat の Webhook URL（https://chat.googleapis.com/…）ではないようです。このまま送信しますか？')) return;
+  saveChatSettings();
+  postToChat(webhook, testText(appUrl()));
+  alert('テストメッセージを送信しました。Google Chat のスペースをご確認ください。\n（届かない場合は URL と、スペース側の Webhook 設定をご確認ください）');
 }
 
 // ── data export / import / reset ──
@@ -586,6 +659,7 @@ document.addEventListener('click', (e) => {
     case 'save-ent': saveEntity(); break;
     case 'del-ent': deleteEntity(); break;
     case 'join': joinTeam(); break;
+    case 'chat-test': sendChatTest(); break;
     case 'export': exportData(); break;
     case 'import': $('#importFile').click(); break;
     case 'reset': resetSample(); break;
@@ -601,6 +675,7 @@ $('#importFile').addEventListener('change', (e) => { if (e.target.files[0]) impo
 // settings toggles (delegated change)
 document.addEventListener('change', (e) => {
   if (e.target.id === 'set-me') { myMemberId = e.target.value || null; LS.set('pms:me', myMemberId); return; }
+  if (e.target.id === 'set-chat-url' || (e.target.dataset && e.target.dataset.chatopt)) { saveChatSettings(); return; }
   const inp = e.target.closest('input[data-opt]'); if (!inp) return;
   opts[inp.dataset.opt] = inp.checked; LS.set('pms:opts', opts); applyOptClasses();
 });

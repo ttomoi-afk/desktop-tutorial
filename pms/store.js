@@ -96,6 +96,14 @@ export function createStore() {
     resetToSample() { set(sampleState()); return { members: state.members, projects: state.projects, tasks: state.tasks }; },
     replaceAll(next) { set(next); },
 
+    // merge into board meta (title/team + shared settings like the Chat webhook);
+    // returns a patch so the whole meta object syncs to the team board.
+    setMeta(patch) {
+      const meta = { ...(state.meta || {}), ...patch };
+      set({ ...state, meta });
+      return { path: 'meta', value: meta };
+    },
+
     // ── mutations. Each returns a patch { path, value|null } for the sync layer.
     upsertTask(t) {
       const list = state.tasks.slice();

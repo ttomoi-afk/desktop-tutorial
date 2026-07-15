@@ -13,6 +13,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
+import { dailyDigestText } from './chat.mjs';
 
 const STATUS_LABEL = { none: '未着手', run: '進行中', rev: 'レビュー中', done: '完了' };
 const __dir = dirname(fileURLToPath(import.meta.url));
@@ -162,6 +163,24 @@ async function main() {
   const dtstamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
   const rows = classify(board, todayISO);
   const stored = board._calsync || {};
+
+  // ── Google Chat: one morning digest to the shared space (independent of email) ──
+  const chatWebhook = board.meta && board.meta.chatWebhook && String(board.meta.chatWebhook).trim();
+  if (chatWebhook && board.meta.chatDaily) {
+    const items = rows
+      .filter((r) => r.member && (r.dueToday.length || r.overdue.length))
+      .map((r) => ({ name: r.member.name, dueToday: r.dueToday, overdue: r.overdue }));
+    if (!items.length) {
+      console.log('Google Chat: 本日締切・期限超過なし（ダイジェスト送信なし）。');
+    } else if (DRY) {
+      console.log(`\n[DRY] Google Chat ダイジェスト →\n${dailyDigestText({ items, todayISO, appUrl: APP_URL })}\n`);
+    } else {
+      try {
+        const res = await fetch(chatWebhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: dailyDigestText({ items, todayISO, appUrl: APP_URL }) }) });
+        console.log(`Google Chat ダイジェスト送信: HTTP ${res.status}`);
+      } catch (e) { console.error('Google Chat ダイジェスト失敗:', e.message); }
+    }
+  }
 
   const toSend = [], skippedNoEmail = [];
   for (const r of rows) {
