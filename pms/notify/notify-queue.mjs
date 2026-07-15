@@ -34,20 +34,22 @@ export function computeTaskAddNotifications(board) {
       .filter((mid) => mid !== req.byMemberId)
       .map((mid) => byId(members, mid))
       .filter((m) => m && m.email && String(m.email).trim());
-    const assignee = byId(members, task.memberId);
+    const memberIds = Array.isArray(task.memberIds) ? task.memberIds : (task.memberId ? [task.memberId] : []);
+    const assignees = memberIds.map((id) => byId(members, id)).filter(Boolean);
     const byName = req.byName || (byId(members, req.byMemberId) || {}).name || '';
-    items.push({ reqId, task, project, assignee, byName, recipients });
+    items.push({ reqId, task, project, assignees, byName, recipients });
   }
   return items;
 }
 
 export function renderNotifyEmail(item, appUrl) {
-  const { task, project, assignee, byName } = item;
+  const { task, project, assignees, byName } = item;
+  const who = (assignees && assignees.length) ? assignees.map((a) => a.name).join('、') : '未設定';
   const subject = `【${project.name}】新しいタスク：${task.title}`;
   const text = [
     `${project.name} に新しいタスクが追加されました。`, '',
     `タスク：${task.title}`,
-    `担当：${assignee ? assignee.name : '未設定'}`,
+    `担当：${who}`,
     `期限：${md(task.end) || '未設定'}`,
     `ステータス：${STATUS_LABEL[task.status] || task.status}`,
     `追加者：${byName || '不明'}`, '',
@@ -58,7 +60,7 @@ export function renderNotifyEmail(item, appUrl) {
   const html = `<div style="font-family:'Hiragino Sans','Noto Sans JP',sans-serif;line-height:1.7;color:#201e1d">
 <p><b>${esc(project.name)}</b> に新しいタスクが追加されました。</p>
 <table style="border-collapse:collapse;font-size:14px">
-${row('タスク', `<b>${esc(task.title)}</b>`)}${row('担当', esc(assignee ? assignee.name : '未設定'))}
+${row('タスク', `<b>${esc(task.title)}</b>`)}${row('担当', esc(who))}
 ${row('期限', md(task.end) || '未設定')}${row('ステータス', STATUS_LABEL[task.status] || task.status)}${row('追加者', esc(byName || '不明'))}
 </table>
 <p style="margin-top:14px"><a href="${esc(appUrl)}" style="color:#0088b0">アプリで確認する</a></p>

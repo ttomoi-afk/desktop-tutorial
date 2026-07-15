@@ -22,6 +22,8 @@ export function todayInTZ(tz, now = new Date()) {
   return new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
 }
 const md = (iso) => { const [, m, d] = iso.split('-'); return `${+m}/${+d}`; };
+// a task's assignees (new: memberIds array; legacy: single memberId)
+const taskMembers = (t) => (Array.isArray(t.memberIds) ? t.memberIds : (t && t.memberId ? [t.memberId] : []));
 const compact = (iso) => iso.replace(/-/g, '');
 const nextDayCompact = (iso) => { const [y, m, d] = iso.split('-').map(Number); const t = Date.UTC(y, m - 1, d) + 86400000; const x = new Date(t); return `${x.getUTCFullYear()}${String(x.getUTCMonth() + 1).padStart(2, '0')}${String(x.getUTCDate()).padStart(2, '0')}`; };
 
@@ -39,8 +41,10 @@ export function classify(board, todayISO) {
   for (const t of tasks) {
     if (!t || t.status === 'done' || !t.end) continue;
     const bucket = t.end === todayISO ? 'dueToday' : t.end < todayISO ? 'overdue' : 'future';
-    if (!map.has(t.memberId)) map.set(t.memberId, { dueToday: [], overdue: [], future: [] });
-    map.get(t.memberId)[bucket].push({ ...t, project: projName(t.projectId) });
+    for (const mid of taskMembers(t)) {
+      if (!map.has(mid)) map.set(mid, { dueToday: [], overdue: [], future: [] });
+      map.get(mid)[bucket].push({ ...t, project: projName(t.projectId) });
+    }
   }
   const rows = [];
   for (const [memberId, b] of map) {
