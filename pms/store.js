@@ -40,18 +40,18 @@ export function sampleState() {
       { id: 'p3', name: 'C案件', goal: '8月末 投資可否の判断',   members: ['m1', 'm2', 'm3', 'm5'], order: 2 },
     ],
     tasks: [
-      { id: 't1',  projectId: 'p1', memberId: 'm1', title: '現地視察レポート作成',       start: '2026-07-01', end: '2026-07-10', status: 'done', pct: 100, order: 0 },
-      { id: 't2',  projectId: 'p1', memberId: 'm5', title: '地域パートナー打診',         start: '2026-07-06', end: '2026-07-24', status: 'run',  pct: 65,  order: 1 },
-      { id: 't3',  projectId: 'p1', memberId: 'm2', title: '体験プログラム企画書',       start: '2026-07-13', end: '2026-07-31', status: 'run',  pct: 40,  order: 2 },
-      { id: 't4',  projectId: 'p1', memberId: 'm4', title: 'SNS発信計画',               start: '2026-07-20', end: '2026-08-07', status: 'none', pct: 0,   order: 3 },
-      { id: 't5',  projectId: 'p2', memberId: 'm3', title: 'ユーザーヒアリング（10件）', start: '2026-07-01', end: '2026-07-17', status: 'run',  pct: 80,  order: 4 },
-      { id: 't6',  projectId: 'p2', memberId: 'm1', title: '試作モック v2',             start: '2026-07-08', end: '2026-07-22', status: 'rev',  pct: 70,  order: 5 },
-      { id: 't7',  projectId: 'p2', memberId: 'm4', title: 'ロゴ・ネーミング検討',       start: '2026-07-13', end: '2026-07-29', status: 'run',  pct: 30,  order: 6 },
-      { id: 't8',  projectId: 'p2', memberId: 'm5', title: '価格プラン草案',             start: '2026-07-27', end: '2026-08-14', status: 'none', pct: 0,   order: 7 },
-      { id: 't9',  projectId: 'p3', memberId: 'm3', title: '財務モデル精査',             start: '2026-07-06', end: '2026-07-21', status: 'run',  pct: 60,  order: 8 },
-      { id: 't10', projectId: 'p3', memberId: 'm2', title: '市場調査メモ',               start: '2026-07-01', end: '2026-07-15', status: 'rev',  pct: 90,  order: 9 },
-      { id: 't11', projectId: 'p3', memberId: 'm1', title: 'DD資料リスト整備',           start: '2026-07-15', end: '2026-07-31', status: 'run',  pct: 15,  order: 10 },
-      { id: 't12', projectId: 'p3', memberId: 'm5', title: '投資委員会プレゼン',         start: '2026-08-03', end: '2026-08-21', status: 'none', pct: 0,   order: 11 },
+      { id: 't1',  projectId: 'p1', memberIds: ['m1'], title: '現地視察レポート作成',       start: '2026-07-01', end: '2026-07-10', status: 'done', pct: 100, order: 0 },
+      { id: 't2',  projectId: 'p1', memberIds: ['m5'], title: '地域パートナー打診',         start: '2026-07-06', end: '2026-07-24', status: 'run',  pct: 65,  order: 1 },
+      { id: 't3',  projectId: 'p1', memberIds: ['m2'], title: '体験プログラム企画書',       start: '2026-07-13', end: '2026-07-31', status: 'run',  pct: 40,  order: 2 },
+      { id: 't4',  projectId: 'p1', memberIds: ['m4'], title: 'SNS発信計画',               start: '2026-07-20', end: '2026-08-07', status: 'none', pct: 0,   order: 3 },
+      { id: 't5',  projectId: 'p2', memberIds: ['m3'], title: 'ユーザーヒアリング（10件）', start: '2026-07-01', end: '2026-07-17', status: 'run',  pct: 80,  order: 4 },
+      { id: 't6',  projectId: 'p2', memberIds: ['m1'], title: '試作モック v2',             start: '2026-07-08', end: '2026-07-22', status: 'rev',  pct: 70,  order: 5 },
+      { id: 't7',  projectId: 'p2', memberIds: ['m4'], title: 'ロゴ・ネーミング検討',       start: '2026-07-13', end: '2026-07-29', status: 'run',  pct: 30,  order: 6 },
+      { id: 't8',  projectId: 'p2', memberIds: ['m5'], title: '価格プラン草案',             start: '2026-07-27', end: '2026-08-14', status: 'none', pct: 0,   order: 7 },
+      { id: 't9',  projectId: 'p3', memberIds: ['m3'], title: '財務モデル精査',             start: '2026-07-06', end: '2026-07-21', status: 'run',  pct: 60,  order: 8 },
+      { id: 't10', projectId: 'p3', memberIds: ['m2'], title: '市場調査メモ',               start: '2026-07-01', end: '2026-07-15', status: 'rev',  pct: 90,  order: 9 },
+      { id: 't11', projectId: 'p3', memberIds: ['m1'], title: 'DD資料リスト整備',           start: '2026-07-15', end: '2026-07-31', status: 'run',  pct: 15,  order: 10 },
+      { id: 't12', projectId: 'p3', memberIds: ['m5'], title: '投資委員会プレゼン',         start: '2026-08-03', end: '2026-08-21', status: 'none', pct: 0,   order: 11 },
     ],
   };
 }
@@ -140,6 +140,13 @@ export function uid(prefix) {
 export function round(n) { return Math.round(n); }
 export function avg(nums) { return nums.length ? Math.round(nums.reduce((s, n) => s + n, 0) / nums.length) : 0; }
 
+// A task's assignees. New tasks use `memberIds` (array); legacy tasks (and old
+// cloud data) may carry a single `memberId` — normalize both to an array.
+export function taskMembers(t) {
+  if (t && Array.isArray(t.memberIds)) return t.memberIds;
+  return t && t.memberId ? [t.memberId] : [];
+}
+
 export function deriveSummary(state) {
   const tasks = state.tasks;
   const counts = { none: 0, run: 0, rev: 0, done: 0 };
@@ -150,7 +157,7 @@ export function deriveSummary(state) {
     return { ...p, pct: avg(pts.map((t) => t.pct)), total: pts.length, done: pts.filter((t) => t.status === 'done').length };
   });
   const members = state.members.map((m) => {
-    const mts = tasks.filter((t) => t.memberId === m.id).sort((a, b) => a.order - b.order);
+    const mts = tasks.filter((t) => taskMembers(t).includes(m.id)).sort((a, b) => a.order - b.order);
     return { ...m, tasks: mts, count: mts.length, avg: avg(mts.map((t) => t.pct)) };
   });
   return { overall, total: tasks.length, counts, projects, members };
@@ -194,8 +201,8 @@ export function deriveGantt(state, today = todayISO()) {
       pct: avg(pts.map((t) => t.pct)),
       bars: pts.map((t) => {
         const s = dayNum(t.start), e = Math.max(dayNum(t.end), dayNum(t.start) + 1);
-        const m = state.members.find((x) => x.id === t.memberId);
-        return { task: t, ini: m ? m.ini : '?', left: pct(s), width: Math.max(1.5, pct(e) - pct(s)), st: STATUS[t.status] };
+        const inis = taskMembers(t).map((id) => { const mm = state.members.find((x) => x.id === id); return mm ? mm.ini : '?'; });
+        return { task: t, inis, left: pct(s), width: Math.max(1.5, pct(e) - pct(s)), st: STATUS[t.status] };
       }),
     };
   }).filter((g) => g.bars.length);

@@ -1,7 +1,7 @@
 // app.js — UI for プロジェクト管理シート. Renders the three BROADSHEET screens
 // from the editable store, drives the editors, and bridges store <-> sync.
 import {
-  createStore, deriveSummary, deriveGantt, memberNextDue, STATUS, STATUS_KEYS,
+  createStore, deriveSummary, deriveGantt, memberNextDue, taskMembers, STATUS, STATUS_KEYS,
   todayISO, jpFull, jpDate, isoWeek, uid,
 } from './store.js';
 import { createSync } from './sync.js';
@@ -136,7 +136,7 @@ function ganttBlockHTML(g) {
         ? `<div class="bar" style="left:${b.left}%;width:${b.width}%;background:${b.st.ganttTrack}"><i style="width:${b.task.pct}%;background:${b.st.fill}"></i></div>`
         : `<div class="bar-none" style="left:${b.left}%;width:${b.width}%"></div>`;
       return `<div class="g-row" data-action="open-task" data-id="${b.task.id}">
-        <div class="g-label"><span class="ava-sm">${esc(b.ini)}</span><span class="g-title">${esc(b.task.title)}</span></div>
+        <div class="g-label">${ganttAvatars(b.inis)}<span class="g-title">${esc(b.task.title)}</span></div>
         <div class="g-track">${inner}</div></div>`;
     }).join('');
     return `<div class="g-proj"><div class="g-proj-name">${esc(grp.project.name)}</div><div class="g-proj-pct">進捗 ${grp.pct}%</div></div>
@@ -163,6 +163,11 @@ function renderGantt(st) {
 function cmykNum(n, cls) {
   return `<div class="cmyk-num ${cls}"><span class="paper">${n}</span>` +
     `<span class="plate plate-c" aria-hidden="true">${n}</span><span class="plate plate-m" aria-hidden="true">${n}</span><span class="plate plate-y" aria-hidden="true">${n}</span></div>`;
+}
+function ganttAvatars(inis) {
+  if (!inis || !inis.length) return '<span class="ava-sm">?</span>';
+  const show = inis.slice(0, 2).map((i) => `<span class="ava-sm">${esc(i)}</span>`).join('');
+  return `<span class="ava-stack">${show}${inis.length > 2 ? `<span class="ava-more">+${inis.length - 2}</span>` : ''}</span>`;
 }
 function segBarHTML(counts, total) { const t = Math.max(1, total); return ['done', 'rev', 'run', 'none'].map((k) => `<div style="width:${(counts[k] / t) * 100}%;background:${STATUS[k].fill}"></div>`).join(''); }
 function segLegendHTML(counts) { return ['done', 'rev', 'run', 'none'].map((k) => `<span class="leg"><i style="background:${STATUS[k].fill}"></i>${STATUS[k].label} ${counts[k]}</span>`).join(''); }
@@ -344,9 +349,9 @@ function openTaskEditor(task) {
   $('#te-heading').textContent = task ? 'タスクを編集' : '新規タスク';
   $('#te-title').value = task ? task.title : '';
   fillSelect($('#te-project'), st.projects, task ? task.projectId : (st.projects[0] && st.projects[0].id), '案件');
-  fillSelect($('#te-member'), st.members, task ? task.memberId : (activeMemberDefault() || (st.members[0] && st.members[0].id)), '担当');
+  const defMembers = task ? taskMembers(task) : (activeMemberDefault() ? [activeMemberDefault()] : (myMemberId ? [myMemberId] : []));
+  $('#te-members').innerHTML = memberChecksHTML(defMembers);
   $('#te-newproj').value = ''; $('#te-newproj').hidden = true;
-  $('#te-newmember').value = ''; $('#te-newmember').hidden = true;
   $('#te-start').value = task ? task.start : TODAY;
   $('#te-end').value = task ? task.end : addDays(TODAY, 7);
   setSeg($('#te-status'), task ? task.status : 'none');
@@ -375,16 +380,12 @@ function saveTask() {
     const name = $('#te-newproj').value.trim(); if (!name) { $('#te-newproj').hidden = false; $('#te-newproj').focus(); return; }
     projectId = uid('p'); pushPatch(store.upsertProject({ id: projectId, name, goal: '' }));
   }
-  let memberId = $('#te-member').value;
-  if (memberId === '__new') {
-    const name = $('#te-newmember').value.trim(); if (!name) { $('#te-newmember').hidden = false; $('#te-newmember').focus(); return; }
-    memberId = uid('m'); pushPatch(store.upsertMember({ id: memberId, name, ini: firstChar(name) }));
-  }
+  const memberIds = Array.from($('#te-members').querySelectorAll('input:checked')).map((i) => i.value);
   let start = $('#te-start').value || TODAY, end = $('#te-end').value || start;
   if (Date.parse(end) < Date.parse(start)) end = start;
   const status = getSeg($('#te-status'));
   const pct = clampPct(+$('#te-pct').value);
-  const t = { id: editingTaskId || uid('t'), projectId, memberId, title, start, end, status, pct };
+  const t = { id: editingTaskId || uid('t'), projectId, memberIds, title, start, end, status, pct };
   const isNew = !editingTaskId;
   pushPatch(store.upsertTask(t));
   if (isNew) queueTaskAddNotice(t);
@@ -404,11 +405,11 @@ function deleteTask() {
 }
 
 // ── entity editor (member / project) ──
-function memberCheckboxes(project) {
+function memberChecksHTML(checkedIds) {
   const st = store.get();
-  const checked = project && Array.isArray(project.members) ? project.members : st.members.map((m) => m.id);
-  return st.members.map((m) => `<label class="mem-check"><input type="checkbox" value="${m.id}" ${checked.includes(m.id) ? 'checked' : ''}>
-    <span class="ava sm">${esc(m.ini)}</span><span>${esc(m.name)}</span></label>`).join('') || '<div class="empty">先にメンバーを追加してください</div>';
+  const set = new Set(checkedIds || []);
+  return st.members.map((m) => `<label class="mem-check"><input type="checkbox" value="${m.id}" ${set.has(m.id) ? 'checked' : ''}>
+    <span class="ava sm">${esc(m.ini)}</span><span>${esc(m.name)}</span></label>`).join('') || '<div class="empty">先にメンバーを追加してください（設定→メンバー）</div>';
 }
 function openEntityEditor(kind, entity) {
   const isMember = kind === 'member';
@@ -421,7 +422,7 @@ function openEntityEditor(kind, entity) {
     <div class="field"><label>案件名</label><input class="input" id="en-name" value="${esc(entity ? entity.name : '')}" placeholder="新規プロジェクト"></div>
     <div class="field"><label>最終目標（任意）</label><input class="input" id="en-goal" value="${esc(entity ? entity.goal : '')}" placeholder="例）9月末 リリース"></div>
     <div class="field"><label>参加メンバー（タスク追加通知の宛先）</label>
-      <div class="mem-picker" id="en-members">${memberCheckboxes(entity)}</div></div>`;
+      <div class="mem-picker" id="en-members">${memberChecksHTML(entity && Array.isArray(entity.members) ? entity.members : store.get().members.map((m) => m.id))}</div></div>`;
   $('#enSheet').querySelector('.sheet-content').innerHTML = `
     <div class="sheet-grip"></div>
     <div class="sheet-head"><div class="sheet-title">${title}</div><button class="sheet-close" data-action="close-ent">閉じる</button></div>
@@ -595,7 +596,6 @@ document.addEventListener('click', (e) => {
 $('#te-status').addEventListener('click', (e) => { const b = e.target.closest('.seg-opt'); if (!b) return; setSeg($('#te-status'), b.dataset.status); if (b.dataset.status === 'done') setPct(100); });
 $('#te-pct').addEventListener('input', (e) => setPct(clampPct(+e.target.value)));
 $('#te-project').addEventListener('change', (e) => { $('#te-newproj').hidden = e.target.value !== '__new'; if (e.target.value === '__new') $('#te-newproj').focus(); });
-$('#te-member').addEventListener('change', (e) => { $('#te-newmember').hidden = e.target.value !== '__new'; if (e.target.value === '__new') $('#te-newmember').focus(); });
 $('#importFile').addEventListener('change', (e) => { if (e.target.files[0]) importData(e.target.files[0]); e.target.value = ''; });
 
 // settings toggles (delegated change)
