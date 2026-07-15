@@ -18,13 +18,14 @@ const TODAY = todayISO();
 const store = createStore();
 let opts = Object.assign({ goals: true, due: true, pct: true, status: true }, LS.get('pms:opts', {}));
 let selMember = LS.get('pms:sel', null);
+let activeScreen = 's-overview';
 let connState = 'idle';
 const params = new URLSearchParams(location.search);
 
 // ── sync wiring ────────────────────────────────────────────────────────────
 const sync = createSync({
   store,
-  onStatus(s) { connState = s; renderConnBadge(); },
+  onStatus(s) { connState = s; renderConnBadge(); if ($('#dt-sidebar')) renderDtSidebar(store.get()); },
 });
 function pushPatch(patch) { sync.push(patch); }
 
@@ -58,6 +59,7 @@ function render() {
   renderOverview(st);
   renderGantt(st);
   renderMember(st);
+  renderDesktop(st);
   renderConnBadge();
   if (active && document.querySelector('.screen.is-active') === active) active.scrollTop = sc;
 }
@@ -116,17 +118,17 @@ function renderOverview(st) {
     </div>`;
 }
 
-// ── 02 工程表 ──
-function renderGantt(st) {
+// ── 02 工程表 (shared block, reused by mobile + desktop) ──
+function ganttMeta(st) {
   const g = deriveGantt(st, TODAY);
-  const total = st.tasks.length;
   const [sy, sm] = g.winStart.split('-').map(Number);
   const endD = new Date(Date.parse(g.winEnd) - 86400000);
-  const range = `${sy}年${sm}月 — ${endD.getUTCMonth() + 1}月`;
+  return { g, range: `${sy}年${sm}月 — ${endD.getUTCMonth() + 1}月`, total: st.tasks.length };
+}
+function ganttBlockHTML(g) {
   const months = g.months.map((m) => `<div class="g-month" style="left:${m.left}%">${m.label}</div>`).join('');
   const weeks = g.weeks.map((w) => `<div class="g-line" style="left:${w}%"></div>`).join('');
   const monthLines = g.months.filter((m) => m.left > 1).map((m) => `<div class="g-line mid" style="left:${m.left}%"></div>`).join('');
-
   const rows = g.rows.map((grp) => {
     const bars = grp.bars.map((b) => {
       const inner = b.st.ganttTrack
@@ -139,13 +141,10 @@ function renderGantt(st) {
     return `<div class="g-proj"><div class="g-proj-name">${esc(grp.project.name)}</div><div class="g-proj-pct">進捗 ${grp.pct}%</div></div>
       ${grp.project.goal ? `<div class="g-goal opt-goals">最終目標　${esc(grp.project.goal)}</div>` : ''}${bars}`;
   }).join('') || emptyHint('タスクがありません。＋ボタンから追加できます。');
-
   const today = (g.todayPct != null && g.todayPct >= 0 && g.todayPct <= 100)
     ? `<div class="g-today"><div class="g-today-line" style="left:${g.todayPct}%"></div>
        <div class="g-today-tag" style="left:${g.todayPct}%">今日 ${(new Date()).getMonth() + 1}/${(new Date()).getDate()}</div></div>` : '';
-
-  $('#ga-body').innerHTML = masthead('第二面', '工程表', `${range} ・ 全${total}タスク ・ 週区切り（月曜）`) + `
-    <div class="g-legend">
+  return `<div class="g-legend">
       <span><i class="none"></i>未着手</span><span><i style="background:var(--color-accent)"></i>進行中</span>
       <span><i style="background:var(--color-accent-2)"></i>レビュー中</span><span><i style="background:var(--color-text)"></i>完了</span></div>
     <div class="gantt">
@@ -154,6 +153,18 @@ function renderGantt(st) {
     </div>
     <div class="g-foot">帯の濃い部分＝進捗率 ・ 行頭の丸＝担当者 ・ 行をタップで編集</div>`;
 }
+function renderGantt(st) {
+  const { g, range, total } = ganttMeta(st);
+  $('#ga-body').innerHTML = masthead('第二面', '工程表', `${range} ・ 全${total}タスク ・ 週区切り（月曜）`) + ganttBlockHTML(g);
+}
+
+// shared small pieces
+function cmykNum(n, cls) {
+  return `<div class="cmyk-num ${cls}"><span class="paper">${n}</span>` +
+    `<span class="plate plate-c" aria-hidden="true">${n}</span><span class="plate plate-m" aria-hidden="true">${n}</span><span class="plate plate-y" aria-hidden="true">${n}</span></div>`;
+}
+function segBarHTML(counts, total) { const t = Math.max(1, total); return ['done', 'rev', 'run', 'none'].map((k) => `<div style="width:${(counts[k] / t) * 100}%;background:${STATUS[k].fill}"></div>`).join(''); }
+function segLegendHTML(counts) { return ['done', 'rev', 'run', 'none'].map((k) => `<span class="leg"><i style="background:${STATUS[k].fill}"></i>${STATUS[k].label} ${counts[k]}</span>`).join(''); }
 
 // ── 03 メンバー別 ──
 function renderMember(st) {
@@ -195,6 +206,99 @@ function renderMember(st) {
 
 function emptyHint(msg) { return `<div class="empty">${esc(msg)}</div>`; }
 
+// ═══ desktop (landscape) — sidebar + main ════════════════════════════════════
+function dtMasthead(title, meta) {
+  return `<div class="dt-mast"><div class="dt-mast-title">${esc(title)}</div><div class="dt-mast-meta">${meta}</div></div>
+  <div class="rule-thick"></div><div class="rule-thin"></div>`;
+}
+function renderDesktop(st) { if (!$('#dt-sidebar')) return; renderDtSidebar(st); renderDtMain(st); }
+
+function renderDtSidebar(st) {
+  const s = deriveSummary(st);
+  const nav = [['s-overview', '概要'], ['s-gantt', '工程表'], ['s-member', 'メンバー別']]
+    .map(([id, label]) => `<button class="dt-nav ${activeScreen === id ? 'is-on' : ''}" data-action="tab" data-target="${id}"><span class="dt-nav-bar"></span>${label}</button>`).join('');
+  const projects = s.projects.map((p) => `<div class="dt-side-proj"><div class="dt-side-proj-h"><span>${esc(p.name)}</span><span class="dt-side-pct">${p.pct}%</span></div>
+    <div class="dt-side-bar"><i style="width:${p.pct}%"></i></div></div>`).join('') || '<div class="empty">なし</div>';
+  const members = s.members.map((m) => `<button class="dt-side-mem" data-action="pick-member-go" data-id="${m.id}"><span class="ava sm">${esc(m.ini)}</span>
+    <span class="dt-side-mem-name">${esc(m.name)}</span><span class="dt-side-mem-n">${m.count}</span></button>`).join('');
+  $('#dt-sidebar').innerHTML = `
+    <div><div class="kick">チーム進行管理</div><div class="dt-brand-title">管理シート</div></div>
+    <div class="dt-nav-group">${nav}</div>
+    <button class="btn btn-primary dt-add" data-action="add-task">＋ 新規タスク</button>
+    <div class="dt-side-label">案件</div><div class="dt-side-projects">${projects}</div>
+    <div class="dt-side-label">メンバー</div><div class="dt-side-members">${members}</div>
+    <div class="dt-side-foot">
+      <button class="conn-badge ${connBadgeClass()}" data-action="open-settings"><span class="dot"></span>${connLabelText().replace('（この端末）', '')}</button>
+      <button class="top-btn" data-action="open-settings">設定</button>
+      <div class="dt-date">${jpFull(TODAY)}</div>
+    </div>`;
+}
+
+function renderDtMain(st) {
+  const host = $('#dt-main'); if (!host) return;
+  if (activeScreen === 's-gantt') {
+    const { g, range, total } = ganttMeta(st);
+    host.innerHTML = dtMasthead('工程表', `${range} ・ 全${total}タスク ・ 週区切り（月曜）`) + `<div class="dt-gantt">${ganttBlockHTML(g)}</div>`;
+  } else if (activeScreen === 's-member') {
+    host.innerHTML = dtMemberHTML(st);
+  } else {
+    host.innerHTML = dtOverviewHTML(st);
+  }
+}
+
+function dtOverviewHTML(st) {
+  const s = deriveSummary(st);
+  const meta = `第${isoWeek(TODAY)}週 ・ ${s.projects.length}案件 / 全${s.total}タスク ・ メンバー${s.members.length}名`;
+  const projects = s.projects.map((p) => `<div class="dt-proj" data-action="open-project" data-id="${p.id}">
+    <div class="dt-proj-h"><span class="dt-proj-name">${esc(p.name)}</span><span class="dt-proj-figs"><b>${p.pct}%</b> <span class="muted">完了 ${p.done}/${p.total}</span></span></div>
+    ${p.goal ? `<div class="dt-proj-goal opt-goals"><b>最終目標</b>　${esc(p.goal)}</div>` : ''}
+    <div class="dt-proj-bar"><i style="width:${p.pct}%"></i></div></div>`).join('') || emptyHint('案件がありません。');
+  const load = s.members.map((m) => {
+    const sq = m.tasks.map((t) => STATUS[t.status].square === 'dashed' ? '<i class="tbd"></i>' : `<i style="background:${STATUS[t.status].square}"></i>`).join('');
+    return `<div class="dt-load-row" data-action="pick-member-go" data-id="${m.id}"><div class="ava">${esc(m.ini)}</div>
+      <div class="dt-load-name">${esc(m.name)}</div><div class="load-sq">${sq}</div>
+      <div class="dt-load-n">${m.count}件</div><div class="dt-load-avg">${m.count ? '平均 ' + m.avg + '%' : '—'}</div></div>`;
+  }).join('');
+  return dtMasthead(st.meta.title || 'プロジェクト管理シート', meta) + `
+    <div class="dt-overall">
+      <div><div class="sec-label">全体進捗</div><div class="dt-num-row">${cmykNum(s.overall, 'dt-big-num')}<span class="dt-pct-sign">%</span></div></div>
+      <div class="dt-overall-bar">
+        <div class="seg dt-seg">${segBarHTML(s.counts, s.total)}</div>
+        <div class="seg-legend dt-legend">${segLegendHTML(s.counts)}</div>
+        <div class="overall-note">全${s.total}タスクの平均進捗（${jpDate(TODAY)}時点）</div>
+      </div>
+    </div>
+    <div class="dt-grid">
+      <div><div class="sec-label">案件別進捗</div><div class="dt-projects">${projects}</div></div>
+      <div><div class="sec-head"><div class="sec-label">メンバー負荷</div><div class="muted" style="font-size:9.5px">■＝タスク1件（色はステータス）</div></div>
+        <div class="dt-load">${load}</div><button class="row-add" data-action="add-member">＋ メンバーを追加</button></div>
+    </div>`;
+}
+
+function dtMemberHTML(st) {
+  const s = deriveSummary(st);
+  const members = s.members;
+  if (!members.length) return dtMasthead('メンバー別タスク', 'メンバー0名') + emptyHint('メンバーがいません。');
+  if (!members.find((m) => m.id === selMember)) selMember = members[0].id;
+  const m = members.find((x) => x.id === selMember);
+  const next = m.tasks.length ? memberNextDue(m.tasks, TODAY) : null;
+  const meta = m.tasks.length ? `担当 ${m.count}件 ・ 平均進捗 ${m.avg}% ・ 直近の期限 ${jpDate(next)}` : '担当タスクなし';
+  const chips = members.map((x) => `<button class="chip" data-action="pick-member" data-id="${x.id}" aria-pressed="${x.id === selMember}">${esc(x.name)}</button>`).join('');
+  const rows = m.tasks.length ? m.tasks.map((t, i) => {
+    const stx = STATUS[t.status]; const proj = st.projects.find((p) => p.id === t.projectId);
+    return `<div class="dt-mv-row" data-action="open-task" data-id="${t.id}">
+      <div class="dt-mv-no">${String(i + 1).padStart(2, '0')}</div>
+      <div><div class="mv-proj">${esc(proj ? proj.name : '—')}</div><div class="dt-mv-title">${esc(t.title)}</div>
+        <div class="dt-mv-line"><span class="${stx.tag} opt-status">${stx.label}</span><span class="mv-due opt-due">期限 ${jpDate(t.end)}</span>${proj && proj.goal ? `<span class="mv-goal opt-goals">最終目標 ${esc(proj.goal)}</span>` : ''}</div></div>
+      <div class="dt-mv-pct opt-pct"><div class="dt-mv-pct-n">${t.pct}%</div><div class="mv-bar"><i style="width:${t.pct}%;background:${stx.fill}"></i></div></div></div>`;
+  }).join('') : emptyHint('担当タスクはありません。');
+  return dtMasthead('メンバー別タスク', `メンバー${members.length}名 ・ 選択中：${esc(m.name)}`) + `
+    <div class="dt-chips">${chips}<button class="chip chip-add" data-action="add-member">＋ 追加</button></div>
+    <div class="dt-mv-id"><div class="dt-mv-ava">${esc(m.ini)}</div><div style="min-width:0"><div class="dt-mv-name">${esc(m.name)}</div><div class="mv-meta">${meta}</div></div>
+      <button class="mini-btn" data-action="edit-member" data-id="${m.id}">編集</button></div>
+    <div class="sec-label" style="margin-top:26px">担当タスク</div><div class="dt-mv-rows">${rows}</div>`;
+}
+
 // ── connection badge ──
 function renderConnBadge() {
   const badge = $('#connBadge'); if (!badge) return;
@@ -210,17 +314,21 @@ function renderConnBadge() {
 
 // ═══ options (display toggles) ═══════════════════════════════════════════════
 function applyOptClasses() {
-  const app = $('#app');
-  app.classList.toggle('hide-goals', !opts.goals);
-  app.classList.toggle('hide-due', !opts.due);
-  app.classList.toggle('hide-pct', !opts.pct);
-  app.classList.toggle('hide-status', !opts.status);
+  const b = document.body.classList;
+  b.toggle('hide-goals', !opts.goals);
+  b.toggle('hide-due', !opts.due);
+  b.toggle('hide-pct', !opts.pct);
+  b.toggle('hide-status', !opts.status);
 }
 
-// ═══ navigation ══════════════════════════════════════════════════════════════
+// ═══ navigation (drives both the phone screens and the desktop main) ═════════
 function showScreen(id) {
+  activeScreen = id;
   document.querySelectorAll('.screen').forEach((s) => { const on = s.id === id; s.classList.toggle('is-active', on); s.hidden = !on; if (on) s.scrollTop = 0; });
   document.querySelectorAll('.tab').forEach((t) => t.setAttribute('aria-selected', t.dataset.target === id ? 'true' : 'false'));
+  document.querySelectorAll('.dt-nav').forEach((b) => b.classList.toggle('is-on', b.dataset.target === id));
+  renderDtMain(store.get());
+  const dm = $('#dt-main'); if (dm) dm.scrollTop = 0;
 }
 
 // ═══ sheets ══════════════════════════════════════════════════════════════════
@@ -246,7 +354,7 @@ function openTaskEditor(task) {
   openSheet('teSheet');
   setTimeout(() => $('#te-title').focus(), 60);
 }
-function activeMemberDefault() { const active = document.querySelector('.screen.is-active'); return (active && active.id === 's-member') ? selMember : null; }
+function activeMemberDefault() { return activeScreen === 's-member' ? selMember : null; }
 
 function fillSelect(sel, items, selected, label) {
   sel.innerHTML = items.map((x) => `<option value="${x.id}" ${x.id === selected ? 'selected' : ''}>${esc(x.name)}</option>`).join('')
@@ -434,7 +542,7 @@ document.addEventListener('click', (e) => {
     case 'tab': showScreen(el.dataset.target); break;
     case 'add-task': openTaskEditor(null); break;
     case 'open-task': openTaskEditor(st.tasks.find((t) => t.id === id)); break;
-    case 'pick-member': selMember = id; LS.set('pms:sel', selMember); renderMember(store.get()); break;
+    case 'pick-member': selMember = id; LS.set('pms:sel', selMember); renderMember(store.get()); renderDtMain(store.get()); break;
     case 'pick-member-go': selMember = id; LS.set('pms:sel', selMember); renderMember(store.get()); showScreen('s-member'); break;
     case 'open-project': openEntityEditor('project', st.projects.find((p) => p.id === id)); break;
     case 'open-settings': openSettings(); break;
