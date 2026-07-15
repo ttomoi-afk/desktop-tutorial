@@ -30,6 +30,19 @@ export function taskAddedText({ projectName, title, who, end, status, byName, ap
   return lines.join('\n');
 }
 
+// A task was assigned to a specific person → personal ping to their own webhook.
+export function taskAssignedText({ projectName, title, end, status, byName, appUrl } = {}) {
+  const lines = [
+    `📩 *あなたにタスクが割り当てられました* ／ ${projectName || '—'}`,
+    `「${title || '（無題）'}」`,
+    `期限：${md(end)}　${STATUS_LABEL[status] || status || ''}`.trim(),
+  ];
+  if (byName) lines.push(`割当：${byName}`);
+  const l = link(appUrl);
+  if (l) lines.push(l);
+  return lines.join('\n');
+}
+
 // A task moved to 完了 → celebrate briefly.
 export function taskDoneText({ projectName, title, byName, appUrl } = {}) {
   const lines = [
