@@ -1,0 +1,41 @@
+name: Task-add notifications
+
+# タスク追加通知のキューを処理（約15分ごと）。タスクが追加されると、アプリが
+# Firebase に通知予約を書き込み、このジョブが「案件の参加メンバー（追加者を除く）」
+# へメール送信します。手動実行（Run workflow）で dry_run=true にすると送信しません。
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'メール送信せず内容だけ表示 (true / false)'
+        default: 'false'
+
+concurrency:
+  group: task-add-notify
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        working-directory: pms/notify
+        run: npm install --no-audit --no-fund
+      - name: Process notification queue
+        working-directory: pms/notify
+        env:
+          PMS_TEAM_CODE: ${{ secrets.PMS_TEAM_CODE }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          APP_URL: https://ttomoi-afk.github.io/desktop-tutorial/pms/
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: node notify-queue.mjs

@@ -18,6 +18,7 @@ const TODAY = todayISO();
 const store = createStore();
 let opts = Object.assign({ goals: true, due: true, pct: true, status: true }, LS.get('pms:opts', {}));
 let selMember = LS.get('pms:sel', null);
+let myMemberId = LS.get('pms:me', null);
 let activeScreen = 's-overview';
 let connState = 'idle';
 const params = new URLSearchParams(location.search);
@@ -384,8 +385,16 @@ function saveTask() {
   const status = getSeg($('#te-status'));
   const pct = clampPct(+$('#te-pct').value);
   const t = { id: editingTaskId || uid('t'), projectId, memberId, title, start, end, status, pct };
+  const isNew = !editingTaskId;
   pushPatch(store.upsertTask(t));
+  if (isNew) queueTaskAddNotice(t);
   closeSheet('teSheet');
+}
+// On a NEW task, enqueue a notification request; the GitHub Actions queue job
+// emails the project's participants (except the adder). No-op until processed.
+function queueTaskAddNotice(t) {
+  const me = store.get().members.find((x) => x.id === myMemberId);
+  pushPatch({ path: '_notify/' + uid('n'), value: { type: 'task-added', taskId: t.id, projectId: t.projectId, byMemberId: myMemberId || '', byName: me ? me.name : '', ts: Date.now() } });
 }
 function deleteTask() {
   if (!editingTaskId) return;
@@ -395,6 +404,12 @@ function deleteTask() {
 }
 
 // ── entity editor (member / project) ──
+function memberCheckboxes(project) {
+  const st = store.get();
+  const checked = project && Array.isArray(project.members) ? project.members : st.members.map((m) => m.id);
+  return st.members.map((m) => `<label class="mem-check"><input type="checkbox" value="${m.id}" ${checked.includes(m.id) ? 'checked' : ''}>
+    <span class="ava sm">${esc(m.ini)}</span><span>${esc(m.name)}</span></label>`).join('') || '<div class="empty">先にメンバーを追加してください</div>';
+}
 function openEntityEditor(kind, entity) {
   const isMember = kind === 'member';
   const title = (entity ? '編集' : '追加') + '：' + (isMember ? 'メンバー' : '案件');
@@ -404,7 +419,9 @@ function openEntityEditor(kind, entity) {
     <div class="field"><label>メールアドレス（期限通知の宛先・任意）</label><input class="input" id="en-email" type="email" value="${esc(entity ? (entity.email || '') : '')}" placeholder="taro@example.com" autocomplete="off"></div>`
     : `
     <div class="field"><label>案件名</label><input class="input" id="en-name" value="${esc(entity ? entity.name : '')}" placeholder="新規プロジェクト"></div>
-    <div class="field"><label>最終目標（任意）</label><input class="input" id="en-goal" value="${esc(entity ? entity.goal : '')}" placeholder="例）9月末 リリース"></div>`;
+    <div class="field"><label>最終目標（任意）</label><input class="input" id="en-goal" value="${esc(entity ? entity.goal : '')}" placeholder="例）9月末 リリース"></div>
+    <div class="field"><label>参加メンバー（タスク追加通知の宛先）</label>
+      <div class="mem-picker" id="en-members">${memberCheckboxes(entity)}</div></div>`;
   $('#enSheet').querySelector('.sheet-content').innerHTML = `
     <div class="sheet-grip"></div>
     <div class="sheet-head"><div class="sheet-title">${title}</div><button class="sheet-close" data-action="close-ent">閉じる</button></div>
@@ -426,7 +443,8 @@ function saveEntity() {
     const email = ($('#en-email').value || '').trim();
     pushPatch(store.upsertMember({ id: id || uid('m'), name, ini, email }));
   } else {
-    pushPatch(store.upsertProject({ id: id || uid('p'), name, goal: $('#en-goal').value.trim() }));
+    const members = Array.from($('#en-members').querySelectorAll('input:checked')).map((i) => i.value);
+    pushPatch(store.upsertProject({ id: id || uid('p'), name, goal: $('#en-goal').value.trim(), members }));
   }
   closeSheet('enSheet');
 }
@@ -472,6 +490,15 @@ function renderSettings() {
         ${cloud ? `<div class="conn-note">同じコードを入れた人どうしで、同じボードをリアルタイム共有します。</div>`
       : `<div class="conn-note">クラウド未設定のためこの端末内のみで動作。<b>README.md「クラウド同期のセットアップ」</b>の手順でFirebaseを設定すると、チームで共有できます。</div>`}
       </div></div>
+
+    <div class="opt-group"><div class="opt-group-label">この端末の利用者</div>
+      <div class="field"><label>自分（タスク追加通知の「追加者」判定に使用・この端末に保存）</label>
+        <select class="input" id="set-me">
+          <option value="">未設定</option>
+          ${st.members.map((m) => `<option value="${m.id}" ${m.id === myMemberId ? 'selected' : ''}>${esc(m.name)}</option>`).join('')}
+        </select></div>
+      <div class="conn-note">タスクを追加すると、その案件の参加メンバー（自分を除く）にメール通知が届きます（クラウド接続時・数分〜十数分後）。</div>
+    </div>
 
     <div class="opt-group"><div class="opt-group-label">表示項目</div>
       ${optRow('goals', '最終目標', '案件ごとのゴールを表示')}
@@ -573,6 +600,7 @@ $('#importFile').addEventListener('change', (e) => { if (e.target.files[0]) impo
 
 // settings toggles (delegated change)
 document.addEventListener('change', (e) => {
+  if (e.target.id === 'set-me') { myMemberId = e.target.value || null; LS.set('pms:me', myMemberId); return; }
   const inp = e.target.closest('input[data-opt]'); if (!inp) return;
   opts[inp.dataset.opt] = inp.checked; LS.set('pms:opts', opts); applyOptClasses();
 });
