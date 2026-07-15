@@ -6,7 +6,7 @@ import {
 } from './store.js';
 import { createSync } from './sync.js';
 import { firebaseConfig, isConfigured } from './firebase-config.js';
-import { taskAddedText, taskDoneText, testText } from './notify/chat.mjs';
+import { taskAddedText, taskAssignedText, taskDoneText, testText } from './notify/chat.mjs';
 
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -69,22 +69,34 @@ function memberNames(ids) {
   const st = store.get();
   return (ids || []).map((id) => { const m = st.members.find((x) => x.id === id); return m ? m.name : ''; }).filter(Boolean).join('、');
 }
+// members among `ids` (minus `exceptId`) that have a personal Chat webhook.
+function chatHooksFor(ids, exceptId) {
+  const st = store.get();
+  return (ids || []).filter((id) => id && id !== exceptId)
+    .map((id) => st.members.find((m) => m.id === id))
+    .filter((m) => m && m.chatHook && String(m.chatHook).trim());
+}
 function notifyChatTaskAdded(t) {
-  const { webhook, on } = chatConfig(); if (!webhook || !on) return;
+  const { webhook, on } = chatConfig(); if (!on) return;
   const st = store.get();
   const proj = st.projects.find((p) => p.id === t.projectId);
   const me = st.members.find((x) => x.id === myMemberId);
-  postToChat(webhook, taskAddedText({
-    projectName: proj ? proj.name : '—', title: t.title, who: memberNames(taskMembers(t)),
-    end: t.end, status: t.status, byName: me ? me.name : '', appUrl: appUrl(),
-  }));
+  const projectName = proj ? proj.name : '—', byName = me ? me.name : '';
+  // shared space (team-wide)
+  if (webhook) postToChat(webhook, taskAddedText({ projectName, title: t.title, who: memberNames(taskMembers(t)), end: t.end, status: t.status, byName, appUrl: appUrl() }));
+  // individual: each assignee (except the adder) who registered a personal webhook
+  chatHooksFor(taskMembers(t), myMemberId).forEach((m) =>
+    postToChat(m.chatHook, taskAssignedText({ projectName, title: t.title, end: t.end, status: t.status, byName, appUrl: appUrl() })));
 }
 function notifyChatTaskDone(t) {
-  const { webhook, on } = chatConfig(); if (!webhook || !on) return;
+  const { webhook, on } = chatConfig(); if (!on) return;
   const st = store.get();
   const proj = st.projects.find((p) => p.id === t.projectId);
   const me = st.members.find((x) => x.id === myMemberId);
-  postToChat(webhook, taskDoneText({ projectName: proj ? proj.name : '—', title: t.title, byName: me ? me.name : '', appUrl: appUrl() }));
+  const projectName = proj ? proj.name : '—', byName = me ? me.name : '';
+  const msg = taskDoneText({ projectName, title: t.title, byName, appUrl: appUrl() });
+  if (webhook) postToChat(webhook, msg);                                  // shared space
+  chatHooksFor(taskMembers(t), myMemberId).forEach((m) => postToChat(m.chatHook, msg)); // co-assignees individually
 }
 
 // ── boot ───────────────────────────────────────────────────────────────────
@@ -461,7 +473,8 @@ function openEntityEditor(kind, entity) {
   const body = isMember ? `
     <div class="field"><label>名前</label><input class="input" id="en-name" value="${esc(entity ? entity.name : '')}" placeholder="山田太郎"></div>
     <div class="field"><label>イニシャル（丸に表示・1〜2文字）</label><input class="input" id="en-ini" maxlength="2" value="${esc(entity ? entity.ini : '')}" placeholder="山"></div>
-    <div class="field"><label>メールアドレス（期限通知の宛先・任意）</label><input class="input" id="en-email" type="email" value="${esc(entity ? (entity.email || '') : '')}" placeholder="taro@example.com" autocomplete="off"></div>`
+    <div class="field"><label>メールアドレス（期限通知の宛先・任意）</label><input class="input" id="en-email" type="email" value="${esc(entity ? (entity.email || '') : '')}" placeholder="taro@example.com" autocomplete="off"></div>
+    <div class="field"><label>Google Chat Webhook（個人通知の宛先・任意）</label><input class="input" id="en-chathook" value="${esc(entity ? (entity.chatHook || '') : '')}" placeholder="https://chat.googleapis.com/v1/spaces/…" autocomplete="off"></div>`
     : `
     <div class="field"><label>案件名</label><input class="input" id="en-name" value="${esc(entity ? entity.name : '')}" placeholder="新規プロジェクト"></div>
     <div class="field"><label>最終目標（任意）</label><input class="input" id="en-goal" value="${esc(entity ? entity.goal : '')}" placeholder="例）9月末 リリース"></div>
@@ -486,7 +499,8 @@ function saveEntity() {
   if (kind === 'member') {
     const ini = ($('#en-ini').value.trim() || firstChar(name)).slice(0, 2);
     const email = ($('#en-email').value || '').trim();
-    pushPatch(store.upsertMember({ id: id || uid('m'), name, ini, email }));
+    const chatHook = ($('#en-chathook').value || '').trim();
+    pushPatch(store.upsertMember({ id: id || uid('m'), name, ini, email, chatHook }));
   } else {
     const members = Array.from($('#en-members').querySelectorAll('input:checked')).map((i) => i.value);
     pushPatch(store.upsertProject({ id: id || uid('p'), name, goal: $('#en-goal').value.trim(), members }));
@@ -555,6 +569,7 @@ function renderSettings() {
       ${chatRow('chatDaily', '毎朝の締切サマリーも送信', '本日締切・期限超過を1通にまとめて自動送信', chat.daily)}
       <div class="data-row"><button class="btn btn-secondary" data-action="chat-test">テスト送信</button></div>
       <div class="conn-note">Google Chat のスペース →（スペース名）→ アプリと統合 → <b>Webhook を追加</b> で URL を作成し貼り付けます。この URL を知っていると誰でもスペースに投稿できるため、チームコードと同様に扱ってください。即時通知は投稿した端末から直接送られ、クラウド接続なしでも動きます。</div>
+      <div class="conn-note">担当者<b>本人にも個別に</b>届けるには、各メンバーの編集で「Google Chat Webhook」を登録してください（そのタスクの担当者だけに送信。上の共有スペースにも投稿されます）。</div>
     </div>
 
     <div class="opt-group"><div class="opt-group-label">表示項目</div>
