@@ -35,9 +35,9 @@ export function sampleState() {
       { id: 'm5', name: '友井大勢',   ini: '大', email: '', order: 4 },
     ],
     projects: [
-      { id: 'p1', name: '弟子屈チャレンジ',       goal: '9月末 現地イベント開催', order: 0 },
-      { id: 'p2', name: 'NYOKKIプロジェクト',     goal: '10月 β版リリース',       order: 1 },
-      { id: 'p3', name: 'ロケットスター投資案件', goal: '8月末 投資可否の判断',   order: 2 },
+      { id: 'p1', name: 'A案件', goal: '9月末 現地イベント開催', order: 0 },
+      { id: 'p2', name: 'B案件', goal: '10月 β版リリース',       order: 1 },
+      { id: 'p3', name: 'C案件', goal: '8月末 投資可否の判断',   order: 2 },
     ],
     tasks: [
       { id: 't1',  projectId: 'p1', memberId: 'm1', title: '現地視察レポート作成',       start: '2026-07-01', end: '2026-07-10', status: 'done', pct: 100, order: 0 },
