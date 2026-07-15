@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>プロジェクト管理シート</title>
-<meta name="description" content="6人チームの各自タスクを「概要 / 工程表 / メンバー別」で管理するチーム用スマホアプリ。ホーム画面に追加でき、Firebaseでリアルタイム共有。">
+<meta name="description" content="6人チームの各自タスクを「概要 / 工程表 / メンバー別」で管理するチーム用アプリ。スマホは縦、PCは横（サイドバー）レイアウト。ホーム画面に追加でき、Firebaseでリアルタイム共有。">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f3f2f2">
 <meta name="mobile-web-app-capable" content="yes">
@@ -20,9 +20,10 @@
 <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+
+<!-- ══ Mobile (portrait phone app) — shown below 1000px ══ -->
 <div class="stage">
 <div class="app" id="app">
-
   <header class="app-top">
     <button class="conn-badge c-local" id="connBadge" data-action="open-settings" aria-label="接続状態・設定"><span class="dot"></span>ローカル</button>
     <button class="top-btn" data-action="open-settings" aria-label="設定">
@@ -46,50 +47,54 @@
     <button class="tab" data-action="tab" data-target="s-gantt" role="tab" aria-selected="false">工程表<span class="u"></span></button>
     <button class="tab" data-action="tab" data-target="s-member" role="tab" aria-selected="false">メンバー<span class="u"></span></button>
   </nav>
+</div>
+</div>
 
-  <!-- task editor -->
-  <div class="sheet-back" id="teSheetBack"></div>
-  <div class="sheet" id="teSheet" role="dialog" aria-modal="true" aria-labelledby="te-heading">
-    <div class="sheet-content">
-      <div class="sheet-grip" aria-hidden="true"></div>
-      <div class="sheet-head"><div class="sheet-title" id="te-heading">新規タスク</div><button class="sheet-close" data-action="close-task">閉じる</button></div>
-      <div class="field"><label for="te-title">タイトル</label><input class="input" id="te-title" placeholder="タスク名" autocomplete="off"></div>
-      <div class="field"><label for="te-project">案件</label><select class="input" id="te-project"></select>
-        <input class="input" id="te-newproj" placeholder="新しい案件名" hidden style="margin-top:8px" autocomplete="off"></div>
-      <div class="field"><label for="te-member">担当</label><select class="input" id="te-member"></select>
-        <input class="input" id="te-newmember" placeholder="新しいメンバー名" hidden style="margin-top:8px" autocomplete="off"></div>
-      <div class="row2">
-        <div class="field"><label for="te-start">開始日</label><input class="input" type="date" id="te-start"></div>
-        <div class="field"><label for="te-end">期限</label><input class="input" type="date" id="te-end"></div>
-      </div>
-      <div class="field"><label>ステータス</label>
-        <div class="seg-ctl" id="te-status">
-          <button type="button" class="seg-opt" data-status="none">未着手</button>
-          <button type="button" class="seg-opt" data-status="run">進行中</button>
-          <button type="button" class="seg-opt" data-status="rev">レビュー中</button>
-          <button type="button" class="seg-opt" data-status="done">完了</button>
-        </div></div>
-      <div class="field"><label for="te-pct">進捗率</label>
-        <div class="pct-field"><input type="range" id="te-pct" min="0" max="100" step="5" value="0"><span class="pct-val" id="te-pctlabel">0%</span></div></div>
-      <div class="sheet-actions">
-        <button class="btn btn-danger" id="te-delete" data-action="delete-task" hidden>削除</button>
-        <button class="btn btn-primary" style="margin-left:auto" data-action="save-task">保存</button>
-      </div>
+<!-- ══ Desktop (landscape) — sidebar + main, shown at 1000px+ ══ -->
+<div class="desktop" id="desktop">
+  <aside class="dt-sidebar" id="dt-sidebar"></aside>
+  <main class="dt-main" id="dt-main"></main>
+</div>
+
+<!-- ══ Shared overlays (fixed) ══ -->
+<div class="sheet-back" id="teSheetBack"></div>
+<div class="sheet" id="teSheet" role="dialog" aria-modal="true" aria-labelledby="te-heading">
+  <div class="sheet-content">
+    <div class="sheet-grip" aria-hidden="true"></div>
+    <div class="sheet-head"><div class="sheet-title" id="te-heading">新規タスク</div><button class="sheet-close" data-action="close-task">閉じる</button></div>
+    <div class="field"><label for="te-title">タイトル</label><input class="input" id="te-title" placeholder="タスク名" autocomplete="off"></div>
+    <div class="field"><label for="te-project">案件</label><select class="input" id="te-project"></select>
+      <input class="input" id="te-newproj" placeholder="新しい案件名" hidden style="margin-top:8px" autocomplete="off"></div>
+    <div class="field"><label for="te-member">担当</label><select class="input" id="te-member"></select>
+      <input class="input" id="te-newmember" placeholder="新しいメンバー名" hidden style="margin-top:8px" autocomplete="off"></div>
+    <div class="row2">
+      <div class="field"><label for="te-start">開始日</label><input class="input" type="date" id="te-start"></div>
+      <div class="field"><label for="te-end">期限</label><input class="input" type="date" id="te-end"></div>
+    </div>
+    <div class="field"><label>ステータス</label>
+      <div class="seg-ctl" id="te-status">
+        <button type="button" class="seg-opt" data-status="none">未着手</button>
+        <button type="button" class="seg-opt" data-status="run">進行中</button>
+        <button type="button" class="seg-opt" data-status="rev">レビュー中</button>
+        <button type="button" class="seg-opt" data-status="done">完了</button>
+      </div></div>
+    <div class="field"><label for="te-pct">進捗率</label>
+      <div class="pct-field"><input type="range" id="te-pct" min="0" max="100" step="5" value="0"><span class="pct-val" id="te-pctlabel">0%</span></div></div>
+    <div class="sheet-actions">
+      <button class="btn btn-danger" id="te-delete" data-action="delete-task" hidden>削除</button>
+      <button class="btn btn-primary" style="margin-left:auto" data-action="save-task">保存</button>
     </div>
   </div>
-
-  <!-- settings (filled by JS) -->
-  <div class="sheet-back" id="setSheetBack"></div>
-  <div class="sheet" id="setSheet" role="dialog" aria-modal="true" aria-label="設定"><div class="sheet-content"></div></div>
-
-  <!-- entity editor: member / project (filled by JS, stacks above settings) -->
-  <div class="sheet-back z2" id="enSheetBack"></div>
-  <div class="sheet z2" id="enSheet" role="dialog" aria-modal="true" aria-label="編集"><div class="sheet-content"></div></div>
-
-  <input type="file" id="importFile" accept="application/json" hidden>
-
 </div>
-</div>
+
+<div class="sheet-back" id="setSheetBack"></div>
+<div class="sheet" id="setSheet" role="dialog" aria-modal="true" aria-label="設定"><div class="sheet-content"></div></div>
+
+<div class="sheet-back z2" id="enSheetBack"></div>
+<div class="sheet z2" id="enSheet" role="dialog" aria-modal="true" aria-label="編集"><div class="sheet-content"></div></div>
+
+<input type="file" id="importFile" accept="application/json" hidden>
+
 <script type="module" src="./app.js"></script>
 </body>
 </html>
