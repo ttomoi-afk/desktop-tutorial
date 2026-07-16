@@ -590,7 +590,7 @@ function renderSettings() {
       </div>
       <input type="file" id="importFile" accept="application/json" hidden>
     </div>
-    <p class="sheet-note">静的モックを実データ化したチーム用アプリ。ステータス色 — 進行中＝シアン / レビュー中＝マゼンタ / 完了＝墨 / 未着手＝破線。</p>`;
+    <p class="sheet-note">チームで使うタスク管理アプリ。ステータス色 — 進行中＝グリーン / レビュー中＝オレンジ / 完了＝チャコール / 未着手＝破線。</p>`;
 }
 function connBadgeClass() { const cloud = decideMode() === 'firebase'; if (!cloud) return 'c-local'; return connState === 'synced' ? 'c-ok' : connState === 'connecting' ? 'c-wait' : connState === 'error' ? 'c-err' : 'c-local'; }
 function connLabelText() { const cloud = decideMode() === 'firebase'; if (!cloud) return 'ローカル（この端末）'; return connState === 'synced' ? 'クラウド同期中' : connState === 'connecting' ? '接続中…' : connState === 'error' ? '接続エラー（ローカル継続）' : '未接続'; }

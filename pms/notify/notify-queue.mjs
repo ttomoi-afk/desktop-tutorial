@@ -63,7 +63,7 @@ export function renderNotifyEmail(item, appUrl) {
 ${row('タスク', `<b>${esc(task.title)}</b>`)}${row('担当', esc(who))}
 ${row('期限', md(task.end) || '未設定')}${row('ステータス', STATUS_LABEL[task.status] || task.status)}${row('追加者', esc(byName || '不明'))}
 </table>
-<p style="margin-top:14px"><a href="${esc(appUrl)}" style="color:#0088b0">アプリで確認する</a></p>
+<p style="margin-top:14px"><a href="${esc(appUrl)}" style="color:#0b8457">アプリで確認する</a></p>
 <p style="color:#999;font-size:12px">— プロジェクト管理シート（自動送信）</p></div>`;
   return { subject, text, html };
 }

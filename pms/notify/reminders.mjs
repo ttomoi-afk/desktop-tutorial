@@ -89,8 +89,8 @@ export function renderEmail(entry, appUrl, todayISO) {
   const html = `<div style="font-family:'Hiragino Sans','Noto Sans JP',sans-serif;line-height:1.7;color:#201e1d">
 <p>${esc(member.name)} さん</p><p>本日（${md(todayISO)}）締切、および期限超過のタスクのお知らせです。</p>
 ${dueToday.length ? `<h3 style="margin:18px 0 2px;font-size:15px">本日締切（${dueToday.length}件）</h3>${ul(dueToday)}` : ''}
-${overdue.length ? `<h3 style="margin:18px 0 2px;font-size:15px;color:#d6006c">期限超過・未完了（${overdue.length}件）</h3>${ul(overdue)}` : ''}
-<p style="margin-top:18px"><a href="${esc(appUrl)}" style="color:#0088b0">アプリで確認する</a></p>
+${overdue.length ? `<h3 style="margin:18px 0 2px;font-size:15px;color:#c2410c">期限超過・未完了（${overdue.length}件）</h3>${ul(overdue)}` : ''}
+<p style="margin-top:18px"><a href="${esc(appUrl)}" style="color:#0b8457">アプリで確認する</a></p>
 <p style="color:#999;font-size:12px">— プロジェクト管理シート（自動送信）</p></div>`;
   return { subject, text, html };
 }
@@ -122,7 +122,7 @@ export function calendarBody(member, calTasks, appUrl) {
   const html = `<div style="font-family:'Hiragino Sans','Noto Sans JP',sans-serif;line-height:1.7;color:#201e1d">
 <p>${esc(member.name)} さん</p><p>担当タスクの締切に変更がありました。添付の <b>.ics</b> を開いて「カレンダーに追加」すると、Googleカレンダーに反映できます。</p>
 <ul style="padding-left:20px">${calTasks.map((t) => `<li>${md(t.end)} ${esc(t.title)}（${esc(t.project)}）</li>`).join('')}</ul>
-<p><a href="${esc(appUrl)}" style="color:#0088b0">アプリで確認する</a></p>
+<p><a href="${esc(appUrl)}" style="color:#0b8457">アプリで確認する</a></p>
 <p style="color:#999;font-size:12px">— プロジェクト管理シート（自動送信）</p></div>`;
   return { subject, text, html };
 }
