@@ -23,35 +23,35 @@ export function jpDate(iso) { if (!iso) return ''; const [, m, d] = iso.split('-
 export function jpFull(iso) { const [y, m, d] = iso.split('-').map(Number); const w = '日月火水木金土'[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]; return `${y}年${m}月${d}日（${w}）`; }
 export function isoWeek(iso) { const [y, m, d] = iso.split('-').map(Number); const t = Date.UTC(y, m - 1, d); const day = new Date(t).getUTCDay() || 7; const th = t + (4 - day) * MS_DAY; const y0 = Date.UTC(new Date(th).getUTCFullYear(), 0, 1); return 1 + Math.round((th - y0) / MS_DAY / 7); }
 
-// ── seed board (the current team snapshot; dummy data) ─────────────────────
+// ── seed board (generic placeholder sample — safe to show anyone) ──────────
 export function sampleState() {
   return {
     meta: { title: 'プロジェクト管理シート', team: 'チーム進行管理' },
     members: [
-      { id: 'm1', name: '竹田由佳',   ini: '由', email: '', order: 0 },
-      { id: 'm2', name: '岡野百合乃', ini: '百', email: '', order: 1 },
-      { id: 'm3', name: '滝川智春',   ini: '智', email: '', order: 2 },
-      { id: 'm4', name: '滝川共香',   ini: '共', email: '', order: 3 },
-      { id: 'm5', name: '友井大勢',   ini: '大', email: '', order: 4 },
+      { id: 'm1', name: 'Aさん', ini: 'A', email: '', order: 0 },
+      { id: 'm2', name: 'Bさん', ini: 'B', email: '', order: 1 },
+      { id: 'm3', name: 'Cさん', ini: 'C', email: '', order: 2 },
+      { id: 'm4', name: 'Dさん', ini: 'D', email: '', order: 3 },
+      { id: 'm5', name: 'Eさん', ini: 'E', email: '', order: 4 },
     ],
     projects: [
-      { id: 'p1', name: 'A案件', goal: '9月末 現地イベント開催', members: ['m1', 'm2', 'm4', 'm5'], order: 0 },
-      { id: 'p2', name: 'B案件', goal: '10月 β版リリース',       members: ['m1', 'm3', 'm4', 'm5'], order: 1 },
-      { id: 'p3', name: 'C案件', goal: '8月末 投資可否の判断',   members: ['m1', 'm2', 'm3', 'm5'], order: 2 },
+      { id: 'p1', name: 'A案件', goal: '9月末 イベント開催', members: ['m1', 'm2', 'm4', 'm5'], order: 0 },
+      { id: 'p2', name: 'B案件', goal: '10月 リリース',       members: ['m1', 'm3', 'm4', 'm5'], order: 1 },
+      { id: 'p3', name: 'C案件', goal: '8月末 中間報告',     members: ['m1', 'm2', 'm3', 'm5'], order: 2 },
     ],
     tasks: [
-      { id: 't1',  projectId: 'p1', memberIds: ['m1'], title: '現地視察レポート作成',       start: '2026-07-01', end: '2026-07-10', status: 'done', pct: 100, order: 0 },
-      { id: 't2',  projectId: 'p1', memberIds: ['m5'], title: '地域パートナー打診',         start: '2026-07-06', end: '2026-07-24', status: 'run',  pct: 65,  order: 1 },
-      { id: 't3',  projectId: 'p1', memberIds: ['m2'], title: '体験プログラム企画書',       start: '2026-07-13', end: '2026-07-31', status: 'run',  pct: 40,  order: 2 },
-      { id: 't4',  projectId: 'p1', memberIds: ['m4'], title: 'SNS発信計画',               start: '2026-07-20', end: '2026-08-07', status: 'none', pct: 0,   order: 3 },
-      { id: 't5',  projectId: 'p2', memberIds: ['m3'], title: 'ユーザーヒアリング（10件）', start: '2026-07-01', end: '2026-07-17', status: 'run',  pct: 80,  order: 4 },
-      { id: 't6',  projectId: 'p2', memberIds: ['m1'], title: '試作モック v2',             start: '2026-07-08', end: '2026-07-22', status: 'rev',  pct: 70,  order: 5 },
-      { id: 't7',  projectId: 'p2', memberIds: ['m4'], title: 'ロゴ・ネーミング検討',       start: '2026-07-13', end: '2026-07-29', status: 'run',  pct: 30,  order: 6 },
-      { id: 't8',  projectId: 'p2', memberIds: ['m5'], title: '価格プラン草案',             start: '2026-07-27', end: '2026-08-14', status: 'none', pct: 0,   order: 7 },
-      { id: 't9',  projectId: 'p3', memberIds: ['m3'], title: '財務モデル精査',             start: '2026-07-06', end: '2026-07-21', status: 'run',  pct: 60,  order: 8 },
-      { id: 't10', projectId: 'p3', memberIds: ['m2'], title: '市場調査メモ',               start: '2026-07-01', end: '2026-07-15', status: 'rev',  pct: 90,  order: 9 },
-      { id: 't11', projectId: 'p3', memberIds: ['m1'], title: 'DD資料リスト整備',           start: '2026-07-15', end: '2026-07-31', status: 'run',  pct: 15,  order: 10 },
-      { id: 't12', projectId: 'p3', memberIds: ['m5'], title: '投資委員会プレゼン',         start: '2026-08-03', end: '2026-08-21', status: 'none', pct: 0,   order: 11 },
+      { id: 't1',  projectId: 'p1', memberIds: ['m1'], title: '企画書の作成',           start: '2026-07-01', end: '2026-07-10', status: 'done', pct: 100, order: 0 },
+      { id: 't2',  projectId: 'p1', memberIds: ['m5'], title: '関係者への連絡・調整',   start: '2026-07-06', end: '2026-07-24', status: 'run',  pct: 65,  order: 1 },
+      { id: 't3',  projectId: 'p1', memberIds: ['m2'], title: 'イベント内容の検討',     start: '2026-07-13', end: '2026-07-31', status: 'run',  pct: 40,  order: 2 },
+      { id: 't4',  projectId: 'p1', memberIds: ['m4'], title: '告知・広報の準備',       start: '2026-07-20', end: '2026-08-07', status: 'none', pct: 0,   order: 3 },
+      { id: 't5',  projectId: 'p2', memberIds: ['m3'], title: 'ヒアリング（10件）',     start: '2026-07-01', end: '2026-07-17', status: 'run',  pct: 80,  order: 4 },
+      { id: 't6',  projectId: 'p2', memberIds: ['m1'], title: '試作品の確認',           start: '2026-07-08', end: '2026-07-22', status: 'rev',  pct: 70,  order: 5 },
+      { id: 't7',  projectId: 'p2', memberIds: ['m4'], title: '名称・デザイン案の検討', start: '2026-07-13', end: '2026-07-29', status: 'run',  pct: 30,  order: 6 },
+      { id: 't8',  projectId: 'p2', memberIds: ['m5'], title: '料金案の作成',           start: '2026-07-27', end: '2026-08-14', status: 'none', pct: 0,   order: 7 },
+      { id: 't9',  projectId: 'p3', memberIds: ['m3'], title: '資料の精査',             start: '2026-07-06', end: '2026-07-21', status: 'run',  pct: 60,  order: 8 },
+      { id: 't10', projectId: 'p3', memberIds: ['m2'], title: '調査メモの整理',         start: '2026-07-01', end: '2026-07-15', status: 'rev',  pct: 90,  order: 9 },
+      { id: 't11', projectId: 'p3', memberIds: ['m1'], title: '必要資料リストの整備',   start: '2026-07-15', end: '2026-07-31', status: 'run',  pct: 15,  order: 10 },
+      { id: 't12', projectId: 'p3', memberIds: ['m5'], title: '報告会プレゼン資料',     start: '2026-08-03', end: '2026-08-21', status: 'none', pct: 0,   order: 11 },
     ],
   };
 }
