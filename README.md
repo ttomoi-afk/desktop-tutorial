@@ -17,6 +17,7 @@
 | トップ | `index.html` | 検索パネル、お風呂タイプ別導線、おすすめ宿、掲載基準 |
 | 検索結果 | `search.html` | お風呂タイプ・泉質・エリア・料金でのフィルターと並び替え |
 | 宿詳細 | `detail.html?id=...` | 温泉データ、貸切風呂一覧、客室ごとのお風呂スペック表、**楽天トラベル・公式サイトへの送客CTA** |
+| エリア特集LP | `tokyo.html` / `osaka.html` / `kyoto.html` / `okinawa.html` / `hokkaido.html` | SEO向けの静的ランディングページ。エリア別に「バストイレ別ホテル」を比較表・FAQ・構造化データ(FAQPage/ItemList/BreadcrumbList)付きで掲載。`tools/gen-area-lp.js` から生成 |
 | 静的API | `api/hotels.json` | 全掲載データのJSON(アプリ・外部連携の土台) |
 
 ※ 旧予約デモ(`booking.html`)は送客型への移行に伴い廃止(旧URLは詳細ページへリダイレクト)。
@@ -78,6 +79,7 @@ python3 -m http.server 8000
 - 宿の画像は**楽天ウェブサービス(トラベルAPI)の施設画像をホットリンク表示**(規約に沿った送客目的の利用・フッターにクレジット表記)。画像URLは `img` フィールドに保存でき、未取得・読込失敗時は宿ごとのシード値から生成する風景SVGに自動フォールバック
 - 画像URLの一括取得は `tools/fetch-images.html` を本番ドメインで開いて実行(APIレート制限のためブラウザから約1.2秒間隔で収集)。詳細ページは閲覧時にAPIから画像を取得し localStorage にキャッシュ
 - トップのヒーロー背景のみ、`assets/img/hero-1〜3.jpg` を置くと写真のクロスフェード表示に切り替わる(画像が無い間は生成風景のまま)。**掲載権利のある画像のみ**使用すること(詳細: `assets/img/README.md`)
+- SNS共有用のOGP画像(1200×630)は `tools/gen-ogp.js`(Playwright)でサイト自身の生成風景を背景に描画し、`assets/img/ogp.png`・`ogp-<エリア>.png` として出力。各ページの `og:image` / `twitter:image` から参照(外部画像は使わずブランドで統一)
 - 客室データ構造上も「ユニットバス」は存在しない(風呂・トイレ別が全室必須)という掲載基準をデータモデルで表現
 
 ## 注意・免責
