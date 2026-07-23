@@ -183,6 +183,9 @@ input, select { font-family: inherit; font-size: 14px; }
   background: var(--indigo-tint); border-radius: 99px; padding: 5px 13px;
 }
 .qtag:hover { background: var(--indigo); color: #fff; }
+.search-quick-area { margin-top: 9px; }
+.qtag-area { background: rgba(168, 128, 44, .13); color: var(--gold); font-weight: 700; }
+.qtag-area:hover { background: var(--gold); color: #fff; }
 
 /* =========================================================
    セクション共通
@@ -637,6 +640,10 @@ input, select { font-family: inherit; font-size: 14px; }
 .foot-links { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 18px 0 10px; }
 .foot-links a { color: #9fb6c6; font-size: 12.5px; }
 .foot-links a:hover { color: #fff; }
+.foot-areas { align-items: baseline; gap: 4px 14px; margin-top: 0; }
+.foot-areas-h { color: #7e93a4; font-size: 11.5px; letter-spacing: .04em; }
+.foot-areas a { color: #c6b088; font-weight: 500; }
+.foot-areas a:hover { color: #ffd9a8; }
 .foot-note { font-size: 11px; color: #7e93a4; border-top: 1px solid rgba(255, 255, 255, .12); padding-top: 14px; margin-top: 8px; }
 
 /* =========================================================
