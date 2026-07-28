@@ -622,8 +622,13 @@ async function joinTeam() {
   const raw = $('#set-code').value.trim(); if (!raw) return;
   const code = sanitizeCode(raw); $('#set-code').value = code;
   const conn = currentConn(); conn.code = code; LS.set('pms:conn', conn);
-  await sync.connect({ mode: decideMode(), code, config: firebaseConfig });
+  await sync.connect({ mode: decideMode(), code, config: firebaseConfig, onFreshBoard: askMigrate });
   renderSettings();
+}
+// Asked only when the code just joined is still empty: offer to move the board
+// we were on into it. Boards that already have data are never overwritten.
+function askMigrate(code) {
+  return confirm(`「${code}」は、まだ何も入っていない合言葉です。\n\nいま表示中の案件・タスクを、この合言葉へ引き継ぎますか？\n\nOK：今の内容をコピーして、この合言葉で共有を始めます\nキャンセル：引き継がず、新しいテンプレートから始めます\n\n※ どちらを選んでも、前の合言葉のボードはそのまま残ります。`);
 }
 
 // Leave the shared board and keep working on this device only. The board we are
