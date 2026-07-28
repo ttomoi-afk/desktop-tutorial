@@ -27,7 +27,8 @@ const params = new URLSearchParams(location.search);
 // ── sync wiring ────────────────────────────────────────────────────────────
 const sync = createSync({
   store,
-  onStatus(s) { connState = s; renderConnBadge(); if ($('#dt-sidebar')) renderDtSidebar(store.get()); },
+  // a status change also flips the connection bar on the 概要 screen, so redraw all
+  onStatus(s) { connState = s; render(); },
 });
 function pushPatch(patch) { sync.push(patch); }
 
@@ -41,10 +42,14 @@ async function startSync() {
   const conn = currentConn();
   const code = sanitizeCode(params.get('code') || conn.code || 'local');
   const mode = decideMode();
-  await sync.connect({ mode, code, config: firebaseConfig });
+  // A failed cloud connect must not break the app: keep running on local data
+  // (the 概要 screen then offers "接続を解除" to switch to local for good).
+  try { await sync.connect({ mode, code, config: firebaseConfig }); }
+  catch (e) { console.warn('[pms] cloud connect failed; continuing locally', e); connState = 'error'; render(); }
 }
 // RTDB keys may not contain . # $ [ ] / — normalize team codes so any input is safe.
 function sanitizeCode(s) { return (String(s || '').trim().replace(/[.#$\[\]\/\s]+/g, '-').replace(/^-+|-+$/g, '')) || 'local'; }
+function isCloudMode() { return decideMode() === 'firebase'; }
 
 // ── Google Chat (instant notifications) ─────────────────────────────────────
 // The webhook + toggles live in board meta, so configuring once covers the whole
@@ -126,6 +131,23 @@ function masthead(face, title, sub) {
   <div class="rule-thick"></div><div class="rule-thin"></div>`;
 }
 
+// Connection bar on the 概要 screen: shows how this device is storing data and
+// lets the user leave the shared board in one tap (or join if not connected).
+function connBarHTML() {
+  const cloud = isCloudMode();
+  const code = currentConn().code;
+  if (!cloud) {
+    return `<div class="conn-bar">
+      <span class="conn-badge c-local"><span class="dot"></span>ローカル（この端末のみ）</span>
+      <span class="conn-bar-note">チームで共有するには接続します</span>
+      <button class="mini-btn" data-action="open-settings">接続</button></div>`;
+  }
+  return `<div class="conn-bar is-cloud">
+    <span class="conn-badge ${connBadgeClass()}"><span class="dot"></span>${connLabelText()}</span>
+    <span class="conn-bar-note">${code ? 'コード：' + esc(code) : ''}</span>
+    <button class="mini-btn danger" data-action="leave">接続を解除</button></div>`;
+}
+
 // ── 01 概要 ──
 function renderOverview(st) {
   const s = deriveSummary(st);
@@ -155,7 +177,7 @@ function renderOverview(st) {
       <div class="load-avg">${m.count ? '平均 ' + m.avg + '%' : '—'}</div></div>`;
   }).join('');
 
-  $('#ov-body').innerHTML = masthead('第一面', st.meta.title || 'プロジェクト管理シート', sub) + `
+  $('#ov-body').innerHTML = masthead('第一面', st.meta.title || 'プロジェクト管理シート', sub) + connBarHTML() + `
     <div class="sec-1"><div class="sec-label">全体進捗</div>
       <div class="overall">
         <div class="num-wrap"><div class="cmyk-num big-num"><span class="paper">${n}</span>
@@ -319,7 +341,7 @@ function dtOverviewHTML(st) {
       <div class="dt-load-name">${esc(m.name)}</div><div class="load-sq">${sq}</div>
       <div class="dt-load-n">${m.count}件</div><div class="dt-load-avg">${m.count ? '平均 ' + m.avg + '%' : '—'}</div></div>`;
   }).join('');
-  return dtMasthead(st.meta.title || 'プロジェクト管理シート', meta) + `
+  return dtMasthead(st.meta.title || 'プロジェクト管理シート', meta) + connBarHTML() + `
     <div class="dt-overall">
       <div><div class="sec-label">全体進捗</div><div class="dt-num-row">${cmykNum(s.overall, 'dt-big-num')}<span class="dt-pct-sign">%</span></div></div>
       <div class="dt-overall-bar">
@@ -545,7 +567,8 @@ function renderSettings() {
 
     <div class="opt-group"><div class="opt-group-label">チーム接続</div>
       <div class="conn-box">
-        <div class="conn-line"><span class="conn-badge ${connBadgeClass()}"><span class="dot"></span>${connLabelText()}</span></div>
+        <div class="conn-line"><span class="conn-badge ${connBadgeClass()}"><span class="dot"></span>${connLabelText()}</span>
+          ${isCloudMode() ? '<button class="mini-btn danger" data-action="leave">接続を解除</button>' : ''}</div>
         <div class="field"><label>チームコード（合言葉・全員で共有）</label>
           <div class="conn-row"><input class="input" id="set-code" value="${esc(conn.code)}" placeholder="${cloud ? '例）nyokki-2026' : 'クラウド未設定'}" ${cloud ? '' : 'disabled'}>
           <button class="btn btn-secondary" data-action="join" ${cloud ? '' : 'disabled'}>接続</button></div></div>
@@ -601,6 +624,22 @@ async function joinTeam() {
   const conn = currentConn(); conn.code = code; LS.set('pms:conn', conn);
   await sync.connect({ mode: decideMode(), code, config: firebaseConfig });
   renderSettings();
+}
+
+// Leave the shared board and keep working on this device only. The board we are
+// looking at is copied into the local board first, so disconnecting never makes
+// the current tasks disappear (the team's cloud data is left untouched).
+async function leaveTeam() {
+  if (!isCloudMode()) return;
+  if (!confirm('クラウド同期を解除して、この端末のみ（ローカル）に切り替えます。\n\n・チームの共有ボードへの反映が止まります\n・いま表示中のデータはこの端末に残ります\n・同じチームコードを入れ直せば、また接続できます\n\n解除しますか？')) return;
+  const snapshot = JSON.parse(JSON.stringify(store.get()));
+  const conn = currentConn(); conn.code = ''; LS.set('pms:conn', conn);
+  await sync.connect({ mode: 'local', code: 'local', config: firebaseConfig });
+  store.replaceAll(snapshot);
+  const b = store.toBoard();
+  pushPatch({ path: 'meta', value: b.meta });
+  ['members', 'projects', 'tasks'].forEach((c) => Object.entries(b[c]).forEach(([id, v]) => pushPatch({ path: c + '/' + id, value: v })));
+  if ($('#setSheet').classList.contains('open')) renderSettings();
 }
 
 // ── Google Chat settings (webhook + toggles, shared via board meta) ──
@@ -674,6 +713,7 @@ document.addEventListener('click', (e) => {
     case 'save-ent': saveEntity(); break;
     case 'del-ent': deleteEntity(); break;
     case 'join': joinTeam(); break;
+    case 'leave': leaveTeam(); break;
     case 'chat-test': sendChatTest(); break;
     case 'export': exportData(); break;
     case 'import': $('#importFile').click(); break;
