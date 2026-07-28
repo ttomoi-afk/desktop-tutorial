@@ -86,15 +86,29 @@ export function createSync({ store, onStatus }) {
     get status() { return status; },
 
     async connect({ mode: m, code: c, config }) {
+      const prevCode = code, hadBoard = mode !== null;
       await api.disconnect();
-      mode = m; code = c || 'local'; seeded = false;
-      store.useCache(code); // per-board local cache for offline reloads
+      const next = c || 'local';
+      // Joining a *different* team code must not drag the previous board along:
+      // the old tasks would stay on screen, and (when the new board is still
+      // empty) even get uploaded into it. Carrying data over is only right for
+      // the "publish my local board to a team code" flow, i.e. coming from the
+      // device-local board.
+      const switchingBoards = hadBoard && prevCode !== next;
+      const publishingLocalWork = !prevCode || prevCode === 'local';
+      mode = m; code = next; seeded = false;
+      const hadCache = store.useCache(code); // per-board local cache for offline reloads
+      if (switchingBoards && !publishingLocalWork && !hadCache) store.clear();
       backend = (m === 'firebase') ? FirebaseBackend(config) : LocalBackend();
       await backend.start(code, {
         onSnapshot: (board) => {
           if (!seeded) {
             seeded = true;
-            if (isEmptyBoard(board)) { backend.setAll(store.toBoard()); return; } // populate a fresh board
+            if (isEmptyBoard(board)) { // populate a fresh board
+              if (isEmptyBoard(store.toBoard())) store.resetToSample(); // brand-new code → start from the template
+              backend.setAll(store.toBoard());
+              return;
+            }
           }
           if (!isEmptyBoard(board)) store.setFromBoard(board);
         },

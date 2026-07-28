@@ -96,6 +96,11 @@ export function createStore() {
     resetToSample() { set(sampleState()); return { members: state.members, projects: state.projects, tasks: state.tasks }; },
     replaceAll(next) { set(next); },
 
+    // Drop everything before loading another team's board. meta goes too, so a
+    // previous team's settings (e.g. its Google Chat webhook) never follow the
+    // user into the board they just switched to.
+    clear() { set({ meta: { title: 'プロジェクト管理シート', team: 'チーム進行管理' }, members: [], projects: [], tasks: [] }); },
+
     // merge into board meta (title/team + shared settings like the Chat webhook);
     // returns a patch so the whole meta object syncs to the team board.
     setMeta(patch) {
