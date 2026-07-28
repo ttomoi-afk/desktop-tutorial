@@ -85,27 +85,35 @@ export function createSync({ store, onStatus }) {
     get code() { return code; },
     get status() { return status; },
 
-    async connect({ mode: m, code: c, config }) {
+    // `onFreshBoard(code)` is consulted only when the code we just joined turns
+    // out to be brand-new AND we set the previous board aside; returning true
+    // migrates that board into the new code (see the carry-over note below).
+    async connect({ mode: m, code: c, config, onFreshBoard }) {
       const prevCode = code, hadBoard = mode !== null;
       await api.disconnect();
       const next = c || 'local';
       // Joining a *different* team code must not drag the previous board along:
       // the old tasks would stay on screen, and (when the new board is still
-      // empty) even get uploaded into it. Carrying data over is only right for
-      // the "publish my local board to a team code" flow, i.e. coming from the
-      // device-local board.
+      // empty) even get uploaded into it. Carrying data over silently is only
+      // right for the "publish my local board to a team code" flow, i.e. coming
+      // from the device-local board.
       const switchingBoards = hadBoard && prevCode !== next;
       const publishingLocalWork = !prevCode || prevCode === 'local';
       mode = m; code = next; seeded = false;
       const hadCache = store.useCache(code); // per-board local cache for offline reloads
-      if (switchingBoards && !publishingLocalWork && !hadCache) store.clear();
+      // Hold the board we are leaving: if the new code is empty the app can ask
+      // whether to migrate it there, instead of losing it or forcing it in.
+      const parked = (switchingBoards && !publishingLocalWork && !hadCache) ? store.toBoard() : null;
+      if (parked) store.clear();
       backend = (m === 'firebase') ? FirebaseBackend(config) : LocalBackend();
       await backend.start(code, {
         onSnapshot: (board) => {
           if (!seeded) {
             seeded = true;
             if (isEmptyBoard(board)) { // populate a fresh board
-              if (isEmptyBoard(store.toBoard())) store.resetToSample(); // brand-new code → start from the template
+              const migrate = parked && !isEmptyBoard(parked) && onFreshBoard && onFreshBoard(next);
+              if (migrate) store.setFromBoard(parked);                 // move the old board over
+              else if (isEmptyBoard(store.toBoard())) store.resetToSample(); // else start from the template
               backend.setAll(store.toBoard());
               return;
             }
