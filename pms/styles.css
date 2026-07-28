@@ -173,6 +173,16 @@ input,select{font-family:inherit}
 .mv-meta{font-size:11px;margin-top:3px;color:color-mix(in srgb,var(--color-text) 55%,transparent)}
 .mini-btn{font-size:11.5px;font-weight:700;color:var(--color-accent-600);padding:6px 11px;border-radius:999px;border:1px solid var(--color-divider);background:var(--color-bg);white-space:nowrap;flex:none}
 .mini-btn:hover{background:var(--color-accent-100);border-color:var(--color-accent-200)}
+.mini-btn.danger{color:#b3391f;border-color:color-mix(in srgb,#b3391f 32%,transparent)}
+.mini-btn.danger:hover{background:#fbeae6;border-color:color-mix(in srgb,#b3391f 55%,transparent)}
+
+/* — connection bar (概要 screen): storage mode + join/leave — */
+.conn-bar{display:flex;align-items:center;gap:10px;margin-top:16px;padding:9px 12px;border-radius:14px;
+  background:var(--color-neutral-100);border:1px solid var(--color-neutral-200)}
+.conn-bar.is-cloud{background:var(--color-accent-100);border-color:var(--color-accent-200)}
+.conn-bar .conn-badge{background:transparent;border:0;padding:0;flex:none}
+.conn-bar-note{flex:1;min-width:0;font-size:10.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:color-mix(in srgb,var(--color-text) 55%,transparent)}
 .mv-tasks{display:flex;flex-direction:column;gap:10px;margin-top:12px}
 .mv-task{display:grid;grid-template-columns:26px 1fr;gap:10px;cursor:pointer;background:var(--color-bg);
   border:1px solid var(--color-neutral-200);border-radius:16px;padding:13px 14px;transition:background .12s}
@@ -282,7 +292,7 @@ select.input{-webkit-appearance:none;appearance:none;background-image:linear-gra
 .mgr-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--color-neutral-200)}
 .mgr-name{flex:1;font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .conn-box{margin-top:8px;padding:13px;border:1px solid var(--color-neutral-200);border-radius:14px;background:var(--color-neutral-100)}
-.conn-line{margin-bottom:6px}
+.conn-line{display:flex;align-items:center;gap:8px;justify-content:space-between;margin-bottom:6px}
 .conn-row{display:flex;gap:8px}
 .conn-row .input{flex:1}
 .conn-box .input{background:var(--color-bg)}
