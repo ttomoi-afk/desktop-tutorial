@@ -115,6 +115,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/79294/79294.html",
    "rakutenHotelNo": 79294,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/79294/79294.jpg",
+   "minPrice": 43000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -234,6 +237,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/70807/70807.html",
    "rakutenHotelNo": 70807,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/70807/70807.jpg",
+   "minPrice": 40000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -350,6 +356,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/44815/44815.html",
    "rakutenHotelNo": 44815,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/44815/44815.jpg",
+   "minPrice": 44000,
+   "hasFreeKashikiri": true,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -431,6 +440,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/55943/55943.html",
    "rakutenHotelNo": 55943,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/55943/55943.jpg",
+   "minPrice": 28000,
+   "hasFreeKashikiri": true,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -529,6 +541,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/75399/75399.html",
    "rakutenHotelNo": 75399,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/75399/75399.jpg",
+   "minPrice": 60000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -617,6 +632,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/111234/111234.html",
    "rakutenHotelNo": 111234,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/111234/111234.jpg",
+   "minPrice": 33000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -698,6 +716,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/51198/51198.html",
    "rakutenHotelNo": 51198,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/51198/51198.jpg",
+   "minPrice": 36000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -786,6 +807,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/147944/147944.html",
    "rakutenHotelNo": 147944,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/147944/147944.jpg",
+   "minPrice": 18000,
+   "hasFreeKashikiri": true,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -905,6 +929,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/8886/8886.html",
    "rakutenHotelNo": 8886,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/8886/8886.jpg",
+   "minPrice": 22000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -990,6 +1017,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/39556/39556.html",
    "rakutenHotelNo": 39556,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/39556/39556.jpg",
+   "minPrice": 20000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1076,6 +1106,9 @@
    "rakutenUrl": "https://travel.rakuten.co.jp/HOTEL/11332/11332.html",
    "rakutenHotelNo": 11332,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/11332/11332.jpg",
+   "minPrice": 36000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1182,6 +1215,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/172443",
    "rakutenHotelNo": 172443,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/172443/172443.jpg",
+   "minPrice": 9000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1277,6 +1313,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/161040",
    "rakutenHotelNo": 161040,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/161040/161040.jpg",
+   "minPrice": 9000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1356,6 +1395,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/14019",
    "rakutenHotelNo": 14019,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/14019/14019.jpg",
+   "minPrice": 10000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1436,6 +1478,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/147710",
    "rakutenHotelNo": 147710,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/147710/147710.jpg",
+   "minPrice": 10000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1529,6 +1574,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/166107",
    "rakutenHotelNo": 166107,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/166107/166107.jpg",
+   "minPrice": 25000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1605,6 +1653,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/147093",
    "rakutenHotelNo": 147093,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/147093/147093.jpg",
+   "minPrice": 23000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1683,6 +1734,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/173094",
    "rakutenHotelNo": 173094,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/173094/173094.jpg",
+   "minPrice": 17000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1774,6 +1828,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178005",
    "rakutenHotelNo": 178005,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/178005/178005.jpg",
+   "minPrice": 16000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1863,6 +1920,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/165557",
    "rakutenHotelNo": 165557,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/165557/165557.jpg",
+   "minPrice": 17000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -1953,6 +2013,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/149160",
    "rakutenHotelNo": 149160,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/149160/149160.jpg",
+   "minPrice": 10000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2044,6 +2107,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/179075",
    "rakutenHotelNo": 179075,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/179075/179075.jpg",
+   "minPrice": 12000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2132,6 +2198,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/158346",
    "rakutenHotelNo": 158346,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/158346/158346.jpg",
+   "minPrice": 9800,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2217,6 +2286,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/167717",
    "rakutenHotelNo": 167717,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/167717/167717.jpg",
+   "minPrice": 7700,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2297,6 +2369,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/172378",
    "rakutenHotelNo": 172378,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/172378/172378.jpg",
+   "minPrice": 10000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2358,6 +2433,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/164935",
    "rakutenHotelNo": 164935,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/164935/164935.jpg",
+   "minPrice": 13500,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2436,6 +2514,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/144957",
    "rakutenHotelNo": 144957,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/144957/144957.jpg",
+   "minPrice": 8000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2515,6 +2596,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/176602",
    "rakutenHotelNo": 176602,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/176602/176602.jpg",
+   "minPrice": 5000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2591,6 +2675,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178414",
    "rakutenHotelNo": 178414,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/178414/178414.jpg",
+   "minPrice": 16000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2666,6 +2753,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/187118",
    "rakutenHotelNo": 187118,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/187118/187118.jpg",
+   "minPrice": 18000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2764,6 +2854,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/130702",
    "rakutenHotelNo": 130702,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/130702/130702.jpg",
+   "minPrice": 28000,
+   "hasFreeKashikiri": true,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2860,6 +2953,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/9696",
    "rakutenHotelNo": 9696,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/9696/9696.jpg",
+   "minPrice": 48000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -2946,6 +3042,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/27783",
    "rakutenHotelNo": 27783,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/27783/27783.jpg",
+   "minPrice": 38000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3039,6 +3138,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/182691",
    "rakutenHotelNo": 182691,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/182691/182691.jpg",
+   "minPrice": 63250,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3127,6 +3229,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/8838",
    "rakutenHotelNo": 8838,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/8838/8838.jpg",
+   "minPrice": 40000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3227,6 +3332,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/178613",
    "rakutenHotelNo": 178613,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/178613/178613.jpg",
+   "minPrice": 11000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3327,6 +3435,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/104701",
    "rakutenHotelNo": 104701,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/104701/104701.jpg",
+   "minPrice": 10000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3389,6 +3500,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/180045",
    "rakutenHotelNo": 180045,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/180045/180045.jpg",
+   "minPrice": 10000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3464,6 +3578,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1160",
    "rakutenHotelNo": 1160,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/1160/1160.jpg",
+   "minPrice": 11000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3541,6 +3658,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/144956",
    "rakutenHotelNo": 144956,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/144956/144956.jpg",
+   "minPrice": 11000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3601,6 +3721,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/168608",
    "rakutenHotelNo": 168608,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/168608/168608.jpg",
+   "minPrice": 17000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3695,6 +3818,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/25288",
    "rakutenHotelNo": 25288,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/25288/25288.jpg",
+   "minPrice": 48000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3796,6 +3922,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/8636",
    "rakutenHotelNo": 8636,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/8636/8636.jpg",
+   "minPrice": 26000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3883,6 +4012,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/53390",
    "rakutenHotelNo": 53390,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/53390/53390.jpg",
+   "minPrice": 58000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -3974,6 +4106,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/80572",
    "rakutenHotelNo": 80572,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/80572/80572.jpg",
+   "minPrice": 38000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": true
   },
   {
@@ -4083,6 +4218,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/25128",
    "rakutenHotelNo": 25128,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/25128/25128.jpg",
+   "minPrice": 68000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -4178,6 +4316,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/28142",
    "rakutenHotelNo": 28142,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/28142/28142.jpg",
+   "minPrice": 24200,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": true
   },
   {
@@ -4255,6 +4396,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/70350",
    "rakutenHotelNo": 70350,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/70350/70350.jpg",
+   "minPrice": 25000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": true,
    "someNoRoomBath": true
   },
   {
@@ -4360,6 +4504,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/19964",
    "rakutenHotelNo": 19964,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/19964/19964.jpg",
+   "minPrice": 15400,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -4446,6 +4593,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/179274",
    "rakutenHotelNo": 179274,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/179274/179274.jpg",
+   "minPrice": 7033,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -4546,6 +4696,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1524",
    "rakutenHotelNo": 1524,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/1524/1524.jpg",
+   "minPrice": 22200,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -4653,6 +4806,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/139989",
    "rakutenHotelNo": 139989,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/139989/139989.jpg",
+   "minPrice": 15520,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -4733,6 +4889,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/16443",
    "rakutenHotelNo": 16443,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/16443/16443.jpg",
+   "minPrice": 13000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -4813,6 +4972,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/182630",
    "rakutenHotelNo": 182630,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/182630/182630.jpg",
+   "minPrice": 16000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -4888,6 +5050,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/166320",
    "rakutenHotelNo": 166320,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/166320/166320.jpg",
+   "minPrice": 15000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -4980,6 +5145,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/145419",
    "rakutenHotelNo": 145419,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/145419/145419.jpg",
+   "minPrice": 16000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5044,6 +5212,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/196",
    "rakutenHotelNo": 196,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/196/196.jpg",
+   "minPrice": 6500,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5119,6 +5290,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/181785",
    "rakutenHotelNo": 181785,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/181785/181785.jpg",
+   "minPrice": 8000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5179,6 +5353,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/167519",
    "rakutenHotelNo": 167519,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/167519/167519.jpg",
+   "minPrice": 7500,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5254,6 +5431,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/160939",
    "rakutenHotelNo": 160939,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/160939/160939.jpg",
+   "minPrice": 8000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5314,6 +5494,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/128440",
    "rakutenHotelNo": 128440,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/128440/128440.jpg",
+   "minPrice": 9000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5390,6 +5573,9 @@
    "rakutenHotelNo": 724,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/724/724.jpg",
    "sepScope": "partial",
+   "minPrice": 13000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5477,6 +5663,9 @@
    "rakutenHotelNo": 7523,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/7523/7523.jpg",
    "sepScope": "partial",
+   "minPrice": 28000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5543,6 +5732,9 @@
    "rakutenHotelNo": 5903,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/5903/5903.jpg",
    "sepScope": "partial",
+   "minPrice": 13000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5609,6 +5801,9 @@
    "rakutenHotelNo": 76941,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/76941/76941.jpg",
    "sepScope": "partial",
+   "minPrice": 16000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5672,6 +5867,9 @@
    "rakutenHotelNo": 172272,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/172272/172272.jpg",
    "sepScope": "partial",
+   "minPrice": 13000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5752,6 +5950,9 @@
    "rakutenHotelNo": 67259,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/67259/67259.jpg",
    "sepScope": "partial",
+   "minPrice": 26000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5823,6 +6024,9 @@
    "rakutenHotelNo": 1341,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/1341/1341.jpg",
    "sepScope": "partial",
+   "minPrice": 11000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -5925,6 +6129,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/69295",
    "rakutenHotelNo": 69295,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/69295/69295.jpg",
+   "minPrice": 13000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -6006,6 +6213,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/168681",
    "rakutenHotelNo": 168681,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/168681/168681.jpg",
+   "minPrice": 14000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   },
   {
@@ -6101,6 +6311,9 @@
    "rakutenUrl": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/1019",
    "rakutenHotelNo": 1019,
    "img": "https://img.travel.rakuten.co.jp/share/HOTEL/1019/1019.jpg",
+   "minPrice": 11000,
+   "hasFreeKashikiri": false,
+   "noRoomBath": false,
    "someNoRoomBath": false
   }
  ]
