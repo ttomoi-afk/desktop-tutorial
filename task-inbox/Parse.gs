@@ -1,9 +1,10 @@
 /**
  * Parse.gs — 自然文（LINE / チャット / 音声入力）→ タスク構造化
  *
- * 本命は Claude API（Messages API を UrlFetchApp で直接叩く）。
- * APIキー未設定・API障害・拒否応答のときは、正規表現ベースの簡易パーサへ自動で落ちる。
- * どちらで解釈したかは戻り値の engine で分かる。
+ * 既定はルール解析（正規表現＋名簿・案件辞書）。無料で、投稿内容が社外に出ない。
+ * スクリプトプロパティ PARSE_ENGINE=claude のときだけ Claude API を使い、
+ * API障害・拒否応答のときは自動でルール解析へ退避する。
+ * どちらで解釈したかは戻り値の engine（'rule' / 'claude:…'）で分かる。
  */
 
 /** 既定モデル。スクリプトプロパティ CLAUDE_MODEL で変更可。 */
@@ -56,10 +57,15 @@ function parseMessage_(text, defaultRequester) {
   var body = String(text || '').trim();
   if (!body) return { tasks: [], engine: 'none', note: '本文が空です' };
 
+  // 既定は rule（無料・データが外に出ない）。AIを使うときだけ PARSE_ENGINE=claude にする。
+  var engine = prop_('PARSE_ENGINE', 'rule');
   var apiKey = prop_('ANTHROPIC_API_KEY', '');
-  if (!apiKey) {
+
+  if (engine !== 'claude' || !apiKey) {
     var r = ruleParse_(body, defaultRequester);
-    r.note = 'ANTHROPIC_API_KEY が未設定のため簡易パーサで解釈しました';
+    if (engine === 'claude' && !apiKey) {
+      r.note = 'PARSE_ENGINE=claude ですが APIキーが未設定のためルール解析を使いました';
+    }
     return r;
   }
 
@@ -68,7 +74,7 @@ function parseMessage_(text, defaultRequester) {
   } catch (err) {
     console.error('Claude 解析に失敗: ' + err);
     var fb = ruleParse_(body, defaultRequester);
-    fb.note = 'AI解析に失敗したため簡易パーサで解釈しました（' + err + '）';
+    fb.note = 'AI解析に失敗したためルール解析で解釈しました（' + err + '）';
     return fb;
   }
 }
@@ -199,72 +205,150 @@ function cleanTask_(t) {
 }
 
 /* ------------------------------------------------------------------ *
- *  簡易パーサ（APIキーなし／API障害時のフォールバック）
+ *  ルールベース解析（既定エンジン）
+ *
+ *  設計方針: 推測できないものは推測しない。
+ *  宛先・期限は「入力側で確定させる」（クイックリプライ／プルダウン／決め書式）のが前提で、
+ *  ここは書かれているものを正確に拾うことに徹する。
  * ------------------------------------------------------------------ */
 
-function ruleParse_(body, defaultRequester) {
-  var assignee = '';
-  var members = getMembers_();
+/** 箇条書き記号（行頭にあれば外す） */
+var BULLET_RE = /^\s*(?:[・･\-–—*＊]|[①-⑳]|[0-9０-９]+[.)．、]|[（(][0-9０-９]+[)）])\s*/;
 
-  // 「友井さんへ」「To 友井」「@友井」「>友井」などを拾う
+/**
+ * 投稿を「1行＝1タスク」に分ける。
+ * 宛先だけの行（例:「友井さんへ」）は、以降の行に引き継ぐ見出しとして扱う。
+ */
+function splitEntries_(body) {
+  var out = [];
+  String(body).split(/\r?\n/).forEach(function (raw) {
+    var line = raw.trim();
+    if (!line) return;
+    // 行頭が箇条書きのときだけ、同じ行の「・」区切りも分割する
+    if (BULLET_RE.test(line) && /[・･]/.test(line.replace(BULLET_RE, ''))) {
+      line.split(/\s*[・･]\s*/).forEach(function (part) {
+        var t = part.replace(BULLET_RE, '').trim();
+        if (t) out.push(t);
+      });
+      return;
+    }
+    out.push(line.replace(BULLET_RE, '').trim());
+  });
+  return out.filter(String);
+}
+
+/**
+ * 行頭の宛先指定を取り除く。名簿に当たったときだけ削るので、
+ * 「今月中に〜」の「今月中」を人名と誤認して削ることはない。
+ * @return {{assignee:string, rest:string, only:boolean}} only=宛先だけの行
+ */
+function stripAssignee_(line) {
   var patterns = [
-    /(?:^|\n)\s*(?:to|To|TO)[\s:：]+([^\s、。\n]+)/,
-    /(?:^|\n)\s*[@＠>＞]\s*([^\s、。\n]+)/,
-    /([^\s、。\n]{1,8})\s*(?:さん|くん|君)?\s*(?:へ|に|宛)(?:[、。\s]|お願い|やって)/
+    /^\s*(?:to|To|TO)[\s:：]+([^\s、。]+)[\s、。]*/,
+    /^\s*[@＠>＞]\s*([^\s、。]+)[\s、。]*/,
+    /^\s*([^\s、。]{1,10}?)\s*(?:さん|くん|君)?\s*(?:へ|に|宛て?)[\s、。]*/
   ];
-  for (var p = 0; p < patterns.length && !assignee; p++) {
-    var m = body.match(patterns[p]);
-    if (m) {
-      var hit = findMember_(m[1]);
-      if (hit) assignee = hit.key;
-    }
+  for (var i = 0; i < patterns.length; i++) {
+    var m = line.match(patterns[i]);
+    if (!m) continue;
+    var hit = findMember_(m[1]);
+    if (!hit) continue;
+    var rest = line.slice(m[0].length).trim();
+    return { assignee: hit.key, rest: rest, only: rest === '' };
   }
-  // それでも決まらなければ、本文に名前が出てくる人を採用
-  if (!assignee) {
-    for (var i = 0; i < members.length; i++) {
-      var cands = [members[i].key, members[i].full].concat(members[i].aliases || []);
-      for (var j = 0; j < cands.length; j++) {
-        if (cands[j] && body.indexOf(cands[j]) >= 0) { assignee = members[i].key; break; }
+  // 行の途中に名前が出てくる場合は、担当だけ拾って本文はそのまま残す
+  var members = getMembers_();
+  for (var j = 0; j < members.length; j++) {
+    var cands = [members[j].full, members[j].key].concat(members[j].aliases || []);
+    for (var k = 0; k < cands.length; k++) {
+      if (cands[k] && cands[k].length >= 2 && line.indexOf(cands[k]) >= 0) {
+        return { assignee: members[j].key, rest: line, only: false };
       }
-      if (assignee) break;
     }
   }
+  return { assignee: '', rest: line, only: false };
+}
 
-  var dueInfo = ruleDue_(body);
-  var priority = /急ぎ|至急|最優先|なるべく早く|今すぐ|特に/.test(body) ? '高' : '中';
+/** 既存タブにある案件名と照合する（AIを使わずに案件を埋めるための辞書マッチ） */
+function matchProject_(text) {
+  var projects;
+  try { projects = collectProjects_(); } catch (e) { return ''; }
+  var q = norm_(text), best = '';
+  for (var i = 0; i < projects.length; i++) {
+    var p = projects[i];
+    if (p.length < 2) continue;
+    if (q.indexOf(norm_(p)) >= 0 && p.length > best.length) best = p;
+  }
+  return best;
+}
 
-  // 宛先・期限の表現を落として本文だけにする
-  var title = body
-    .replace(/(?:^|\n)\s*(?:to|To|TO)[\s:：]+[^\s、。\n]+/g, ' ')
-    .replace(/(?:^|\n)\s*[@＠>＞]\s*[^\s、。\n]+/g, ' ')
-    .replace(/[^\s、。\n]{1,8}\s*(?:さん|くん|君)\s*(?:へ|に|宛)/g, ' ')
-    .replace(dueInfo.text || '＿＿＿＿', ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+/**
+ * 依頼の言い回しを落としてタスク名に整える。
+ * 「洗い出して欲しい」→「洗い出し」／「探してください」→「探し」
+ * 促音便（作って・読んで）は無理に変換せずそのまま残す。
+ */
+function cleanTitle_(s) {
+  var t = String(s || '').trim()
+    .replace(/^[\s、。，,]+/, '')
+    .replace(/[。．\s]+$/, '');
 
-  // 除去のあとに残る句読点で先頭が空にならないよう、空でない節を拾う
-  var segs = title.split(/[。\n]/)
-    .map(function (s) { return s.replace(/^[\s、。，,]+/, '').replace(/^(?:に|は|を|へ)(?=[^\s])/, '').trim(); })
-    .filter(String);
-  var firstLine = segs.length ? segs[0] : '';
-  var rest = segs.slice(1).join('。');
+  var before;
+  do {
+    before = t;
+    t = t
+      .replace(/(?:を|の)?\s*(?:お願い(?:します|いたします|致します|ね)?|よろしく(?:お願いします)?|頼(?:みます|む))[。！!\s]*$/, '')
+      .replace(/(?:欲しい|ほしい|下さい|ください|もらえ(?:ますか|る\?)?|くれ(?:ますか|る\?)?|おいて|といて)[。！!？?\s]*$/, '')
+      // 優先度は priority 側で拾うので、タスク名からは外す
+      .replace(/[\s、,]*(?:大至急|至急|急ぎ|最優先|今すぐ|なるはや|なるべく早く)[。！!\s]*$/, '')
+      .replace(/[。．、，\s]+$/, '');
+  } while (t !== before && t.length > 1);
 
-  return {
-    tasks: firstLine ? [{
-      assignee: assignee,
-      assigneeRaw: assignee,
+  // て形が末尾に残ったら連用形に寄せる（促音便・撥音便は触らない）
+  if (t.length > 2 && !/(?:って|んで|いで)$/.test(t)) {
+    t = t.replace(/[てで]$/, '');
+  }
+  return t.trim();
+}
+
+/**
+ * ルールベースで投稿をタスク配列にする。
+ * @return {{tasks: Array, engine: string, note: string}}
+ */
+function ruleParse_(body, defaultRequester) {
+  var lines = splitEntries_(body);
+  var inherited = '';     // 宛先だけの行から引き継ぐ担当者
+  var tasks = [];
+
+  for (var i = 0; i < lines.length; i++) {
+    var a = stripAssignee_(lines[i]);
+    if (a.only) { inherited = a.assignee; continue; }   // 「友井さんへ」だけの行
+
+    var text = a.rest;
+    var due = ruleDue_(text);
+    var withoutDue = due.text ? text.replace(due.text, ' ') : text;
+
+    // 1文目をタスク名、2文目以降を詳細にする（勝手に別タスクへ分割はしない）
+    var sentences = withoutDue.split(/[。．]/)
+      .map(function (x) { return x.trim(); })
+      .filter(String);
+    var title = cleanTitle_(sentences[0] || '');
+    if (!title) continue;
+
+    tasks.push({
+      assignee: a.assignee || inherited,
+      assigneeRaw: a.assignee || inherited,
       requester: defaultRequester || '',
-      project: '',
-      title: firstLine.slice(0, 60),
-      detail: rest,
-      due: dueInfo.date,
-      dueText: dueInfo.text,
-      priority: priority,
-      confidence: assignee ? 0.4 : 0.1
-    }] : [],
-    engine: 'rule',
-    note: ''
-  };
+      project: matchProject_(text),
+      title: title.slice(0, 80),
+      detail: sentences.slice(1).join('。'),
+      due: due.date,
+      dueText: due.text,
+      priority: /急ぎ|至急|最優先|なるべく早く|今すぐ|特に|優先/.test(text) ? '高' : '中',
+      confidence: (a.assignee || inherited) ? 0.9 : 0
+    });
+  }
+
+  return { tasks: tasks, engine: 'rule', note: '' };
 }
 
 /** 日本語の期限表現 → {date:'YYYY-MM-DD', text:'原文'} */

@@ -48,10 +48,16 @@ function doPost(e) {
       handleLineEvents_(body.events);
       return jsonOut_({ ok: true });
     }
-    // 汎用（iOSショートカット・他アプリなど）: {text, from}
+    // 汎用（iOSショートカット・他アプリなど）: {text, from, assignee, due}
     if (body.text) {
-      var r = ingest_(body.text, body.from || '', body.source || 'api');
-      return jsonOut_({ ok: true, results: r.results, engine: r.engine, note: r.note });
+      var parsed = buildTasks_(body.text, body.from || '', body.assignee || '', body.due || '');
+      if (!parsed.tasks.length) {
+        return jsonOut_({ ok: true, results: [], note: parsed.note || 'タスクは見つかりませんでした' });
+      }
+      var results = writeTasks_(parsed.tasks, {
+        source: body.source || 'api', rawMessage: body.text, engine: parsed.engine
+      });
+      return jsonOut_({ ok: true, results: results, engine: parsed.engine, note: parsed.note });
     }
   } catch (err) {
     console.error(err);
@@ -73,30 +79,28 @@ function jsonOut_(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-/**
- * 解析 → 書き込みまでを一気に行う共通処理（チャット経由はこちら）。
- * @return {{results:Array, engine:string, note:string, tasks:Array}}
- */
-function ingest_(text, requesterKey, source) {
-  var parsed = parseMessage_(text, requesterKey);
-  if (!parsed.tasks.length) {
-    return { results: [], engine: parsed.engine, note: parsed.note || 'タスクは見つかりませんでした', tasks: [] };
-  }
-  var results = writeTasks_(parsed.tasks, {
-    source: source,
-    rawMessage: text,
-    engine: parsed.engine
-  });
-  return { results: results, engine: parsed.engine, note: parsed.note, tasks: parsed.tasks };
-}
-
 /* ---------------- スマホ投げ込みページ用（google.script.run から呼ぶ） ---------------- */
+
+/**
+ * 本文を解析し、画面で明示的に選ばれた担当・期限があればそれを優先する。
+ * 「宛先と期限は入力側で確定させる」という構造化入力の要。
+ */
+function buildTasks_(text, from, assignee, due) {
+  var parsed = parseMessage_(String(text || ''), String(from || ''));
+  var member = assignee ? findMember_(assignee) : null;
+
+  parsed.tasks.forEach(function (t) {
+    if (member) { t.assignee = member.key; t.assigneeRaw = member.key; t.confidence = 1; }
+    if (due) { t.due = due; t.dueText = ''; }
+  });
+  return parsed;
+}
 
 /** 解析だけして候補を返す（まだシートには書かない） */
 function apiParse(payload) {
   payload = payload || {};
   if (!tokenOk_(payload.token)) return { ok: false, error: 'invalid token' };
-  var parsed = parseMessage_(String(payload.text || ''), String(payload.from || ''));
+  var parsed = buildTasks_(payload.text, payload.from, payload.assignee, payload.due);
   return {
     ok: true,
     tasks: parsed.tasks,
@@ -104,6 +108,23 @@ function apiParse(payload) {
     note: parsed.note,
     today: todayStr_()
   };
+}
+
+/** 担当が明示されているときの一発登録（解析と書き込みを1往復で済ませる） */
+function apiQuickCommit(payload) {
+  payload = payload || {};
+  if (!tokenOk_(payload.token)) return { ok: false, error: 'invalid token' };
+  var text = String(payload.text || '').trim();
+  if (!text) return { ok: false, error: '本文が空です' };
+
+  var parsed = buildTasks_(text, payload.from, payload.assignee, payload.due);
+  if (!parsed.tasks.length) {
+    return { ok: false, error: parsed.note || 'タスクとして読み取れませんでした' };
+  }
+  var results = writeTasks_(parsed.tasks, {
+    source: 'web', rawMessage: text, engine: parsed.engine
+  });
+  return { ok: true, results: results };
 }
 
 /** 画面で確認・修正されたタスクをシートへ書き込む */

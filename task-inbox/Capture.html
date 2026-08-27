@@ -1,4 +1,5 @@
-<!-- Capture.html — スマホ用の投げ込みページ（GAS HtmlService テンプレート） -->
+<!-- Capture.html — スマホ用の投げ込みページ（GAS HtmlService テンプレート）
+     担当と期限は「選ぶ」、本文だけ「書く」。宛先の取り違えが起きない構造化入力。 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
@@ -6,46 +7,53 @@
 :root{
   --bg:#ffffff; --surface:#f2f7f4; --text:#22382e; --accent:#0b8457; --accent-2:#e08804;
   --n100:#f5f8f6; --n200:#e8eeea; --n300:#d3ddd7; --n500:#93a29a; --n700:#5a6961;
-  --a100:#e6f6ee; --a200:#c6ecd9; --a700:#07583b;
+  --a100:#e6f6ee; --a700:#07583b;
   --radius:14px; --radius-lg:22px;
   --font:'M PLUS Rounded 1c','Hiragino Maru Gothic ProN','Hiragino Sans','Noto Sans JP',sans-serif;
-  --shadow:0 4px 14px rgba(42,51,46,.14);
 }
 @media (prefers-color-scheme:dark){
   :root{--bg:#131a16; --surface:#1b241f; --text:#e6efe9; --n100:#1b241f; --n200:#25302a;
-        --n300:#33403a; --n500:#8fa197; --n700:#b9c8c0; --a100:#123227; --a200:#1b4635; --a700:#8fdcb8;
-        --accent:#3fbc86; --shadow:0 4px 14px rgba(0,0,0,.4);}
+        --n300:#33403a; --n500:#8fa197; --n700:#b9c8c0; --a100:#123227; --a700:#8fdcb8;
+        --accent:#3fbc86;}
 }
 *,*::before,*::after{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-weight:500;line-height:1.6;
-  -webkit-font-smoothing:antialiased;padding:14px 14px calc(28px + env(safe-area-inset-bottom));
-  max-width:560px;margin-inline:auto}
+body{margin:0 auto;background:var(--bg);color:var(--text);font-family:var(--font);font-weight:500;
+  line-height:1.6;-webkit-font-smoothing:antialiased;max-width:560px;
+  padding:14px 14px calc(28px + env(safe-area-inset-bottom))}
 h1{font-size:1.12rem;margin:0;letter-spacing:.02em}
 button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer;font-weight:700}
-input,textarea,select{font-family:inherit;font-size:16px;color:inherit} /* 16px = iOSの自動ズーム防止 */
+input,textarea,select{font-family:inherit;font-size:16px;color:inherit} /* 16px=iOSの自動ズーム防止 */
 
 .top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .top .who{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--n700)}
 .top select{background:var(--n100);border:1px solid var(--n300);border-radius:999px;padding:6px 10px;font-size:.82rem}
 
 .card{background:var(--surface);border:1px solid var(--n200);border-radius:var(--radius-lg);padding:14px;margin-bottom:12px}
-textarea{width:100%;min-height:132px;resize:vertical;border:0;background:transparent;padding:2px;
-  font-size:16px;line-height:1.65;outline:none}
+.field{margin-bottom:12px}
+.field:last-child{margin-bottom:0}
+.label{display:flex;align-items:baseline;gap:8px;font-size:.72rem;color:var(--n500);margin-bottom:6px}
+.label b{color:var(--accent);font-size:.7rem}
+.label .val{margin-left:auto;color:var(--n700);font-size:.72rem}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--bg);border:1px solid var(--n300);border-radius:999px;padding:7px 14px;font-size:.85rem;
+  transition:background .12s,border-color .12s}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip.mic{border-color:var(--accent);color:var(--accent);font-weight:700}
+.chip.mic[aria-pressed="true"]{background:var(--accent);color:#fff}
+.chip input[type=date]{border:0;background:transparent;font-size:.85rem;width:7.4em;padding:0}
+
+textarea{width:100%;min-height:112px;resize:vertical;border:1px solid var(--n300);border-radius:var(--radius);
+  background:var(--bg);padding:10px;font-size:16px;line-height:1.65;outline:none}
+textarea:focus{border-color:var(--accent)}
 textarea::placeholder{color:var(--n500)}
 
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.chip{background:var(--bg);border:1px solid var(--n300);border-radius:999px;padding:5px 12px;font-size:.8rem}
-.chip:active{background:var(--a100)}
-.chip.mic{border-color:var(--accent);color:var(--accent)}
-.chip.mic.on{background:var(--accent);color:#fff}
-
-.row{display:flex;gap:8px;margin-top:10px}
-.btn{flex:1;background:var(--accent);color:#fff;border-radius:var(--radius);padding:13px;text-align:center;font-size:.95rem}
+.row{display:flex;gap:8px;margin-top:12px}
+.btn{flex:1;background:var(--accent);color:#fff;border-radius:var(--radius);padding:14px;text-align:center;font-size:.95rem}
 .btn.ghost{background:var(--n200);color:var(--text)}
 .btn[disabled]{opacity:.5;pointer-events:none}
-
-.hint{font-size:.74rem;color:var(--n500);margin-top:8px;line-height:1.5}
-.status{font-size:.82rem;color:var(--n700);margin:10px 2px;min-height:1.2em}
+.hint{font-size:.74rem;color:var(--n500);margin:8px 2px 0;line-height:1.5}
+.status{font-size:.82rem;color:var(--n700);margin:10px 2px;min-height:1.2em;white-space:pre-wrap}
 .status.err{color:#c0392b}
 @media (prefers-color-scheme:dark){.status.err{color:#ff8f7a}}
 
@@ -60,8 +68,8 @@ textarea::placeholder{color:var(--n500)}
 
 .recent{margin-top:20px}
 .recent h2{font-size:.8rem;color:var(--n500);margin:0 0 8px;font-weight:700}
-.recent li{list-style:none;font-size:.8rem;padding:8px 0;border-top:1px solid var(--n200);color:var(--n700)}
 .recent ul{margin:0;padding:0}
+.recent li{list-style:none;font-size:.8rem;padding:8px 0;border-top:1px solid var(--n200);color:var(--n700)}
 .recent b{color:var(--text)}
 .badge{display:inline-block;background:var(--a100);color:var(--a700);border-radius:999px;
   padding:1px 8px;font-size:.68rem;margin-right:6px}
@@ -76,14 +84,26 @@ textarea::placeholder{color:var(--n500)}
 </div>
 
 <div class="card">
-  <textarea id="text" autofocus placeholder="思いついたまま書く／話す。&#10;&#10;例）友井さんへ　今月中に弟子屈で使えそうな補助金を全部洗い出して。特に新しい車の助成金は急ぎで。"></textarea>
-  <div class="chips" id="chips">
-    <button class="chip mic" id="mic" type="button">🎤 話して入力</button>
+  <div class="field">
+    <div class="label"><span>担当</span><b id="assigneeReq">選ぶと一発で登録</b><span class="val" id="assigneeVal"></span></div>
+    <div class="chips" id="assigneeChips"></div>
   </div>
-  <div class="row">
-    <button class="btn" id="go" type="button">AIで読み取る</button>
+
+  <div class="field">
+    <div class="label"><span>期限</span><span class="val" id="dueVal">なし</span></div>
+    <div class="chips" id="dueChips"></div>
   </div>
-  <p class="hint">キーボードのマイクボタン（音声入力）でも書けます。宛先は「◯◯さんへ」と頭に付けると確実です。</p>
+
+  <div class="field">
+    <div class="label"><span>やること</span></div>
+    <textarea id="text" placeholder="思いついたまま書く／話す。&#10;例）弟子屈で使えそうな補助金を全部洗い出して。特に新車の助成金は急ぎで。"></textarea>
+    <div class="chips" style="margin-top:8px">
+      <button class="chip mic" id="mic" type="button" aria-pressed="false">🎤 話して入力</button>
+    </div>
+  </div>
+
+  <div class="row"><button class="btn" id="go" type="button">読み取って確認</button></div>
+  <p class="hint" id="hint">担当を選ばないときは、本文に「友井さんへ」と書けば振り分けます。改行して複数行書くと、1行ずつ別のタスクになります。</p>
 </div>
 
 <div class="status" id="status"></div>
@@ -99,40 +119,96 @@ var MEMBERS = <?!= JSON.stringify(members) ?>;
 var TOKEN   = <?!= JSON.stringify(token) ?>;
 
 var $ = function (id) { return document.getElementById(id); };
-var lastParse = { engine: '', raw: '' };
+var sel = { assignee: '', due: '', dueLabel: 'なし' };
+var lastRaw = '';
+
+/* ---------- 日付ユーティリティ ---------- */
+function ymd(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') +
+         '-' + String(d.getDate()).padStart(2, '0');
+}
+function shift(days) { var d = new Date(); d.setDate(d.getDate() + days); return ymd(d); }
+function endOfWeek() { var d = new Date(); d.setDate(d.getDate() + ((7 - d.getDay()) % 7)); return ymd(d); }
+function endOfMonth() { var d = new Date(); return ymd(new Date(d.getFullYear(), d.getMonth() + 1, 0)); }
+function pretty(s) { return s ? s.slice(5).replace('-', '/') : 'なし'; }
 
 /* ---------- 「自分」セレクタ（端末に記憶） ---------- */
-(function initMe() {
-  var sel = $('me');
+(function () {
+  var s = $('me');
   MEMBERS.forEach(function (m) {
     var o = document.createElement('option');
-    o.value = m.key; o.textContent = m.key;
-    sel.appendChild(o);
+    o.value = m.key; o.textContent = m.key; s.appendChild(o);
   });
-  try { sel.value = localStorage.getItem('ti.me') || ''; } catch (e) {}
-  sel.addEventListener('change', function () {
-    try { localStorage.setItem('ti.me', sel.value); } catch (e) {}
+  try { s.value = localStorage.getItem('ti.me') || ''; } catch (e) {}
+  s.addEventListener('change', function () {
+    try { localStorage.setItem('ti.me', s.value); } catch (e) {}
   });
 })();
 
-/* ---------- 宛先チップ ---------- */
-(function initChips() {
-  var box = $('chips');
+/* ---------- 担当チップ（単一選択・もう一度押すと解除） ---------- */
+(function () {
+  var box = $('assigneeChips');
   MEMBERS.forEach(function (m) {
     var b = document.createElement('button');
-    b.type = 'button'; b.className = 'chip'; b.textContent = m.key + 'さんへ';
+    b.type = 'button'; b.className = 'chip'; b.textContent = m.key;
+    b.setAttribute('aria-pressed', 'false');
     b.addEventListener('click', function () {
-      var ta = $('text');
-      ta.value = ta.value.replace(/^\s*\S{1,8}さんへ\s*/, '');
-      ta.value = m.key + 'さんへ ' + ta.value;
-      ta.focus();
+      var on = sel.assignee === m.key;
+      sel.assignee = on ? '' : m.key;
+      Array.prototype.forEach.call(box.children, function (c) {
+        c.setAttribute('aria-pressed', String(!on && c === b));
+      });
+      $('assigneeVal').textContent = sel.assignee ? sel.assignee + 'さん' : '';
+      $('assigneeReq').textContent = sel.assignee ? '' : '選ぶと一発で登録';
+      $('go').textContent = sel.assignee ? '登録' : '読み取って確認';
     });
     box.appendChild(b);
   });
 })();
 
-/* ---------- 音声入力（使えない端末では案内を出す） ---------- */
-(function initMic() {
+/* ---------- 期限チップ ---------- */
+(function () {
+  var box = $('dueChips');
+  var opts = [
+    { label: 'なし', get: function () { return ''; } },
+    { label: '今日', get: function () { return shift(0); } },
+    { label: '明日', get: function () { return shift(1); } },
+    { label: '今週中', get: endOfWeek },
+    { label: '今月末', get: endOfMonth }
+  ];
+  var buttons = [];
+  function clear() { buttons.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); }); }
+
+  opts.forEach(function (o) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip'; b.textContent = o.label;
+    b.setAttribute('aria-pressed', String(o.label === 'なし'));
+    b.addEventListener('click', function () {
+      clear(); b.setAttribute('aria-pressed', 'true');
+      date.value = '';
+      sel.due = o.get(); sel.dueLabel = o.label;
+      $('dueVal').textContent = sel.due ? o.label + '（' + pretty(sel.due) + '）' : 'なし';
+    });
+    buttons.push(b); box.appendChild(b);
+  });
+
+  var wrap = document.createElement('span');
+  wrap.className = 'chip';
+  var date = document.createElement('input');
+  date.type = 'date';
+  wrap.appendChild(date);
+  date.addEventListener('change', function () {
+    if (!date.value) return;
+    clear();
+    sel.due = date.value; sel.dueLabel = '指定';
+    $('dueVal').textContent = pretty(sel.due);
+  });
+  buttons.push(wrap);
+  box.appendChild(wrap);
+})();
+
+/* ---------- 音声入力（使えない端末では案内） ---------- */
+(function () {
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   var btn = $('mic');
   if (!SR) {
@@ -141,9 +217,9 @@ var lastParse = { engine: '', raw: '' };
     });
     return;
   }
-  var rec = new SR();
-  rec.lang = 'ja-JP'; rec.interimResults = true; rec.continuous = true;
+  var rec = new SR(); rec.lang = 'ja-JP'; rec.interimResults = true; rec.continuous = true;
   var base = '', on = false;
+  function off() { on = false; btn.setAttribute('aria-pressed', 'false'); btn.textContent = '🎤 話して入力'; }
 
   rec.onresult = function (ev) {
     var fixed = '', tmp = '';
@@ -155,56 +231,74 @@ var lastParse = { engine: '', raw: '' };
     $('text').value = base + tmp;
   };
   rec.onerror = function (ev) {
-    on = false; btn.classList.remove('on'); btn.textContent = '🎤 話して入力';
+    off();
     setStatus(ev.error === 'not-allowed'
       ? 'マイクが許可されませんでした。キーボードのマイクボタンをお使いください。'
       : '音声入力に失敗しました（' + ev.error + '）。', true);
   };
-  rec.onend = function () {
-    on = false; btn.classList.remove('on'); btn.textContent = '🎤 話して入力';
-  };
+  rec.onend = off;
   btn.addEventListener('click', function () {
     if (on) { rec.stop(); return; }
     base = $('text').value ? $('text').value.replace(/\s*$/, '') + ' ' : '';
     try { rec.start(); } catch (e) { return; }
-    on = true; btn.classList.add('on'); btn.textContent = '■ 停止';
+    on = true; btn.setAttribute('aria-pressed', 'true'); btn.textContent = '■ 停止';
     setStatus('聞き取り中…');
   });
 })();
 
-/* ---------- 解析 ---------- */
+/* ---------- 送信 ---------- */
 $('go').addEventListener('click', function () {
   var text = $('text').value.trim();
-  if (!text) { setStatus('本文を入力してください。', true); return; }
+  if (!text) { setStatus('やることを入力してください。', true); return; }
+  lastRaw = text;
+  var payload = { text: text, from: $('me').value, assignee: sel.assignee, due: sel.due, token: TOKEN };
+
+  // 担当が選ばれていれば確認画面を挟まず1往復で登録する
+  if (sel.assignee) {
+    busy(true, '登録しています…');
+    google.script.run
+      .withSuccessHandler(function (res) { busy(false, ''); onCommitted(res); })
+      .withFailureHandler(onFail)
+      .apiQuickCommit(payload);
+    return;
+  }
+
   busy(true, '読み取っています…');
-  lastParse.raw = text;
   google.script.run
     .withSuccessHandler(function (res) {
       busy(false, '');
       if (!res || !res.ok) { setStatus((res && res.error) || '解析に失敗しました。', true); return; }
-      lastParse.engine = res.engine || '';
       if (!res.tasks.length) {
-        setStatus(res.note || 'タスクとして読み取れませんでした。宛先とやることを書いてみてください。', true);
-        $('preview').innerHTML = '';
-        return;
+        setStatus(res.note || 'タスクとして読み取れませんでした。', true);
+        $('preview').innerHTML = ''; return;
       }
-      setStatus('内容を確認して「シートに登録」を押してください。' + (res.note ? '（' + res.note + '）' : ''));
+      setStatus('担当を確認して「シートに登録」を押してください。');
       renderPreview(res.tasks);
     })
-    .withFailureHandler(function (err) {
-      busy(false, '');
-      setStatus('通信に失敗しました：' + err.message, true);
-    })
-    .apiParse({ text: text, from: $('me').value, token: TOKEN });
+    .withFailureHandler(onFail)
+    .apiParse(payload);
 });
+
+function onFail(err) { busy(false, ''); setStatus('通信に失敗しました：' + err.message, true); }
+
+function onCommitted(res) {
+  if (!res || !res.ok) { setStatus((res && res.error) || '登録に失敗しました。', true); return; }
+  var ok = res.results.filter(function (r) { return r.wrote; }).length;
+  setStatus(ok === res.results.length
+    ? '✅ ' + ok + '件を登録しました。'
+    : '⚠️ ' + res.results.length + '件中 ' + ok + '件を転記、残りは受信箱に保留しました。');
+  $('preview').innerHTML = '';
+  $('text').value = '';
+  loadRecent();
+}
 
 /* ---------- 確認カード ---------- */
 function renderPreview(tasks) {
   var box = $('preview');
   box.innerHTML = '';
-  tasks.forEach(function (t, i) {
+  tasks.forEach(function (t) {
     var el = document.createElement('div');
-    el.className = 'task'; el.dataset.i = i;
+    el.className = 'task';
     el.innerHTML =
       '<div class="line title"><label>タスク</label><input data-f="title" value="' + esc(t.title) + '"></div>' +
       '<div class="line"><label>担当</label>' + selectHtml('assignee', t.assignee) +
@@ -213,11 +307,11 @@ function renderPreview(tasks) {
       '<div class="line"><label>詳細</label><input data-f="detail" value="' + esc(t.detail) + '"></div>' +
       '<div class="line"><label>優先</label>' + priorityHtml(t.priority) +
         '<button class="del" type="button">削除</button></div>' +
-      (t.assignee ? '' : '<div class="warn">担当者が判別できませんでした。選ぶと個人タブへ転記します。</div>') +
+      (t.assignee ? '' : '<div class="warn">担当が決まっていません。選ぶと個人タブへ転記します。</div>') +
       (t.dueText && !t.due ? '<div class="warn">期限「' + esc(t.dueText) + '」は日付にできませんでした。</div>' : '');
     el.querySelector('.del').addEventListener('click', function () {
       el.remove();
-      if (!box.querySelector('.task')) { setStatus(''); }
+      if (!box.querySelector('.task')) setStatus('');
     });
     box.appendChild(el);
   });
@@ -237,14 +331,12 @@ function selectHtml(field, value) {
   }));
   return '<select data-f="' + field + '">' + opts.join('') + '</select>';
 }
-
 function priorityHtml(value) {
   return '<select data-f="priority">' + ['高', '中', '低'].map(function (p) {
     return '<option' + (p === (value || '中') ? ' selected' : '') + '>' + p + '</option>';
   }).join('') + '</select>';
 }
 
-/* ---------- 登録 ---------- */
 function commit() {
   var els = Array.prototype.slice.call(document.querySelectorAll('.task'));
   if (!els.length) { setStatus('登録するタスクがありません。', true); return; }
@@ -258,22 +350,9 @@ function commit() {
 
   busy(true, '登録しています…');
   google.script.run
-    .withSuccessHandler(function (res) {
-      busy(false, '');
-      if (!res || !res.ok) { setStatus((res && res.error) || '登録に失敗しました。', true); return; }
-      var ok = res.results.filter(function (r) { return r.wrote; }).length;
-      setStatus(ok === res.results.length
-        ? '✅ ' + ok + '件を登録しました。'
-        : '⚠️ ' + res.results.length + '件中 ' + ok + '件を転記、残りは受信箱に保留しました。');
-      $('preview').innerHTML = '';
-      $('text').value = '';
-      loadRecent();
-    })
-    .withFailureHandler(function (err) {
-      busy(false, '');
-      setStatus('通信に失敗しました：' + err.message, true);
-    })
-    .apiCommit({ tasks: tasks, token: TOKEN, raw: lastParse.raw, engine: lastParse.engine, source: 'web' });
+    .withSuccessHandler(function (res) { busy(false, ''); onCommitted(res); })
+    .withFailureHandler(onFail)
+    .apiCommit({ tasks: tasks, token: TOKEN, raw: lastRaw, engine: 'web', source: 'web' });
 }
 
 /* ---------- 履歴 ---------- */
@@ -283,8 +362,7 @@ function loadRecent() {
     $('recentBox').hidden = false;
     $('recent').innerHTML = res.rows.map(function (r) {
       return '<li>' + (r.assignee ? '<span class="badge">' + esc(r.assignee) + '</span>' : '') +
-             '<b>' + esc(r.title) + '</b>' +
-             (r.due ? ' ・ ' + esc(r.due) : '') +
+             '<b>' + esc(r.title) + '</b>' + (r.due ? ' ・ ' + esc(r.due) : '') +
              (r.sheet ? ' → ' + esc(r.sheet) : ' → 受信箱') + '</li>';
     }).join('');
   }).apiRecent({ token: TOKEN });

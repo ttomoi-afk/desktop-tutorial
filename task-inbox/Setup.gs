@@ -12,13 +12,14 @@ function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('タスク投げ込み')
     .addItem('① 初期セットアップ', 'setup')
-    .addItem('② Claude APIキーを設定…', 'promptApiKey')
     .addSeparator()
+    .addItem('解析テスト（書き込みなし）', 'testParse')
     .addItem('設定タブを開く', 'openSettings')
     .addItem('設定タブの内容を保存', 'loadSettingsFromSheet')
-    .addSeparator()
     .addItem('スマホ用URL・Webhook URLを表示', 'showUrls')
-    .addItem('解析テスト（書き込みなし）', 'testParse')
+    .addSeparator()
+    .addItem('AI解析の切り替え（任意）', 'toggleEngine')
+    .addItem('Claude APIキーを設定…（任意）', 'promptApiKey')
     .addToUi();
 }
 
@@ -36,11 +37,12 @@ function setup() {
   }
 
   var msg = 'セットアップが完了しました。\n\n' +
-    '1. 「設定」タブでメンバーの タブ名 / LINE userId / メール を確認・記入\n' +
-    '2. メニュー「② Claude APIキーを設定…」でキーを登録\n' +
+    '1. 「設定」タブでメンバーの タブ名 / 別名 / LINE userId / メール を確認・記入\n' +
+    '2. メニュー「設定タブの内容を保存」で反映\n' +
     '3. デプロイ > 新しいデプロイ > ウェブアプリ（アクセス：全員）で公開\n' +
     '4. メニュー「スマホ用URL・Webhook URLを表示」で URL を取得\n\n' +
-    'APIキーを登録しなくても簡易パーサで動きますが、日本語の読み取り精度は下がります。';
+    'このまま外部AIを使わず0円で動きます（解析エンジン: ルール）。\n' +
+    '精度を上げたいときだけ、メニューの「AI解析の切り替え」から有効にできます。';
   if (ui) ui.alert('タスク投げ込み', msg, ui.ButtonSet.OK); else console.log(msg);
 }
 
@@ -124,6 +126,38 @@ function loadSettingsFromSheet() {
   if (ui) ui.alert('保存しました', msg, ui.ButtonSet.OK); else console.log(msg);
 }
 
+/** ルール解析（無料）と AI解析（Claude）を切り替える */
+function toggleEngine() {
+  var ui = safeUi_();
+  var cur = prop_('PARSE_ENGINE', 'rule');
+  var hasKey = !!prop_('ANTHROPIC_API_KEY', '');
+
+  if (cur === 'claude') {
+    props_().setProperty('PARSE_ENGINE', 'rule');
+    if (ui) ui.alert('ルール解析に戻しました',
+      '外部AIは使いません。費用は0円で、投稿内容は Google の外に出ません。', ui.ButtonSet.OK);
+    return;
+  }
+
+  if (!hasKey) {
+    if (ui) ui.alert('APIキーが未登録です',
+      '先にメニュー「Claude APIキーを設定…（任意）」でキーを登録してください。', ui.ButtonSet.OK);
+    return;
+  }
+  if (ui) {
+    var res = ui.alert('AI解析に切り替えますか？',
+      'ONにすると、投稿の本文が Anthropic の API へ送られます（約3円/件）。\n' +
+      'M&A・NDA 関連など機微な内容を扱う場合はご注意ください。\n\n' +
+      'AIで上乗せされるのは次の3点です。\n' +
+      '・1投稿を複数タスクへ自動分割\n・タスク名の自然な要約\n・一覧に無い案件名の推測',
+      ui.ButtonSet.OK_CANCEL);
+    if (res !== ui.Button.OK) return;
+  }
+  props_().setProperty('PARSE_ENGINE', 'claude');
+  if (ui) ui.alert('AI解析に切り替えました',
+    'いつでもこのメニューからルール解析に戻せます。', ui.ButtonSet.OK);
+}
+
 /** Claude APIキーの登録（入力値はシートに残らない） */
 function promptApiKey() {
   var ui = safeUi_();
@@ -140,7 +174,9 @@ function promptApiKey() {
   var key = res.getResponseText().trim();
   if (!key) { ui.alert('変更しませんでした。'); return; }
   props_().setProperty('ANTHROPIC_API_KEY', key);
-  ui.alert('保存しました', 'APIキーを登録しました。メニュー「解析テスト」で動作を確認できます。', ui.ButtonSet.OK);
+  ui.alert('保存しました',
+    'APIキーを登録しました。続けてメニュー「AI解析の切り替え（任意）」で有効にしてください。\n' +
+    '（登録しただけでは解析エンジンはルールのままです）', ui.ButtonSet.OK);
 }
 
 /** デプロイ済みURLとトークンを表示 */

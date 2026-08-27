@@ -23,7 +23,12 @@ global.PropertiesService = { getScriptProperties: () => ({
   getProperty: k => (k in STORE ? STORE[k] : null),
   setProperty: (k,v) => { STORE[k]=v; }
 })};
-global.CacheService = { getScriptCache: () => ({ get:()=>null, put:()=>{}, remove:()=>{} }) };
+const CACHE = {};
+global.CacheService = { getScriptCache: () => ({
+  get: k => (k in CACHE ? CACHE[k] : null),
+  put: (k,v) => { CACHE[k]=v; },
+  remove: k => { delete CACHE[k]; }
+})};
 global.console = console;
 
 // --- Sheet mock ---
