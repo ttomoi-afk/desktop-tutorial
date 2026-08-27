@@ -1,0 +1,309 @@
+<!-- Capture.html — スマホ用の投げ込みページ（GAS HtmlService テンプレート） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --surface:#f2f7f4; --text:#22382e; --accent:#0b8457; --accent-2:#e08804;
+  --n100:#f5f8f6; --n200:#e8eeea; --n300:#d3ddd7; --n500:#93a29a; --n700:#5a6961;
+  --a100:#e6f6ee; --a200:#c6ecd9; --a700:#07583b;
+  --radius:14px; --radius-lg:22px;
+  --font:'M PLUS Rounded 1c','Hiragino Maru Gothic ProN','Hiragino Sans','Noto Sans JP',sans-serif;
+  --shadow:0 4px 14px rgba(42,51,46,.14);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#131a16; --surface:#1b241f; --text:#e6efe9; --n100:#1b241f; --n200:#25302a;
+        --n300:#33403a; --n500:#8fa197; --n700:#b9c8c0; --a100:#123227; --a200:#1b4635; --a700:#8fdcb8;
+        --accent:#3fbc86; --shadow:0 4px 14px rgba(0,0,0,.4);}
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-weight:500;line-height:1.6;
+  -webkit-font-smoothing:antialiased;padding:14px 14px calc(28px + env(safe-area-inset-bottom));
+  max-width:560px;margin-inline:auto}
+h1{font-size:1.12rem;margin:0;letter-spacing:.02em}
+button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer;font-weight:700}
+input,textarea,select{font-family:inherit;font-size:16px;color:inherit} /* 16px = iOSの自動ズーム防止 */
+
+.top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.top .who{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--n700)}
+.top select{background:var(--n100);border:1px solid var(--n300);border-radius:999px;padding:6px 10px;font-size:.82rem}
+
+.card{background:var(--surface);border:1px solid var(--n200);border-radius:var(--radius-lg);padding:14px;margin-bottom:12px}
+textarea{width:100%;min-height:132px;resize:vertical;border:0;background:transparent;padding:2px;
+  font-size:16px;line-height:1.65;outline:none}
+textarea::placeholder{color:var(--n500)}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{background:var(--bg);border:1px solid var(--n300);border-radius:999px;padding:5px 12px;font-size:.8rem}
+.chip:active{background:var(--a100)}
+.chip.mic{border-color:var(--accent);color:var(--accent)}
+.chip.mic.on{background:var(--accent);color:#fff}
+
+.row{display:flex;gap:8px;margin-top:10px}
+.btn{flex:1;background:var(--accent);color:#fff;border-radius:var(--radius);padding:13px;text-align:center;font-size:.95rem}
+.btn.ghost{background:var(--n200);color:var(--text)}
+.btn[disabled]{opacity:.5;pointer-events:none}
+
+.hint{font-size:.74rem;color:var(--n500);margin-top:8px;line-height:1.5}
+.status{font-size:.82rem;color:var(--n700);margin:10px 2px;min-height:1.2em}
+.status.err{color:#c0392b}
+@media (prefers-color-scheme:dark){.status.err{color:#ff8f7a}}
+
+.task{background:var(--bg);border:1px solid var(--n300);border-radius:var(--radius);padding:12px;margin-bottom:10px}
+.task .line{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.task label{font-size:.7rem;color:var(--n500);min-width:3.6em}
+.task input,.task select{flex:1;min-width:0;background:var(--n100);border:1px solid var(--n300);
+  border-radius:9px;padding:8px 10px;font-size:15px}
+.task .title input{font-weight:700}
+.task .del{font-size:.74rem;color:var(--n500);padding:4px}
+.warn{font-size:.74rem;color:var(--accent-2);margin-top:4px}
+
+.recent{margin-top:20px}
+.recent h2{font-size:.8rem;color:var(--n500);margin:0 0 8px;font-weight:700}
+.recent li{list-style:none;font-size:.8rem;padding:8px 0;border-top:1px solid var(--n200);color:var(--n700)}
+.recent ul{margin:0;padding:0}
+.recent b{color:var(--text)}
+.badge{display:inline-block;background:var(--a100);color:var(--a700);border-radius:999px;
+  padding:1px 8px;font-size:.68rem;margin-right:6px}
+</style>
+
+<div class="top">
+  <h1>タスク投げ込み</h1>
+  <div class="who">
+    <span>自分</span>
+    <select id="me"><option value="">未設定</option></select>
+  </div>
+</div>
+
+<div class="card">
+  <textarea id="text" autofocus placeholder="思いついたまま書く／話す。&#10;&#10;例）友井さんへ　今月中に弟子屈で使えそうな補助金を全部洗い出して。特に新しい車の助成金は急ぎで。"></textarea>
+  <div class="chips" id="chips">
+    <button class="chip mic" id="mic" type="button">🎤 話して入力</button>
+  </div>
+  <div class="row">
+    <button class="btn" id="go" type="button">AIで読み取る</button>
+  </div>
+  <p class="hint">キーボードのマイクボタン（音声入力）でも書けます。宛先は「◯◯さんへ」と頭に付けると確実です。</p>
+</div>
+
+<div class="status" id="status"></div>
+<div id="preview"></div>
+
+<div class="recent" id="recentBox" hidden>
+  <h2>最近の投げ込み</h2>
+  <ul id="recent"></ul>
+</div>
+
+<script>
+var MEMBERS = <?!= JSON.stringify(members) ?>;
+var TOKEN   = <?!= JSON.stringify(token) ?>;
+
+var $ = function (id) { return document.getElementById(id); };
+var lastParse = { engine: '', raw: '' };
+
+/* ---------- 「自分」セレクタ（端末に記憶） ---------- */
+(function initMe() {
+  var sel = $('me');
+  MEMBERS.forEach(function (m) {
+    var o = document.createElement('option');
+    o.value = m.key; o.textContent = m.key;
+    sel.appendChild(o);
+  });
+  try { sel.value = localStorage.getItem('ti.me') || ''; } catch (e) {}
+  sel.addEventListener('change', function () {
+    try { localStorage.setItem('ti.me', sel.value); } catch (e) {}
+  });
+})();
+
+/* ---------- 宛先チップ ---------- */
+(function initChips() {
+  var box = $('chips');
+  MEMBERS.forEach(function (m) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip'; b.textContent = m.key + 'さんへ';
+    b.addEventListener('click', function () {
+      var ta = $('text');
+      ta.value = ta.value.replace(/^\s*\S{1,8}さんへ\s*/, '');
+      ta.value = m.key + 'さんへ ' + ta.value;
+      ta.focus();
+    });
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- 音声入力（使えない端末では案内を出す） ---------- */
+(function initMic() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var btn = $('mic');
+  if (!SR) {
+    btn.addEventListener('click', function () {
+      setStatus('この端末ではページ内の音声入力が使えません。キーボードのマイクボタンをお使いください。', true);
+    });
+    return;
+  }
+  var rec = new SR();
+  rec.lang = 'ja-JP'; rec.interimResults = true; rec.continuous = true;
+  var base = '', on = false;
+
+  rec.onresult = function (ev) {
+    var fixed = '', tmp = '';
+    for (var i = ev.resultIndex; i < ev.results.length; i++) {
+      if (ev.results[i].isFinal) fixed += ev.results[i][0].transcript;
+      else tmp += ev.results[i][0].transcript;
+    }
+    if (fixed) base += fixed;
+    $('text').value = base + tmp;
+  };
+  rec.onerror = function (ev) {
+    on = false; btn.classList.remove('on'); btn.textContent = '🎤 話して入力';
+    setStatus(ev.error === 'not-allowed'
+      ? 'マイクが許可されませんでした。キーボードのマイクボタンをお使いください。'
+      : '音声入力に失敗しました（' + ev.error + '）。', true);
+  };
+  rec.onend = function () {
+    on = false; btn.classList.remove('on'); btn.textContent = '🎤 話して入力';
+  };
+  btn.addEventListener('click', function () {
+    if (on) { rec.stop(); return; }
+    base = $('text').value ? $('text').value.replace(/\s*$/, '') + ' ' : '';
+    try { rec.start(); } catch (e) { return; }
+    on = true; btn.classList.add('on'); btn.textContent = '■ 停止';
+    setStatus('聞き取り中…');
+  });
+})();
+
+/* ---------- 解析 ---------- */
+$('go').addEventListener('click', function () {
+  var text = $('text').value.trim();
+  if (!text) { setStatus('本文を入力してください。', true); return; }
+  busy(true, '読み取っています…');
+  lastParse.raw = text;
+  google.script.run
+    .withSuccessHandler(function (res) {
+      busy(false, '');
+      if (!res || !res.ok) { setStatus((res && res.error) || '解析に失敗しました。', true); return; }
+      lastParse.engine = res.engine || '';
+      if (!res.tasks.length) {
+        setStatus(res.note || 'タスクとして読み取れませんでした。宛先とやることを書いてみてください。', true);
+        $('preview').innerHTML = '';
+        return;
+      }
+      setStatus('内容を確認して「シートに登録」を押してください。' + (res.note ? '（' + res.note + '）' : ''));
+      renderPreview(res.tasks);
+    })
+    .withFailureHandler(function (err) {
+      busy(false, '');
+      setStatus('通信に失敗しました：' + err.message, true);
+    })
+    .apiParse({ text: text, from: $('me').value, token: TOKEN });
+});
+
+/* ---------- 確認カード ---------- */
+function renderPreview(tasks) {
+  var box = $('preview');
+  box.innerHTML = '';
+  tasks.forEach(function (t, i) {
+    var el = document.createElement('div');
+    el.className = 'task'; el.dataset.i = i;
+    el.innerHTML =
+      '<div class="line title"><label>タスク</label><input data-f="title" value="' + esc(t.title) + '"></div>' +
+      '<div class="line"><label>担当</label>' + selectHtml('assignee', t.assignee) +
+        '<label style="min-width:2.6em">期限</label><input data-f="due" type="date" value="' + esc(t.due) + '"></div>' +
+      '<div class="line"><label>案件</label><input data-f="project" value="' + esc(t.project) + '"></div>' +
+      '<div class="line"><label>詳細</label><input data-f="detail" value="' + esc(t.detail) + '"></div>' +
+      '<div class="line"><label>優先</label>' + priorityHtml(t.priority) +
+        '<button class="del" type="button">削除</button></div>' +
+      (t.assignee ? '' : '<div class="warn">担当者が判別できませんでした。選ぶと個人タブへ転記します。</div>') +
+      (t.dueText && !t.due ? '<div class="warn">期限「' + esc(t.dueText) + '」は日付にできませんでした。</div>' : '');
+    el.querySelector('.del').addEventListener('click', function () {
+      el.remove();
+      if (!box.querySelector('.task')) { setStatus(''); }
+    });
+    box.appendChild(el);
+  });
+
+  var row = document.createElement('div');
+  row.className = 'row';
+  row.innerHTML = '<button class="btn ghost" id="cancel" type="button">やめる</button>' +
+                  '<button class="btn" id="commit" type="button">シートに登録</button>';
+  box.appendChild(row);
+  $('cancel').addEventListener('click', function () { box.innerHTML = ''; setStatus(''); });
+  $('commit').addEventListener('click', commit);
+}
+
+function selectHtml(field, value) {
+  var opts = ['<option value="">（未定）</option>'].concat(MEMBERS.map(function (m) {
+    return '<option value="' + esc(m.key) + '"' + (m.key === value ? ' selected' : '') + '>' + esc(m.key) + '</option>';
+  }));
+  return '<select data-f="' + field + '">' + opts.join('') + '</select>';
+}
+
+function priorityHtml(value) {
+  return '<select data-f="priority">' + ['高', '中', '低'].map(function (p) {
+    return '<option' + (p === (value || '中') ? ' selected' : '') + '>' + p + '</option>';
+  }).join('') + '</select>';
+}
+
+/* ---------- 登録 ---------- */
+function commit() {
+  var els = Array.prototype.slice.call(document.querySelectorAll('.task'));
+  if (!els.length) { setStatus('登録するタスクがありません。', true); return; }
+  var tasks = els.map(function (el) {
+    var t = { requester: $('me').value, dueText: '', confidence: 1 };
+    Array.prototype.forEach.call(el.querySelectorAll('[data-f]'), function (f) {
+      t[f.dataset.f] = f.value.trim ? f.value.trim() : f.value;
+    });
+    return t;
+  }).filter(function (t) { return t.title; });
+
+  busy(true, '登録しています…');
+  google.script.run
+    .withSuccessHandler(function (res) {
+      busy(false, '');
+      if (!res || !res.ok) { setStatus((res && res.error) || '登録に失敗しました。', true); return; }
+      var ok = res.results.filter(function (r) { return r.wrote; }).length;
+      setStatus(ok === res.results.length
+        ? '✅ ' + ok + '件を登録しました。'
+        : '⚠️ ' + res.results.length + '件中 ' + ok + '件を転記、残りは受信箱に保留しました。');
+      $('preview').innerHTML = '';
+      $('text').value = '';
+      loadRecent();
+    })
+    .withFailureHandler(function (err) {
+      busy(false, '');
+      setStatus('通信に失敗しました：' + err.message, true);
+    })
+    .apiCommit({ tasks: tasks, token: TOKEN, raw: lastParse.raw, engine: lastParse.engine, source: 'web' });
+}
+
+/* ---------- 履歴 ---------- */
+function loadRecent() {
+  google.script.run.withSuccessHandler(function (res) {
+    if (!res || !res.ok || !res.rows.length) return;
+    $('recentBox').hidden = false;
+    $('recent').innerHTML = res.rows.map(function (r) {
+      return '<li>' + (r.assignee ? '<span class="badge">' + esc(r.assignee) + '</span>' : '') +
+             '<b>' + esc(r.title) + '</b>' +
+             (r.due ? ' ・ ' + esc(r.due) : '') +
+             (r.sheet ? ' → ' + esc(r.sheet) : ' → 受信箱') + '</li>';
+    }).join('');
+  }).apiRecent({ token: TOKEN });
+}
+loadRecent();
+
+/* ---------- 小物 ---------- */
+function setStatus(msg, isErr) {
+  var el = $('status');
+  el.textContent = msg || '';
+  el.className = 'status' + (isErr ? ' err' : '');
+}
+function busy(on, msg) {
+  $('go').disabled = on;
+  var c = $('commit'); if (c) c.disabled = on;
+  if (msg !== undefined) setStatus(msg);
+}
+function esc(s) {
+  return String(s === null || s === undefined ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+</script>
