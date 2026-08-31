@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>候補日メーカー — カレンダーの空きから、そのままメール</title>
+<meta name="description" content="Googleカレンダーの空き時間を読み取って打合せの候補日を自動で組み立て、日本語のビジネスメール文面にしてGmail・メーラーへ渡すツール。仮押さえ登録つき。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%85%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <h1>📅 候補日メーカー</h1>
+    <button class="conn c-local" id="connBadge" type="button"><span class="dot"></span><span id="connText">未接続</span></button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ① カレンダー接続 -->
+  <section class="card" id="cardConnect">
+    <h2><span class="step">1</span>カレンダーをつなぐ</h2>
+    <p class="lead">自分の予定と、共有されている同僚のカレンダーの<strong>空き時間だけ</strong>を読み取ります（予定の中身は取得しません）。</p>
+    <div class="row">
+      <button class="btn primary" id="btnConnect" type="button">Googleカレンダーに接続</button>
+      <button class="btn ghost" id="btnDemo" type="button">デモデータで試す</button>
+      <button class="btn ghost" id="btnDisconnect" type="button" hidden>接続を解除</button>
+    </div>
+    <details id="detClient">
+      <summary>接続設定（クライアントID）</summary>
+      <label class="f">
+        <span>OAuth クライアントID（ウェブアプリ）</span>
+        <input type="text" id="clientId" placeholder="1234567890-xxxx.apps.googleusercontent.com" autocomplete="off" spellcheck="false">
+      </label>
+      <p class="note">Google Cloud コンソールで発行し、<strong>承認済みJavaScript生成元</strong>にこのページのドメインを登録してください。手順は <a href="./README.md">README</a> に記載。この端末（ブラウザ）にのみ保存されます。</p>
+    </details>
+    <div class="cals" id="calList" hidden></div>
+  </section>
+
+  <!-- ② 条件 -->
+  <section class="card" id="cardCond">
+    <h2><span class="step">2</span>候補の出し方</h2>
+    <div class="grid">
+      <label class="f"><span>所要時間</span>
+        <select id="durationMin">
+          <option value="30">30分</option><option value="45">45分</option>
+          <option value="60" selected>1時間</option><option value="90">1時間30分</option><option value="120">2時間</option>
+        </select></label>
+      <label class="f"><span>営業時間</span>
+        <span class="pair"><input type="time" id="workStart" value="10:00"><i>〜</i><input type="time" id="workEnd" value="18:00"></span></label>
+      <label class="f"><span>昼休み（除外）</span>
+        <span class="pair"><input type="time" id="lunchStart" value="12:00"><i>〜</i><input type="time" id="lunchEnd" value="13:00"></span></label>
+      <label class="f"><span>いつから探す</span>
+        <select id="fromDays">
+          <option value="1">明日から</option><option value="2">明後日から</option>
+          <option value="3">3日後から</option><option value="7">来週から</option><option value="0">今日から</option>
+        </select></label>
+      <label class="f"><span>何日先まで</span>
+        <select id="spanDays">
+          <option value="7">1週間</option><option value="14" selected>2週間</option>
+          <option value="21">3週間</option><option value="30">1か月</option>
+        </select></label>
+      <label class="f"><span>返信の余裕（リードタイム）</span>
+        <select id="leadHours">
+          <option value="0">なし</option><option value="12">12時間後から</option>
+          <option value="24" selected>24時間後から</option><option value="48">48時間後から</option>
+        </select></label>
+      <label class="f"><span>前後のバッファ</span>
+        <select id="bufferMin">
+          <option value="0">なし</option><option value="15" selected>15分</option><option value="30">30分</option><option value="60">1時間</option>
+        </select></label>
+      <label class="f"><span>提示する数</span>
+        <select id="maxTotal">
+          <option value="3">3件</option><option value="5">5件</option><option value="6" selected>6件</option><option value="9">9件</option>
+        </select></label>
+      <label class="f"><span>1日あたり</span>
+        <select id="maxPerDay"><option value="1">1件まで</option><option value="2" selected>2件まで</option><option value="3">3件まで</option></select></label>
+      <label class="f"><span>開始時刻の刻み</span>
+        <select id="stepMin"><option value="15">15分</option><option value="30" selected>30分</option><option value="60">1時間</option></select></label>
+    </div>
+    <div class="f">
+      <span>対象の曜日</span>
+      <div class="wd" id="weekdays">
+        <label><input type="checkbox" value="1" checked><span>月</span></label>
+        <label><input type="checkbox" value="2" checked><span>火</span></label>
+        <label><input type="checkbox" value="3" checked><span>水</span></label>
+        <label><input type="checkbox" value="4" checked><span>木</span></label>
+        <label><input type="checkbox" value="5" checked><span>金</span></label>
+        <label><input type="checkbox" value="6"><span>土</span></label>
+        <label><input type="checkbox" value="0"><span>日</span></label>
+      </div>
+    </div>
+    <label class="chk"><input type="checkbox" id="skipHolidays" checked><span>日本の祝日を除く</span></label>
+    <div class="row">
+      <button class="btn primary" id="btnGenerate" type="button">空きから候補日をつくる</button>
+    </div>
+  </section>
+
+  <!-- ③ 候補 -->
+  <section class="card" id="cardSlots">
+    <h2><span class="step">3</span>候補日を選ぶ</h2>
+    <p class="lead" id="slotsLead">「空きから候補日をつくる」を押すと、ここに候補が並びます。チェックを外した候補はメールに載りません。</p>
+    <ul class="slots" id="slotList"></ul>
+    <div class="row" id="slotActions" hidden>
+      <button class="btn ghost" id="btnAllOn" type="button">すべて選ぶ</button>
+      <button class="btn ghost" id="btnAllOff" type="button">すべて外す</button>
+      <button class="btn ghost" id="btnMore" type="button">もっと出す</button>
+    </div>
+  </section>
+
+  <!-- ④ 文面 -->
+  <section class="card" id="cardMail">
+    <h2><span class="step">4</span>メールをつくる</h2>
+    <div class="grid">
+      <label class="f"><span>宛先メールアドレス</span><input type="email" id="toEmail" placeholder="customer@example.com" autocomplete="off"></label>
+      <label class="f"><span>会社名</span><input type="text" id="company" placeholder="株式会社◯◯"></label>
+      <label class="f"><span>宛名（ご担当者）</span><input type="text" id="person" placeholder="山田"></label>
+      <label class="f"><span>用件</span><input type="text" id="topic" placeholder="お打ち合わせ"></label>
+      <label class="f"><span>場所・方法</span><input type="text" id="place" placeholder="オンライン（Google Meet）"></label>
+      <label class="f"><span>差出人（署名）</span><input type="text" id="me" placeholder="チームエナジー 〇〇"></label>
+    </div>
+    <label class="f"><span>件名</span><input type="text" id="subject"></label>
+    <label class="f">
+      <span>本文テンプレート <button class="link" id="btnResetTpl" type="button">初期文面に戻す</button></span>
+      <textarea id="template" rows="12" spellcheck="false"></textarea>
+    </label>
+    <p class="note">差し込みタグ: <code>{{会社名}}</code> <code>{{宛名}}</code> <code>{{用件}}</code> <code>{{場所}}</code> <code>{{所要時間}}</code> <code>{{候補日}}</code> <code>{{回答期限}}</code> <code>{{差出人}}</code></p>
+    <div class="preview">
+      <div class="pv-head">プレビュー</div>
+      <pre id="preview"></pre>
+    </div>
+  </section>
+
+  <!-- ⑤ 送信 -->
+  <section class="card" id="cardSend">
+    <h2><span class="step">5</span>送る・仮押さえする</h2>
+    <div class="row">
+      <button class="btn primary" id="btnGmail" type="button">Gmailで開く</button>
+      <button class="btn" id="btnMailto" type="button">メーラーで開く</button>
+      <button class="btn ghost" id="btnCopy" type="button">本文をコピー</button>
+    </div>
+    <p class="note">送信ボタンは<strong>下書きを開くだけ</strong>です。宛先・文面を確認してから、ご自身で送信してください。</p>
+    <div class="hold">
+      <label class="chk"><input type="checkbox" id="holdOn"><span>選んだ候補を「仮」の予定としてカレンダーに登録する</span></label>
+      <div class="grid" id="holdOpts" hidden>
+        <label class="f"><span>登録先カレンダー</span><select id="holdCal"></select></label>
+        <label class="f"><span>予定のタイトル</span><input type="text" id="holdTitle" value="【仮】{{会社名}} {{用件}}"></label>
+        <label class="chk"><input type="checkbox" id="holdFree"><span>「予定あり」にせず空き時間扱いにする</span></label>
+      </div>
+      <div class="row"><button class="btn" id="btnHold" type="button" disabled>仮押さえを登録</button></div>
+    </div>
+  </section>
+
+  <p class="foot">予定の内容は読み取らず、空き/埋まりの時間帯だけを使います。設定と文面はこの端末（ブラウザ）にのみ保存されます。</p>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
