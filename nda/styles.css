@@ -39,6 +39,7 @@ h1 { font-size: 17px; font-weight: 800; margin: 0; letter-spacing: .02em; }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
 .btn.primary:hover { background: var(--accent-strong); }
 .btn.ghost { background: transparent; color: var(--muted); }
+a.btn { display: inline-block; text-decoration: none; color: var(--text); }
 .btn.danger { color: var(--danger); border-color: #eecfcd; }
 .btn.danger:hover { background: var(--danger-weak); }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
