@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NDA管理シート — 締結日と企業名がひと目で分かる</title>
+<meta name="description" content="秘密保持契約（NDA）の企業名・締結日・有効期限を一覧で管理するシート。期限切れと期限間近を自動で色分けし、CSV／JSONで書き出し・読み込みできます。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%9D%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <h1>🤝 NDA管理シート</h1>
+    <div class="top-actions">
+      <button class="btn ghost" id="btnMenu" type="button" aria-expanded="false">データ</button>
+      <button class="btn primary" id="btnAdd" type="button">＋ NDAを追加</button>
+    </div>
+  </div>
+  <div class="wrap menu" id="menu" hidden>
+    <button class="btn" id="btnExportCsv" type="button">CSVで書き出し</button>
+    <button class="btn" id="btnImportCsv" type="button">CSVを読み込み</button>
+    <button class="btn" id="btnExportJson" type="button">JSONで書き出し（バックアップ）</button>
+    <button class="btn" id="btnImportJson" type="button">JSONを読み込み</button>
+    <button class="btn" id="btnPrint" type="button">印刷 / PDF</button>
+    <button class="btn" id="btnSample" type="button">サンプルを入れて試す</button>
+    <button class="btn danger" id="btnClear" type="button">すべて削除</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- サマリー -->
+  <section class="stats" id="stats" aria-label="集計"></section>
+
+  <!-- 絞り込み -->
+  <section class="tools">
+    <label class="search">
+      <span class="sr-only">検索</span>
+      <input type="search" id="q" placeholder="企業名・案件・担当で検索" autocomplete="off" spellcheck="false">
+    </label>
+    <div class="chips" id="chips" role="tablist" aria-label="状態で絞り込み">
+      <button class="chip is-on" data-filter="all" role="tab" aria-selected="true" type="button">すべて</button>
+      <button class="chip" data-filter="live" role="tab" aria-selected="false" type="button">有効</button>
+      <button class="chip" data-filter="soon" role="tab" aria-selected="false" type="button">期限間近</button>
+      <button class="chip" data-filter="over" role="tab" aria-selected="false" type="button">期限切れ</button>
+      <button class="chip" data-filter="auto" role="tab" aria-selected="false" type="button">自動更新</button>
+    </div>
+    <label class="sortf">
+      <span class="sr-only">並び替え</span>
+      <select id="sort">
+        <option value="signed-desc">締結日が新しい順</option>
+        <option value="signed-asc">締結日が古い順</option>
+        <option value="expire-asc">期限が近い順</option>
+        <option value="company-asc">企業名（あいうえお／ABC順）</option>
+      </select>
+    </label>
+  </section>
+
+  <!-- 一覧 -->
+  <section class="sheet" id="sheet" aria-live="polite"></section>
+
+  <p class="foot">データはこの端末のブラウザにのみ保存されます（サーバーには送信されません）。<br>
+    端末を替えるときや共有するときは <strong>CSV / JSON の書き出し</strong>をお使いください。</p>
+</main>
+
+<!-- 追加・編集フォーム -->
+<dialog class="modal" id="editor">
+  <form method="dialog" id="form">
+    <div class="modal-head">
+      <h2 id="editorTitle">NDAを追加</h2>
+      <button class="x" value="cancel" type="submit" aria-label="閉じる">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <label class="f"><span>企業名 <i class="req">必須</i></span>
+        <input type="text" id="f-company" required maxlength="120" list="companies" placeholder="株式会社〇〇" autocomplete="off"></label>
+      <datalist id="companies"></datalist>
+
+      <div class="grid">
+        <label class="f"><span>締結日 <i class="req">必須</i></span>
+          <input type="date" id="f-signed" required></label>
+        <label class="f"><span>有効期限</span>
+          <input type="date" id="f-expires"></label>
+      </div>
+      <div class="quick" id="quickTerm">
+        <span>締結日から</span>
+        <button class="mini" type="button" data-years="1">1年</button>
+        <button class="mini" type="button" data-years="2">2年</button>
+        <button class="mini" type="button" data-years="3">3年</button>
+        <button class="mini" type="button" data-years="5">5年</button>
+        <button class="mini" type="button" data-years="0">期限をクリア</button>
+      </div>
+      <label class="chk"><input type="checkbox" id="f-auto"><span>自動更新あり（申し出がなければ延長）</span></label>
+
+      <div class="grid">
+        <label class="f"><span>種別</span>
+          <select id="f-type">
+            <option value="mutual">相互（双方が開示）</option>
+            <option value="ours">当社が開示</option>
+            <option value="theirs">先方が開示</option>
+          </select></label>
+        <label class="f"><span>自社担当</span>
+          <input type="text" id="f-owner" maxlength="60" placeholder="営業部 山田" autocomplete="off"></label>
+      </div>
+
+      <label class="f"><span>目的・案件名</span>
+        <input type="text" id="f-purpose" maxlength="120" placeholder="共同キャンペーンの検討" autocomplete="off"></label>
+
+      <div class="grid">
+        <label class="f"><span>先方窓口</span>
+          <input type="text" id="f-counterpart" maxlength="60" placeholder="経営企画室 佐藤様" autocomplete="off"></label>
+        <label class="f"><span>原本の保管先（URL・場所）</span>
+          <input type="text" id="f-doc" maxlength="300" placeholder="共有ドライブのリンク、書庫キャビネットなど" autocomplete="off"></label>
+      </div>
+
+      <label class="f"><span>備考</span>
+        <textarea id="f-note" rows="2" maxlength="500" placeholder="秘密保持期間は終了後3年、など"></textarea></label>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn danger ghost" id="btnDelete" value="delete" type="submit" hidden>削除</button>
+      <span class="spacer"></span>
+      <button class="btn" value="cancel" type="submit">キャンセル</button>
+      <button class="btn primary" value="save" type="submit">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<input type="file" id="fileCsv" accept=".csv,text/csv" hidden>
+<input type="file" id="fileJson" accept=".json,application/json" hidden>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
