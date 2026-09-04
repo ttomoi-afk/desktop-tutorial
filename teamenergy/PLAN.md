@@ -32,33 +32,41 @@
 
 ---
 
-## 2. Team Energy について（公開情報から。要確認）
+## 2. Team Energy について（会社概要PPTX 2026年8月版より）
 
-- 大阪本社。起業支援・社長育成・共経営によるグループ経営。代表 中村誠司氏
-- キーワード: **共経営**、**共走**、「夢と事業が共に育つ森」、「20年で100社・社長輩出」
-- グループ会社数: 2024年8月時点 32社 ／ 2025年4月 持株会社体制で32社（要最新値）
-- 事業領域: 教育、起業支援、再生可能エネルギー、美容、飲食、不動産、地方創生、マーケ支援、コンテンツ、人材
-- 既存サイト: teamenergy.co.jp（/about/partnership 共経営とは、/run-ceo 社長と共走する、/about/team グループ企業、/magazine TE Magazine）、group.teamenergy.co.jp（ブランドサイト）
-- 関連: Team Energy Academia（企業内大学）、Team Energy Seeds、Team Energy Growth／GI（投資）
+- Team Energy株式会社（総称 Team Energy Group）。設立 2012年5月。代表 中村誠司（グループCEO）
+- 本社 大阪（グラングリーン大阪）／東京オフィス（新宿）
+- 位置づけ: **「ともにつくり、ともに育てる事業投資会社」**。出資と経営を切り離さない。ファンドではなく長期保有
+- 数字: 経営歴33年／設立会社数56社／現在のグループ会社 約15社／企業価値100億円以上 5社
+- 6事業会社: Geo（GeoDreams, G-Pulse）／GI（バイウィル）／AI総研（キャナルAI, スケールエーアイ, MIRACRE AI）／Growth（AILE, ANY, 弟子屈チャレンジ, NYOKKI）／GLI（Team Glocal）／AM
+- 主な実績: レジル（2024上場、ベインへ約520億円で売却）、ふるさと熱電（2025年8月、ベースロードキャピタルへ100億円で売却）、GeoDreams、BY WILL（約30億円調達）、G-Pulse（米政府補助2.5億ドル）
+- 重点領域: シニア／AI・DXで伸ばせる業種／エネルギー関連
+- ロゴ: 8枚花弁の円環（赤 #d51521, 橙 #da391d, 黄 #eeb61c, 緑 #55ab36, 深緑 #228f3b, 水色 #1b9cc9, 青 #1270ad, 紺 #10325e）＋ TEAM ENERGY ワードマーク（Futura系）
+- 既存サイト: teamenergy.co.jp（/magazine TE Magazine ほか）
+
+### PPTXのうちサイトに載せていないもの（仲介会社向け・機密）
+- 投資条件の数値（EBITDA・EV倍率・自己資金拠出額）、NG業種の一覧
+- 担当体制（3名の略歴）、案件窓口メールアドレス
+- 承継案件の事例（年商・拠点数・従業員数）
 
 ---
 
-## 3. 構成案（ミダスの型 → Team Energy への置き換え）
+## 3. 構成（ミダスの型 → Team Energy への置き換え）現在の index.html
 
-| ミダス | Team Energy 案 | 備考 |
+| ミダス | Team Energy | 備考 |
 | --- | --- | --- |
-| CONCEPT | 共経営とは（CONCEPT） | 「共経営」を1ページで説明 |
-| PORTFOLIO | グループ企業（COMPANIES） | 32社のロゴグリッド。業種タブは付けない |
-| TEAM | 社長たち（PRESIDENTS） | ミダスは投資チーム、TEは「輩出した社長」が主役 |
-| COMPANY | 会社概要（COMPANY） | |
-| STORIES | TE MAGAZINE | 既存記事を移植 |
-| NEWS | NEWS | |
-| CAREERS | 社長になる／社長と共走する（JOIN） | 応募導線を2つに分ける（社長候補／共走人材） |
-| 財団ボタン | Academia または Seeds | ヘッダー右上の「もう一つの顔」 |
-
-### トップページの数字（TRACK RECORDS相当）候補
-- グループ企業数 ／ 輩出した社長数 ／ 累計創業数 ／ 事業領域数 ／ 目標「100社」
-- ※ 実数を確認してから入れる。推定値は入れない
+| ヒーロー動画＋一文 | Canvasのマグマ＋「ともにつくり、ともに育てる。」 | 白地・マグマ1色・粒子感。動画が来たら差し替え |
+| TRACK RECORDS | 経営歴33年／設立56社／企業価値100億円以上5社 | |
+| CONCEPT | Concept（チームエナジーとは） | PPTX P3の本文をそのまま使用 |
+| — | Policy（投資に対する考え方 4点） | ファンドではないことを明言 |
+| — | Focus（重点領域 3つ） | 業種の例のみ。投資条件の数値は出さない |
+| PORTFOLIO | Group（6事業会社＋傘下） | ロゴが揃ったらロゴグリッドに |
+| — | Results（主な実績 5件） | |
+| TEAM | CEO（中村誠司 略歴） | PPTXの写真を使用 |
+| STORIES | Stories（TE Magazine） | data/stories.json |
+| NEWS | News | data/news.json |
+| CAREERS | Partnership（承継／仲介・金融機関／経営者志望 の3窓口） | 黒背景 |
+| フッター CONTACT | Contact＋会社概要 | |
 
 ---
 
