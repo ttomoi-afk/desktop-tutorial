@@ -12,10 +12,11 @@
   --ink: #1b1614;            /* 岩盤の黒(暖色寄り) */
   --ink-soft: #5b514c;
   --ink-faint: #9a8f88;
-  /* マグマ(アクセントは実質この1色) */
-  --magma: #c9411f;
-  --magma-deep: #9e2d12;
-  --magma-glow: rgba(233, 96, 40, .28);
+  /* アクセント1色。ミダスの動画から採取した黄色(#cda20b)。マグマ色に戻す場合は #c9411f */
+  --magma: #cda20b;
+  --magma-deep: #a8850a;
+  --magma-glow: rgba(205, 162, 11, .28);
+  --hero-bg: #eaeaea;   /* 動画の背景色。動画の外側と揃える */
 
   --en: "Jost", "Futura", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   --jp: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, system-ui, sans-serif;
@@ -168,14 +169,14 @@ section { padding: 120px 0; }
   min-height: 640px;
   padding: 0;
   overflow: hidden;
-  background: var(--white);
+  background: var(--hero-bg);
 }
-.hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-/* 動画の粒子感に相当するフィルムグレイン */
-.hero-grain {
-  position: absolute; inset: 0; pointer-events: none;
-  opacity: .5; mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.55 0 0 0 0 0.5 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+.hero-video { position: absolute; inset: 0; }
+.hero-video video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.hero-video .sp { display: none; }
+@media (max-width: 767px) {
+  .hero-video .pc { display: none; }
+  .hero-video .sp { display: block; }
 }
 .hero-inner {
   position: absolute; inset: 0;
@@ -213,7 +214,7 @@ section { padding: 120px 0; }
 .hero-scroll::after { content: ""; display: block; width: 1px; height: 48px; background: var(--ink-faint); margin: 12px auto 0; }
 @media (max-width: 767px) {
   .hero { min-height: 560px; }
-  .hero-inner { padding-bottom: 72px; background: linear-gradient(to top, rgba(255,255,255,.92) 0%, rgba(255,255,255,.85) 34%, rgba(255,255,255,0) 60%); }
+  .hero-inner { padding-bottom: 72px; background: linear-gradient(to top, rgba(234,234,234,.95) 0%, rgba(234,234,234,.85) 34%, rgba(234,234,234,0) 60%); }
   .hero-scroll { display: none; }
 }
 

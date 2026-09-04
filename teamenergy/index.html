@@ -14,6 +14,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<!-- Adobe Fonts: Team Energy 自身のキットIDを取得したら有効化し、style.css の --en / --jp を差し替える
+<link rel="stylesheet" href="https://use.typekit.net/XXXXXXX.css">
+-->
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -38,8 +41,11 @@
 
   <!-- ヒーロー: 白地に、地中から立ち上るマグマ -->
   <section class="hero">
-    <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
-    <div class="hero-grain" aria-hidden="true"></div>
+    <!-- ヒーロー動画。ミダスキャピタルの動画からキャプションを除去したもの(権利要確認)。PC/SPで別ファイル -->
+    <div class="hero-video">
+      <video class="pc" src="assets/movie/top-pc.mp4" poster="assets/movie/top-poster.jpg" loop autoplay muted playsinline preload="metadata"></video>
+      <video class="sp" src="assets/movie/top-sp.mp4" poster="assets/movie/top-poster-sp.jpg" loop autoplay muted playsinline preload="metadata"></video>
+    </div>
     <div class="hero-inner">
       <h1 class="hero-copy">ともにつくり、<br>ともに育てる。</h1>
       <p class="hero-sub">事業への「出資」と「経営」を切り離さない、事業投資会社です。</p>
