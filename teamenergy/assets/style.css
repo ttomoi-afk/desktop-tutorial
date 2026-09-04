@@ -124,8 +124,8 @@ section { padding: 120px 0; }
   justify-content: space-between;
   mix-blend-mode: multiply; /* 白地の上ではそのまま、動画の上でも沈む */
 }
-.header-logo { font-family: var(--en); font-weight: 500; font-size: 18px; letter-spacing: .22em; text-transform: uppercase; }
-.header-logo small { display: block; font-family: var(--jp); font-weight: 400; font-size: 10px; letter-spacing: .3em; color: var(--ink-soft); margin-top: 2px; }
+.header-logo a, .footer-logo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--en); font-weight: 500; font-size: 19px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+.logo-mark { width: 30px; height: 30px; }
 .gnav { display: flex; align-items: center; gap: 40px; }
 .gnav ul { display: flex; gap: 28px; }
 .gnav a { font-family: var(--en); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; position: relative; padding: 4px 0; }
@@ -362,12 +362,14 @@ section { padding: 120px 0; }
   border-top: 1px solid var(--line);
   padding-top: 24px;
 }
+.footer-logo { font-size: 15px; }
+.footer-logo .logo-mark { width: 24px; height: 24px; }
 .footer-links { display: flex; gap: 28px; }
 .footer-links a { font-family: var(--en); font-size: 11px; letter-spacing: .16em; color: var(--ink-soft); }
 .footer-links a:hover { color: var(--magma); }
 .copyright { font-family: var(--en); font-size: 11px; letter-spacing: .12em; color: var(--ink-faint); text-align: right; line-height: 1.6; }
 @media (max-width: 767px) {
   .footer { padding-top: 72px; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
   .copyright { text-align: left; }
 }

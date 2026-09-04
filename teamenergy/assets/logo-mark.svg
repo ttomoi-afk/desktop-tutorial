@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true">
+  <!-- 仮のロゴマーク: 6色の円環。正式データ(SVG/AI)が届いたら差し替える -->
+  <g fill="none" stroke-width="15" stroke-linecap="butt" transform="rotate(-90 50 50)">
+    <circle cx="50" cy="50" r="40" pathLength="100" stroke="#c8102e" stroke-dasharray="14.2 85.8" stroke-dashoffset="0"/>
+    <circle cx="50" cy="50" r="40" pathLength="100" stroke="#f08a1d" stroke-dasharray="14.2 85.8" stroke-dashoffset="-16.67"/>
+    <circle cx="50" cy="50" r="40" pathLength="100" stroke="#4d9a2c" stroke-dasharray="14.2 85.8" stroke-dashoffset="-33.33"/>
+    <circle cx="50" cy="50" r="40" pathLength="100" stroke="#1d7fc4" stroke-dasharray="14.2 85.8" stroke-dashoffset="-50"/>
+    <circle cx="50" cy="50" r="40" pathLength="100" stroke="#0e4a86" stroke-dasharray="14.2 85.8" stroke-dashoffset="-66.67"/>
+    <circle cx="50" cy="50" r="40" pathLength="100" stroke="#8e1a3a" stroke-dasharray="14.2 85.8" stroke-dashoffset="-83.33"/>
+  </g>
+</svg>
