@@ -384,13 +384,15 @@ section { padding: 120px 0; }
 .join .sec-title::before { background: var(--magma); }
 .join-copy {
   margin-top: 40px;
-  font-family: var(--en);
-  font-size: clamp(30px, 4.2vw, 56px);
-  font-weight: 300;
-  line-height: 1.25;
-  letter-spacing: .04em;
+  font-size: clamp(22px, 2.6vw, 34px);
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: .08em;
 }
-.join-copy span { color: var(--magma); }
+.join-facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin-top: 14px; font-size: 14px; }
+.join-facts dt { color: rgba(255,255,255,.55); }
+.join-facts dd { color: var(--white); }
+.join .sec-btn { margin-top: 56px; }
 .join-grid { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 .join-door { border-top: 1px solid rgba(255,255,255,.25); padding-top: 28px; }
 .join-door h3 { font-size: 18px; font-weight: 500; letter-spacing: .1em; }
@@ -430,3 +432,74 @@ section { padding: 120px 0; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
   .copyright { text-align: left; }
 }
+
+/* ---------- 下層ページ(仲介会社の皆さまへ) ---------- */
+.subpage .header { mix-blend-mode: normal; }
+.page-hero { padding: 200px 0 96px; background: var(--paper); }
+.page-hero-copy { margin-top: 32px; font-size: clamp(24px, 3vw, 38px); font-weight: 500; line-height: 1.6; letter-spacing: .08em; }
+.page-hero-txt { margin-top: 24px; max-width: 720px; font-size: 15px; color: var(--ink-soft); }
+@media (max-width: 767px) { .page-hero { padding: 140px 0 64px; } }
+
+.strengths-grid { margin-top: 56px; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.strength { padding: 36px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.strength h3 { font-size: 18px; font-weight: 500; letter-spacing: .08em; }
+.strength p { margin-top: 12px; font-size: 14px; color: var(--ink-soft); }
+@media (max-width: 767px) { .strengths-grid { grid-template-columns: 1fr; } .strength { padding: 28px 20px; } }
+
+.criteria-intro { margin-top: 32px; max-width: 640px; font-size: 15px; }
+.criteria-list { margin-top: 40px; display: grid; grid-template-columns: 220px 1fr; border-top: 1px solid var(--line); }
+.criteria-list dt, .criteria-list dd { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.criteria-list dt { font-size: 14px; color: var(--ink-soft); }
+.criteria-list dd { font-size: 20px; letter-spacing: .06em; }
+.criteria-list dd .en { font-size: 28px; font-weight: 300; }
+@media (max-width: 767px) {
+  .criteria-list { grid-template-columns: 1fr; }
+  .criteria-list dt { padding-bottom: 4px; border-bottom: 0; }
+  .criteria-list dd { padding-top: 0; }
+}
+
+.focus-item h3 small { text-transform: none; letter-spacing: .1em; font-family: var(--jp); }
+.focus-detail { margin-top: 20px; font-size: 13px; }
+.focus-detail dt { font-weight: 500; margin-top: 12px; }
+.focus-detail dd { color: var(--ink-soft); }
+.focus-tags { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+.focus-tags li { font-size: 13px; padding: 6px 12px; border: 1px solid var(--line); background: var(--white); }
+
+.excluded-list { margin-top: 40px; border-top: 1px solid var(--line); }
+.excluded-list dt { padding: 20px 0 4px; font-size: 15px; font-weight: 500; }
+.excluded-list dd { padding: 0 0 20px; font-size: 13px; color: var(--ink-soft); border-bottom: 1px solid var(--line); }
+
+.experience { background: var(--paper); }
+.experience-grid { margin-top: 56px; display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
+.experience-num .desc { margin-top: 20px; font-size: 14px; color: var(--ink-soft); }
+.experience-points { border-top: 1px solid var(--line); }
+.experience-points dt { padding-top: 18px; font-size: 16px; font-weight: 500; }
+.experience-points dd { padding: 6px 0 18px; font-size: 14px; color: var(--ink-soft); border-bottom: 1px solid var(--line); }
+@media (max-width: 767px) { .experience-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+.case { margin-top: 72px; padding: 40px; background: var(--white); border: 1px solid var(--line); }
+.case-label { font-size: 12px; color: var(--magma); letter-spacing: .12em; }
+.case-label small { margin-left: 12px; color: var(--ink-faint); }
+.case h3 { margin-top: 12px; font-size: 22px; font-weight: 500; letter-spacing: .08em; }
+.case-facts { margin-top: 24px; display: flex; gap: 48px; }
+.case-facts div, .case-facts dt { font-size: 12px; color: var(--ink-faint); }
+.case-facts dd { font-size: 22px; font-weight: 500; letter-spacing: .04em; }
+.case-body { margin-top: 24px; }
+.case-body li { font-size: 14px; color: var(--ink-soft); padding: 4px 0 4px 16px; position: relative; }
+.case-body li::before { content: ""; position: absolute; left: 0; top: 16px; width: 6px; height: 1px; background: var(--ink-faint); }
+.case-note { margin-top: 16px; font-size: 11px; color: var(--ink-faint); }
+@media (max-width: 767px) { .case { padding: 24px 20px; } .case-facts { gap: 24px; flex-wrap: wrap; } }
+
+.team-grid { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; border-top: 1px solid var(--line); }
+.member { padding-top: 32px; }
+.member h3 { font-size: 22px; font-weight: 500; letter-spacing: .14em; }
+.member-role { margin-top: 6px; font-size: 12px; color: var(--magma); letter-spacing: .08em; }
+.member ul { margin-top: 20px; }
+.member li { font-size: 13px; color: var(--ink-soft); padding: 4px 0 4px 14px; position: relative; }
+.member li::before { content: ""; position: absolute; left: 0; top: 15px; width: 6px; height: 1px; background: var(--ink-faint); }
+@media (max-width: 767px) { .team-grid { grid-template-columns: 1fr; gap: 0; } .member { padding: 28px 0; border-bottom: 1px solid var(--line); } }
+
+.footer-mail { margin-top: 24px; }
+.footer-mail a { font-size: 22px; letter-spacing: .04em; border-bottom: 1px solid var(--ink); padding-bottom: 6px; }
+.footer-mail a:hover { color: var(--magma); border-color: var(--magma); }
+@media (max-width: 767px) { .footer-mail a { font-size: 17px; } }

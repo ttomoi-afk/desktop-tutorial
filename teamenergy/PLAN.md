@@ -44,10 +44,9 @@
 - ロゴ: 8枚花弁の円環（赤 #d51521, 橙 #da391d, 黄 #eeb61c, 緑 #55ab36, 深緑 #228f3b, 水色 #1b9cc9, 青 #1270ad, 紺 #10325e）＋ TEAM ENERGY ワードマーク（Futura系）
 - 既存サイト: teamenergy.co.jp（/magazine TE Magazine ほか）
 
-### PPTXのうちサイトに載せていないもの（仲介会社向け・機密）
-- 投資条件の数値（EBITDA・EV倍率・自己資金拠出額）、NG業種の一覧
-- 担当体制（3名の略歴）、案件窓口メールアドレス
-- 承継案件の事例（年商・拠点数・従業員数）
+### 仲介会社向けの内容は sourcing.html に掲載（指示により公開）
+- 特徴4点／投資条件／重点業種／対象外の業種／投資経験と承継事例／担当体制3名／案件窓口（sourcing@teamenergy.co.jp）
+- トップページには黒い入口セクション（For Intermediaries）とナビ「M&A」を置く
 
 ---
 
@@ -59,13 +58,12 @@
 | TRACK RECORDS | 経営歴33年／設立56社／企業価値100億円以上5社 | |
 | CONCEPT | Concept（チームエナジーとは） | PPTX P3の本文をそのまま使用 |
 | — | Policy（投資に対する考え方 4点） | ファンドではないことを明言 |
-| — | Focus（重点領域 3つ） | 業種の例のみ。投資条件の数値は出さない |
+| — | For Intermediaries（黒。投資条件の要点＋sourcing.htmlへの導線） | 重点業種の詳細は sourcing.html |
 | PORTFOLIO | Group（6事業会社＋傘下） | ロゴが揃ったらロゴグリッドに |
 | — | Results（主な実績 5件） | |
 | TEAM | CEO（中村誠司 略歴） | PPTXの写真を使用 |
 | STORIES | Stories（TE Magazine） | data/stories.json |
 | NEWS | News | data/news.json |
-| CAREERS | Partnership（承継／仲介・金融機関／経営者志望 の3窓口） | 黒背景 |
 | フッター CONTACT | Contact＋会社概要 | |
 
 ---
