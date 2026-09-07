@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """index.html と CSS/JS/画像/動画/JSON を1つのHTMLに束ねる(プレビュー配布用)。
-使い方: python3 teamenergy/tools/build-single.py 出力パス
+使い方: python3 teamenergy/tools/build-single.py 出力パス [ページ名=index.html] [リンク置換 例: sourcing.html=https://...]
 """
 import base64, json, mimetypes, re, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 out = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ROOT / 'dist' / 'teamenergy-preview.html')
+page = sys.argv[2] if len(sys.argv) > 2 else 'index.html'
+links = dict(a.split('=', 1) for a in sys.argv[3:])
 out.parent.mkdir(parents=True, exist_ok=True)
 
 def data_uri(rel):
@@ -13,7 +15,7 @@ def data_uri(rel):
     mime = mimetypes.guess_type(p.name)[0] or 'application/octet-stream'
     return f"data:{mime};base64,{base64.b64encode(p.read_bytes()).decode()}"
 
-html = (ROOT / 'index.html').read_text()
+html = (ROOT / page).read_text()
 css = (ROOT / 'assets/style.css').read_text()
 js = (ROOT / 'assets/main.js').read_text()
 
@@ -32,13 +34,21 @@ for rel in re.findall(r'(?:src|href|poster)="(assets/[^"]+)"', html):
 html = html.replace('<link rel="stylesheet" href="' + data_uri('assets/style.css') + '">', '<style>\n' + css + '\n</style>')
 html = html.replace('<script src="' + data_uri('assets/main.js') + '"></script>', '<script>\n' + js + '\n</script>')
 html = html.replace('<a href="./">', '<a href="#">')
-html = re.sub(r'<title>.*?</title>', '<title>Team Energy</title>', html)
+# ページ間リンクを公開URLへ(指定がなければ無効化)
+for target in ['index.html', 'sourcing.html']:
+    repl = links.get(target, '#' if target != page else '#')
+    html = re.sub(r'href="' + re.escape(target) + r'(#[^"]*)?"', lambda m: 'href="' + (repl + (m.group(1) or '') if repl != '#' else (m.group(1) or '#')) + '"', html)
+html = re.sub(r'<title>.*?</title>', '<title>' + ('Team Energy' if page == 'index.html' else 'Team Energy For Intermediaries') + '</title>', html)
 
 # Artifact 用に <head>/<body> の骨組みを外し、本文だけにする
 head = re.search(r'<head>(.*?)</head>', html, re.S).group(1)
-body = re.search(r'<body>(.*?)</body>', html, re.S).group(1)
+body = re.search(r'<body[^>]*>(.*?)</body>', html, re.S).group(1)
 keep = [l for l in head.splitlines() if re.search(r'<title>|<link rel="(preconnect|stylesheet)"|<style>|</style>', l) or not l.strip().startswith('<meta')]
 # <style>...</style> は複数行なので head 全体から meta 行と favicon だけ落とす
 head_clean = '\n'.join(l for l in head.splitlines() if not re.match(r'\s*<meta', l) and 'rel="icon"' not in l)
+body_class = re.search(r'<body([^>]*)>', html).group(1)
+if 'subpage' in body_class:
+    css_fix = '<style>.header{mix-blend-mode:normal}</style>'
+    body = css_fix + body
 out.write_text(head_clean + '\n' + body)
 print(out, f'{out.stat().st_size/1024/1024:.1f} MB')
