@@ -335,6 +335,41 @@ section { padding: 120px 0; }
   .org-co { min-height: 60px; font-size: 13px; }
 }
 
+/* ---------- 事業会社アコーディオン(組織図の下) ---------- */
+.biz-acc { margin-top: 64px; border-top: 1px solid var(--ink); }
+.biz-acc-item { border-bottom: 1px solid var(--line); }
+.biz-acc-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 26px 0; }
+.biz-acc-text { display: block; font-family: var(--en); font-size: 22px; font-weight: 500; letter-spacing: .06em; line-height: 1.3; transition: color .3s; }
+.biz-acc-text:hover { color: var(--magma); }
+.biz-acc-text small { display: block; margin-top: 6px; font-family: var(--jp); font-size: 12px; font-weight: 400; letter-spacing: .06em; color: var(--ink-soft); }
+.biz-acc-trigger { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); position: relative; transition: background .3s, border-color .3s; }
+.biz-acc-trigger span::before, .biz-acc-trigger span::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ink); transition: transform .3s, background .3s; }
+.biz-acc-trigger span::before { width: 16px; height: 1.5px; transform: translate(-50%, -50%); }
+.biz-acc-trigger span::after { width: 1.5px; height: 16px; transform: translate(-50%, -50%); }
+.biz-acc-trigger:hover { background: var(--ink); }
+.biz-acc-trigger:hover span::before, .biz-acc-trigger:hover span::after { background: var(--white); }
+.biz-acc-trigger[aria-expanded="true"] { background: var(--magma); border-color: var(--magma); }
+.biz-acc-trigger[aria-expanded="true"] span::before, .biz-acc-trigger[aria-expanded="true"] span::after { background: var(--white); }
+.biz-acc-trigger[aria-expanded="true"] span::after { transform: translate(-50%, -50%) rotate(90deg); }
+.biz-acc-trigger:focus-visible { outline: 2px solid var(--magma); outline-offset: 3px; }
+.biz-acc-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s ease; }
+.biz-acc-body > * { overflow: hidden; min-height: 0; }
+.biz-acc-body.is-open { grid-template-rows: 1fr; }
+.biz-acc-links { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+/* 下余白は要素として持たせる(paddingだと閉じても高さが残るため) */
+.biz-acc-links::after { content: ""; display: block; grid-column: 1 / -1; height: 16px; }
+.biz-acc-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border: 1px solid var(--line); background: var(--white); font-size: 14px; letter-spacing: .04em; transition: border-color .3s, color .3s; }
+.biz-acc-link::after { content: ""; flex: none; width: 7px; height: 7px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
+.biz-acc-link:hover { color: var(--magma); border-color: var(--magma); }
+.biz-acc-link small { margin-left: auto; font-family: var(--en); font-size: 10px; letter-spacing: .1em; color: var(--ink-faint); }
+@media (max-width: 767px) {
+  .biz-acc { margin-top: 48px; }
+  .biz-acc-header { padding: 20px 0; }
+  .biz-acc-text { font-size: 18px; }
+  .biz-acc-trigger { width: 40px; height: 40px; }
+  .biz-acc-links { grid-template-columns: 1fr; }
+}
+
 /* ---------- Results ---------- */
 .results-list { margin-top: 48px; border-top: 1px solid var(--line); }
 .results-list li {

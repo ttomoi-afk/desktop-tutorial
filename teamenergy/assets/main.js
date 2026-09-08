@@ -39,6 +39,24 @@
     });
   }
 
+  /* ---------- 事業会社アコーディオン(開くのは一度に1つ) ---------- */
+  var accs = document.querySelectorAll('#biz-acc .biz-acc-trigger');
+  accs.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      accs.forEach(function (b) {
+        var body = document.getElementById(b.getAttribute('aria-controls'));
+        b.setAttribute('aria-expanded', 'false');
+        if (body) { body.classList.remove('is-open'); body.setAttribute('aria-hidden', 'true'); }
+      });
+      if (!open) {
+        var target = document.getElementById(btn.getAttribute('aria-controls'));
+        btn.setAttribute('aria-expanded', 'true');
+        if (target) { target.classList.add('is-open'); target.setAttribute('aria-hidden', 'false'); }
+      }
+    });
+  });
+
   /* ---------- データ描画 ---------- */
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
