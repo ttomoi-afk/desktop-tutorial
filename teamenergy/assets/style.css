@@ -540,7 +540,19 @@ section { padding: 120px 0; }
 .center-eyebrow { text-align: center; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--magma); }
 .center-title { margin-top: 10px; text-align: center; font-size: 36px; font-weight: 700; letter-spacing: .1em; line-height: 1.3; }
 .center-lead { margin-top: 16px; text-align: center; font-size: 14px; color: var(--ink-soft); }
-.member-grid { margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 64px 32px; }
+.member-lead { margin-top: 64px; display: grid; grid-template-columns: 5fr 7fr; gap: 56px; align-items: start; }
+.member-lead .member-photo { margin-right: 36px; }
+.member-lead .member-role { margin-top: 0; }
+.member-lead .member-name { font-size: 32px; }
+.member-lead .member-bio { margin-top: 16px; font-size: 15px; }
+.member-lead .ceo-timeline { margin-top: 28px; }
+.member-row { margin-top: 72px; padding-top: 48px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; }
+.member-row .member-photo { margin-right: 22px; }
+.member-row .member-romaji { right: -22px; font-size: 10px; letter-spacing: .2em; }
+.member-row .member-role { font-size: 11px; }
+.member-row .member-name { font-size: 17px; letter-spacing: .1em; }
+.member-row .member-bio { font-size: 12.5px; line-height: 1.8; }
+.member-row .member-photo-note { font-size: 10px; }
 .member-photo { position: relative; aspect-ratio: 1 / 1; margin-right: 32px; background: var(--paper); overflow: visible; }
 .member-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 20%; }
 .member-photo-none { display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); }
@@ -567,11 +579,15 @@ section { padding: 120px 0; }
 .btn-pill-arrow { width: 28px; height: 28px; border-radius: 50%; background: var(--white); position: relative; }
 .btn-pill-arrow::before { content: ""; position: absolute; left: 8px; top: 13px; width: 11px; height: 1.5px; background: var(--ink); }
 .btn-pill-arrow::after { content: ""; position: absolute; right: 8px; top: 9px; width: 7px; height: 7px; border-top: 1.5px solid var(--ink); border-right: 1.5px solid var(--ink); transform: rotate(45deg); }
-@media (max-width: 1023px) { .member-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 1023px) { .member-row { grid-template-columns: repeat(3, 1fr); gap: 40px 28px; } }
 @media (max-width: 767px) {
   .center-title { font-size: 28px; }
-  .member-grid { grid-template-columns: 1fr; gap: 48px; margin-top: 40px; }
-  .member-photo { margin-right: 28px; }
+  .member-lead { grid-template-columns: 1fr; gap: 24px; margin-top: 40px; }
+  .member-lead .member-photo { margin-right: 28px; }
+  .member-lead .member-name { font-size: 26px; }
+  .member-row { grid-template-columns: 1fr 1fr; gap: 36px 20px; margin-top: 48px; padding-top: 36px; }
+  .member-row .member-photo { margin-right: 18px; }
+  .member-row .member-romaji { right: -18px; }
 }
 
 /* ---------- Why ---------- */
