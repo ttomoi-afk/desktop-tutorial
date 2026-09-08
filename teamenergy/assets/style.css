@@ -1,21 +1,21 @@
 /* =========================================================
    Team Energy コーポレートサイト
-   基調: 白 / 墨 / マグマ(1色)。装飾はフェードインのみ。
+   基調: 白 / 玄武岩の黒 / マグマ(1色)。地熱をイメージ。装飾はフェードインのみ。
    ========================================================= */
 
 :root {
-  /* 地表 */
+  /* 地表: 白と、火山灰・砂のような薄い暖色 */
   --white: #ffffff;
-  --paper: #f6f3ef;          /* 地表の薄い砂色。セクションの切り替えにだけ使う */
-  --line: #e4ddd5;
-  /* 地中 */
-  --ink: #1b1614;            /* 岩盤の黒(暖色寄り) */
-  --ink-soft: #5b514c;
-  --ink-faint: #9a8f88;
-  /* アクセント1色。ミダスの動画から採取した黄色(#cda20b)。マグマ色に戻す場合は #c9411f */
-  --magma: #cda20b;
-  --magma-deep: #a8850a;
-  --magma-glow: rgba(205, 162, 11, .28);
+  --paper: #f5efe8;
+  --line: #e6dbd0;
+  /* 地中: 玄武岩の黒(暖色寄り) */
+  --ink: #1a1412;
+  --ink-soft: #5c4f48;
+  --ink-faint: #9c8c82;
+  /* マグマ: アクセントはこの1色。動画の球体の色と揃える */
+  --magma: #d2461c;
+  --magma-deep: #9e2f10;
+  --magma-glow: rgba(232, 96, 40, .3);
   --hero-bg: #eaeaea;   /* 動画の背景色。動画の外側と揃える */
 
   --en: "Jost", "Futura", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
@@ -125,7 +125,7 @@ section { padding: 120px 0; }
   justify-content: space-between;
   mix-blend-mode: multiply; /* 白地の上ではそのまま、動画の上でも沈む */
 }
-.header-logo a, .footer-logo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--en); font-weight: 600; font-size: 19px; letter-spacing: .06em; text-transform: uppercase; color: #26343a; }
+.header-logo a, .footer-logo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--en); font-weight: 600; font-size: 19px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
 .logo-mark { width: 30px; height: 30px; }
 .gnav { display: flex; align-items: center; gap: 40px; }
 .gnav ul { display: flex; gap: 28px; }
@@ -412,7 +412,13 @@ section { padding: 120px 0; }
 }
 
 /* ---------- JOIN ---------- */
-.join { background: var(--ink); color: var(--white); }
+.join { background: var(--ink); color: var(--white); position: relative; overflow: hidden; }
+.join::before {
+  content: ""; position: absolute; right: -10%; bottom: -40%; width: 60%; padding-top: 60%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(210,70,28,.55), rgba(210,70,28,0));
+  pointer-events: none;
+}
+.join .sec-inner { position: relative; }
 .join .sec-title::before { background: var(--magma); }
 .join-copy {
   margin-top: 40px;
