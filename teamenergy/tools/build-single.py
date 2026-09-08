@@ -22,6 +22,11 @@ js = (ROOT / 'assets/main.js').read_text()
 # JSON は fetch できないので JS に埋め込む
 news = json.load(open(ROOT / 'data/news.json'))
 stories = json.load(open(ROOT / 'data/stories.json'))
+for st in stories:
+    if st.get('image') and (ROOT / st['image']).exists():
+        st['image'] = data_uri(st['image'])
+    if st.get('url') in links:
+        st['url'] = links[st['url']]
 js = js.replace(
     "function loadJSON(path, cb) {\n    fetch(path).then(function (r) { return r.json(); }).then(cb).catch(function () { cb([]); });\n  }",
     "var INLINE = { 'data/news.json': " + json.dumps(news, ensure_ascii=False) + ", 'data/stories.json': " + json.dumps(stories, ensure_ascii=False) + " };\n"
@@ -29,16 +34,17 @@ js = js.replace(
 assert 'INLINE' in js, 'loadJSON の置換に失敗'
 
 # 外部ファイルの参照を埋め込みに置換
-for rel in re.findall(r'(?:src|href|poster)="(assets/[^"]+)"', html):
-    html = html.replace(f'"{rel}"', f'"{data_uri(rel)}"')
+for rel in sorted(set(re.findall(r'(?:src|href|poster)="((?:\.\./)?assets/[^"]+)"', html)), key=len, reverse=True):
+    html = html.replace(f'"{rel}"', f'"{data_uri(rel.replace("../", ""))}"')
 html = html.replace('<link rel="stylesheet" href="' + data_uri('assets/style.css') + '">', '<style>\n' + css + '\n</style>')
 html = html.replace('<script src="' + data_uri('assets/main.js') + '"></script>', '<script>\n' + js + '\n</script>')
 html = html.replace('<a href="./">', '<a href="#">')
 # ページ間リンクを公開URLへ(指定がなければ無効化)
-for target in ['index.html', 'sourcing.html']:
+for target in ['index.html', 'sourcing.html', 'cases/teshikaga.html', '../index.html', '../sourcing.html']:
     repl = links.get(target, '#' if target != page else '#')
     html = re.sub(r'href="' + re.escape(target) + r'(#[^"]*)?"', lambda m: 'href="' + (repl + (m.group(1) or '') if repl != '#' else (m.group(1) or '#')) + '"', html)
-html = re.sub(r'<title>.*?</title>', '<title>' + ('Team Energy' if page == 'index.html' else 'Team Energy For Intermediaries') + '</title>', html)
+titles = {'index.html': 'Team Energy', 'sourcing.html': 'Team Energy For Intermediaries', 'cases/teshikaga.html': 'Teshikaga Challenge Case'}
+html = re.sub(r'<title>.*?</title>', '<title>' + titles.get(page, 'Team Energy') + '</title>', html)
 
 # Artifact 用に <head>/<body> の骨組みを外し、本文だけにする
 head = re.search(r'<head>(.*?)</head>', html, re.S).group(1)

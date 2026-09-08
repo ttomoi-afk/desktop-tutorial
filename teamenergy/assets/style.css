@@ -684,3 +684,57 @@ section { padding: 120px 0; }
   .pmap-num { font-size: 30px; }
   .pmap-name { font-size: 14px; }
 }
+
+/* ---------- 事例ページ(弟子屈チャレンジ) ---------- */
+.case-hero { position: relative; height: 72vh; min-height: 520px; padding: 0; overflow: hidden; background: var(--ink); }
+.case-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .82; }
+.case-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,20,18,.72) 0%, rgba(26,20,18,.15) 55%, rgba(26,20,18,0) 100%); }
+.case-hero-inner { position: absolute; left: 0; right: 0; bottom: 0; padding-bottom: 72px; color: var(--white); z-index: 1; }
+.case-eyebrow { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+.case-title { margin-top: 16px; font-size: clamp(28px, 3.6vw, 48px); font-weight: 500; line-height: 1.45; letter-spacing: .06em; }
+.case-sub { margin-top: 18px; font-size: 14px; color: rgba(255,255,255,.85); line-height: 1.9; }
+@media (max-width: 767px) { .case-hero { height: 64vh; min-height: 440px; } .case-hero-inner { padding-bottom: 48px; } }
+
+.case-overview-grid { display: grid; grid-template-columns: 6fr 6fr; gap: 64px; align-items: start; }
+.case-intro { margin-top: 28px; font-size: 15px; }
+.case-facts-list { display: grid; grid-template-columns: 120px 1fr; border-top: 1px solid var(--line); }
+.case-facts-list dt, .case-facts-list dd { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.case-facts-list dt { color: var(--ink-faint); }
+.case-facts-list dd a { border-bottom: 1px solid var(--line); }
+.case-facts-list dd a:hover { color: var(--magma); border-color: var(--magma); }
+@media (max-width: 767px) { .case-overview-grid { grid-template-columns: 1fr; gap: 32px; } .case-facts-list { grid-template-columns: 96px 1fr; } }
+
+.case-timeline-sec { background: var(--paper); }
+.case-timeline { margin-top: 56px; border-left: 1px solid var(--ink); padding-left: 40px; }
+.case-timeline li { position: relative; padding-bottom: 40px; }
+.case-timeline li::before { content: ""; position: absolute; left: -45px; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--magma); }
+.case-timeline li:last-child { padding-bottom: 0; }
+.case-tl-year { font-size: 13px; letter-spacing: .16em; color: var(--magma); }
+.case-timeline h3 { margin-top: 6px; font-size: 20px; font-weight: 500; letter-spacing: .08em; }
+.case-timeline p:not(.case-tl-year) { margin-top: 10px; max-width: 720px; font-size: 14px; color: var(--ink-soft); }
+@media (max-width: 767px) { .case-timeline { padding-left: 28px; } .case-timeline li::before { left: -33px; } }
+
+.case-approach-grid { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.case-approach-item { padding: 36px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.case-approach-item h3 { font-size: 18px; font-weight: 500; letter-spacing: .06em; line-height: 1.6; }
+.case-approach-item p { margin-top: 14px; font-size: 14px; color: var(--ink-soft); }
+@media (max-width: 1023px) { .case-approach-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 767px) { .case-approach-grid { grid-template-columns: 1fr; } .case-approach-item { padding: 28px 20px; } }
+
+.case-numbers { margin-top: 48px; }
+.case-gallery { margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+.case-gallery figure { margin: 0; }
+.case-gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.case-gallery figcaption { margin-top: 10px; font-size: 12px; color: var(--ink-soft); letter-spacing: .04em; }
+@media (max-width: 767px) { .case-gallery { grid-template-columns: 1fr 1fr; gap: 20px 12px; } }
+
+.case-now-grid { margin-top: 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.case-now-grid h3 { font-size: 18px; font-weight: 500; letter-spacing: .1em; margin-bottom: 20px; }
+.case-models dt { font-size: 15px; font-weight: 500; padding-top: 16px; }
+.case-models dd { font-size: 13.5px; color: var(--ink-soft); padding: 6px 0 16px; border-bottom: 1px solid var(--line); }
+@media (max-width: 767px) { .case-now-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+.case-contact { background: var(--paper); }
+.case-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.case-contact-txt { margin-top: 28px; font-size: 14px; color: var(--ink-soft); }
+@media (max-width: 767px) { .case-contact-grid { grid-template-columns: 1fr; gap: 40px; } }
