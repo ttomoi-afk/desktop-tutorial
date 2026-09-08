@@ -705,7 +705,7 @@ section { padding: 120px 0; }
 @media (max-width: 767px) { .case-overview-grid { grid-template-columns: 1fr; gap: 32px; } .case-facts-list { grid-template-columns: 96px 1fr; } }
 
 .case-timeline-sec { background: var(--paper); }
-.case-timeline { margin-top: 56px; border-left: 1px solid var(--ink); padding-left: 40px; }
+.case-timeline { margin-top: 56px; border-left: 1px solid var(--ink); padding-left: 40px; list-style: none; }
 .case-timeline li { position: relative; padding-bottom: 40px; }
 .case-timeline li::before { content: ""; position: absolute; left: -45px; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--magma); }
 .case-timeline li:last-child { padding-bottom: 0; }
