@@ -381,7 +381,7 @@ section { padding: 120px 0; }
   align-items: baseline;
 }
 .results-name { font-size: 17px; font-weight: 500; letter-spacing: .08em; }
-.results-name small { display: block; font-size: 11px; color: var(--ink-faint); font-weight: 400; }
+.results-name small { display: block; font-size: 11px; color: var(--ink-faint); font-weight: 400; letter-spacing: .02em; line-height: 1.6; margin-top: 4px; }
 .results-year { font-size: 13px; letter-spacing: .1em; color: var(--magma); }
 .results-desc { font-size: 14px; color: var(--ink-soft); }
 @media (max-width: 767px) {
@@ -630,6 +630,16 @@ section { padding: 120px 0; }
   .member-row .member-photo { margin-right: 18px; }
   .member-row .member-romaji { right: -18px; }
 }
+
+.ceo-extra { margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.ceo-extra h4 { font-size: 13px; font-weight: 500; letter-spacing: .1em; color: var(--magma); }
+.ceo-extra ul { margin-top: 10px; }
+.ceo-extra li { font-size: 13px; color: var(--ink-soft); padding: 3px 0 3px 14px; position: relative; }
+.ceo-extra li::before { content: ""; position: absolute; left: 0; top: 14px; width: 6px; height: 1px; background: var(--ink-faint); }
+.ceo-plan { margin-top: 10px; display: grid; grid-template-columns: 48px 1fr; gap: 4px 12px; font-size: 13px; }
+.ceo-plan dt { color: var(--ink-faint); }
+.ceo-plan dd { color: var(--ink-soft); }
+@media (max-width: 767px) { .ceo-extra { grid-template-columns: 1fr; gap: 20px; } }
 
 /* ---------- Why ---------- */
 .why { background: var(--paper); }
