@@ -61,7 +61,7 @@
 | — | For Intermediaries（黒。投資条件の要点＋sourcing.htmlへの導線） | 重点業種の詳細は sourcing.html |
 | PORTFOLIO | Group（6事業会社＋傘下） | ロゴが揃ったらロゴグリッドに |
 | — | Results（主な実績 5件） | |
-| TEAM | People（CEO＋投資実務3名＋掲載予定の仮枠: 新浪氏・バイウィル役員） | 仮枠は肩書・略歴・写真が届いたら差し替え。公開前に本人確認 |
+| TEAM | People「メンバー紹介」（写真カード3列、写真右にローマ字縦組み、役職・氏名・紹介文、下部に「詳しく見る」ボタン。ロケットスター社のメンバー紹介を参考） | CEO＋投資実務3名＋掲載予定の仮枠（新浪氏・バイウィル役員）。写真とローマ字の読みは要確認 |
 | — | Why Team Energy（グループインする理由 6点） | 数十億円規模のオーナー企業向けの訴求。ベイン/ミダスの TEAM・実績の見せ方を参考 |
 | STORIES | Stories（TE Magazine） | data/stories.json |
 | NEWS | News | data/news.json |
