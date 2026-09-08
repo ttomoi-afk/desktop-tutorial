@@ -52,7 +52,11 @@
 
 ---
 
-## 3. 構成（ミダスの型 → Team Energy への置き換え）現在の index.html
+## 3. 構成（2026-09-08 並び替え後）
+
+トップ: ヒーロー → Concept → Group（組織図＋アコーディオン） → Stories → People → Track Records（数字＋75社ドット） → Results（規模の横棒グラフ＋投資規模の成長曲線＋実績一覧） → Partners → News → For Intermediaries（入口のみ） → Contact。Why と Policy は sourcing.html に移動。
+
+## 3-旧. 構成（ミダスの型 → Team Energy への置き換え）
 
 | ミダス | Team Energy | 備考 |
 | --- | --- | --- |
