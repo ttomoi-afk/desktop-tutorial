@@ -320,6 +320,11 @@ section { padding: 120px 0; }
 }
 .org-subs li::before { content: ""; position: absolute; left: 50%; top: -15px; width: 1px; height: 14px; background: #cfc6bb; }
 .org-subs li small { display: block; font-size: 10px; color: var(--ink-faint); letter-spacing: .1em; }
+/* 組織図の会社名はリンク。押せることが分かるように hover で色を変える */
+.org-co a, .org-subs li a { display: block; transition: color .3s; }
+.org-co:has(a:hover) { border-top-color: var(--magma); }
+.org-co a:hover, .org-subs li a:hover { color: var(--magma); }
+.org-subs li:has(a:hover) { border-color: var(--magma); }
 .org-note { margin-top: 24px; font-size: 11px; color: var(--ink-faint); }
 @media (max-width: 1023px) {
   .org-branches { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
@@ -465,7 +470,8 @@ section { padding: 120px 0; }
 .join-facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin-top: 14px; font-size: 14px; }
 .join-facts dt { color: rgba(255,255,255,.55); }
 .join-facts dd { color: var(--white); }
-.join .sec-btn { margin-top: 56px; }
+.join-txt { margin-top: 28px; max-width: 640px; font-size: 14px; color: rgba(255,255,255,.7); }
+.join .sec-btn { margin-top: 40px; }
 .join-grid { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 .join-door { border-top: 1px solid rgba(255,255,255,.25); padding-top: 28px; }
 .join-door h3 { font-size: 18px; font-weight: 500; letter-spacing: .1em; }
