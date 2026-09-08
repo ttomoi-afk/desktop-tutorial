@@ -57,6 +57,28 @@
     });
   });
 
+  /* ---------- パートナー種別の切り替え(地域別の数を差し替える) ---------- */
+  var ptabs = document.querySelectorAll('.ptab');
+  if (ptabs.length) {
+    var setCounts = function (key) {
+      document.querySelectorAll('.pmap-region').forEach(function (g) {
+        g.querySelector('.pmap-num').textContent = g.getAttribute('data-' + key);
+      });
+      ['pmap-total', 'pmap-nation'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = el.getAttribute('data-' + key);
+      });
+    };
+    ptabs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        ptabs.forEach(function (b) { b.classList.remove('is-active'); b.setAttribute('aria-pressed', 'false'); });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-pressed', 'true');
+        setCounts(btn.getAttribute('data-ptab'));
+      });
+    });
+  }
+
   /* ---------- データ描画 ---------- */
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 

@@ -650,3 +650,37 @@ section { padding: 120px 0; }
 .why .sec-btn { margin-top: 48px; }
 @media (max-width: 1023px) { .why-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 767px) { .why-grid { grid-template-columns: 1fr; } .why-item { padding: 28px 20px; } }
+
+/* ---------- Partners(地域金融機関・自治体とのネットワーク) ---------- */
+.pmetrics { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.pmetric { padding: 36px 32px 36px 0; border-bottom: 1px solid var(--line); }
+.pmetric + .pmetric { padding-left: 32px; border-left: 1px solid var(--line); }
+.pmetric h3 { font-size: 14px; font-weight: 500; }
+.pmetric .record-num { margin-top: 14px; }
+.ptabs { margin-top: 40px; display: flex; gap: 8px; flex-wrap: wrap; }
+.ptab { font-size: 13px; letter-spacing: .06em; padding: 10px 20px; border: 1px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink); transition: background .25s, color .25s, border-color .25s; }
+.ptab:hover { border-color: var(--magma); color: var(--magma); }
+.ptab.is-active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.ptab:focus-visible { outline: 2px solid var(--magma); outline-offset: 3px; }
+.pmap { margin-top: 32px; display: grid; grid-template-columns: 7fr 5fr; gap: 48px; align-items: start; }
+.pmap-svg { width: 100%; height: auto; display: block; }
+.pmap-region rect { fill: var(--paper); stroke: var(--line); stroke-width: 1; transition: fill .3s; }
+.pmap-region:hover rect { fill: #efe3d8; }
+.pmap-name { font-family: var(--jp); font-size: 12px; fill: var(--ink-soft); letter-spacing: .04em; }
+.pmap-num { font-family: var(--en); font-size: 26px; font-weight: 300; fill: var(--ink); }
+.pmap-side { padding-top: 8px; }
+.pmap-total, .pmap-nationwide { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.pmap-total { border-top: 1px solid var(--ink); }
+.pmap-total dt, .pmap-nationwide dt { font-size: 13px; color: var(--ink-soft); }
+.pmap-total dd .en { font-size: 40px; font-weight: 300; line-height: 1; color: var(--magma); }
+.pmap-nationwide dd .en { font-size: 24px; font-weight: 300; line-height: 1; }
+.pmap-total dd small, .pmap-nationwide dd small { font-size: 12px; margin-left: 4px; }
+.pmap-note { margin-top: 16px; font-size: 11px; color: var(--ink-faint); }
+.pmap .sec-btn { margin-top: 28px; }
+@media (max-width: 767px) {
+  .pmetrics { grid-template-columns: 1fr; }
+  .pmetric, .pmetric + .pmetric { padding: 24px 0; border-left: 0; }
+  .pmap { grid-template-columns: 1fr; gap: 24px; }
+  .pmap-num { font-size: 30px; }
+  .pmap-name { font-size: 14px; }
+}
