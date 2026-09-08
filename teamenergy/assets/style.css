@@ -282,25 +282,57 @@ section { padding: 120px 0; }
   .focus-item { padding: 28px 0; border-bottom: 1px solid var(--line); }
 }
 
-/* ---------- Group ---------- */
-.group-grid {
-  margin-top: 56px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
+/* ---------- Group(組織図) ---------- */
+.org { margin-top: 56px; --og: 16px; --ol: 1px solid var(--line-strong, #cfc6bb); }
+.org-root {
+  width: 280px; margin: 0 auto; padding: 16px 20px;
+  background: var(--ink); color: var(--white);
+  font-size: 16px; font-weight: 500; letter-spacing: .1em; text-align: center;
+  position: relative;
 }
-.group-item { padding: 32px 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 180px; }
-.group-item h3 { font-family: var(--en); font-weight: 500; font-size: 17px; letter-spacing: .06em; }
-.group-item h3:lang(ja) { font-family: var(--jp); }
-.group-item ul { margin-top: 14px; }
-.group-item li { font-size: 13px; color: var(--ink-soft); padding: 4px 0 4px 14px; position: relative; }
-.group-item li::before { content: ""; position: absolute; left: 0; top: 14px; width: 6px; height: 1px; background: var(--ink-faint); }
-.group-item li small { font-family: var(--en); font-size: 10px; letter-spacing: .1em; color: var(--ink-faint); margin-left: 6px; }
+.org-root::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 36px; background: #cfc6bb; }
+.org-branches {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--og);
+  position: relative;
+}
+/* 親から各社へ渡る横線: 最初と最後の列の中心の間 */
+.org-branches::before {
+  content: ""; position: absolute; top: 0;
+  left: calc((100% - 5 * var(--og)) / 12);
+  right: calc((100% - 5 * var(--og)) / 12);
+  height: 1px; background: #cfc6bb;
+}
+.org-branch { position: relative; padding-top: 28px; }
+.org-branch::before { content: ""; position: absolute; left: 50%; top: 0; width: 1px; height: 28px; background: #cfc6bb; }
+.org-co {
+  min-height: 72px; display: flex; align-items: center; justify-content: center;
+  padding: 12px 8px; text-align: center;
+  border: 1px solid #cfc6bb; border-top: 2px solid var(--ink); background: var(--white);
+  font-size: 14px; font-weight: 500; letter-spacing: .04em; line-height: 1.5;
+}
+.org-subs li {
+  position: relative; margin-top: 14px; padding: 12px 8px;
+  border: 1px solid var(--line); background: var(--paper);
+  font-size: 12.5px; text-align: center; color: var(--ink-soft); line-height: 1.5;
+}
+.org-subs li::before { content: ""; position: absolute; left: 50%; top: -15px; width: 1px; height: 14px; background: #cfc6bb; }
+.org-subs li small { display: block; font-size: 10px; color: var(--ink-faint); letter-spacing: .1em; }
+.org-note { margin-top: 24px; font-size: 11px; color: var(--ink-faint); }
+@media (max-width: 1023px) {
+  .org-branches { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
+  .org-branches::before { display: none; }
+  .org-root::after { display: none; }
+  .org-branches { margin-top: 24px; }
+  .org-branch { padding-top: 0; }
+  .org-branch::before { display: none; }
+}
 @media (max-width: 767px) {
-  .group-grid { grid-template-columns: 1fr 1fr; }
-  .group-item { padding: 22px 16px; min-height: 0; }
-  .group-item h3 { font-size: 14px; }
+  .org-root { width: 100%; }
+  .org-branches { grid-template-columns: 1fr 1fr; gap: 12px; row-gap: 24px; }
+  .org-co { min-height: 60px; font-size: 13px; }
 }
 
 /* ---------- Results ---------- */
