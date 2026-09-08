@@ -55,13 +55,14 @@
 | ミダス | Team Energy | 備考 |
 | --- | --- | --- |
 | ヒーロー動画＋一文 | Canvasのマグマ＋「ともにつくり、ともに育てる。」 | 白地・マグマ1色・粒子感。動画が来たら差し替え |
-| TRACK RECORDS | 経営歴33年／設立56社／企業価値100億円以上5社 | |
+| TRACK RECORDS | 経営歴33年／設立56社／企業価値100億円以上5社 | 直後に Results（主な実績）を置き、実績を先に見せる |
 | CONCEPT | Concept（チームエナジーとは） | PPTX P3の本文をそのまま使用 |
 | — | Policy（投資に対する考え方 4点） | ファンドではないことを明言 |
 | — | For Intermediaries（黒。投資条件の要点＋sourcing.htmlへの導線） | 重点業種の詳細は sourcing.html |
 | PORTFOLIO | Group（6事業会社＋傘下） | ロゴが揃ったらロゴグリッドに |
 | — | Results（主な実績 5件） | |
-| TEAM | CEO（中村誠司 略歴） | PPTXの写真を使用 |
+| TEAM | People（CEO＋投資実務3名＋掲載予定の仮枠: 新浪氏・バイウィル役員） | 仮枠は肩書・略歴・写真が届いたら差し替え。公開前に本人確認 |
+| — | Why Team Energy（グループインする理由 6点） | 数十億円規模のオーナー企業向けの訴求。ベイン/ミダスの TEAM・実績の見せ方を参考 |
 | STORIES | Stories（TE Magazine） | data/stories.json |
 | NEWS | News | data/news.json |
 | フッター CONTACT | Contact＋会社概要 | |
