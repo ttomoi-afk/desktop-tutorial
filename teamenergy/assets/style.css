@@ -284,64 +284,6 @@ section { padding: 120px 0; }
   .focus-item { padding: 28px 0; border-bottom: 1px solid var(--line); }
 }
 
-/* ---------- Group(組織図) ---------- */
-.org { margin-top: 56px; --og: 16px; --ol: 1px solid var(--line-strong, #cfc6bb); }
-.org-root {
-  width: 280px; margin: 0 auto; padding: 16px 20px;
-  background: var(--ink); color: var(--white);
-  font-size: 16px; font-weight: 500; letter-spacing: .1em; text-align: center;
-  position: relative;
-}
-.org-root::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 36px; background: #cfc6bb; }
-.org-branches {
-  margin-top: 36px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: var(--og);
-  position: relative;
-}
-/* 親から各社へ渡る横線: 最初と最後の列の中心の間 */
-.org-branches::before {
-  content: ""; position: absolute; top: 0;
-  left: calc((100% - 5 * var(--og)) / 12);
-  right: calc((100% - 5 * var(--og)) / 12);
-  height: 1px; background: #cfc6bb;
-}
-.org-branch { position: relative; padding-top: 28px; }
-.org-branch::before { content: ""; position: absolute; left: 50%; top: 0; width: 1px; height: 28px; background: #cfc6bb; }
-.org-co {
-  min-height: 72px; display: flex; align-items: center; justify-content: center;
-  padding: 12px 8px; text-align: center;
-  border: 1px solid #cfc6bb; border-top: 2px solid var(--ink); background: var(--white);
-  font-size: 14px; font-weight: 500; letter-spacing: .04em; line-height: 1.5;
-}
-.org-subs li {
-  position: relative; margin-top: 14px; padding: 12px 8px;
-  border: 1px solid var(--line); background: var(--paper);
-  font-size: 12.5px; text-align: center; color: var(--ink-soft); line-height: 1.5;
-}
-.org-subs li::before { content: ""; position: absolute; left: 50%; top: -15px; width: 1px; height: 14px; background: #cfc6bb; }
-.org-subs li small { display: block; font-size: 10px; color: var(--ink-faint); letter-spacing: .1em; }
-/* 組織図の会社名はリンク。押せることが分かるように hover で色を変える */
-.org-co a, .org-subs li a { display: block; transition: color .3s; }
-.org-co:has(a:hover) { border-top-color: var(--magma); }
-.org-co a:hover, .org-subs li a:hover { color: var(--magma); }
-.org-subs li:has(a:hover) { border-color: var(--magma); }
-.org-note { margin-top: 24px; font-size: 11px; color: var(--ink-faint); }
-@media (max-width: 1023px) {
-  .org-branches { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
-  .org-branches::before { display: none; }
-  .org-root::after { display: none; }
-  .org-branches { margin-top: 24px; }
-  .org-branch { padding-top: 0; }
-  .org-branch::before { display: none; }
-}
-@media (max-width: 767px) {
-  .org-root { width: 100%; }
-  .org-branches { grid-template-columns: 1fr 1fr; gap: 12px; row-gap: 24px; }
-  .org-co { min-height: 60px; font-size: 13px; }
-}
-
 /* ---------- 事業会社アコーディオン(組織図の下) ---------- */
 .biz-acc { margin-top: 64px; border-top: 1px solid var(--ink); }
 .biz-acc-item { border-bottom: 1px solid var(--line); }
@@ -660,37 +602,21 @@ section { padding: 120px 0; }
 @media (max-width: 767px) { .why-grid { grid-template-columns: 1fr; } .why-item { padding: 28px 20px; } }
 
 /* ---------- Partners(地域金融機関・自治体とのネットワーク) ---------- */
-.pmetrics { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
-.pmetric { padding: 36px 32px 36px 0; border-bottom: 1px solid var(--line); }
-.pmetric + .pmetric { padding-left: 32px; border-left: 1px solid var(--line); }
-.pmetric h3 { font-size: 14px; font-weight: 500; }
-.pmetric .record-num { margin-top: 14px; }
-.ptabs { margin-top: 40px; display: flex; gap: 8px; flex-wrap: wrap; }
-.ptab { font-size: 13px; letter-spacing: .06em; padding: 10px 20px; border: 1px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink); transition: background .25s, color .25s, border-color .25s; }
-.ptab:hover { border-color: var(--magma); color: var(--magma); }
-.ptab.is-active { background: var(--ink); color: var(--white); border-color: var(--ink); }
-.ptab:focus-visible { outline: 2px solid var(--magma); outline-offset: 3px; }
-.pmap { margin-top: 32px; display: grid; grid-template-columns: 7fr 5fr; gap: 48px; align-items: start; }
+/* 数は出さない。全国に提携先があることだけを地図で示す */
+.pmap { margin-top: 48px; display: grid; grid-template-columns: 7fr 5fr; gap: 48px; align-items: center; }
 .pmap-svg { width: 100%; height: auto; display: block; }
 .pmap-region rect { fill: var(--paper); stroke: var(--line); stroke-width: 1; transition: fill .3s; }
 .pmap-region:hover rect { fill: #efe3d8; }
-.pmap-name { font-family: var(--jp); font-size: 12px; fill: var(--ink-soft); letter-spacing: .04em; }
-.pmap-num { font-family: var(--en); font-size: 26px; font-weight: 300; fill: var(--ink); }
-.pmap-side { padding-top: 8px; }
-.pmap-total, .pmap-nationwide { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
-.pmap-total { border-top: 1px solid var(--ink); }
-.pmap-total dt, .pmap-nationwide dt { font-size: 13px; color: var(--ink-soft); }
-.pmap-total dd .en { font-size: 40px; font-weight: 300; line-height: 1; color: var(--magma); }
-.pmap-nationwide dd .en { font-size: 24px; font-weight: 300; line-height: 1; }
-.pmap-total dd small, .pmap-nationwide dd small { font-size: 12px; margin-left: 4px; }
+.pmap-name { font-family: var(--jp); font-size: 13px; fill: var(--ink); letter-spacing: .04em; font-weight: 500; }
+.pmap-dot { fill: var(--magma); }
+.pmap-legend { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-soft); letter-spacing: .06em; }
+.pmap-key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--magma); }
+.pmap-txt { margin-top: 20px; font-size: 14px; color: var(--ink-soft); }
 .pmap-note { margin-top: 16px; font-size: 11px; color: var(--ink-faint); }
 .pmap .sec-btn { margin-top: 28px; }
 @media (max-width: 767px) {
-  .pmetrics { grid-template-columns: 1fr; }
-  .pmetric, .pmetric + .pmetric { padding: 24px 0; border-left: 0; }
   .pmap { grid-template-columns: 1fr; gap: 24px; }
-  .pmap-num { font-size: 30px; }
-  .pmap-name { font-size: 14px; }
+  .pmap-name { font-size: 15px; }
 }
 
 /* ---------- 事例ページ(弟子屈チャレンジ) ---------- */
@@ -777,7 +703,7 @@ section { padding: 120px 0; }
 .chart-table th { color: var(--ink-faint); font-size: 11px; }
 @media (max-width: 767px) { .charts { grid-template-columns: 1fr; gap: 40px; } }
 
-/* 設立75社のドット */
+/* 設立58社のドット */
 .dotgrid { margin: 40px 0 0; }
 .dotgrid figcaption { font-size: 12px; color: var(--ink-soft); margin-bottom: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
 .dot-key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--line); }

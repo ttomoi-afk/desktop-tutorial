@@ -54,7 +54,7 @@
 
 ## 3. 構成（2026-09-08 並び替え後）
 
-トップ: ヒーロー → Concept → Group（組織図＋アコーディオン） → Stories → People → Track Records（数字＋75社ドット） → Results（規模の横棒グラフ＋投資規模の成長曲線＋実績一覧） → Partners → News → For Intermediaries（入口のみ） → Contact。Why と Policy は sourcing.html に移動。
+トップ: ヒーロー → Concept → Group（事業会社アコーディオン。組織図は2026-09-09に削除） → Stories → People → Track Records（数字＋58社ドット） → Results（規模の横棒グラフ＋投資規模の成長曲線＋実績一覧） → Partners → News → For Intermediaries（入口のみ） → Contact。Why と Policy は sourcing.html に移動。
 
 ## 3-旧. 構成（ミダスの型 → Team Energy への置き換え）
 
@@ -68,7 +68,7 @@
 | PORTFOLIO | Group（6事業会社＋傘下） | ロゴが揃ったらロゴグリッドに |
 | — | Results（主な実績 5件） | |
 | TEAM | People「メンバー紹介」（写真カード3列、写真右にローマ字縦組み、役職・氏名・紹介文、下部に「詳しく見る」ボタン。ロケットスター社のメンバー紹介を参考） | CEO＋投資実務2名（友井はM&Aページのみ）＋掲載予定の仮枠（新浪氏・バイウィル役員）。写真とローマ字の読みは要確認 |
-| — | Partners（バイウィルのパートナー実績を同形式で転用: 総数390団体／紹介4,056件／すべて・自治体・金融機関の切替／地域別の簡略日本地図。出典注記あり） | 2026年9月4日時点。数値の更新は index.html の data-all/muni/fin |
+| — | Partners（数値なし。全国9地域にパートナーがいることを簡略日本地図で示す。出典注記あり） | 具体的な団体数・紹介件数・自治体数は掲載しない（2026-09-09の指示） |
 | — | Why Team Energy（グループインする理由 6点） | 数十億円規模のオーナー企業向けの訴求。ベイン/ミダスの TEAM・実績の見せ方を参考 |
 | STORIES | Stories（TE Magazine） | data/stories.json |
 | NEWS | News | data/news.json |
@@ -79,7 +79,7 @@
 ### 事例ページ cases/teshikaga.html（弟子屈チャレンジ）
 - 出典: 提案資料PPTX（現在のホテル情報）、Wantedly記事（運営責任者 滝川智春氏の再建、代表 河原典仁氏と松山裕一氏の対談）、道東ミルクロード記事（2025年7月リニューアル）、弟子屈町・観光協会サイト（前身「ピュアフィールド 風曜日」、事業再構築補助金）
 - 未取得: 稼働率・売上・投資額などの数字。取得前の経営状況の具体（赤字額など）
-- 導線: トップの Stories 1件目、組織図アコーディオンの弟子屈チャレンジ
+- 導線: トップの Stories 1件目、Groupアコーディオンの弟子屈チャレンジ
 
 ## 4. 決めたいこと（未決）
 
