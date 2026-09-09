@@ -109,3 +109,8 @@
 - フレームワーク・ビルド無し。カルーセルのみ軽量ライブラリ or CSS scroll-snap
 - 書体: Adobe Fonts が無ければ Google Fonts（英語: Cormorant Garamond、日本語: Shippori Mincho）
 - NEWS／MAGAZINE は `data/*.json` から描画し、将来 CMS へ移せる形にする
+
+## ヒーロー背景の試作（2026-09-09）
+- 動画の元素材が 1080p・約0.9Mbps で、再エンコードでは画質が上がらないことを確認（拡大比較で差なし）
+- 代替として Canvas 描画版を試作: `assets/hero.js`（球体をスプライトとして事前描画し、毎フレームは drawImage のみ。60fps）
+- 比較ページ: `proto/hero.html`（描画版／動画版の切り替え付き）。採用が決まったら index.html の `.hero-video` を `.hero-canvas` に置き換え、動画ファイルを削除する

@@ -38,12 +38,17 @@ for rel in sorted(set(re.findall(r'(?:src|href|poster)="((?:\.\./)?assets/[^"]+)
     html = html.replace(f'"{rel}"', f'"{data_uri(rel.replace("../", ""))}"')
 html = html.replace('<link rel="stylesheet" href="' + data_uri('assets/style.css') + '">', '<style>\n' + css + '\n</style>')
 html = html.replace('<script src="' + data_uri('assets/main.js') + '"></script>', '<script>\n' + js + '\n</script>')
+# その他の assets/*.js もインラインにする(Artifact では data: の script が読めない)
+for rel in re.findall(r'<script src="(?:\.\./)?(assets/[^"]+\.js)"></script>', (ROOT / page).read_text()):
+    if rel == 'assets/main.js':
+        continue
+    html = html.replace('<script src="' + data_uri(rel) + '"></script>', '<script>\n' + (ROOT / rel).read_text() + '\n</script>')
 html = html.replace('<a href="./">', '<a href="#">')
 # ページ間リンクを公開URLへ(指定がなければ無効化)
 for target in ['index.html', 'sourcing.html', 'cases/teshikaga.html', '../index.html', '../sourcing.html']:
     repl = links.get(target, '#' if target != page else '#')
     html = re.sub(r'href="' + re.escape(target) + r'(#[^"]*)?"', lambda m: 'href="' + (repl + (m.group(1) or '') if repl != '#' else (m.group(1) or '#')) + '"', html)
-titles = {'index.html': 'Team Energy', 'sourcing.html': 'Team Energy For Intermediaries', 'cases/teshikaga.html': 'Teshikaga Challenge Case'}
+titles = {'index.html': 'Team Energy', 'sourcing.html': 'Team Energy For Intermediaries', 'cases/teshikaga.html': 'Teshikaga Challenge Case', 'proto/hero.html': 'Hero Prototype'}
 html = re.sub(r'<title>.*?</title>', '<title>' + titles.get(page, 'Team Energy') + '</title>', html)
 
 # Artifact 用に <head>/<body> の骨組みを外し、本文だけにする

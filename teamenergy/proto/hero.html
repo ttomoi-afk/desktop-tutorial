@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero Prototype | Team Energy</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+/* 試作ページだけの部品: 動画版と描画版の切り替え */
+.proto-switch { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 60; display: flex; border: 1px solid var(--ink); background: rgba(255,255,255,.92); backdrop-filter: blur(6px); }
+.proto-switch button { font-family: var(--jp); font-size: 13px; letter-spacing: .1em; padding: 12px 22px; color: var(--ink); white-space: nowrap; }
+.proto-switch button.is-active { background: var(--ink); color: var(--white); }
+.proto-switch button:focus-visible { outline: 2px solid var(--magma); outline-offset: 2px; }
+body.show-video .hero-canvas { display: none; }
+body:not(.show-video) .hero-video { display: none; }
+.proto-note { padding: 96px 0; }
+.proto-note h2 { font-size: 22px; font-weight: 500; letter-spacing: .1em; }
+.proto-note dl { margin-top: 32px; display: grid; grid-template-columns: 200px 1fr; border-top: 1px solid var(--line); max-width: 860px; }
+.proto-note dt, .proto-note dd { padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.proto-note dt { color: var(--ink-faint); }
+@media (max-width: 767px) { .proto-note dl { grid-template-columns: 1fr; } .proto-note dt { padding-bottom: 0; border: 0; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <p class="header-logo"><a href="../index.html"><img class="logo-mark" src="../assets/logo-mark.svg" alt=""><span>Team Energy</span></a></p>
+  <nav class="gnav">
+    <ul>
+      <li><a href="../index.html#concept">Concept</a></li>
+      <li><a href="../index.html#group">Group</a></li>
+      <li><a href="../index.html#stories">Stories</a></li>
+      <li><a href="../index.html#people">People</a></li>
+      <li><a href="../index.html#results">Results</a></li>
+      <li><a href="../index.html#partners">Partners</a></li>
+      <li><a href="../sourcing.html">M&amp;A</a></li>
+      <li><a href="../index.html#news">News</a></li>
+    </ul>
+    <p class="nav-contact"><a href="../index.html#contact">Contact</a></p>
+  </nav>
+  <button class="nav-toggle" aria-label="メニュー"><i></i></button>
+</header>
+
+<main>
+
+  <section class="hero">
+    <!-- 試作: Canvas で描く球体。動画版と切り替えて比較できる -->
+    <canvas class="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-video">
+      <video class="pc" src="../assets/movie/top-pc.mp4" poster="../assets/movie/top-poster.jpg" autoplay muted loop playsinline></video>
+      <video class="sp" src="../assets/movie/top-sp.mp4" poster="../assets/movie/top-poster-sp.jpg" autoplay muted loop playsinline></video>
+    </div>
+    <div class="hero-inner">
+      <h1 class="hero-copy">ともにつくり、<br>ともに育てる。</h1>
+      <p class="hero-sub">事業への「出資」と「経営」を切り離さない事業投資会社です。<br class="pc">年商数億〜数十億円の企業の事業承継と成長を、グループの資金と経営人材で支えます。</p>
+      <p class="hero-caption">
+        <span class="is-on">意思決定から実行までを自社で完結させる。だから、判断が速い</span>
+        <span>承継後は、社内で育てた経営人材が経営に入る</span>
+        <span>ファンドではない。期限を切らずに、事業を持ち続ける</span>
+      </p>
+      <p class="hero-btn"><a class="btn" href="../index.html#concept">Concept</a></p>
+    </div>
+    <p class="hero-scroll">Scroll</p>
+  </section>
+
+  <section class="proto-note">
+    <div class="sec-inner">
+      <h2>ヒーロー背景の試作</h2>
+      <dl>
+        <dt>描画方式</dt><dd>動画ファイルを使わず、ブラウザが毎フレーム球体を描画します。輪郭は画面の解像度そのままで描かれるため、Retina や 4K でも滲みません。</dd>
+        <dt>ファイルサイズ</dt><dd>約5KB（動画版は約3MB）。読み込み直後から表示が始まります。</dd>
+        <dt>色</dt><dd>サイトのアクセント色（マグマ #d2461c）と同じ値で描いています。落ち影も同系色です。</dd>
+        <dt>動き</dt><dd>球体の群れが右側をゆっくり漂います。画面外に出た時とタブが非表示の時は描画を止め、「視差効果を減らす」設定では静止画になります。</dd>
+        <dt>権利</dt><dd>自社制作のため、他社動画の流用に伴う権利の問題がありません。</dd>
+      </dl>
+    </div>
+  </section>
+
+</main>
+
+<div class="proto-switch" role="group" aria-label="表示の切り替え">
+  <button type="button" class="is-active" data-mode="canvas">試作（描画）</button>
+  <button type="button" data-mode="video">現行（動画）</button>
+</div>
+
+<script src="../assets/main.js"></script>
+<script src="../assets/hero.js"></script>
+<script>
+  document.querySelectorAll('.proto-switch button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.body.classList.toggle('show-video', b.getAttribute('data-mode') === 'video');
+      document.querySelectorAll('.proto-switch button').forEach(function (x) { x.classList.toggle('is-active', x === b); });
+    });
+  });
+</script>
+</body>
+</html>
