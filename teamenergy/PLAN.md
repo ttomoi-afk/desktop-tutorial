@@ -101,11 +101,11 @@
   - 岩盤の墨 `#1b1614`（暖色寄りの黒。JOINセクションの背景）
   - マグマ `#c9411f`（アクセントは実質この1色。見出しの短線・キャプション・hover）
 - ヒーローはCanvasで「地層の線」と「地中から立ち上るマグマの泡」を描画。動画素材が届けばそのまま差し替え可能
-- 書体: 英語 Jost（Futura系のGoogle Fonts）、日本語 Noto Sans JP
+- 書体: 英語 Cormorant Garamond（ガラモン系セリフ）、日本語 Shippori Mincho（明朝）。2026-09-09にゴシック系から変更
 
 ## 6. 技術方針（案）
 
 - このリポジトリの `teamenergy/` 配下に静的HTML／CSS／JSで制作（他プロジェクトと同じ方式、GitHub Pages で確認可能）
 - フレームワーク・ビルド無し。カルーセルのみ軽量ライブラリ or CSS scroll-snap
-- 書体: Adobe Fonts が無ければ Google Fonts（英語: geometric sans 系、日本語: Noto Sans JP）
+- 書体: Adobe Fonts が無ければ Google Fonts（英語: Cormorant Garamond、日本語: Shippori Mincho）
 - NEWS／MAGAZINE は `data/*.json` から描画し、将来 CMS へ移せる形にする
