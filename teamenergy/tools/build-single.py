@@ -46,7 +46,7 @@ for rel in re.findall(r'<script src="(?:\.\./)?(assets/[^"]+\.js)"></script>', (
 html = html.replace('<a href="./">', '<a href="#">')
 # ページ間リンクを公開URLへ(指定がなければ無効化)
 for target in ['index.html', 'sourcing.html', 'cases/teshikaga.html', '../index.html', '../sourcing.html']:
-    repl = links.get(target, '#' if target != page else '#')
+    repl = links.get(target, links.get(target.replace('../', ''), '#'))  # 下層ページの ../ 付きリンクも同じ指定で置換
     html = re.sub(r'href="' + re.escape(target) + r'(#[^"]*)?"', lambda m: 'href="' + (repl + (m.group(1) or '') if repl != '#' else (m.group(1) or '#')) + '"', html)
 titles = {'index.html': 'Team Energy', 'sourcing.html': 'Team Energy For Intermediaries', 'cases/teshikaga.html': 'Teshikaga Challenge Case', 'proto/hero.html': 'Hero Prototype'}
 html = re.sub(r'<title>.*?</title>', '<title>' + titles.get(page, 'Team Energy') + '</title>', html)
