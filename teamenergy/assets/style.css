@@ -18,8 +18,9 @@
   --magma-glow: rgba(232, 96, 40, .3);
   --hero-bg: #eaeaea;   /* 動画の背景色。動画の外側と揃える */
 
-  --en: "Jost", "Futura", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-  --jp: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, system-ui, sans-serif;
+  /* 書体: 明朝系。欧文はガラモン系、日本語はしっぽり明朝。真面目で品のある印象に */
+  --en: "Cormorant Garamond", "EB Garamond", Garamond, "Times New Roman", serif;
+  --jp: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
 
   --inner: 1200px;
   --gutter: 24px;
@@ -32,9 +33,9 @@ body {
   color: var(--ink);
   background: var(--white);
   font-size: 15px;
-  line-height: 1.9;
+  line-height: 2;
   font-feature-settings: "palt";
-  letter-spacing: .04em;
+  letter-spacing: .06em;
 }
 img, svg, video, canvas { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -42,7 +43,7 @@ ul { list-style: none; }
 button { font: inherit; cursor: pointer; background: none; border: 0; }
 
 /* ---------- ユーティリティ(ミダスの ls-04 / fs-14 に相当) ---------- */
-.en { font-family: var(--en); font-weight: 400; letter-spacing: .08em; }
+.en { font-family: var(--en); font-weight: 500; letter-spacing: .08em; }
 .upper { text-transform: uppercase; }
 .fs-13 { font-size: 13px; }
 .fs-14 { font-size: 14px; }
@@ -63,9 +64,9 @@ button { font: inherit; cursor: pointer; background: none; border: 0; }
 /* セクション見出し: 英語大文字 + 左のマグマ色の短線 */
 .sec-title {
   font-family: var(--en);
-  font-weight: 400;
-  font-size: 30px;
-  letter-spacing: .14em;
+  font-weight: 500;
+  font-size: 36px;
+  letter-spacing: .12em;
   line-height: 1.2;
   position: relative;
   padding-top: 22px;
@@ -82,7 +83,7 @@ button { font: inherit; cursor: pointer; background: none; border: 0; }
 section { padding: 120px 0; }
 @media (max-width: 767px) {
   section { padding: 72px 0; }
-  .sec-title { font-size: 24px; }
+  .sec-title { font-size: 28px; }
 }
 
 /* ボタン: 1種類だけを使い回す */
@@ -91,7 +92,8 @@ section { padding: 120px 0; }
   align-items: center;
   gap: 18px;
   font-family: var(--en);
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 600;
   letter-spacing: .18em;
   text-transform: uppercase;
   padding: 14px 0;
@@ -125,11 +127,11 @@ section { padding: 120px 0; }
   justify-content: space-between;
   mix-blend-mode: multiply; /* 白地の上ではそのまま、動画の上でも沈む */
 }
-.header-logo a, .footer-logo { display: inline-flex; align-items: center; gap: 14px; font-family: var(--en); font-weight: 600; font-size: 26px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.header-logo a, .footer-logo { display: inline-flex; align-items: center; gap: 14px; font-family: var(--en); font-weight: 600; font-size: 28px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
 .logo-mark { width: 44px; height: 44px; }
 .gnav { display: flex; align-items: center; gap: 40px; }
 .gnav ul { display: flex; gap: 28px; }
-.gnav a { font-family: var(--en); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; position: relative; padding: 4px 0; }
+.gnav a { font-family: var(--en); font-size: 14px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; position: relative; padding: 4px 0; }
 .gnav a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px; background: var(--magma); transition: width .3s; }
 .gnav a:hover::after { width: 100%; }
 .gnav .nav-contact a { border: 1px solid var(--ink); padding: 10px 22px; }
@@ -146,7 +148,7 @@ section { padding: 120px 0; }
 
 @media (max-width: 1023px) {
   .header { padding: 20px 20px; mix-blend-mode: normal; }
-  .header-logo a { font-size: 21px; gap: 10px; }
+  .header-logo a { font-size: 23px; gap: 10px; }
   .logo-mark { width: 36px; height: 36px; }
   .nav-toggle { display: block; }
   .gnav {
@@ -155,7 +157,7 @@ section { padding: 120px 0; }
     opacity: 0; pointer-events: none; transition: opacity .3s;
   }
   .gnav ul { flex-direction: column; align-items: center; gap: 22px; }
-  .gnav a { font-size: 14px; }
+  .gnav a { font-size: 17px; }
   body.nav-open .gnav { opacity: 1; pointer-events: auto; }
   body.nav-open .nav-toggle { z-index: 60; }
   body.nav-open .nav-toggle i { background: transparent; }
@@ -210,7 +212,7 @@ section { padding: 120px 0; }
 .hero-btn { margin-top: 36px; }
 .hero-scroll {
   position: absolute; right: 40px; bottom: 40px;
-  font-family: var(--en); font-size: 10px; letter-spacing: .3em; text-transform: uppercase;
+  font-family: var(--en); font-size: 12px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
   writing-mode: vertical-rl; color: var(--ink-faint);
 }
 .hero-scroll::after { content: ""; display: block; width: 1px; height: 48px; background: var(--ink-faint); margin: 12px auto 0; }
@@ -235,13 +237,13 @@ section { padding: 120px 0; }
 .record-title { font-size: 14px; font-weight: 500; }
 .record-en { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
 .record-num { margin-top: 18px; display: flex; align-items: baseline; gap: 6px; }
-.record-num .en { font-size: 64px; letter-spacing: .02em; line-height: 1; font-weight: 300; }
+.record-num .en { font-size: 72px; letter-spacing: .02em; line-height: 1; font-weight: 400; }
 .record-num small { font-size: 14px; }
 .records-note { margin-top: 20px; font-size: 11px; color: var(--ink-faint); }
 @media (max-width: 767px) {
   .records-grid { grid-template-columns: 1fr; }
   .record, .record + .record { padding: 28px 0; border-left: 0; }
-  .record-num .en { font-size: 52px; }
+  .record-num .en { font-size: 56px; }
 }
 
 /* ---------- 番号付きリスト(Policy) ---------- */
@@ -255,7 +257,7 @@ section { padding: 120px 0; }
   border-bottom: 1px solid var(--line);
   align-items: baseline;
 }
-.num-item .num, .focus-item .num { font-family: var(--en); font-size: 13px; letter-spacing: .2em; color: var(--magma); }
+.num-item .num, .focus-item .num { font-family: var(--en); font-size: 15px; font-weight: 600; letter-spacing: .2em; color: var(--magma); }
 .num-item h3 { font-size: 20px; font-weight: 500; letter-spacing: .1em; }
 .num-item .desc, .focus-item .desc { font-size: 14px; color: var(--ink-soft); }
 @media (max-width: 767px) {
@@ -277,7 +279,7 @@ section { padding: 120px 0; }
 .focus-grid { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; border-top: 1px solid var(--line); }
 .focus-item { padding-top: 32px; }
 .focus-item h3 { margin-top: 16px; font-size: 26px; font-weight: 500; letter-spacing: .1em; }
-.focus-item h3 small { display: block; font-family: var(--en); font-size: 11px; letter-spacing: .2em; color: var(--ink-faint); text-transform: uppercase; margin-top: 6px; font-weight: 400; }
+.focus-item h3 small { display: block; font-family: var(--en); font-size: 13px; letter-spacing: .2em; color: var(--ink-faint); text-transform: uppercase; margin-top: 6px; font-weight: 400; }
 .focus-item .desc { margin-top: 16px; }
 @media (max-width: 767px) {
   .focus-grid { grid-template-columns: 1fr; gap: 0; }
@@ -288,7 +290,7 @@ section { padding: 120px 0; }
 .biz-acc { margin-top: 64px; border-top: 1px solid var(--ink); }
 .biz-acc-item { border-bottom: 1px solid var(--line); }
 .biz-acc-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 26px 0; }
-.biz-acc-text { display: block; font-family: var(--en); font-size: 22px; font-weight: 500; letter-spacing: .06em; line-height: 1.3; transition: color .3s; }
+.biz-acc-text { display: block; font-family: var(--en); font-size: 26px; font-weight: 600; letter-spacing: .06em; line-height: 1.3; transition: color .3s; }
 .biz-acc-text:hover { color: var(--magma); }
 .biz-acc-text small { display: block; margin-top: 6px; font-family: var(--jp); font-size: 12px; font-weight: 400; letter-spacing: .06em; color: var(--ink-soft); }
 .biz-acc-trigger { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); position: relative; transition: background .3s, border-color .3s; }
@@ -310,7 +312,7 @@ section { padding: 120px 0; }
 .biz-acc-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border: 1px solid var(--line); background: var(--white); font-size: 14px; letter-spacing: .04em; transition: border-color .3s, color .3s; }
 .biz-acc-link::after { content: ""; flex: none; width: 7px; height: 7px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
 .biz-acc-link:hover { color: var(--magma); border-color: var(--magma); }
-.biz-acc-link small { margin-left: auto; font-family: var(--en); font-size: 10px; letter-spacing: .1em; color: var(--ink-faint); }
+.biz-acc-link small { margin-left: auto; font-family: var(--en); font-size: 12px; letter-spacing: .1em; color: var(--ink-faint); }
 @media (max-width: 767px) {
   .biz-acc { margin-top: 48px; }
   .biz-acc-header { padding: 20px 0; }
@@ -387,8 +389,8 @@ section { padding: 120px 0; }
   transition: color .3s;
 }
 .news-list a:hover { color: var(--magma); }
-.news-date { font-family: var(--en); font-size: 13px; letter-spacing: .1em; }
-.news-cat span { font-family: var(--en); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; border: 1px solid var(--line); padding: 3px 10px; color: var(--ink-soft); }
+.news-date { font-family: var(--en); font-size: 15px; font-weight: 500; letter-spacing: .1em; }
+.news-cat span { font-family: var(--en); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; border: 1px solid var(--line); padding: 3px 10px; color: var(--ink-soft); }
 .news-title { font-size: 14px; }
 @media (max-width: 767px) {
   .news-list a { grid-template-columns: 96px 1fr; }
@@ -427,7 +429,7 @@ section { padding: 120px 0; }
 /* ---------- フッター ---------- */
 .footer { padding: 120px 0 40px; }
 .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-.footer h2 { font-family: var(--en); font-weight: 400; font-size: 30px; letter-spacing: .14em; }
+.footer h2 { font-family: var(--en); font-weight: 500; font-size: 36px; letter-spacing: .12em; }
 .company-info { display: grid; grid-template-columns: 96px 1fr; border-top: 1px solid var(--line); }
 .company-info dt, .company-info dd { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
 .company-info dt { color: var(--ink-faint); }
@@ -447,9 +449,9 @@ section { padding: 120px 0; }
 .footer-logo { font-size: 20px; }
 .footer-logo .logo-mark { width: 34px; height: 34px; }
 .footer-links { display: flex; gap: 28px; }
-.footer-links a { font-family: var(--en); font-size: 11px; letter-spacing: .16em; color: var(--ink-soft); }
+.footer-links a { font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .16em; color: var(--ink-soft); }
 .footer-links a:hover { color: var(--magma); }
-.copyright { font-family: var(--en); font-size: 11px; letter-spacing: .12em; color: var(--ink-faint); text-align: right; line-height: 1.6; }
+.copyright { font-family: var(--en); font-size: 13px; font-weight: 500; letter-spacing: .12em; color: var(--ink-faint); text-align: right; line-height: 1.6; }
 @media (max-width: 767px) {
   .footer { padding-top: 72px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
@@ -474,7 +476,7 @@ section { padding: 120px 0; }
 .criteria-list dt, .criteria-list dd { padding: 20px 0; border-bottom: 1px solid var(--line); }
 .criteria-list dt { font-size: 14px; color: var(--ink-soft); }
 .criteria-list dd { font-size: 20px; letter-spacing: .06em; }
-.criteria-list dd .en { font-size: 28px; font-weight: 300; }
+.criteria-list dd .en { font-size: 32px; font-weight: 400; }
 @media (max-width: 767px) {
   .criteria-list { grid-template-columns: 1fr; }
   .criteria-list dt { padding-bottom: 4px; border-bottom: 0; }
@@ -539,7 +541,7 @@ section { padding: 120px 0; }
 .member-lead .ceo-timeline { margin-top: 28px; }
 .member-row { margin-top: 72px; padding-top: 48px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
 .member-row .member-photo { margin-right: 22px; }
-.member-row .member-romaji { right: -22px; font-size: 10px; letter-spacing: .2em; }
+.member-row .member-romaji { right: -22px; font-size: 12px; letter-spacing: .2em; }
 .member-row .member-role { font-size: 11px; }
 .member-row .member-name { font-size: 17px; letter-spacing: .1em; }
 .member-row .member-bio { font-size: 12.5px; line-height: 1.8; }
@@ -551,7 +553,7 @@ section { padding: 120px 0; }
 .member-romaji {
   position: absolute; top: 0; right: -30px;
   writing-mode: vertical-rl; text-orientation: mixed;
-  font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--magma); white-space: nowrap;
+  font-size: 13px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--magma); white-space: nowrap;
 }
 .member-role { margin-top: 16px; font-size: 12px; color: var(--ink-faint); letter-spacing: .06em; }
 .member-name { margin-top: 4px; font-size: 22px; font-weight: 700; letter-spacing: .14em; }
@@ -685,10 +687,10 @@ section { padding: 120px 0; }
 .chart .bar:focus { outline: none; }
 .chart .bar-target rect { fill: none; stroke: var(--magma); stroke-width: 1; stroke-dasharray: 3 3; }
 .chart .ch-grid { stroke: var(--line); stroke-width: 1; }
-.chart .ch-tick { font-family: var(--en); font-size: 11px; fill: var(--ink-faint); letter-spacing: .04em; }
+.chart .ch-tick { font-family: var(--en); font-size: 13px; font-weight: 500; fill: var(--ink-faint); letter-spacing: .04em; }
 .chart .ch-label { font-size: 13px; fill: var(--ink); font-weight: 500; }
 .chart .ch-sub { font-size: 10px; fill: var(--ink-faint); }
-.chart .ch-value { font-family: var(--en); font-size: 15px; fill: var(--ink); }
+.chart .ch-value { font-family: var(--en); font-size: 17px; font-weight: 500; fill: var(--ink); }
 .chart .ch-unit { font-family: var(--jp); font-size: 10px; fill: var(--ink-soft); }
 .chart .ch-line { fill: none; stroke: var(--magma); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .chart .ch-area { fill: var(--magma); opacity: .1; }
