@@ -223,6 +223,32 @@ section { padding: 120px 0; }
   .hero-scroll { display: none; }
 }
 
+/* ---------- ヒーロー(地熱・マグマ背景の暗い版) ---------- */
+.hero-dark { background: #070403; color: var(--white); }
+.hero-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgba(7,4,3,.82) 0%, rgba(7,4,3,.5) 30%, rgba(7,4,3,0) 62%); }
+.hero-dark .hero-inner { background: none; }
+.hero-dark .hero-caption { color: #f0a35c; }
+.hero-dark .btn { color: var(--white); border-color: rgba(255,255,255,.7); }
+.hero-dark .btn:hover { color: #f0a35c; border-color: #f0a35c; }
+.hero-dark .hero-scroll { color: rgba(255,255,255,.55); }
+.hero-dark .hero-scroll::after { background: rgba(255,255,255,.4); }
+@media (max-width: 767px) {
+  .hero-dark .hero-inner { background: linear-gradient(to top, rgba(7,4,3,.94) 0%, rgba(7,4,3,.72) 36%, rgba(7,4,3,0) 64%); }
+}
+/* 暗いヒーローの上ではヘッダーを白抜きに。スクロールで白地に入ると元に戻る(main.js が body.on-dark-hero を付け外し) */
+.header, .header-logo a, .nav-toggle i, .nav-toggle i::before, .nav-toggle i::after, .gnav .nav-contact a { transition: color .35s, background-color .35s, border-color .35s; }
+body.on-dark-hero .header { mix-blend-mode: normal; color: var(--white); }
+body.on-dark-hero .header-logo a { color: var(--white); }
+body.on-dark-hero:not(.nav-open) .nav-toggle i, body.on-dark-hero:not(.nav-open) .nav-toggle i::before, body.on-dark-hero:not(.nav-open) .nav-toggle i::after { background: var(--white); }
+body.on-dark-hero .gnav .nav-contact a { border-color: rgba(255,255,255,.7); }
+body.on-dark-hero .gnav .nav-contact a:hover { background: var(--white); color: var(--ink); }
+body.on-dark-hero .gnav a::after { background: #f0a35c; }
+@media (max-width: 1023px) {
+  body.on-dark-hero.nav-open .gnav { color: var(--ink); }
+  body.on-dark-hero.nav-open .gnav .nav-contact a { border-color: var(--ink); }
+  body.on-dark-hero.nav-open .gnav .nav-contact a:hover { background: var(--ink); color: var(--white); }
+}
+
 /* ---------- 数字 ---------- */
 .records-grid {
   margin-top: 56px;

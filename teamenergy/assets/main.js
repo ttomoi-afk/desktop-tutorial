@@ -57,6 +57,19 @@
     });
   });
 
+  /* ---------- 暗いヒーローの上ではヘッダーを白抜きにする ---------- */
+  var darkHero = document.querySelector('.hero-dark');
+  if (darkHero) {
+    var ticking = false;
+    function updateHeader() {
+      ticking = false;
+      document.body.classList.toggle('on-dark-hero', window.scrollY < darkHero.offsetHeight - 72);
+    }
+    updateHeader();
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(updateHeader); } }, { passive: true });
+    window.addEventListener('resize', updateHeader);
+  }
+
   /* ---------- データ描画 ---------- */
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
