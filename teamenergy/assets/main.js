@@ -57,18 +57,75 @@
     });
   });
 
-  /* ---------- 暗いヒーローの上ではヘッダーを白抜きにする ---------- */
+  /* ---------- ヒーロー: 読み込み後に文字を立ち上げる ---------- */
+  function ready() { document.body.classList.add('is-ready'); }
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(ready); setTimeout(ready, 1500); } else { setTimeout(ready, 300); }
+
+  /* ---------- スクロール: ヘッダーの白抜き/白帯、ヒーローの視差 ---------- */
   var darkHero = document.querySelector('.hero-dark');
-  if (darkHero) {
-    var ticking = false;
-    function updateHeader() {
-      ticking = false;
-      document.body.classList.toggle('on-dark-hero', window.scrollY < darkHero.offsetHeight - 72);
+  var heroInner = document.querySelector('.hero-inner');
+  var ticking = false;
+  function onScroll() {
+    ticking = false;
+    var y = window.scrollY;
+    document.body.classList.toggle('is-scrolled', y > 40);
+    if (darkHero) {
+      var h = darkHero.offsetHeight;
+      document.body.classList.toggle('on-dark-hero', y < h - 72);
+      if (heroInner && !reduceMotion) {
+        var p = Math.min(1, y / h);
+        heroInner.style.transform = 'translateY(' + (y * 0.28).toFixed(1) + 'px)';
+        heroInner.style.opacity = String(1 - p * 1.4 > 0 ? 1 - p * 1.4 : 0);
+      }
     }
-    updateHeader();
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(updateHeader); } }, { passive: true });
-    window.addEventListener('resize', updateHeader);
   }
+  onScroll();
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+
+  /* ---------- 数字のカウントアップ(見えた時に一度だけ) ---------- */
+  var counters = document.querySelectorAll('[data-count]');
+  if (counters.length) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        cio.unobserve(e.target);
+        var el = e.target, to = parseFloat(el.getAttribute('data-count')), t0 = null, dur = 1500;
+        if (reduceMotion) { el.textContent = String(to); return; }
+        function step(now) {
+          if (!t0) t0 = now;
+          var k = Math.min(1, (now - t0) / dur); k = 1 - Math.pow(1 - k, 3);
+          el.textContent = String(Math.round(to * k));
+          if (k < 1) requestAnimationFrame(step);
+        }
+        el.textContent = '0';
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function (el) { cio.observe(el); });
+  }
+
+  /* ---------- ドットは順に灯る(遅延を1個ずつずらす) ---------- */
+  document.querySelectorAll('.dotgrid-body i').forEach(function (d, i) { d.style.transitionDelay = (0.2 + i * 0.022).toFixed(3) + 's'; });
+  document.querySelectorAll('.pmap-svg .pmap-region').forEach(function (g, i) { g.style.transitionDelay = (0.05 + i * 0.09).toFixed(2) + 's'; g.querySelector('.pmap-dot').style.transitionDelay = (0.5 + i * 0.09).toFixed(2) + 's'; });
+
+  /* ---------- 同じ動画を別の場所でも使う(ファイルは1つ) ---------- */
+  document.querySelectorAll('video[data-clone-of]').forEach(function (v) {
+    var src = document.querySelector(v.getAttribute('data-clone-of'));
+    if (!src) return;
+    src.querySelectorAll('source').forEach(function (so) { v.appendChild(so.cloneNode(true)); });
+    if (src.getAttribute('src')) v.src = src.getAttribute('src');
+    v.load();
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { es[0].isIntersecting ? v.play().catch(function () {}) : v.pause(); }, { threshold: 0 }).observe(v);
+    }
+  });
+  /* ヒーロー動画も画面外では止める */
+  document.querySelectorAll('.hero-video video').forEach(function (v) {
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { es[0].isIntersecting ? v.play().catch(function () {}) : v.pause(); }, { threshold: 0 }).observe(v);
+    }
+  });
 
   /* ---------- データ描画 ---------- */
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }

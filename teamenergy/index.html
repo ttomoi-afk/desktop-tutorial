@@ -41,13 +41,21 @@
 
 <main>
 
-  <!-- ヒーロー: 地中のマグマ。溶岩の亀裂が光り、火の粉が立ちのぼる(Canvas 描画、assets/hero-magma.js) -->
+  <!-- ヒーロー: 地中のマグマ(実写素材)。継ぎ目のないループに加工済み。PC/SPで別ファイル -->
   <section class="hero hero-dark">
-    <canvas class="hero-canvas hero-magma" aria-hidden="true"></canvas>
-    <canvas class="hero-canvas hero-fx" aria-hidden="true"></canvas>
+    <div class="hero-video">
+      <video class="pc" poster="assets/movie/magma-poster.jpg" loop autoplay muted playsinline preload="auto">
+        <source src="assets/movie/magma-pc.webm" type="video/webm">
+        <source src="assets/movie/magma-pc.mp4" type="video/mp4">
+      </video>
+      <video class="sp" poster="assets/movie/magma-poster-sp.jpg" loop autoplay muted playsinline preload="metadata">
+        <source src="assets/movie/magma-sp.webm" type="video/webm">
+        <source src="assets/movie/magma-sp.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-inner">
-      <h1 class="hero-copy">ともにつくり、<br>ともに育てる。</h1>
+      <h1 class="hero-copy"><span class="reveal"><span>ともにつくり、</span></span><span class="reveal"><span>ともに育てる。</span></span></h1>
       <p class="hero-sub">事業への「出資」と「経営」を切り離さない事業投資会社です。<br class="pc">年商数億〜数十億円の企業の事業承継と成長を、グループの資金と経営人材で支えます。</p>
       <p class="hero-caption">
         <span>意思決定から実行までを自社で完結させる。だから、判断が速い</span>
@@ -83,7 +91,7 @@
       <h2 class="sec-title">Group</h2>
       <p class="sec-lead">Team Energy株式会社を中心に、6つの事業会社と傘下各社でグループを構成しています。＋を押すと各社をご覧いただけます</p>
       <!-- 事業会社アコーディオン。＋を押すと傘下各社へのリンクが開く。各社のURLが揃ったら href を差し替える -->
-      <div class="biz-acc" id="biz-acc">
+      <div class="biz-acc stg" id="biz-acc">
         <div class="biz-acc-item" id="biz-gi">
           <div class="biz-acc-header">
             <a href="#" class="biz-acc-text">Team Energy GI<small>バイウィルを中心に、CO₂排出権創出と脱炭素支援</small></a>
@@ -159,7 +167,7 @@
     <div class="sec-inner fadein">
       <h2 class="sec-title">Stories</h2>
       <p class="sec-lead">事例と、経営者たちの言葉</p>
-      <div class="stories-track" id="stories-track"></div>
+      <div class="stories-track stg" id="stories-track"></div>
       <p class="sec-btn"><a class="btn" href="https://teamenergy.co.jp/magazine/">View Stories</a></p>
     </div>
   </section>
@@ -212,7 +220,7 @@
       </article>
 
       <!-- その他メンバー: 小さいカードを横並び -->
-      <div class="member-row">
+      <div class="member-row stg">
         <article class="member-card">
           <div class="member-photo member-photo-none">
             <span class="member-photo-note">写真準備中</span>
@@ -258,21 +266,21 @@
   <section class="records">
     <div class="sec-inner fadein">
       <h2 class="sec-title">Track Records</h2>
-      <div class="records-grid">
+      <div class="records-grid stg">
         <div class="record">
           <h3 class="record-title">経営歴</h3>
           <p class="record-en en">Years of Management</p>
-          <p class="record-num"><span class="en">34</span><small>年</small></p>
+          <p class="record-num"><span class="en" data-count="34">34</span><small>年</small></p>
         </div>
         <div class="record">
           <h3 class="record-title">設立会社数</h3>
           <p class="record-en en">Companies Founded</p>
-          <p class="record-num"><span class="en">58</span><small>社</small></p>
+          <p class="record-num"><span class="en" data-count="58">58</span><small>社</small></p>
         </div>
         <div class="record">
           <h3 class="record-title">企業価値100億円以上の企業</h3>
           <p class="record-en en">Companies Valued over ¥10B</p>
-          <p class="record-num"><span class="en">5</span><small>社</small></p>
+          <p class="record-num"><span class="en" data-count="5">5</span><small>社</small></p>
         </div>
       </div>
       <figure class="dotgrid">
@@ -311,7 +319,7 @@
           </details>
         </figure>
       </div>
-      <ul class="results-list">
+      <ul class="results-list stg">
         <li>
           <p class="results-name">レジル<small>旧 中央電力。株式会社メリックス → 中央電力株式会社 → レジル株式会社</small></p>
           <p class="results-year en">2024</p>
@@ -353,7 +361,7 @@
       <p class="sec-lead">地域金融機関・自治体とのネットワーク。北海道から九州・沖縄まで、全国のパートナーとカーボンニュートラルの実現をともに目指しています</p>
 
       <div class="pmap">
-        <svg class="pmap-svg" viewBox="0 0 560 456" role="img" aria-label="パートナーのいる地域。北海道から九州・沖縄まで全国9地域">
+        <svg class="pmap-svg stg" viewBox="0 0 560 456" role="img" aria-label="パートナーのいる地域。北海道から九州・沖縄まで全国9地域">
           <g class="pmap-region"><rect x="430" y="16" width="124" height="92" rx="6"/><text class="pmap-name" x="442" y="38">北海道</text><circle class="pmap-dot" cx="536" cy="90" r="5"/></g>
           <g class="pmap-region"><rect x="404" y="126" width="104" height="112" rx="6"/><text class="pmap-name" x="416" y="148">東北</text><circle class="pmap-dot" cx="490" cy="220" r="5"/></g>
           <g class="pmap-region"><rect x="404" y="256" width="104" height="84" rx="6"/><text class="pmap-name" x="416" y="278">関東</text><circle class="pmap-dot" cx="490" cy="322" r="5"/></g>
@@ -378,13 +386,15 @@
   <section class="news" id="news">
     <div class="sec-inner fadein">
       <h2 class="sec-title">News</h2>
-      <ul class="news-list" id="news-list"></ul>
+      <ul class="news-list stg" id="news-list"></ul>
       <p class="sec-btn"><a class="btn" href="#">View All</a></p>
     </div>
   </section>
 
   <!-- 仲介会社の皆さまへ。ミダスのCAREERSに相当する黒のセクション -->
-  <section class="join" id="ma">
+  <section class="join has-video" id="ma">
+    <video class="join-video" muted loop playsinline autoplay preload="none" data-clone-of=".hero-video video.pc" aria-hidden="true"></video>
+    <div class="join-shade" aria-hidden="true"></div>
     <div class="sec-inner fadein">
       <h2 class="sec-title">For Intermediaries</h2>
       <p class="join-copy">事業承継の引受先として、<br>仲介会社・金融機関の皆さまからの<br>ご提案をお待ちしています。</p>
@@ -422,6 +432,5 @@
 </footer>
 
 <script src="assets/main.js"></script>
-<script src="assets/hero-magma.js"></script>
 </body>
 </html>

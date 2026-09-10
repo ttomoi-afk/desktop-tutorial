@@ -16,6 +16,7 @@ def data_uri(rel):
     return f"data:{mime};base64,{base64.b64encode(p.read_bytes()).decode()}"
 
 html = (ROOT / page).read_text()
+html = re.sub(r'\s*<source src="[^"]+\.webm" type="video/webm">', '', html)  # バンドルは mp4 だけ(容量)
 css = (ROOT / 'assets/style.css').read_text()
 js = (ROOT / 'assets/main.js').read_text()
 
