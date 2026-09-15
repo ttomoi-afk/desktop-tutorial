@@ -21,6 +21,8 @@
   /* 書体: 明朝系。欧文はガラモン系、日本語はしっぽり明朝。真面目で品のある印象に */
   --en: "Cormorant Garamond", "EB Garamond", Garamond, "Times New Roman", serif;
   --jp: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  /* 数字: ガラモンの数字は上下に揺れて読みにくいので、一般的なサンセリフを使う */
+  --num: "Helvetica Neue", Helvetica, Arial, "Segoe UI", Roboto, sans-serif;
 
   --inner: 1200px;
   --gutter: 24px;
@@ -35,6 +37,7 @@ body {
   font-size: 16px;
   line-height: 1.9;
   font-feature-settings: "palt";
+  font-variant-numeric: lining-nums;
   letter-spacing: .06em;
 }
 img, svg, video, canvas { display: block; max-width: 100%; }
@@ -787,6 +790,20 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .pf-desc { margin-top: 12px; font-size: 14px; line-height: 1.85; color: var(--ink-soft); }
 @media (max-width: 1023px) { .pf-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 767px) { .pf-grid { grid-template-columns: 1fr; border-left: 0; } .pf-card { border-right: 0; padding: 24px 0; } .results-catch { margin-top: 28px; } .chart-cols .ch-label { font-size: 21px; } .chart-cols .ch-tick { font-size: 19px; } .chart-cols .ch-value { font-size: 26px; } .chart-cols .ch-tag { font-size: 17px; } }
+
+/* ---------- 数字の書体(年・金額・目盛・日付など) ---------- */
+.record-num .en, .ceo-timeline dt, .results-year, .news-date, .criteria-list dd .en, .case-tl-year, .chart .ch-tick, .chart .ch-value, .chart-table table, .experience-num .record-num .en, .case-facts dd, .company-info dd, .copyright, .pmap-num { font-family: var(--num); letter-spacing: .02em; }
+.record-num .en { font-size: 64px; font-weight: 300; }
+.ceo-timeline dt { font-size: 15px; font-weight: 500; }
+.news-date { font-size: 15px; font-weight: 500; }
+.chart .ch-tick { font-size: 12px; font-weight: 400; }
+.chart .ch-value { font-size: 16px; font-weight: 500; }
+.criteria-list dd .en { font-size: 30px; font-weight: 300; }
+.copyright { font-family: var(--en); }
+@media (max-width: 767px) {
+  .record-num .en { font-size: 52px; }
+  .chart-cols .ch-tick { font-size: 18px; } .chart-cols .ch-value { font-size: 24px; }
+}
 
 /* =========================================================
    動き。装飾は「現れる」「伸びる」「数える」の3種に絞る。
