@@ -753,6 +753,41 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .dotgrid-body i.is-on { background: var(--magma); }
 @media (max-width: 767px) { .dotgrid-body { grid-template-columns: repeat(15, 1fr); gap: 6px; } }
 
+/* ---------- 代表: 主な実績(相談・人生設計の代わり) ---------- */
+.ceo-results { margin-top: 36px; }
+.ceo-results h4 { font-size: 14px; font-weight: 700; letter-spacing: .1em; }
+.ceo-results dl { margin-top: 12px; border-top: 1px solid var(--line); }
+.ceo-results dl > div { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.ceo-results dt { font-size: 15px; font-weight: 700; letter-spacing: .06em; color: var(--ink); }
+.ceo-results dt.en-name { font-family: var(--en); font-size: 17px; font-weight: 600; letter-spacing: .04em; }
+.ceo-results dd { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+
+/* ---------- Portfolio(実績) ---------- */
+.results-catch { margin-top: 40px; font-size: clamp(22px, 2.4vw, 32px); font-weight: 500; line-height: 1.6; letter-spacing: .08em; }
+.results-txt { margin-top: 16px; font-size: 15px; color: var(--ink-soft); max-width: 720px; }
+.chart-fig-wide { margin-top: 56px; max-width: 880px; }
+.chart .col rect { fill: var(--magma); }
+.chart .col-plan rect { fill: #f0c4b1; }
+.chart .col:hover rect, .chart .col:focus rect { fill: var(--magma-deep); }
+.chart .col-plan:hover rect, .chart .col-plan:focus rect { fill: #e5a78d; }
+.chart .col:focus { outline: none; }
+.chart .ch-tag { font-family: var(--en); font-size: 11px; font-weight: 600; letter-spacing: .14em; fill: var(--magma); }
+.chart-cols .ch-label { font-size: 12px; }
+.pf-legend { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 12px; color: var(--ink-soft); }
+.pf-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.pf-legend .key { display: inline-block; width: 12px; height: 12px; border-radius: 2px; }
+.pf-legend .key-exit { background: var(--magma); }
+.pf-legend .key-plan { background: #f0c4b1; }
+.pf-grid { margin-top: 64px; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.pf-card { padding: 28px 22px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.pf-kind { font-family: var(--en); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+.pf-card.is-exit .pf-kind { color: var(--magma); }
+.pf-name { margin-top: 8px; font-family: var(--en); font-size: 22px; font-weight: 600; letter-spacing: .04em; line-height: 1.2; }
+.pf-call { margin-top: 12px; font-size: 13px; font-weight: 700; line-height: 1.7; color: var(--ink); }
+.pf-desc { margin-top: 12px; font-size: 12.5px; line-height: 1.85; color: var(--ink-soft); }
+@media (max-width: 1023px) { .pf-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 767px) { .pf-grid { grid-template-columns: 1fr; border-left: 0; } .pf-card { border-right: 0; padding: 24px 0; } .results-catch { margin-top: 28px; } .chart-cols .ch-label { font-size: 21px; } .chart-cols .ch-tick { font-size: 19px; } .chart-cols .ch-value { font-size: 26px; } .chart-cols .ch-tag { font-size: 17px; } }
+
 /* =========================================================
    動き。装飾は「現れる」「伸びる」「数える」の3種に絞る。
    prefers-reduced-motion では全て無効(最終状態で表示)
@@ -816,6 +851,16 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
   .fadein.is-visible .chart .pt { opacity: 1; }
   .fadein.is-visible .chart .pt:nth-of-type(1) { transition-delay: .5s; } .fadein.is-visible .chart .pt:nth-of-type(2) { transition-delay: 1.1s; } .fadein.is-visible .chart .pt:nth-of-type(3) { transition-delay: 1.9s; }
   .fadein.is-visible .chart .ch-value { opacity: 1; transition-delay: 2s; }
+
+  .chart .col rect { transform-box: fill-box; transform-origin: center bottom; transform: scaleY(0); transition: transform 1.1s cubic-bezier(.2,.7,.15,1); }
+  .chart .col .ch-value, .chart .col .ch-tag { opacity: 0; transition: opacity .6s ease; }
+  .fadein.is-visible .chart .col rect { transform: none; }
+  .fadein.is-visible .chart .col .ch-value, .fadein.is-visible .chart .col .ch-tag { opacity: 1; }
+  .fadein.is-visible .chart .col:nth-of-type(1) rect { transition-delay: .15s; } .fadein.is-visible .chart .col:nth-of-type(1) .ch-value, .fadein.is-visible .chart .col:nth-of-type(1) .ch-tag { transition-delay: .9s; }
+  .fadein.is-visible .chart .col:nth-of-type(2) rect { transition-delay: .3s; } .fadein.is-visible .chart .col:nth-of-type(2) .ch-value, .fadein.is-visible .chart .col:nth-of-type(2) .ch-tag { transition-delay: 1.05s; }
+  .fadein.is-visible .chart .col:nth-of-type(3) rect { transition-delay: .45s; } .fadein.is-visible .chart .col:nth-of-type(3) .ch-value, .fadein.is-visible .chart .col:nth-of-type(3) .ch-tag { transition-delay: 1.2s; }
+  .fadein.is-visible .chart .col:nth-of-type(4) rect { transition-delay: .6s; } .fadein.is-visible .chart .col:nth-of-type(4) .ch-value, .fadein.is-visible .chart .col:nth-of-type(4) .ch-tag { transition-delay: 1.35s; }
+  .fadein.is-visible .chart .col:nth-of-type(5) rect { transition-delay: .75s; } .fadein.is-visible .chart .col:nth-of-type(5) .ch-value, .fadein.is-visible .chart .col:nth-of-type(5) .ch-tag { transition-delay: 1.5s; }
 
   /* 地図: 地域が順に現れ、点が灯る */
   .pmap-dot { transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform .5s cubic-bezier(.2,.7,.15,1) .6s; }
