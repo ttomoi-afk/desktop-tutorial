@@ -99,7 +99,8 @@
           if (k < 1) requestAnimationFrame(step);
         }
         el.textContent = '0';
-        requestAnimationFrame(step);
+        var delay = parseInt(el.getAttribute('data-count-delay') || '0', 10);
+        if (delay) setTimeout(function () { requestAnimationFrame(step); }, delay); else requestAnimationFrame(step);
       });
     }, { threshold: 0.6 });
     counters.forEach(function (el) { cio.observe(el); });

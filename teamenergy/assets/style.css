@@ -243,6 +243,31 @@ section { padding: 88px 0; }
 @media (max-width: 767px) {
   .hero-dark .hero-inner { justify-content: center; padding-bottom: 10vh; background: linear-gradient(to top, rgba(7,4,3,.85) 0%, rgba(7,4,3,.45) 40%, rgba(7,4,3,.2) 70%, rgba(7,4,3,0) 100%); }
 }
+/* ヒーロー下部: ポートフォリオの数字の抜粋 */
+.hero-stats { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; max-width: var(--inner); margin: 0 auto; padding: 0 var(--gutter); }
+.hero-stats-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 28px; border-top: 1px solid rgba(255,255,255,.22); padding: 26px 0 40px; }
+.hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,.16); padding-left: 28px; }
+.hero-stat-num { display: flex; align-items: baseline; gap: 4px; font-family: var(--num); font-size: 44px; font-weight: 300; line-height: 1; letter-spacing: .02em; color: var(--white); }
+.hero-stat-num small { font-family: var(--jp); font-size: 14px; font-weight: 400; letter-spacing: .06em; color: rgba(255,255,255,.85); }
+.hero-stat-title { margin-top: 10px; font-size: 13px; letter-spacing: .08em; line-height: 1.6; color: rgba(255,255,255,.72); }
+.hero.has-stats .hero-scroll { display: none; }
+.hero-dark.has-stats .hero-inner { padding-top: 110px; padding-bottom: 150px; }
+.hero-dark.has-stats .hero-caption { margin-top: 20px; }
+.hero-dark.has-stats .hero-btn { margin-top: 24px; }
+@media (max-width: 1023px) {
+  .hero-stat-num { font-size: 36px; }
+  .hero-stats-inner { gap: 0 20px; }
+  .hero-stat + .hero-stat { padding-left: 20px; }
+}
+@media (max-width: 767px) {
+  .hero.has-stats { min-height: 720px; }
+  .hero-stats-inner { grid-template-columns: 1fr 1fr; gap: 18px 20px; padding: 20px 0 28px; }
+  .hero-stat + .hero-stat { border-left: 0; padding-left: 0; }
+  .hero-stat-num { font-size: 32px; }
+  .hero-stat-title { margin-top: 6px; font-size: 12px; }
+  .hero-dark.has-stats .hero-inner { padding-top: 90px; padding-bottom: 210px; }
+}
+
 /* 暗いヒーローの上ではヘッダーを白抜きに。スクロールで白地に入ると元に戻る(main.js が body.on-dark-hero を付け外し) */
 .header, .header-logo a, .nav-toggle i, .nav-toggle i::before, .nav-toggle i::after, .gnav .nav-contact a { transition: color .35s, background-color .35s, border-color .35s; }
 body.on-dark-hero .header { mix-blend-mode: normal; color: var(--white); }
@@ -827,9 +852,9 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
   .reveal > span { display: block; transform: translateY(110%); transition: transform 1.2s cubic-bezier(.2,.7,.15,1); }
   .reveal:nth-child(2) > span { transition-delay: .14s; }
   body.is-ready .reveal > span { transform: none; }
-  .hero-sub, .hero-caption, .hero-btn, .hero-scroll { opacity: 0; transform: translateY(14px); transition: opacity 1s ease, transform 1s ease; }
-  .hero-sub { transition-delay: .55s; } .hero-caption { transition-delay: .75s; } .hero-btn { transition-delay: .9s; } .hero-scroll { transition-delay: 1.4s; }
-  body.is-ready .hero-sub, body.is-ready .hero-caption, body.is-ready .hero-btn, body.is-ready .hero-scroll { opacity: 1; transform: none; }
+  .hero-sub, .hero-caption, .hero-btn, .hero-scroll, .hero-stats { opacity: 0; transform: translateY(14px); transition: opacity 1s ease, transform 1s ease; }
+  .hero-sub { transition-delay: .55s; } .hero-caption { transition-delay: .75s; } .hero-btn { transition-delay: .9s; } .hero-scroll { transition-delay: 1.4s; } .hero-stats { transition-delay: 1.2s; }
+  body.is-ready .hero-sub, body.is-ready .hero-caption, body.is-ready .hero-btn, body.is-ready .hero-scroll, body.is-ready .hero-stats { opacity: 1; transform: none; }
   .hero-inner, .hero-scroll { will-change: transform, opacity; }
   .hero-scroll::after { animation: scrollhint 2.4s ease-in-out infinite; transform-origin: top; }
   @keyframes scrollhint { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
