@@ -812,12 +812,10 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .pf-name a { border-bottom: 1px solid var(--line); transition: color .3s, border-color .3s; }
 .pf-name a:hover { color: var(--magma); border-color: var(--magma); }
 /* 金額を出さないグラフ: 目盛りなし、100億円の基準線だけ */
-.chart .ch-ref { stroke: var(--magma); stroke-width: 1; stroke-dasharray: 4 4; opacity: .7; }
-.chart .ch-ref-label { font-size: 12px; fill: var(--magma); letter-spacing: .06em; }
 .chart-soft .ch-label { font-size: 14px; }
 .results .records-grid { margin-top: 36px; }
 @media (max-width: 1023px) { .pf-grid-4 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 767px) { .member-row.cols-2 { grid-template-columns: 1fr 1fr; } .pf-grid-4 { grid-template-columns: 1fr; } .chart-soft .ch-label { font-size: 20px; } .chart-soft .ch-ref-label { font-size: 17px; } }
+@media (max-width: 767px) { .member-row.cols-2 { grid-template-columns: 1fr 1fr; } .pf-grid-4 { grid-template-columns: 1fr; } .chart-soft .ch-label { font-size: 20px; } }
 
 /* =========================================================
    動き。装飾は「現れる」「伸びる」「数える」の3種に絞る。
