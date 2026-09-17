@@ -495,6 +495,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 /* ---------- フッター ---------- */
 .footer { padding: 88px 0 32px; }
 .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: start; }
+.footer-grid-single { grid-template-columns: 1fr; max-width: 760px; }
 .footer h2 { font-family: var(--en); font-weight: 500; font-size: 36px; letter-spacing: .12em; }
 .company-info { display: grid; grid-template-columns: 96px 1fr; border-top: 1px solid var(--line); }
 .company-info dt, .company-info dd { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
