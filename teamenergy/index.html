@@ -54,12 +54,7 @@
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-inner">
       <h1 class="hero-copy"><span class="reveal"><span>次の大企業を、</span></span><span class="reveal"><span>つくり続ける。</span></span></h1>
-      <p class="hero-sub">出資と経営を切り離さない事業投資会社。<br class="pc">産業の主役になる会社を、生み続けることを目標に、資金と経営人材で事業の成長を加速します。</p>
-      <p class="hero-caption">
-        <span>産業の主役になる会社を、生み続けることを目標に</span>
-        <span>上場・売却によるEXITを2社実現</span>
-        <span>意思決定から実行までを自社で完結させる。だから、判断が速い</span>
-      </p>
+      <p class="hero-sub">出資と経営を切り離さない、事業投資会社。</p>
       <p class="hero-btn"><a class="btn" href="#concept">Concept</a></p>
     </div>
     <!-- ポートフォリオの数字の抜粋。数値は Portfolio セクションと揃える -->
@@ -95,9 +90,8 @@
         </div>
         <div class="about-body">
           <h3 class="about-catch">産業の主役になる会社を、<br>つくる</h3>
-          <p>Team Energyは、出資と経営を切り離さない事業投資会社です。投資先の経営に自ら入り、意思決定から実行までを自社で完結させます。だから、判断が速い。</p>
-          <p>目指すのは、100億円企業を10社輩出すること。これまでに4社が企業価値100億円を超え、うち2社は上場・売却によるEXITに至りました。</p>
-          <p>地熱発電や脱炭素などのエネルギー領域を軸に、事業の立ち上げから成長、事業承継まで、グループの資金と経営人材で支えます。</p>
+          <p>投資先の経営に自ら入り、意思決定から実行までを自社で完結させる。だから、判断が速い。</p>
+          <p>目標は、100億円企業を10社。エネルギー領域を軸に、立ち上げから承継まで、資金と経営人材で支えます。</p>
         </div>
       </div>
     </div>
@@ -107,7 +101,7 @@
   <section class="group" id="group">
     <div class="sec-inner fadein">
       <h2 class="sec-title">Group</h2>
-      <p class="sec-lead">Team Energy株式会社を中心に、6つの事業領域と18社の事業会社でグループを構成しています。＋を押すと各社をご覧いただけます</p>
+      <p class="sec-lead">6つの事業領域、18社の事業会社。</p>
       <!-- 事業会社アコーディオン。＋を押すと傘下各社へのリンクが開く。各社のURLが揃ったら href を差し替える -->
       <div class="biz-acc stg" id="biz-acc">
         <div class="biz-acc-item" id="biz-gi">
@@ -187,25 +181,16 @@
     <div class="sec-inner fadein">
       <h2 class="sec-title">Portfolio</h2>
       <p class="sec-lead">ポートフォリオと実績</p>
-      <p class="results-catch">100億円企業を10社輩出することを目標に。</p>
-      <p class="results-txt">これまでに4社が企業価値100億円を超え、うち2社は上場・売却によるEXITを実現しました。</p>
-      <div class="records-grid stg">
-        <div class="record">
-          <p class="record-title">企業価値100億円超の企業</p>
-          <p class="record-en en">Companies Valued over ¥10B</p>
-          <p class="record-num"><span class="en" data-count="4">4</span><small>社</small></p>
+      <!-- 左: 目標と数字、右: 企業価値のグラフ。縦に積まず横に並べて余白を減らす -->
+      <div class="results-top">
+        <div class="results-summary">
+          <p class="results-catch">100億円企業を、<br>10社輩出することを目標に。</p>
+          <dl class="records-list stg">
+            <div class="records-row"><dt><span class="en" data-count="4">4</span><small>社</small></dt><dd>企業価値100億円超の企業</dd></div>
+            <div class="records-row"><dt><span class="en" data-count="2">2</span><small>社</small></dt><dd>上場・売却によるEXIT</dd></div>
+            <div class="records-row"><dt><span class="en" data-count="18">18</span><small>社</small></dt><dd>グループの事業会社</dd></div>
+          </dl>
         </div>
-        <div class="record">
-          <p class="record-title">上場・売却によるEXIT</p>
-          <p class="record-en en">Exits (IPO / Buyout)</p>
-          <p class="record-num"><span class="en" data-count="2">2</span><small>社</small></p>
-        </div>
-        <div class="record">
-          <p class="record-title">グループの事業会社</p>
-          <p class="record-en en">Operating Companies</p>
-          <p class="record-num"><span class="en" data-count="18">18</span><small>社</small></p>
-        </div>
-      </div>
       <figure class="chart-fig chart-fig-wide">
         <figcaption><strong>各社の企業価値の規模</strong></figcaption>
         <svg class="chart chart-cols chart-soft" viewBox="0 0 640 280" role="img" aria-labelledby="pft" aria-describedby="pfd"><title id="pft">ポートフォリオ各社の企業価値の規模</title><desc id="pfd">レジルは約520億円。他の3社は企業価値100億円超で、具体的な金額は非表示</desc>
@@ -224,33 +209,34 @@
         </svg>
         <p class="pf-legend"><span><i class="key key-exit"></i>EXIT済（2社）</span><span><i class="key key-plan"></i>未上場（2社）</span></p>
         <details class="chart-table"><summary>表で見る</summary>
-          <table><thead><tr><th>会社</th><th>状況</th><th>備考</th></tr></thead><tbody><tr><td>BYWILL</td><td>未上場</td><td>シリーズA・Bラウンドで累計約30億円の資金調達を実施</td></tr><tr><td>GeoDreams</td><td>未上場</td><td>地熱革命に向けてクローズドループ事業を展開</td></tr><tr><td>ふるさと熱電</td><td>EXIT済</td><td>ベースロードキャピタルへ売却。現在はベースロードジャパンが運営</td></tr><tr><td>レジル</td><td>EXIT済</td><td>2024年4月に東証グロース市場へIPO。その後、ベインキャピタルによるTOB（約520億円）を実施</td></tr></tbody></table>
+          <table><thead><tr><th>会社</th><th>状況</th><th>備考</th></tr></thead><tbody><tr><td>BYWILL</td><td>未上場</td><td>累計約30億円を調達</td></tr><tr><td>GeoDreams</td><td>未上場</td><td>クローズドループ地熱の開発</td></tr><tr><td>ふるさと熱電</td><td>EXIT済</td><td>ベースロードキャピタルへ売却</td></tr><tr><td>レジル</td><td>EXIT済</td><td>2024年 東証グロース上場。その後TOB（約520億円）</td></tr></tbody></table>
         </details>
       </figure>
+      </div>
       <div class="pf-grid pf-grid-4 stg">
         <article class="pf-card is-plan">
           <p class="pf-kind">未上場</p>
           <h3 class="pf-name"><a href="https://www.bywill.co.jp/" target="_blank" rel="noopener">BY WILL</a></h3>
-          <p class="pf-call">シリーズA・Bラウンドで累計約30億円の資金調達を実施</p>
-          <p class="pf-desc">第一地銀45行・基礎自治体60以上と連携し、地域での脱炭素・環境貢献につながる環境クレジット創出事業を展開。企業と地域双方の立場でカーボンニュートラル実現を支援。</p>
+          <p class="pf-call">累計約30億円を調達</p>
+          <p class="pf-desc">地銀45行・自治体60超と連携する環境クレジット創出事業</p>
         </article>
         <article class="pf-card is-plan">
           <p class="pf-kind">未上場</p>
           <h3 class="pf-name">GeoDreams</h3>
-          <p class="pf-call">地熱革命に向けてクローズドループ事業を展開</p>
-          <p class="pf-desc">最新の地下資源開発技術を活用し、次世代型地熱発電「クローズドループ」を推進。掘削・探査・メンテナンスを包括的に担う事業を展開。日本に「地熱革命」を起こすことが使命。</p>
+          <p class="pf-call">クローズドループ地熱の開発</p>
+          <p class="pf-desc">次世代型地熱発電の掘削・探査・運営を一貫して担う</p>
         </article>
         <article class="pf-card is-exit">
           <p class="pf-kind">EXIT</p>
           <h3 class="pf-name">ふるさと熱電</h3>
-          <p class="pf-call">ベースロードキャピタルへ売却。現在はベースロードジャパンが運営</p>
-          <p class="pf-desc">地熱発電所と地域とが共生する仕組みを重視した地熱発電所の運営事業。地域資源を活かし、持続可能なエネルギー供給と地域経済の活性化を同時に実現。日本初のSPCモデルでの地熱発電所の開設も。</p>
+          <p class="pf-call">ベースロードキャピタルへ売却</p>
+          <p class="pf-desc">地域と共生する地熱発電所の運営。日本初のSPCモデル</p>
         </article>
         <article class="pf-card is-exit">
           <p class="pf-kind">EXIT</p>
           <h3 class="pf-name"><a href="https://rezil.co.jp/" target="_blank" rel="noopener">REZIL</a></h3>
-          <p class="pf-call">2024年4月に東証グロース市場へIPO。その後、ベインキャピタルによるTOB（約520億円）を実施</p>
-          <p class="pf-desc">国内で初めて仕組みを確立したマンション一括受電のパイオニア企業。電力コスト削減と快適な住環境を提供し、集合住宅の新しいインフラモデルを牽引。エネルギーDX事業等、時代にマッチした新しい価値を創造中。</p>
+          <p class="pf-call">2024年 東証グロース上場。その後TOB（約520億円）</p>
+          <p class="pf-desc">マンション一括受電のパイオニア</p>
         </article>
       </div>
     </div>
@@ -348,7 +334,7 @@
     <div class="sec-inner fadein">
       <h2 class="sec-title">M&amp;A</h2>
       <p class="join-copy">Team Energy Groupに参加する企業を、<br>お待ちしています。</p>
-      <p class="join-txt">事業承継や資本提携のご提案は、仲介会社・金融機関・オーナー経営者の皆さまからお受けしています。グループへの参加や承継のご相談は、M&amp;Aページの窓口からお寄せください。</p>
+      <p class="join-txt">事業承継・資本提携のご相談は、M&amp;Aページの窓口へ。</p>
       <p class="sec-btn"><a class="btn" href="sourcing.html">M&amp;A</a></p>
     </div>
   </section>
