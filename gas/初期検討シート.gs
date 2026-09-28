@@ -31,7 +31,8 @@ var ITEMS = [
   ['12',  '特定人材に依存していないか', '依存している人材はいないか、いる場合は代替可能か', false]
 ];
 
-var HDR = 12;              // 見出し行
+var HDR = 22;              // 評価表の見出し行
+var SALES_MIN = 300, SALES_MAX = 3000;   // 売上目安（百万円）
 var TOP = HDR + 1;         // 明細の先頭行
 var BOT = HDR + ITEMS.length;
 
@@ -48,6 +49,7 @@ function createScreeningSheet() {
   var sh = ss.insertSheet(name, ss.getNumSheets());
 
   buildHead_(sh);
+  buildSummary_(sh);
   buildVerdict_(sh);
   buildTable_(sh);
   styleSheet_(sh);
@@ -73,9 +75,9 @@ function buildHead_(sh) {
   sh.getRange('A2').setValue('案件名');
   sh.getRange('A3').setValue('仲介会社');
   sh.getRange('A4').setValue('出所（案件概要書）');
+  ['B2:D2', 'B3:D3', 'B4:D4'].forEach(function (a) { sh.getRange(a).merge(); });
   sh.getRange('E2').setValue('作成日');
   sh.getRange('F2').setValue(new Date()).setNumberFormat('yyyy/mm/dd');
-  ['B2:D2', 'B3:D3', 'B4:D4'].forEach(function (a) { sh.getRange(a).merge(); });
 
   sh.getRange('A6').setValue('基本情報（○△×は付けない。事実を記録する）')
     .setFontWeight('bold').setBackground(BLUE);
@@ -90,6 +92,55 @@ function buildHead_(sh) {
     sh.getRange(r, 1).setValue(rows[i][0]).setFontWeight('bold');
     sh.getRange(r, 2, 1, 6).merge().setNote(rows[i][1]);
   }
+}
+
+/**
+ * 数値サマリー（管理表転記用）。譲渡価格・EBITDA・EV/EBITDAマルチプル・売上 の4項目。
+ * マルチプルは入力値から再計算されるので、数字を直せば追随する。
+ */
+function buildSummary_(sh) {
+  sh.getRange('A11').setValue('数値サマリー（管理表転記用・単位：百万円）')
+    .setFontWeight('bold').setBackground(BLUE);
+  sh.getRange('A11:G11').merge();
+
+  var mult =
+    '=IF(OR($B$12="",$B$13="",$B$15="",$B$16="",$B$13<=0),"",' +
+    '($B$12-($B$15-$B$16))/$B$13)';
+  var book =
+    '=IF(OR($B$12="",$B$13="",$B$15="",$B$13<=0),"",($B$12-$B$15)/$B$13)';
+  var lo = SALES_MIN.toLocaleString('en-US');
+  var hi = SALES_MAX.toLocaleString('en-US');
+  var band = '売上目安 ' + lo + '〜' + hi;
+  var salesChk =
+    '=IF($B$14="","",IF($B$14<' + SALES_MIN + ',"' + band +
+    ' の下限未満（投資条件友井 No.20 で対象外）",IF($B$14>' + SALES_MAX + ',"' + band +
+    ' の上限超（投資条件友井 No.20 で対象外）","' + band + ' の範囲内")))';
+
+  // [ラベル, 入力かどうか, 数式, 右側の注記]
+  var rows = [
+    ['譲渡価格',               true,  null,   '希望株式価値。条件付き（進行期の純資産積み上げ分 等）はここに明記'],
+    ['実態EBITDA（直近期）',   true,  null,   '役員報酬・私的経費等の調整後。実態収益＋減価償却費'],
+    ['売上（直近期）',         true,  null,   salesChk],
+    ['簿価NetCash',            true,  null,   '現預金 − 有利子負債。マイナスなら NetDebt'],
+    ['平均必要運転資金',       true,  null,   '3期分の（売上債権＋棚卸（仕掛工事含む）−仕入債務）の平均'],
+    ['EV/EBITDAマルチプル',    false, mult,   'TE定義：EV＝譲渡価格−実質NetCash（＝簿価NetCash−平均必要運転資金）'],
+    ['参考：簿価NetDebtベース', false, book,  '運転資金を調整しない倍率。仲介提示値との突き合わせ用']
+  ];
+  for (var i = 0; i < rows.length; i++) {
+    var r = 12 + i;
+    sh.getRange(r, 1).setValue(rows[i][0]).setFontWeight('bold');
+    var v = sh.getRange(r, 2);
+    if (rows[i][2]) {
+      v.setFormula(rows[i][2]).setNumberFormat('0.0"倍"').setFontWeight('bold');
+    } else {
+      v.setNumberFormat('#,##0.0').setBackground('#fffde7');   // 入力セル
+    }
+    var note = sh.getRange(r, 3, 1, 5).merge();
+    if (String(rows[i][3]).charAt(0) === '=') note.setFormula(rows[i][3]);
+    else note.setValue(rows[i][3]).setFontColor('#7f7f7f').setFontSize(9);
+  }
+  sh.getRange('A12:G18').setBorder(true, true, true, true, true, true);
+  sh.getRange('B12:B18').setHorizontalAlignment('right');
 }
 
 /** ◯2.0 / △〜◯1.5 / △1.0 / ×〜△0.5 / ×0。－ は加算も分母もしない。 */
@@ -125,12 +176,12 @@ function buildVerdict_(sh) {
     ',IF(jd=0,"",TEXT(sc/(jd*2),"0%")&"　（得点 "&TEXT(sc,"0.0")&"／判定済 "&jd&"/' +
     ITEMS.length + ' 件）"))';
 
-  sh.getRange('A10').setValue('総合判定').setFontWeight('bold');
-  sh.getRange('B10:D10').merge().setFormula(verdict)
+  sh.getRange('A20').setValue('総合判定').setFontWeight('bold');
+  sh.getRange('B20:D20').merge().setFormula(verdict)
     .setFontWeight('bold').setFontSize(11);
-  sh.getRange('E10').setValue('達成率').setFontWeight('bold');
-  sh.getRange('F10:G10').merge().setFormula(rate);
-  sh.getRange('A10:G10').setBackground('#f3f3f3');
+  sh.getRange('E20').setValue('達成率').setFontWeight('bold');
+  sh.getRange('F20:G20').merge().setFormula(rate);
+  sh.getRange('A20:G20').setBackground('#f3f3f3');
 }
 
 function buildTable_(sh) {
@@ -158,7 +209,7 @@ function buildTable_(sh) {
 }
 
 function styleSheet_(sh) {
-  var w = [58, 200, 330, 54, 86, 360, 300];
+  var w = [160, 130, 300, 54, 86, 330, 300];
   for (var i = 0; i < w.length; i++) sh.setColumnWidth(i + 1, w[i]);
   sh.setFrozenRows(HDR);
 

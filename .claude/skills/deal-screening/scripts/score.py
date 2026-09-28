@@ -40,6 +40,29 @@ def has(d, *keys):
     return all(k in d and d[k] is not None for k in keys)
 
 
+def ev_calc(d):
+    """(実質NetCash, EV, 承継コスト, ①EV/EBITDA, ②(EV+承継コスト)/EBITDA) か None。
+
+    投資条件タブの定義そのまま:
+      実質NetCash = 簿価NetCash − 平均必要運転資金  （マイナスなら実質NetDebt）
+      EV          = 譲渡価格（株式価値） − 実質NetCash
+    """
+    if not (has(d, "equity_price", "ebitda", "book_net_cash", "avg_wc")
+            and d["ebitda"] > 0):
+        return None
+    real_nc = d["book_net_cash"] - d["avg_wc"]
+    ev = d["equity_price"] - real_nc
+    cost = d.get("deal_cost", 0)
+    return real_nc, ev, cost, ev / d["ebitda"], (ev + cost) / d["ebitda"]
+
+
+def book_multiple(d):
+    """運転資金を調整しない簿価NetDebtベースの倍率。仲介側の提示値と突き合わせる用。"""
+    if not (has(d, "equity_price", "ebitda", "book_net_cash") and d["ebitda"] > 0):
+        return None
+    return (d["equity_price"] - d["book_net_cash"]) / d["ebitda"]
+
+
 def judge(d):
     """定量6項目を判定。戻りは {no: (評価, 根拠1行)}。"""
     out = {}
@@ -118,13 +141,9 @@ def judge(d):
         out["3"] = (UNKNOWN, "3期分の粗利率が揃わない")
 
     # --- 5 価格は割高ではないか ----------------------------------------
-    if has(d, "equity_price", "ebitda") and d["ebitda"] > 0 \
-            and has(d, "book_net_cash", "avg_wc"):
-        real_nc = d["book_net_cash"] - d["avg_wc"]
-        ev = d["equity_price"] - real_nc
-        cost = d.get("deal_cost", 0)
-        m1 = ev / d["ebitda"]
-        m2 = (ev + cost) / d["ebitda"]
+    ev_parts = ev_calc(d)
+    if ev_parts:
+        real_nc, ev, cost, m1, m2 = ev_parts
         g = band(m2, [5.0, 6.0, 7.0, 8.0])
         # 実質NetCash はマイナスなら NetDebt。符号を文言側に吸わせて
         # 「−実質NetDebt-407」のような二重否定を出さない。
@@ -158,6 +177,83 @@ def judge(d):
         out["11"] = (UNKNOWN, "上位取引先の集中度の記載なし")
 
     return out
+
+
+SALES_MIN, SALES_MAX = 300, 3000     # 売上目安（百万円）。投資条件友井タブ No.20／仲介向け資料P10
+
+
+def summary(d):
+    """譲渡価格・EBITDA・EV/EBITDAマルチプル・売上 の4項目を組み立てる。
+
+    戻りは (表示行のリスト, 貼り付け用の4値) 。値が取れないものは '－'。
+    """
+    na = "－"
+    rows, tsv = [], []
+
+    # 譲渡価格（株式価値）
+    if has(d, "equity_price"):
+        note = d.get("price_note", "")
+        rows.append(("譲渡価格", f"{d['equity_price']:,.1f}", note))
+        tsv.append(f"{d['equity_price']:,.1f}")
+    else:
+        rows.append(("譲渡価格", na, "希望価格の記載なし"))
+        tsv.append(na)
+
+    # 実態EBITDA（直近期）
+    if has(d, "ebitda"):
+        rows.append(("実態EBITDA", f"{d['ebitda']:,.1f}", ""))
+        tsv.append(f"{d['ebitda']:,.1f}")
+    else:
+        rows.append(("実態EBITDA", na, "実態EBITDAの記載なし"))
+        tsv.append(na)
+
+    # EV/EBITDAマルチプル
+    ev_parts = ev_calc(d)
+    if ev_parts:
+        real_nc, ev, cost, m1, m2 = ev_parts
+        nc = (f"実質NetCash {real_nc:,.1f}" if real_nc >= 0
+              else f"実質NetDebt {-real_nc:,.1f}")
+        rows.append(("EV/EBITDAマルチプル", f"{m1:.1f}倍",
+                     f"TE定義：EV {ev:,.1f}（{nc}）÷ EBITDA"))
+        tsv.append(f"{m1:.1f}")
+        if cost:
+            rows.append(("", f"{m2:.1f}倍", f"②承継コスト{cost:,.1f}加味後（評価5の判定基準）"))
+    else:
+        if has(d, "ebitda") and d["ebitda"] <= 0:
+            why = "実態EBITDAが0以下のため倍率を算出できない"
+        else:
+            why = ("譲渡価格／実態EBITDA／簿価NetCash／平均必要運転資金のうち "
+                   + "／".join({"equity_price": "譲渡価格", "ebitda": "実態EBITDA",
+                                "book_net_cash": "簿価NetCash",
+                                "avg_wc": "平均必要運転資金"}[k]
+                               for k in ("equity_price", "ebitda",
+                                         "book_net_cash", "avg_wc")
+                               if not has(d, k)) + " が不足")
+        rows.append(("EV/EBITDAマルチプル", na, why))
+        tsv.append(na)
+    bm = book_multiple(d)
+    if bm is not None:
+        rows.append(("", f"{bm:.1f}倍", "参考：簿価NetDebtベース（運転資金の調整なし）"))
+
+    # 売上（直近期）。売上目安 300〜3,000 の範囲チェックを添える
+    sales = d.get("sales")
+    if sales is None and d.get("sales_3y"):
+        s3 = [v for v in d["sales_3y"] if v is not None]
+        sales = s3[-1] if s3 else None
+    if sales is not None:
+        if sales < SALES_MIN:
+            j = f"売上目安 {SALES_MIN:,}〜{SALES_MAX:,} の下限未満（投資条件友井 No.20 で対象外）"
+        elif sales > SALES_MAX:
+            j = f"売上目安 {SALES_MIN:,}〜{SALES_MAX:,} の上限超（投資条件友井 No.20 で対象外）"
+        else:
+            j = f"売上目安 {SALES_MIN:,}〜{SALES_MAX:,} の範囲内"
+        rows.append(("売上", f"{sales:,.1f}", j))
+        tsv.append(f"{sales:,.1f}")
+    else:
+        rows.append(("売上", na, "売上高の記載なし"))
+        tsv.append(na)
+
+    return rows, tsv
 
 
 LABELS = {
@@ -220,8 +316,18 @@ def main():
         else:
             grades[no], reasons[no] = UNKNOWN, "（定性項目・未入力）"
 
-    w = max(len(LABELS[n]) for n in ORDER)
     print(f"■ {d.get('name', '(案件名未設定)')}   単位：百万円")
+    print()
+    print("■ 数値サマリー（管理表転記用）")
+    srows, stsv = summary(d)
+    lw = max(len(r[0]) for r in srows)
+    for label, val, note in srows:
+        print(f"  {label:<{lw}}  {val:>10}   {note}")
+    print("  貼り付け用 → 譲渡価格 / EBITDA / EV\u002fEBITDAマルチプル / 売上")
+    print("  " + "\t".join(stsv))
+    print()
+
+    w = max(len(LABELS[n]) for n in ORDER)
     print("-" * 100)
     for no in ORDER:
         mark = "★" if no in MUST else "　"
@@ -239,6 +345,7 @@ def main():
     if "--json" in sys.argv:
         print("\n" + json.dumps(
             {"name": d.get("name"), "verdict": verdict, "rate": round(rate, 3),
+             "summary": dict(zip(["譲渡価格", "EBITDA", "EV/EBITDAマルチプル", "売上"], stsv)),
              "rows": [{"no": no, "軸": LABELS[no], "評価": grades[no],
                        "根拠": reasons[no]} for no in ORDER]},
             ensure_ascii=False, indent=2))
