@@ -332,9 +332,14 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
 .about-catch { font-size: 28px; font-weight: 500; line-height: 1.6; letter-spacing: .08em; margin-bottom: 18px; }
 .about-body p + p { margin-top: 1.4em; }
+.about-manifesto { font-size: 20px; font-weight: 500; line-height: 2; letter-spacing: .08em; }
+.about-goal { font-size: 24px; font-weight: 500; line-height: 1.7; letter-spacing: .08em; color: var(--magma); }
 @media (max-width: 767px) {
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .about-catch { font-size: 22px; }
+  .about-manifesto { font-size: 17px; line-height: 1.9; }
+  .about-manifesto br { display: none; }
+  .about-goal { font-size: 20px; }
 }
 
 /* ---------- Focus ---------- */
@@ -821,7 +826,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .pf-card { padding: 22px 20px 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .pf-kind { font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
 .pf-card.is-exit .pf-kind { color: var(--magma); }
-.pf-name { margin-top: 8px; font-family: var(--en); font-size: 22px; font-weight: 600; letter-spacing: .04em; line-height: 1.2; }
+.pf-name { margin-top: 8px; font-family: var(--en), var(--jp); font-size: 22px; font-weight: 600; letter-spacing: .04em; line-height: 1.2; }
 .pf-call { margin-top: 10px; font-size: 15px; font-weight: 700; line-height: 1.7; color: var(--ink); }
 .pf-desc { margin-top: 6px; font-size: 14px; line-height: 1.8; color: var(--ink-soft); }
 @media (max-width: 1023px) { .pf-grid { grid-template-columns: repeat(3, 1fr); } }
