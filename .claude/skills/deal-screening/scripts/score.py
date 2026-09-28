@@ -126,10 +126,15 @@ def judge(d):
         m1 = ev / d["ebitda"]
         m2 = (ev + cost) / d["ebitda"]
         g = band(m2, [5.0, 6.0, 7.0, 8.0])
-        nc_label = "実質NetCash" if real_nc >= 0 else "実質NetDebt"
+        # 実質NetCash はマイナスなら NetDebt。符号を文言側に吸わせて
+        # 「−実質NetDebt-407」のような二重否定を出さない。
+        if real_nc >= 0:
+            nc = f"−実質NetCash{real_nc:,.0f}"
+        else:
+            nc = f"＋実質NetDebt{-real_nc:,.0f}"
         out["5"] = (g, f"①EV/EBITDA {m1:.1f}倍／②(EV＋承継コスト)/EBITDA {m2:.1f}倍"
-                       f"（EV {ev:,.0f}＝株式価値{d['equity_price']:,.0f}−{nc_label}"
-                       f"{real_nc:,.0f}、承継コスト{cost:,.0f}）")
+                       f"（EV {ev:,.0f}＝株式価値{d['equity_price']:,.0f}{nc}"
+                       f"、承継コスト{cost:,.0f}）")
     else:
         missing = [k for k in ("equity_price", "ebitda", "book_net_cash", "avg_wc")
                    if not has(d, k)]
