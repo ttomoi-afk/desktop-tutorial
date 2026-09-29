@@ -109,7 +109,7 @@ for row, label, exp in (
     (6, "実案件1 左官", {MULT: 19.4, REFM: 11.1, RANGE: "範囲内",
                          VERDICT: "C：見送り（Must×）", RATE: 0.455}),
     (7, "実案件2 動物カフェ", {MULT: 3.0, REFM: 3.0, RANGE: "範囲内",
-                              VERDICT: "C：見送り（Must×）", RATE: 0.409}),
+                              VERDICT: "B：追加情報を取得", RATE: 0.455}),
 ):
     bk = Book(wb, maxrow=LAST + 5)
     out = []
@@ -222,9 +222,12 @@ chk("企業名 6行（C判定は空）", evaluate(bk, "友井→服部", we[f"{E
 chk("×が付いた項目 5行", evaluate(bk, "友井→服部", we[f"{EC['×が付いた項目']}5"].value), "")
 chk("要確認 5行", evaluate(bk, "友井→服部", we[f"{EC['要確認（－）の項目']}5"].value), "")
 chk("上申区分 8行（未入力）", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}8"].value), "")
-chk("上申区分 7行（動物カフェ・C判定）", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}7"].value), "—")
+chk("上申区分 7行（動物カフェ・B判定）",
+    evaluate(bk, "友井→服部", we[f"{EC['上申区分']}7"].value), "△ 要相談")
+chk("×が付いた項目 7行", evaluate(bk, "友井→服部", we[f"{EC['×が付いた項目']}7"].value), "8-2 ")
+chk("要確認 7行", evaluate(bk, "友井→服部", we[f"{EC['要確認（－）の項目']}7"].value), "11 ")
 chk("集計行", evaluate(bk, "友井→服部", we[f"A{BAND_ROW}"].value),
-    "◎ 上申対象 1 件　／　△ 要相談 0 件")
+    "◎ 上申対象 1 件　／　△ 要相談 1 件")
 # 手動✓ で C判定でも拾えるか
 bk2 = Book(wb, maxrow=LAST + 5)
 bk2.set("友井→服部", "A6", "✓")
@@ -262,13 +265,12 @@ chk("maX 年間合致計", evaluate(bk, "仲介会社管理シート", yh), 1.0)
 _r = evaluate(bk, "仲介会社管理シート", yr)
 chk("maX 合致率", round(_r, 3) if isinstance(_r, float) else _r, 0.5)
 chk("全社合計 流入", evaluate(bk, "仲介会社管理シート", wm.cell(4, tail).value), 3.0)
-chk("全社合計 合致", evaluate(bk, "仲介会社管理シート", wm.cell(4, tail + 1).value), 1.0)
+chk("全社合計 合致", evaluate(bk, "仲介会社管理シート", wm.cell(4, tail + 1).value), 2.0)
 ag = next(r for r in range(5, 41) if wm.cell(r, 1).value == "株式会社Anyglo")
 chk("Anyglo 2026年9月 流入", evaluate(bk, "仲介会社管理シート", wm.cell(ag, 12).value), 1.0)
-chk("Anyglo 2026年9月 合致（業種NGで除外）",
-    evaluate(bk, "仲介会社管理シート", wm.cell(ag, 13).value), 0.0)
+chk("Anyglo 2026年9月 合致", evaluate(bk, "仲介会社管理シート", wm.cell(ag, 13).value), 1.0)
 chk("Anyglo 年間流入計", evaluate(bk, "仲介会社管理シート", wm.cell(ag, tail).value), 1.0)
-chk("Anyglo 合致率", evaluate(bk, "仲介会社管理シート", wm.cell(ag, tail + 2).value), 0.0)
+chk("Anyglo 合致率", evaluate(bk, "仲介会社管理シート", wm.cell(ag, tail + 2).value), 1.0)
 # レコフ（案件なし）は0件
 rk = next(r for r in range(5, 41) if wm.cell(r, 1).value == "株式会社レコフ")
 chk("レコフ 年間流入計", evaluate(bk, "仲介会社管理シート", wm.cell(rk, tail).value), 0.0)
