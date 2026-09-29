@@ -100,7 +100,19 @@ def judge(d):
 
     # --- 2 安定黒字か --------------------------------------------------
     e3 = d.get("ebitda_3y")
-    if e3 and len(e3) == 3 and all(v is not None for v in e3):
+    # 業歴が3期に足りない案件。情報不足ではなく「要件を構造的に満たせない」ので
+    # － ではなく評価を付ける。No.2 は3年の継続性を見る項目なので上限は ×〜△。
+    if e3 and 1 <= len(e3) <= 2 and all(v is not None for v in e3):
+        seq = "→".join(f"{v:,.0f}" for v in e3)
+        n = len(e3)
+        if any(v <= 0 for v in e3):
+            out["2"] = (GRADES[4], f"実態EBITDA {seq}（業歴{n}期・赤字を含む）")
+        elif n == 2:
+            out["2"] = (GRADES[3], f"実態EBITDA {seq}（業歴2期で両期黒字だが、"
+                                   f"3期連続黒字の要件は構造的に満たせない）")
+        else:
+            out["2"] = (GRADES[4], f"実態EBITDA {seq}（業歴1期のみ）")
+    elif e3 and len(e3) == 3 and all(v is not None for v in e3):
         neg = sum(1 for v in e3 if v <= 0)
         seq = "→".join(f"{v:,.0f}" for v in e3)
         if neg >= 2:
@@ -121,7 +133,27 @@ def judge(d):
 
     # --- 3 粗利率 3期連続30%以上か ------------------------------------
     gm = d.get("gross_margin_3y")
-    if gm and len(gm) == 3 and all(v is not None for v in gm):
+    # No.3 は水準を見る項目なので、2期でも十分な材料になる。ただし1期分の
+    # 確認が取れないぶん上限を設ける（2期→△〜◯、1期→△）。
+    if gm and 1 <= len(gm) <= 2 and all(v is not None for v in gm):
+        n = len(gm)
+        avg = sum(gm) / n
+        seq = "→".join(f"{v:.1f}%" for v in gm)
+        cap = 1 if n == 2 else 2          # GRADES の添字。1=△〜◯ 2=△
+        if avg < 20:
+            g = GRADES[4]
+        elif avg < 25:
+            g = GRADES[3]
+        elif avg < 30:
+            g = GRADES[2]
+        else:
+            g = GRADES[cap]
+        # cap より良い評価にはしない
+        if GRADES.index(g) < cap:
+            g = GRADES[cap]
+        out["3"] = (g, f"粗利率 {seq}（業歴{n}期・平均{avg:.1f}%。"
+                       f"3期分の確認が取れないため上限 {GRADES[cap]}）")
+    elif gm and len(gm) == 3 and all(v is not None for v in gm):
         avg = sum(gm) / 3
         seq = "→".join(f"{v:.1f}%" for v in gm)
         below = sum(1 for v in gm if v < 30)

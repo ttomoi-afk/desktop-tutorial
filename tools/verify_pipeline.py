@@ -17,7 +17,7 @@ from score import total, ORDER, ev_calc, book_multiple   # noqa: E402
 F = "案件管理表_TeamEnergy.xlsx"
 SH = "案件管理"
 BAND_ROW, HEAD_ROW, FIRST, LAST = 3, 4, 5, 104
-BLANK = 7                       # 5=記入例 6=実案件 なので素の挙動は7行目で見る
+BLANK = 8                       # 5=記入例 6,7=実案件 なので素の挙動は8行目で見る
 GRADES = ["◯", "△〜◯", "△", "×〜△", "×", "－"]
 ITEM_NAMES = ["1-1", "1-2", "1-3", "2", "3", "4", "5", "8-1", "8-2", "9", "11", "12"]
 MUST_NAMES = ["1-1", "1-2", "2", "5"]
@@ -106,8 +106,10 @@ print("③ 入力済みの2行")
 for row, label, exp in (
     (5, "記入例", {MULT: 4.7, REFM: 4.4, RANGE: "範囲内",
                    VERDICT: "A：進める", RATE: 0.854}),
-    (6, "実案件", {MULT: 19.4, REFM: 11.1, RANGE: "範囲内",
-                   VERDICT: "C：見送り（Must×）", RATE: 0.455}),
+    (6, "実案件1 左官", {MULT: 19.4, REFM: 11.1, RANGE: "範囲内",
+                         VERDICT: "C：見送り（Must×）", RATE: 0.455}),
+    (7, "実案件2 動物カフェ", {MULT: 3.0, REFM: 3.0, RANGE: "範囲内",
+                              VERDICT: "C：見送り（Must×）", RATE: 0.409}),
 ):
     bk = Book(wb, maxrow=LAST + 5)
     out = []
@@ -186,7 +188,7 @@ if mism2:
 print(f"   不一致 {mism2} 件")
 
 # ⑥ 境界値と未入力
-print("⑥ 境界値（7行目＝未入力の行）")
+print("⑥ 境界値（8行目＝未入力の行）")
 for sl, want in [(299.9, "下限未満（対象外）"), (300, "範囲内"), (3000, "範囲内"),
                  (3000.1, "上限超（対象外）")]:
     bk = Book(wb, maxrow=LAST + 5)
@@ -219,7 +221,8 @@ chk("企業名 5行", evaluate(bk, "友井→服部", we[f"{EC['企業名']}5"].
 chk("企業名 6行（C判定は空）", evaluate(bk, "友井→服部", we[f"{EC['企業名']}6"].value), "")
 chk("×が付いた項目 5行", evaluate(bk, "友井→服部", we[f"{EC['×が付いた項目']}5"].value), "")
 chk("要確認 5行", evaluate(bk, "友井→服部", we[f"{EC['要確認（－）の項目']}5"].value), "")
-chk("上申区分 7行（未入力）", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}7"].value), "")
+chk("上申区分 8行（未入力）", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}8"].value), "")
+chk("上申区分 7行（動物カフェ・C判定）", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}7"].value), "—")
 chk("集計行", evaluate(bk, "友井→服部", we[f"A{BAND_ROW}"].value),
     "◎ 上申対象 1 件　／　△ 要相談 0 件")
 # 手動✓ で C判定でも拾えるか
@@ -258,8 +261,14 @@ chk("maX 年間流入計", evaluate(bk, "仲介会社管理シート", yi), 2.0)
 chk("maX 年間合致計", evaluate(bk, "仲介会社管理シート", yh), 1.0)
 _r = evaluate(bk, "仲介会社管理シート", yr)
 chk("maX 合致率", round(_r, 3) if isinstance(_r, float) else _r, 0.5)
-chk("全社合計 流入", evaluate(bk, "仲介会社管理シート", wm.cell(4, tail).value), 2.0)
+chk("全社合計 流入", evaluate(bk, "仲介会社管理シート", wm.cell(4, tail).value), 3.0)
 chk("全社合計 合致", evaluate(bk, "仲介会社管理シート", wm.cell(4, tail + 1).value), 1.0)
+ag = next(r for r in range(5, 41) if wm.cell(r, 1).value == "株式会社Anyglo")
+chk("Anyglo 2026年9月 流入", evaluate(bk, "仲介会社管理シート", wm.cell(ag, 12).value), 1.0)
+chk("Anyglo 2026年9月 合致（業種NGで除外）",
+    evaluate(bk, "仲介会社管理シート", wm.cell(ag, 13).value), 0.0)
+chk("Anyglo 年間流入計", evaluate(bk, "仲介会社管理シート", wm.cell(ag, tail).value), 1.0)
+chk("Anyglo 合致率", evaluate(bk, "仲介会社管理シート", wm.cell(ag, tail + 2).value), 0.0)
 # レコフ（案件なし）は0件
 rk = next(r for r in range(5, 41) if wm.cell(r, 1).value == "株式会社レコフ")
 chk("レコフ 年間流入計", evaluate(bk, "仲介会社管理シート", wm.cell(rk, tail).value), 0.0)
@@ -274,8 +283,10 @@ bk4 = Book(wb, maxrow=max(LAST, 200) + 5)
 bk4.set("判定基準", "B32", 20)       # 実態EBITDA下限を20に
 bk4.set("判定基準", "B34", 25)       # マルチプル上限を25倍に
 bk4.set("判定基準", "B35", "なし")    # 除外業種を外す → 実案件も合致に入る
-chk("パラメータ連動（下限20・倍率25倍・除外なし）",
+chk("パラメータ連動（下限20・倍率25倍・除外なし）maX",
     evaluate(bk4, "仲介会社管理シート", sep_hit.value), 2.0)
+chk("パラメータ連動（除外なし）Anyglo",
+    evaluate(bk4, "仲介会社管理シート", wm.cell(ag, 13).value), 1.0)
 print("   月次・年間計・合致率・パラメータ連動とも期待どおり")
 
 print()
