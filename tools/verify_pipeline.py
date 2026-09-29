@@ -336,6 +336,98 @@ for r in rows:
             chk(f"{h} が空（{r}行）", None, "入っていること")
 print(f"   28件（No.2:13 / No.3:15）／自動反映・Q#・解決連動とも期待どおり")
 
+# ⑩ 取込タブと Apps Script の対応、および取込を通した結果
+print("⑩ 取込（gas/案件取込.gs との対応）")
+import re as _re                                              # noqa: E402
+import shutil as _sh                                          # noqa: E402
+from sim_intake import import_deal, headers as _hd, IN_DEAL_HEAD as _IDH  # noqa: E402
+from sim_intake import IN_DEAL_ROW as _IDR, IN_Q_HEAD as _IQH  # noqa: E402
+from sim_intake import IN_Q_FIRST as _IQF                      # noqa: E402
+
+_gs = open("/home/user/desktop-tutorial/gas/案件取込.gs", encoding="utf-8").read()
+for nm, pat, want in [("IN_DEAL_HEAD", r"IN_DEAL_HEAD = (\d+)", "5"),
+                      ("IN_DEAL_ROW", r"IN_DEAL_ROW = (\d+)", "6"),
+                      ("IN_Q_HEAD", r"IN_Q_HEAD = (\d+)", "9"),
+                      ("IN_Q_FIRST", r"IN_Q_FIRST = (\d+)", "10"),
+                      ("IN_Q_LAST", r"IN_Q_LAST = (\d+)", "59"),
+                      ("DEAL_HEAD_ROW", r"DEAL_HEAD_ROW = (\d+)", "4"),
+                      ("DEAL_FIRST", r"DEAL_FIRST = (\d+)", "5"),
+                      ("Q_HEAD_ROW", r"Q_HEAD_ROW = (\d+)", "3"),
+                      ("Q_FIRST", r"var Q_FIRST = (\d+)", "4")]:
+    m = _re.search(pat, _gs)
+    chk(f"gs定数 {nm}", m.group(1) if m else None, want)
+
+_ih = _hd(wb["取込"], _IDH)
+_dh = _hd(wb[SH], HEAD_ROW)
+_qh = _hd(wb["質問リスト"], 3)
+_iq = _hd(wb["取込"], _IQH)
+chk("取込の案件見出しが全て案件管理にある", [h for h in _ih if h not in _dh], [])
+_fcols = [h for h, c in _dh.items()
+          if isinstance(wb[SH].cell(FIRST, c).value, str)
+          and str(wb[SH].cell(FIRST, c).value).startswith("=")]
+chk("数式列が取込に混入していない", [h for h in _ih if h in _fcols], [])
+chk("取込に案件管理の入力列が揃っている",
+    [h for h in _dh if h not in _ih and h not in _fcols and h != "No"], [])
+chk("質問見出しの対応", [h for h in _iq if h not in _qh], [])
+chk("評価12列が取込にある",
+    len([h for h in _ih if h.lstrip("★") in
+         ("1-1", "1-2", "1-3", "2", "3", "4", "5", "8-1", "8-2", "9", "11", "12")]), 12)
+
+# 実際に取込を通して、数式が壊れず判定まで出るか
+import datetime as _dt                                        # noqa: E402
+from openpyxl import load_workbook as _lw                     # noqa: E402
+_sh.copy(F, "_verify_intake.xlsx")
+_wb = _lw("_verify_intake.xlsx")
+_si = _wb["取込"]
+_d = {"企業名": "取込テスト株式会社", "事業内容": "ビルメンテナンス",
+      "業種区分": "重点②AI・DXで伸ばせる業種", "流入日": _dt.date(2026, 10, 5),
+      "仲介会社": "株式会社ストライク", "仲介担当者": "三浦様",
+      "譲渡価格": 900, "実態EBITDA": 160, "売上": 1800,
+      "簿価NetCash": 120, "平均必要運転資金": 80,
+      "★1-1": "◯", "★1-2": "△", "1-3": "◯", "★2": "◯", "3": "△", "4": "◯",
+      "★5": "◯", "8-1": "◯", "8-2": "◯", "9": "△〜◯", "11": "△〜◯", "12": "△",
+      "ステータス": "初期検討中"}
+for _h, _v in _d.items():
+    _si.cell(_IDR, _ih[_h]).value = _v
+for _i, _q in enumerate(["質問A", "質問B", "質問C"]):
+    _si.cell(_IQF + _i, _iq["質問（このまま読める文）"]).value = _q
+    _si.cell(_IQF + _i, _iq["優先度"]).value = "必須"
+_res = import_deal(_wb)
+_wb.save("_verify_intake.xlsx")
+_wb2 = _lw("_verify_intake.xlsx")
+_b = Book(_wb2, maxrow=320)
+_ws, _DC = _wb2[SH], _hd(_wb2[SH], HEAD_ROW)
+chk("取込 行", _res["row"], 8)
+chk("取込 案件No", _res["no"], 4.0)
+chk("取込後の総合判定",
+    evaluate(_b, SH, _ws.cell(8, _DC["総合判定"]).value), "A：進める")
+chk("取込後の達成率",
+    round(evaluate(_b, SH, _ws.cell(8, _DC["達成率"]).value), 3), 0.833)
+chk("取込後の未解決質問",
+    evaluate(_b, SH, _ws.cell(8, _DC["未解決質問"]).value), 3.0)
+_wq, _QC = _wb2["質問リスト"], _hd(_wb2["質問リスト"], 3)
+chk("質問の案件No", _wq.cell(32, _QC["案件No"]).value, 4.0)
+chk("質問のQ#", [_wq.cell(32 + i, _QC["Q#"]).value for i in range(3)], [1, 2, 3])
+chk("質問の企業名が自動反映",
+    evaluate(_b, "質問リスト", _wq.cell(32, _QC["企業名"]).value), "取込テスト株式会社")
+chk("取込タブがクリアされた",
+    all(_wb2["取込"].cell(_IDR, c).value in ("", None)
+        for c in range(1, len(_ih) + 1)), True)
+_e = 0
+for _n in _wb2.sheetnames:
+    for _row in _wb2[_n].iter_rows():
+        for _c in _row:
+            if isinstance(_c.value, str) and _c.value.startswith("="):
+                try:
+                    evaluate(_b, _n, _c.value)
+                except Err:
+                    _e += 1
+chk("取込後の数式エラー", _e, 0)
+for _r, _w in ((5, "A：進める"), (6, "C：見送り（Must×）"), (7, "B：追加情報を取得")):
+    chk(f"既存{_r}行が壊れていない",
+        evaluate(_b, SH, _ws.cell(_r, _DC["総合判定"]).value), _w)
+print("   見出しの対応・取込の実行・既存行の保全とも期待どおり")
+
 print()
 print("=" * 62)
 print("失敗:", len(fails))

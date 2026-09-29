@@ -3,6 +3,8 @@
 
 タブ構成
   案件管理            1行=1案件。企業名・事業内容＋数値＋青塗り12項目の◯△×＋判定＋進行
+  取込                Claudeが出したTSVを貼る場所。1回の取込＝1案件。
+                      Apps Script（gas/案件取込.gs）が案件管理と質問リストへ振り分ける
   質問リスト           1行=1質問。仲介の案件担当者に聞く文面と、回答で動く評価項目
   友井→服部           上席に上げる案件だけを案件管理から自動で抜き出す
   仲介会社管理シート    36社の属性と、月次の流入／条件合致件数（案件管理から自動集計）
@@ -55,6 +57,10 @@ FY_START = (2026, 9)
 MONTHS = [((FY_START[0] + (FY_START[1] - 1 + i) // 12),
            ((FY_START[1] - 1 + i) % 12) + 1) for i in range(12)]
 Q_FIRST, Q_LAST = 4, 303          # 質問リストの行範囲
+# 取込タブの固定行。Apps Script（gas/案件取込.gs）が同じ番号を見る。
+IN_DEAL_HEAD, IN_DEAL_ROW = 5, 6
+IN_Q_HEAD, IN_Q_FIRST, IN_Q_LAST = 9, 10, 59
+IN_LOG_ROW = 61
 MED_FIRST = 5                     # 仲介会社の先頭行
 MED_LAST = MED_FIRST + len(MEDIATORS) - 1
 ESC_JUDGE = ["進める", "条件付きで進める", "追加検討", "見送り"]
@@ -373,6 +379,80 @@ def build_deals(ws):
         CellIsRule(operator="greaterThan", formula=["7"],
                    fill=PatternFill("solid", fgColor="F4C7C3")))
     ws.auto_filter.ref = f"A{HEAD_ROW}:{get_column_letter(len(COLS))}{LAST}"
+
+
+# ════════════════════════════════════════════════════════════════
+#  取込（ClaudeのTSVを貼る場所）
+# ════════════════════════════════════════════════════════════════
+IN_Q_COLS = ["分類", "質問（このまま読める文）", "何を確かめたいか", "関連項目", "優先度"]
+
+
+def build_intake(ws, d):
+    """案件管理の入力列をそのまま見出しに使う。Apps Script は見出し名で対応を取るので
+    列の順番が変わっても取り違えない。"""
+    deal_heads = [h for h, _, k in COLS if k in ("in", "eval") and h != "No"]
+
+    ws["A1"] = "取込（案件概要書の分析結果を貼る）"
+    ws["A1"].font = TITLE_F
+    ws["A2"] = ("① Claudeに案件概要書を渡す → ② 出てきたTSVを下の2ブロックに貼る"
+                "（■案件は1行だけ、■質問は何行でも）→ "
+                "③ メニュー「案件取込」→「取込を実行」。"
+                "案件Noは自動で振られ、質問の全行に同じ案件Noが入ります。"
+                "取込が終わると貼った内容は自動でクリアされます。"
+                "企業名が既にある案件と一致した場合は、上書きするか新規追加するかを聞きます。")
+    ws["A2"].font = NOTE_F
+    ws["A2"].alignment = Alignment(wrap_text=True, vertical="top")
+    ws.merge_cells(f"A2:{get_column_letter(max(len(deal_heads), 12))}2")
+    ws.row_dimensions[2].height = 42
+
+    def band(row, text, color, span):
+        ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=span)
+        c = ws.cell(row, 1, text)
+        c.font = BAND_F
+        c.fill = PatternFill("solid", fgColor=color)
+        c.alignment = Alignment(horizontal="left", vertical="center")
+        ws.row_dimensions[row].height = 18
+
+    band(IN_DEAL_HEAD - 1, "■ 案件（1行だけ貼る。No は自動で振られます）",
+         "3D6B8E", len(deal_heads))
+    for i, h in enumerate(deal_heads, start=1):
+        c = ws.cell(IN_DEAL_HEAD, i, h)
+        c.font = HDR_F
+        c.fill = HDR_FILL
+        c.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        c.border = Border(left=thin, right=thin, top=thin, bottom=med)
+        cc = ws.cell(IN_DEAL_ROW, i)
+        cc.fill = IN_FILL
+        cc.border = BOX
+        cc.font = BODY_F
+        cc.alignment = Alignment(vertical="top", wrap_text=True)
+        ws.column_dimensions[get_column_letter(i)].width = \
+            next(w for hh, w, _ in COLS if hh == h)
+    ws.row_dimensions[IN_DEAL_HEAD].height = 34
+    ws.row_dimensions[IN_DEAL_ROW].height = 40
+
+    band(IN_Q_HEAD - 1, "■ この案件への質問（何行でも。案件Noは取込時に入ります）",
+         "1F4E79", len(IN_Q_COLS))
+    for i, h in enumerate(IN_Q_COLS, start=1):
+        c = ws.cell(IN_Q_HEAD, i, h)
+        c.font = HDR_F
+        c.fill = HDR_FILL
+        c.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        c.border = Border(left=thin, right=thin, top=thin, bottom=med)
+    for r in range(IN_Q_FIRST, IN_Q_LAST + 1):
+        for i in range(1, len(IN_Q_COLS) + 1):
+            cc = ws.cell(r, i)
+            cc.fill = IN_FILL
+            cc.border = BOX
+            cc.font = BODY_F
+            cc.alignment = Alignment(vertical="top", wrap_text=True)
+
+    ws.cell(IN_LOG_ROW, 1, "取込ログ").font = HDR_F
+    ws.cell(IN_LOG_ROW, 1).fill = PatternFill("solid", fgColor="F3F3F3")
+    ws.merge_cells(start_row=IN_LOG_ROW, start_column=2,
+                   end_row=IN_LOG_ROW, end_column=max(len(deal_heads), 8))
+    ws.cell(IN_LOG_ROW, 2, "（取込を実行すると、ここに結果が出ます）").font = NOTE_F
+    ws.freeze_panes = "A5"
 
 
 # ════════════════════════════════════════════════════════════════
@@ -888,6 +968,7 @@ def build_criteria(ws):
 wb = Workbook()
 ws_deal = wb.active
 ws_deal.title = "案件管理"
+ws_in = wb.create_sheet("取込")
 ws_q = wb.create_sheet("質問リスト")
 ws_esc = wb.create_sheet("友井→服部")
 ws_med = wb.create_sheet("仲介会社管理シート")
@@ -895,6 +976,7 @@ ws_cri = wb.create_sheet("判定基準")
 ws_cho = wb.create_sheet("選択肢")
 
 build_deals(ws_deal)
+build_intake(ws_in, L)
 build_questions(ws_q, L)
 build_escalation(ws_esc, L)
 build_mediators(ws_med, L)
@@ -906,6 +988,7 @@ wb.save(out)
 print("saved", out)
 print(f"案件管理   列{len(COLS)} 評価{EVC[0]}〜{EVC[-1]} Must{MUST} 判定{VERDICT_C}{RATE_C}")
 print(f"友井→服部  列{len(ESC_COLS)} 行{FIRST}〜{LAST}（案件管理と1:1）")
+print(f"取込       案件列{len([h for h,_,k in COLS if k in ('in','eval') and h!='No'])} / 質問行{IN_Q_FIRST}〜{IN_Q_LAST}")
 print(f"質問リスト  {len(QUESTIONS)}件 行{Q_FIRST}〜{Q_LAST}")
 print(f"仲介会社   {len(MEDIATORS)}社 行{MED_FIRST}〜{MED_LAST} "
       f"月次{MONTHS[0][0]}/{MONTHS[0][1]}〜{MONTHS[-1][0]}/{MONTHS[-1][1]}")
