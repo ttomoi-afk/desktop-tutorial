@@ -77,14 +77,23 @@ def judge(d):
                              f"（株式価値{d['equity_price']:,.0f}＋承継コスト{cost:,.0f}"
                              f"−借入{d['debt_financing']:,.0f}）")
         else:
-            # 借入未定。株式価値のみで4億超なら借入前提でも厳しい
+            # 借入未定。株式価値のみで4億超なら借入前提でも厳しい。
+            # さらに、4億円に収めるのに必要な借入が実態EBITDAの6倍を超えるなら
+            # レバレッジでは埋まらない差なので × とする（6倍は No.5 の上限と揃える）。
             bare = d["equity_price"] + cost
-            if bare > 400:
-                out["1-2"] = (GRADES[3], f"買収借入が未定。株式価値＋承継コストのみで"
-                                         f"{bare:,.0f}百万円（4億円超）")
-            else:
+            if bare <= 400:
                 out["1-2"] = (UNKNOWN, f"買収借入が未定。株式価値＋承継コスト"
                                        f"{bare:,.0f}百万円（借入次第で4億円以下に収まる）")
+            else:
+                need = bare - 400
+                if has(d, "ebitda") and d["ebitda"] > 0 and need / d["ebitda"] > 6:
+                    out["1-2"] = (GRADES[4],
+                                  f"株式価値＋承継コスト{bare:,.0f}百万円。4億円に収めるには"
+                                  f"借入{need:,.0f}百万円が必要で、実態EBITDA{d['ebitda']:,.1f}の"
+                                  f"{need / d['ebitda']:.1f}年分。レバレッジでは埋まらない")
+                else:
+                    out["1-2"] = (GRADES[3], f"買収借入が未定。株式価値＋承継コストのみで"
+                                             f"{bare:,.0f}百万円（4億円超）")
     else:
         out["1-2"] = (UNKNOWN, "希望株式価値の記載なし")
 
