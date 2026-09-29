@@ -3,6 +3,7 @@
 
 タブ構成
   案件管理            1行=1案件。企業名・事業内容＋数値＋青塗り12項目の◯△×＋判定＋進行
+  質問リスト           1行=1質問。仲介の案件担当者に聞く文面と、回答で動く評価項目
   友井→服部           上席に上げる案件だけを案件管理から自動で抜き出す
   仲介会社管理シート    36社の属性と、月次の流入／条件合致件数（案件管理から自動集計）
   判定基準            ルーブリックの閾値と、条件合致の判定パラメータ
@@ -14,6 +15,7 @@
 from datetime import date
 
 from mediators import MEDIATORS
+from questions import (QUESTIONS, Q_CATEGORIES, Q_PRIORITY, Q_STATUS)
 from openpyxl import Workbook
 from openpyxl.comments import Comment
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -52,6 +54,7 @@ SALES_MIN, SALES_MAX = 300, 3000
 FY_START = (2026, 9)
 MONTHS = [((FY_START[0] + (FY_START[1] - 1 + i) // 12),
            ((FY_START[1] - 1 + i) % 12) + 1) for i in range(12)]
+Q_FIRST, Q_LAST = 4, 303          # 質問リストの行範囲
 MED_FIRST = 5                     # 仲介会社の先頭行
 MED_LAST = MED_FIRST + len(MEDIATORS) - 1
 ESC_JUDGE = ["進める", "条件付きで進める", "追加検討", "見送り"]
@@ -117,7 +120,7 @@ COLS = (
     + [("譲渡価格", 9, "in"), ("実態EBITDA", 10, "in"), (MULT_H, 11, "calc"),
        ("売上", 9, "in")]
     + [(("★\n" if m else "") + s_, 5.0, "eval") for s_, _, m in ITEMS]
-    + [("総合判定", 16, "calc"), ("達成率", 8, "calc")]
+    + [("総合判定", 16, "calc"), ("達成率", 8, "calc"), ("未解決\n質問", 7, "calc")]
     + [("ステータス", 12, "in"), ("次アクション", 26, "in"), ("期限", 10, "in"),
        ("意向表明期限", 11, "in"), ("初期検討メモ", 34, "in"),
        ("見送り理由", 26, "in")]
@@ -139,6 +142,7 @@ MUST = [EVC[i] for i, (_, _, m) in enumerate(ITEMS) if m]
 SCORE_C, JUDGED_C = L["得点"], L["判定済"]
 NX_C, MUSTX_C = L["×件数"], L["Must×"]
 VERDICT_C, RATE_C = L["総合判定"], L["達成率"]
+OPENQ_C = L["未解決\n質問"]
 
 BANDS = [  # (開始見出し, 終了見出し, ラベル, 色)
     ("No", "企業名", "キー", "5B7C99"),
@@ -146,7 +150,7 @@ BANDS = [  # (開始見出し, 終了見出し, ラベル, 色)
     ("譲渡価格", "売上", "主要数値（単位：百万円）", "3D6B8E"),
     (COLS[EV_FIRST - 1][0], COLS[EV_LAST - 1][0],
      "初期検討（投資条件タブ 青塗り12項目）　★=Must", "1F4E79"),
-    ("総合判定", "達成率", "判定", "2E6B4F"),
+    ("総合判定", "未解決\n質問", "判定", "2E6B4F"),
     ("ステータス", "見送り理由", "進行管理", "6B7F8C"),
     ("流入日", "備考", "補足（仲介・価格の内訳・保管先）", "9AA5AD"),
 ]
@@ -252,6 +256,11 @@ def build_deals(ws):
             f'"B：追加情報を取得")))))')
         ws[f"{RATE_C}{r}"] = (f'=IF(${JUDGED_C}{r}=0,"",'
                               f'${SCORE_C}{r}/(${JUDGED_C}{r}*2))')
+        # 未解決の質問件数。状態が空欄（未質問）も未解決として数える
+        ws[f"{OPENQ_C}{r}"] = (
+            f'=IF($A{r}="","",COUNTIFS('
+            f'質問リスト!$A${Q_FIRST}:$A${Q_LAST},$A{r},'
+            f'質問リスト!${Q_STATE_C}${Q_FIRST}:${Q_STATE_C}${Q_LAST},"<>解決"))')
         for h in ("譲渡価格", "実態EBITDA", "売上", "簿価NetCash", WC_H):
             ws[f"{L[h]}{r}"].number_format = "#,##0.0"
         for h in (MULT_H, REF_H):
@@ -364,6 +373,119 @@ def build_deals(ws):
         CellIsRule(operator="greaterThan", formula=["7"],
                    fill=PatternFill("solid", fgColor="F4C7C3")))
     ws.auto_filter.ref = f"A{HEAD_ROW}:{get_column_letter(len(COLS))}{LAST}"
+
+
+# ════════════════════════════════════════════════════════════════
+#  質問リスト（仲介の案件担当者に聞く）
+# ════════════════════════════════════════════════════════════════
+Q_COLS = [
+    ("案件\nNo", 6, "in"),
+    ("企業名", 22, "link"),
+    ("仲介会社", 18, "link"),
+    ("案件担当者", 12, "link"),
+    ("Q#", 5, "in"),
+    ("分類", 18, "in"),
+    ("質問（このまま読める文）", 62, "in"),
+    ("何を確かめたいか", 40, "in"),
+    ("関連\n項目", 10, "in"),
+    ("優先度", 8, "in"),
+    ("聞いた日", 10, "in"),
+    ("回答", 52, "in"),
+    ("回答日", 10, "in"),
+    ("回答で動く評価", 28, "in"),
+    ("状態", 14, "in"),
+]
+QC = {}
+for _i, (_h, _w, _k) in enumerate(Q_COLS, start=1):
+    QC.setdefault(_h, get_column_letter(_i))
+Q_STATE_C = QC["状態"]
+
+
+def build_questions(ws, d):
+    ws["A1"] = "質問リスト（仲介会社の案件担当者向け）"
+    ws["A1"].font = TITLE_F
+    ws["A2"] = ("案件Noを入れると企業名・仲介会社・案件担当者が案件管理から入ります。"
+                "「関連項目」は、その回答で動く12項目の番号。"
+                "状態を「解決」にすると案件管理の未解決質問カウントから外れます。"
+                "案件Noで絞り込めば、その案件だけの質問票として読めます。"
+                "優先度は 必須＝これが無いと評価が付かない／重要＝回答で評価が動く／"
+                "確認＝リスクの念押し。")
+    ws["A2"].font = NOTE_F
+    ws["A2"].alignment = Alignment(wrap_text=True, vertical="top")
+    ws.merge_cells(f"A2:{get_column_letter(len(Q_COLS))}2")
+    ws.row_dimensions[2].height = 28
+
+    for i, (h, _, kind) in enumerate(Q_COLS, start=1):
+        c = ws.cell(3, i, h)
+        c.font = HDR_F
+        c.fill = HDR_FILL if kind == "in" else PatternFill("solid", fgColor="E2E2E2")
+        c.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        c.border = Border(left=thin, right=thin, top=thin, bottom=med)
+    ws.row_dimensions[3].height = 32
+
+    dv_cat = DataValidation(type="list",
+                            formula1=f"=選択肢!$I$3:$I${2 + len(Q_CATEGORIES)}",
+                            allow_blank=True)
+    dv_pri = DataValidation(type="list", formula1=f'"{",".join(Q_PRIORITY)}"',
+                            allow_blank=True)
+    dv_st = DataValidation(type="list", formula1=f'"{",".join(Q_STATUS)}"',
+                           allow_blank=True)
+    for dv in (dv_cat, dv_pri, dv_st):
+        ws.add_data_validation(dv)
+
+    PULL = {"企業名": "企業名", "仲介会社": "仲介会社", "案件担当者": "仲介担当者"}
+    for r in range(Q_FIRST, Q_LAST + 1):
+        for h, src in PULL.items():
+            ws[f"{QC[h]}{r}"] = (
+                f'=IF($A{r}="","",IFERROR(INDEX(案件管理!${d[src]}:${d[src]},'
+                f'MATCH($A{r},案件管理!${d["No"]}:${d["No"]},0)),""))')
+        for i, (h, _, kind) in enumerate(Q_COLS, start=1):
+            c = ws.cell(r, i)
+            c.font = BODY_F
+            c.border = BOX
+            c.fill = IN_FILL if kind == "in" else CALC_FILL
+            c.alignment = Alignment(
+                vertical="top",
+                wrap_text=h in ("質問（このまま読める文）", "何を確かめたいか", "回答",
+                                "回答で動く評価"))
+        for h in ("案件\nNo", "Q#", "関連\n項目", "優先度", "状態"):
+            ws[f"{QC[h]}{r}"].alignment = Alignment(horizontal="center",
+                                                    vertical="top")
+        for h in ("聞いた日", "回答日"):
+            ws[f"{QC[h]}{r}"].number_format = "yyyy/mm/dd"
+        dv_cat.add(ws[f'{QC["分類"]}{r}'])
+        dv_pri.add(ws[f'{QC["優先度"]}{r}'])
+        dv_st.add(ws[f'{QC["状態"]}{r}'])
+
+    # 洗い出し済みの質問を流し込む（案件ごとに Q# を振り直す）
+    seq = {}
+    for j, (no, cat, q, aim, rel, pri) in enumerate(QUESTIONS):
+        r = Q_FIRST + j
+        seq[no] = seq.get(no, 0) + 1
+        vals = {"案件\nNo": no, "Q#": seq[no], "分類": cat,
+                "質問（このまま読める文）": q, "何を確かめたいか": aim,
+                "関連\n項目": rel, "優先度": pri, "状態": "未質問"}
+        for h, v in vals.items():
+            c = ws[f"{QC[h]}{r}"]
+            c.value = v
+            c.font = Font(name=FONT, size=10, color=BLUE_TXT)
+        ws.row_dimensions[r].height = 44
+
+    for i, (h, w, _) in enumerate(Q_COLS, start=1):
+        ws.column_dimensions[get_column_letter(i)].width = w
+    ws.freeze_panes = f'{QC["Q#"]}{Q_FIRST}'
+    pri = QC["優先度"]
+    for txt, color in [("必須", "F4C7C3"), ("重要", "FFF2CC"), ("確認", "EFEFEF")]:
+        ws.conditional_formatting.add(
+            f"{pri}{Q_FIRST}:{pri}{Q_LAST}",
+            FormulaRule(formula=[f'EXACT({pri}{Q_FIRST},"{txt}")'],
+                        fill=PatternFill("solid", fgColor=color)))
+    st = QC["状態"]
+    ws.conditional_formatting.add(
+        f"{st}{Q_FIRST}:{st}{Q_LAST}",
+        FormulaRule(formula=[f'EXACT({st}{Q_FIRST},"解決")'],
+                    fill=PatternFill("solid", fgColor="B7E1CD")))
+    ws.auto_filter.ref = f"A3:{get_column_letter(len(Q_COLS))}{Q_LAST}"
 
 
 # ════════════════════════════════════════════════════════════════
@@ -650,7 +772,10 @@ def build_choices(ws):
     ws["A2"] = None
     cols = [("A", "業種区分", SECTORS, 34), ("C", "ステータス", STATUS, 16),
             ("E", "評価", ["◯", "△〜◯", "△", "×〜△", "×", "－"], 8),
-            ("G", "服部判断", ESC_JUDGE, 18)]
+            ("G", "服部判断", ESC_JUDGE, 18),
+            ("I", "質問の分類", Q_CATEGORIES, 24),
+            ("K", "優先度", Q_PRIORITY, 10),
+            ("M", "質問の状態", Q_STATUS, 16)]
     for col, h, vals, w in cols:
         c = ws[f"{col}2"]
         c.value = h
@@ -660,7 +785,7 @@ def build_choices(ws):
             ws[f"{col}{i}"] = v
             ws[f"{col}{i}"].font = BODY_F
         ws.column_dimensions[col].width = w
-    for col in ("B", "D", "F"):
+    for col in ("B", "D", "F", "H", "J", "L"):
         ws.column_dimensions[col].width = 2
     ws["A20"] = ("仲介会社の一覧はここには置いていない。仲介会社管理シートのA列が唯一の正で、"
                  "案件管理の仲介会社ドロップダウンはそこを直接参照している。"
@@ -668,7 +793,7 @@ def build_choices(ws):
                  "tools/build_pipeline.py の MED_LAST が指す範囲を広げること。")
     ws["A20"].font = NOTE_F
     ws["A20"].alignment = Alignment(wrap_text=True, vertical="top")
-    ws.merge_cells("A20:G22")
+    ws.merge_cells("A20:M22")
 
 
 def build_criteria(ws):
@@ -763,12 +888,14 @@ def build_criteria(ws):
 wb = Workbook()
 ws_deal = wb.active
 ws_deal.title = "案件管理"
+ws_q = wb.create_sheet("質問リスト")
 ws_esc = wb.create_sheet("友井→服部")
 ws_med = wb.create_sheet("仲介会社管理シート")
 ws_cri = wb.create_sheet("判定基準")
 ws_cho = wb.create_sheet("選択肢")
 
 build_deals(ws_deal)
+build_questions(ws_q, L)
 build_escalation(ws_esc, L)
 build_mediators(ws_med, L)
 build_criteria(ws_cri)
@@ -779,5 +906,6 @@ wb.save(out)
 print("saved", out)
 print(f"案件管理   列{len(COLS)} 評価{EVC[0]}〜{EVC[-1]} Must{MUST} 判定{VERDICT_C}{RATE_C}")
 print(f"友井→服部  列{len(ESC_COLS)} 行{FIRST}〜{LAST}（案件管理と1:1）")
+print(f"質問リスト  {len(QUESTIONS)}件 行{Q_FIRST}〜{Q_LAST}")
 print(f"仲介会社   {len(MEDIATORS)}社 行{MED_FIRST}〜{MED_LAST} "
       f"月次{MONTHS[0][0]}/{MONTHS[0][1]}〜{MONTHS[-1][0]}/{MONTHS[-1][1]}")

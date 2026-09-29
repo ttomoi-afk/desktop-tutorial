@@ -52,10 +52,11 @@ MULT, SALES = COL["EV/EBITDAマルチプル"], COL["売上"]
 BNC, WC = COL["簿価NetCash"], COL["平均必要運転資金"]
 REFM, RANGE = COL["参考：簿価ベース倍率"], COL["売上レンジ"]
 VERDICT, RATE = COL["総合判定"], COL["達成率"]
+OPENQ = COL["未解決質問"]
 
 print("① 列の並び")
 for h in ("No", "企業名", "事業内容", "業種区分", "譲渡価格", "実態EBITDA", "売上",
-          "総合判定", "達成率", "得点", "Must×"):
+          "総合判定", "達成率", "未解決質問", "得点", "Must×"):
     if h not in COL:
         chk(f"見出し{h}", None, "存在すること")
 chk("12項目すべて存在", sorted(EVCOL), sorted(ITEM_NAMES))
@@ -120,6 +121,11 @@ for row, label, exp in (
         chk(f"{label} {col}{row}", got, want)
         out.append(f"{col}={got}")
     print(f"   {label}（{row}行目） " + " / ".join(str(x) for x in out))
+for row, want in ((5, 0.0), (6, 13.0), (7, 15.0)):
+    bk = Book(wb, maxrow=max(LAST, 310))
+    chk(f"未解決質問 {row}行", evaluate(bk, SH, ws[f"{OPENQ}{row}"].value), want)
+print("   未解決質問 5行=0 / 6行=13 / 7行=15")
+
 # 実案件が score.py と一致するか
 d = {"equity_price": 60, "ebitda": 24.1, "book_net_cash": -206.9, "avg_wc": 200.4}
 bk = Book(wb, maxrow=LAST + 5)
@@ -290,6 +296,45 @@ chk("パラメータ連動（下限20・倍率25倍・除外なし）maX",
 chk("パラメータ連動（除外なし）Anyglo",
     evaluate(bk4, "仲介会社管理シート", wm.cell(ag, 13).value), 1.0)
 print("   月次・年間計・合致率・パラメータ連動とも期待どおり")
+
+# ⑨ 質問リスト
+print("⑨ 質問リスト")
+wq = wb["質問リスト"]
+QC = {}
+for c in wq[3]:
+    if c.value is not None:
+        QC.setdefault(str(c.value).replace("\n", ""), c.column_letter)
+rows = [r for r in range(4, 304) if wq[f"A{r}"].value is not None]
+chk("質問の件数", len(rows), 28)
+per = {}
+for r in rows:
+    per[wq[f"A{r}"].value] = per.get(wq[f"A{r}"].value, 0) + 1
+chk("案件別の件数", per, {2: 13, 3: 15})
+bk = Book(wb, maxrow=310)
+chk("企業名の自動反映（No.2）", evaluate(bk, "質問リスト", wq[f'{QC["企業名"]}4'].value),
+    "尾形工業株式会社")
+chk("仲介会社の自動反映", evaluate(bk, "質問リスト", wq[f'{QC["仲介会社"]}4'].value),
+    "株式会社maXアドバイザリー")
+chk("案件担当者の自動反映", evaluate(bk, "質問リスト", wq[f'{QC["案件担当者"]}4'].value),
+    "稲見様")
+chk("企業名の自動反映（No.3）", evaluate(bk, "質問リスト", wq[f'{QC["企業名"]}17'].value),
+    "株式会社SAMOEDO'S")
+chk("未入力行は空", evaluate(bk, "質問リスト", wq[f'{QC["企業名"]}200'].value), "")
+# Q# が案件ごとに振り直されているか
+q2 = [wq[f'{QC["Q#"]}{r}'].value for r in rows if wq[f"A{r}"].value == 2]
+q3 = [wq[f'{QC["Q#"]}{r}'].value for r in rows if wq[f"A{r}"].value == 3]
+chk("Q#（No.2）", q2, list(range(1, 14)))
+chk("Q#（No.3）", q3, list(range(1, 16)))
+# 状態を解決にすると案件管理のカウントが減る
+bk2 = Book(wb, maxrow=310)
+bk2.set("質問リスト", f'{QC["状態"]}4', "解決")
+chk("解決でカウントが減る", evaluate(bk2, SH, ws[f"{OPENQ}6"].value), 12.0)
+# 全質問に優先度・分類・関連項目が入っているか
+for r in rows:
+    for h in ("分類", "優先度", "何を確かめたいか", "質問（このまま読める文）"):
+        if not wq[f"{QC[h]}{r}"].value:
+            chk(f"{h} が空（{r}行）", None, "入っていること")
+print(f"   28件（No.2:13 / No.3:15）／自動反映・Q#・解決連動とも期待どおり")
 
 print()
 print("=" * 62)
