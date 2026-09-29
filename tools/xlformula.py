@@ -3,8 +3,9 @@
 
 LibreOffice がこのコンテナで起動しないため recalc.py が使えない。その代替として
 使っている関数だけを実装し、セルの値を本当に計算して期待値と突き合わせる。
-対応: IF AND OR NOT COUNTIF INDEX MATCH IFERROR LEFT EXACT
+対応: IF AND OR NOT COUNTIF COUNTIFS SUM DATE INDEX MATCH IFERROR LEFT EXACT
 """
+import datetime
 import re
 from openpyxl.utils import column_index_from_string, get_column_letter
 
@@ -171,6 +172,27 @@ class Parser:
             return any(truth(self.ev(x)) for x in a)
         if name == "NOT":
             return not truth(self.ev(a[0]))
+        if name == "SUM":
+            t = 0.0
+            for x in a:
+                for v in flat(self.ev(x)):
+                    if v is None or v == "" or isinstance(v, str):
+                        continue
+                    t += num(v)
+            return t
+        if name == "DATE":
+            return datetime.date(int(num(self.ev(a[0]))), int(num(self.ev(a[1]))),
+                                 int(num(self.ev(a[2]))))
+        if name == "COUNTIFS":
+            if len(a) % 2:
+                raise Err("#VALUE! COUNTIFS")
+            pairs = [(flat(self.ev(a[i])), self.ev(a[i + 1]))
+                     for i in range(0, len(a), 2)]
+            n = len(pairs[0][0])
+            if any(len(r) != n for r, _ in pairs):
+                raise Err("#VALUE! COUNTIFS ranges differ")
+            return float(sum(1 for i in range(n)
+                             if all(countif_match(r[i], c) for r, c in pairs)))
         if name == "COUNTIF":
             rng, crit = self.ev(a[0]), self.ev(a[1])
             return float(sum(1 for c in flat(rng) if countif_match(c, crit)))
@@ -196,6 +218,21 @@ class Parser:
         raise Err(f"#NAME? {name}")
 
 
+EPOCH = datetime.date(1899, 12, 30)      # Excel のシリアル値の起点
+
+
+def to_serial(v):
+    if isinstance(v, datetime.datetime):
+        d = v.date()
+        frac = (v.hour * 3600 + v.minute * 60 + v.second) / 86400
+        return (d - EPOCH).days + frac
+    return (v - EPOCH).days
+
+
+def is_date(v):
+    return isinstance(v, (datetime.datetime, datetime.date))
+
+
 def flat(x):
     return x if isinstance(x, list) else [x]
 
@@ -215,6 +252,8 @@ def num(v):
         return 0.0
     if isinstance(v, bool):
         return 1.0 if v else 0.0
+    if is_date(v):
+        return float(to_serial(v))
     if isinstance(v, (int, float)):
         return float(v)
     raise Err("#VALUE!")
@@ -225,6 +264,9 @@ def text(v):
         return ""
     if isinstance(v, bool):
         return "TRUE" if v else "FALSE"
+    if is_date(v):
+        # Excel の "&" は日付をシリアル値の文字列にする（">="&DATE(...) がこれ）
+        return str(int(to_serial(v)))
     if isinstance(v, float) and v.is_integer():
         return str(int(v))
     return str(v)

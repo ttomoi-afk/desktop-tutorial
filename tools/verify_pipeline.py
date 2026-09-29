@@ -16,7 +16,7 @@ from score import total, ORDER, ev_calc, book_multiple   # noqa: E402
 
 F = "案件管理表_TeamEnergy.xlsx"
 SH = "案件管理"
-HEAD_ROW, FIRST, LAST = 4, 5, 104
+BAND_ROW, HEAD_ROW, FIRST, LAST = 3, 4, 5, 104
 BLANK = 7                       # 5=記入例 6=実案件 なので素の挙動は7行目で見る
 GRADES = ["◯", "△〜◯", "△", "×〜△", "×", "－"]
 ITEM_NAMES = ["1-1", "1-2", "1-3", "2", "3", "4", "5", "8-1", "8-2", "9", "11", "12"]
@@ -202,6 +202,81 @@ for label, sets in [("EBITDA=0", {PRICE: 100, EBITDA: 0, BNC: 0, WC: 0}),
     chk(f"倍率 {label}", evaluate(bk, SH, ws[f"{MULT}{BLANK}"].value), "")
     chk(f"総合判定 {label}", evaluate(bk, SH, ws[f"{VERDICT}{BLANK}"].value), "")
 print("   すべて空文字を返す（エラーにならない）")
+
+# ⑦ 友井→服部（上申シート）
+print("⑦ 友井→服部（上申シート）")
+we = wb["友井→服部"]
+EC = {}
+for c in we[HEAD_ROW]:
+    if c.value is not None:
+        EC.setdefault(str(c.value).replace("\n", ""), c.column_letter)
+bk = Book(wb, maxrow=LAST + 5)
+# 5行目=記入例（A判定）→ ◎ 上申対象 / 6行目=尾形工業（C判定）→ —
+chk("上申区分 5行", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}5"].value), "◎ 上申対象")
+chk("上申区分 6行", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}6"].value), "—")
+chk("企業名 5行", evaluate(bk, "友井→服部", we[f"{EC['企業名']}5"].value),
+    "（記入例）株式会社サンプル配食サービス")
+chk("企業名 6行（C判定は空）", evaluate(bk, "友井→服部", we[f"{EC['企業名']}6"].value), "")
+chk("×が付いた項目 5行", evaluate(bk, "友井→服部", we[f"{EC['×が付いた項目']}5"].value), "")
+chk("要確認 5行", evaluate(bk, "友井→服部", we[f"{EC['要確認（－）の項目']}5"].value), "")
+chk("上申区分 7行（未入力）", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}7"].value), "")
+chk("集計行", evaluate(bk, "友井→服部", we[f"A{BAND_ROW}"].value),
+    "◎ 上申対象 1 件　／　△ 要相談 0 件")
+# 手動✓ で C判定でも拾えるか
+bk2 = Book(wb, maxrow=LAST + 5)
+bk2.set("友井→服部", "A6", "✓")
+chk("手動✓で6行が対象化", evaluate(bk2, "友井→服部", we[f"{EC['上申区分']}6"].value),
+    "◎ 上申対象")
+chk("手動✓後の企業名", evaluate(bk2, "友井→服部", we[f"{EC['企業名']}6"].value), "尾形工業株式会社")
+chk("手動✓後の×項目", evaluate(bk2, "友井→服部", we[f"{EC['×が付いた項目']}6"].value),
+    "1-1 5 ")
+chk("手動✓後の要確認", evaluate(bk2, "友井→服部", we[f"{EC['要確認（－）の項目']}6"].value),
+    "11 ")
+print("   自動判定・手動✓・×項目の抽出とも期待どおり")
+
+# ⑧ 仲介会社管理シート（案件管理からの自動集計）
+print("⑧ 仲介会社管理シート")
+wm = wb["仲介会社管理シート"]
+names = [wm.cell(r, 1).value for r in range(5, 41)]
+chk("会社数", len(names), 36)
+chk("案件管理の仲介会社DVが管理シートを参照",
+    any("仲介会社管理シート" in (dv.formula1 or "") for dv in ws.data_validations.dataValidation),
+    True)
+# サンプル2件はどちらも 株式会社maXアドバイザリー。2026年9月に流入
+mx = next(r for r in range(5, 41) if wm.cell(r, 1).value == "株式会社maXアドバイザリー")
+bk = Book(wb, maxrow=max(LAST, 200) + 5)
+sep_in, sep_hit = wm.cell(mx, 12), wm.cell(mx, 13)     # L=2026年9月の流入/合致
+chk("maX 2026年9月 流入", evaluate(bk, "仲介会社管理シート", sep_in.value), 2.0)
+chk("maX 2026年9月 合致", evaluate(bk, "仲介会社管理シート", sep_hit.value), 1.0)
+oct_in = wm.cell(mx, 14)
+chk("maX 2026年10月 流入", evaluate(bk, "仲介会社管理シート", oct_in.value), 0.0)
+# 年間計と合致率
+tail = 11 + 24 + 1
+yi, yh, yr = (wm.cell(mx, tail).value, wm.cell(mx, tail + 1).value,
+              wm.cell(mx, tail + 2).value)
+chk("maX 年間流入計", evaluate(bk, "仲介会社管理シート", yi), 2.0)
+chk("maX 年間合致計", evaluate(bk, "仲介会社管理シート", yh), 1.0)
+_r = evaluate(bk, "仲介会社管理シート", yr)
+chk("maX 合致率", round(_r, 3) if isinstance(_r, float) else _r, 0.5)
+chk("全社合計 流入", evaluate(bk, "仲介会社管理シート", wm.cell(4, tail).value), 2.0)
+chk("全社合計 合致", evaluate(bk, "仲介会社管理シート", wm.cell(4, tail + 1).value), 1.0)
+# レコフ（案件なし）は0件
+rk = next(r for r in range(5, 41) if wm.cell(r, 1).value == "株式会社レコフ")
+chk("レコフ 年間流入計", evaluate(bk, "仲介会社管理シート", wm.cell(rk, tail).value), 0.0)
+chk("レコフ 合致率（0除算回避）", evaluate(bk, "仲介会社管理シート",
+                                     wm.cell(rk, tail + 2).value), "")
+# パラメータを変えると合致数が動くか（EBITDA下限を20に下げれば実案件も合致）
+bk3 = Book(wb, maxrow=max(LAST, 200) + 5)
+bk3.set("判定基準", "B32", 20)   # 実態EBITDA下限
+chk("パラメータ連動（EBITDA下限20）",
+    evaluate(bk3, "仲介会社管理シート", sep_hit.value), 1.0)
+bk4 = Book(wb, maxrow=max(LAST, 200) + 5)
+bk4.set("判定基準", "B32", 20)       # 実態EBITDA下限を20に
+bk4.set("判定基準", "B34", 25)       # マルチプル上限を25倍に
+bk4.set("判定基準", "B35", "なし")    # 除外業種を外す → 実案件も合致に入る
+chk("パラメータ連動（下限20・倍率25倍・除外なし）",
+    evaluate(bk4, "仲介会社管理シート", sep_hit.value), 2.0)
+print("   月次・年間計・合致率・パラメータ連動とも期待どおり")
 
 print()
 print("=" * 62)

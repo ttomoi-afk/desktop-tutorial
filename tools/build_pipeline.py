@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
-"""案件管理表を生成する。案件管理と初期検討を1タブに統合した版。
+"""案件管理表を生成する。
 
 タブ構成
-  案件管理  1行=1案件。企業名・事業内容＋数値＋青塗り12項目の◯△×＋判定＋進行
-  判定基準  ルーブリックの閾値（参照用）
-  選択肢    ドロップダウンの元データ
+  案件管理            1行=1案件。企業名・事業内容＋数値＋青塗り12項目の◯△×＋判定＋進行
+  友井→服部           上席に上げる案件だけを案件管理から自動で抜き出す
+  仲介会社管理シート    36社の属性と、月次の流入／条件合致件数（案件管理から自動集計）
+  判定基準            ルーブリックの閾値と、条件合致の判定パラメータ
+  選択肢              ドロップダウンの元データ
+
+連携の要は仲介会社名。案件管理の仲介会社ドロップダウンは
+仲介会社管理シートのA列を直接参照するので、名称が常に一致し集計が0件にならない。
 """
+from datetime import date
+
+from mediators import MEDIATORS
 from openpyxl import Workbook
 from openpyxl.comments import Comment
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -38,6 +46,22 @@ GRADE_LIST = "◯,△〜◯,△,×〜△,×,－"
 GRADE_COLORS = [("◯", "B7E1CD"), ("△〜◯", "D9EAD3"), ("△", "FFF2CC"),
                 ("×〜△", "FCE5CD"), ("×", "F4C7C3"), ("－", "EFEFEF")]
 SALES_MIN, SALES_MAX = 300, 3000
+
+# 仲介会社管理シートの月次列。アップロード版は 9〜12月が3回繰り返されていたので
+# 事業年度（9月開始）12ヶ月に振り直した。年度が違う場合はここだけ直せばよい。
+FY_START = (2026, 9)
+MONTHS = [((FY_START[0] + (FY_START[1] - 1 + i) // 12),
+           ((FY_START[1] - 1 + i) % 12) + 1) for i in range(12)]
+MED_FIRST = 5                     # 仲介会社の先頭行
+MED_LAST = MED_FIRST + len(MEDIATORS) - 1
+ESC_JUDGE = ["進める", "条件付きで進める", "追加検討", "見送り"]
+
+# 判定基準タブの「条件合致の判定パラメータ」の先頭行。ここを起点に
+# EBITDA下限／EBITDA上限／マルチプル上限／除外業種 が4行並ぶ。
+# 仲介会社管理シートの COUNTIFS もこの定数から参照を組むので、ずれない。
+PARAM_ROW = 32
+P_EB_LO, P_EB_HI = PARAM_ROW, PARAM_ROW + 1
+P_MULT, P_EXCL = PARAM_ROW + 2, PARAM_ROW + 3
 
 INTERMEDIARIES = [
     "M&Aクラウド", "レコフ", "たすき", "インクグロウ", "シェアモル", "ゴエンキャピタル",
@@ -82,6 +106,7 @@ ITEMS = [
     ("12", "特定人材に依存していないか／依存人材の代替可能性\n"
            "◯ 社長不在でも運営可／△ 社長の営業依存（顧問就任で緩和）／× 有資格者が社長のみ・職人依存", False),
 ]
+ITEM_NAMES = [s for s, _, _ in ITEMS]
 
 # (見出し, 幅, 種別)  種別 in=入力 / calc=数式 / eval=◯△× / hide=内部計算
 # 並びは「1画面で読める順」。先頭からステータスまでで約230文字幅＝1画面に収まる。
@@ -170,9 +195,17 @@ def build_deals(ws):
     dv_g = DataValidation(type="list", formula1=f'"{GRADE_LIST}"', allow_blank=True,
                           showErrorMessage=True, errorTitle="評価の入力",
                           error="◯／△〜◯／△／×〜△／×／－ から選んでください")
-    dv_i = DataValidation(type="list", formula1="=選択肢!$A$3:$A$36", allow_blank=True)
-    dv_s = DataValidation(type="list", formula1="=選択肢!$C$3:$C$10", allow_blank=True)
-    dv_t = DataValidation(type="list", formula1="=選択肢!$E$3:$E$14", allow_blank=True)
+    # 名称のゆれで集計が0件になるのを防ぐため、仲介会社管理シートのA列を直接参照する
+    dv_i = DataValidation(
+        type="list",
+        formula1=f"=仲介会社管理シート!$A${MED_FIRST}:$A${MED_LAST}",
+        allow_blank=True)
+    dv_s = DataValidation(type="list",
+                          formula1=f"=選択肢!$A$3:$A${2 + len(SECTORS)}",
+                          allow_blank=True)
+    dv_t = DataValidation(type="list",
+                          formula1=f"=選択肢!$C$3:$C${2 + len(STATUS)}",
+                          allow_blank=True)
     for dv in (dv_g, dv_i, dv_s, dv_t):
         ws.add_data_validation(dv)
 
@@ -236,26 +269,26 @@ def build_deals(ws):
     # 記入例（架空）と実案件
     ex = {"No": 1, "企業名": "（記入例）株式会社サンプル配食サービス",
           "事業内容": "高齢者向けの栄養管理食を製造し、定期宅配で提供。売上の8割が月額定期契約",
-          "業種区分": "重点①シニア", "流入日": "2026/09/20",
-          "仲介会社": "maXアドバイザリー", "仲介担当者": "稲見様", "所在地": "大阪府",
+          "業種区分": "重点①シニア", "流入日": date(2026, 9, 20),
+          "仲介会社": "株式会社maXアドバイザリー", "仲介担当者": "稲見様", "所在地": "大阪府",
           "譲渡価格": 480, "実態EBITDA": 95, "売上": 1240,
           "簿価NetCash": 60, WC_H: 25,
           "ステータス": "初期検討中", "次アクション": "得意先別売上構成の受領を依頼",
-          "期限": "2026/10/03", "意向表明期限": "2026/10/31",
+          "期限": date(2026, 10, 3), "意向表明期限": date(2026, 10, 31),
           "初期検討メモ": "ストック性が高く重点業種に直球。価格は②5.1倍で許容内",
           "資料保管先／IM": "仲介会社資料管理／maX",
           "備考": "架空の例。使い始めるときに削除してください"}
     ex_g = ["◯", "◯", "◯", "◯", "◯", "◯", "△〜◯", "◯", "△〜◯", "△", "△〜◯", "△"]
     real = {"No": 2, "企業名": "尾形工業株式会社",
             "事業内容": "左官工事。マンション・ビルの補修／断面修復が約70%、一般住宅の漆喰・珪藻土塗りが約30%。自社職人33名",
-            "業種区分": "NG業種7カテゴリ", "流入日": "2026/09/28",
-            "仲介会社": "maXアドバイザリー", "仲介担当者": "稲見様",
+            "業種区分": "NG業種7カテゴリ", "流入日": date(2026, 9, 28),
+            "仲介会社": "株式会社maXアドバイザリー", "仲介担当者": "稲見様",
             "所在地": "千葉県船橋市",
             "譲渡価格": 60, "実態EBITDA": 24.1, "売上": 774.0,
             "簿価NetCash": -206.9, WC_H: 200.4,
             "ステータス": "見送り",
             "次アクション": "見送りの連絡と、今後の案件テーマのすり合わせ",
-            "期限": "2026/10/02",
+            "期限": date(2026, 10, 2),
             "初期検討メモ": "業種がNG❹（職人依存型の建設工事）。粗利率18.4%、外注費53%。得意先別売上は未開示",
             "見送り理由": "NG業種に該当し、EV/EBITDAも19.4倍で価格条件を満たさない",
             "資料保管先／IM": "仲介会社資料管理／maX",
@@ -311,26 +344,309 @@ def build_deals(ws):
     ws.auto_filter.ref = f"A{HEAD_ROW}:{get_column_letter(len(COLS))}{LAST}"
 
 
+# ════════════════════════════════════════════════════════════════
+#  友井→服部（上席に上げる案件）
+# ════════════════════════════════════════════════════════════════
+# 案件管理の 5〜104 行と 1:1 で対応させる。配列数式（FILTER 等）は
+# openpyxl で書くと Excel 側で展開されないため使わず、行ごとの IF で表現する。
+ESC_COLS = [
+    ("上申\n手動✓", 7, "in"),
+    ("上申区分", 13, "calc"),
+    ("No", 5, "link"),
+    ("企業名", 22, "link"),
+    ("事業内容", 30, "link"),
+    ("業種区分", 18, "link"),
+    ("譲渡価格", 9, "link"),
+    ("実態EBITDA", 10, "link"),
+    (MULT_H, 11, "link"),
+    ("売上", 9, "link"),
+    ("総合判定", 16, "link"),
+    ("達成率", 8, "link"),
+    ("×が付いた項目", 20, "calc"),
+    ("要確認（－）の項目", 20, "calc"),
+    ("友井コメント（初期検討メモ）", 36, "link"),
+    ("ステータス", 12, "link"),
+    ("上申日", 10, "in"),
+    ("服部判断", 15, "in"),
+    ("服部コメント", 36, "in"),
+    ("指示後の次アクション", 30, "in"),
+]
+
+
+def build_escalation(ws, d):
+    """d = 案件管理の列レター辞書（L）"""
+    E = {}
+    for i, (h, _, _) in enumerate(ESC_COLS, start=1):
+        E.setdefault(h, get_column_letter(i))
+    ws["A1"] = "友井 → 服部（上席に上げる案件）"
+    ws["A1"].font = TITLE_F
+    ws["A2"] = ("案件管理タブの5〜104行と同じ行番号で対応しています。"
+                "総合判定がAなら自動で「◎ 上申対象」、Bなら「△ 要相談」。"
+                "Cの案件と未入力行は空欄になります。"
+                "判定に関わらず上げたい案件は、A列に ✓ を入れてください。"
+                "白地の列（上申日・服部判断・服部コメント・指示後の次アクション）だけが入力欄で、"
+                "残りは案件管理からの自動反映です。")
+    ws["A2"].font = NOTE_F
+    ws["A2"].alignment = Alignment(wrap_text=True, vertical="top")
+    ws.merge_cells(f"A2:{get_column_letter(len(ESC_COLS))}2")
+    ws.row_dimensions[2].height = 30
+
+    ws[f"A{BAND_ROW}"] = (f"上申対象の件数： ◎ "
+                          f"")
+    ws[f"A{BAND_ROW}"].value = None
+    cnt = (f'="◎ 上申対象 "&COUNTIF($B${FIRST}:$B${LAST},"◎ 上申対象")'
+           f'&" 件　／　△ 要相談 "&COUNTIF($B${FIRST}:$B${LAST},"△ 要相談")&" 件"')
+    c = ws[f"A{BAND_ROW}"]
+    c.value = cnt
+    c.font = Font(name=FONT, size=11, bold=True, color=INK)
+    ws.merge_cells(f"A{BAND_ROW}:{get_column_letter(len(ESC_COLS))}{BAND_ROW}")
+    ws[f"A{BAND_ROW}"].fill = PatternFill("solid", fgColor="E8F0E4")
+    ws[f"A{BAND_ROW}"].alignment = Alignment(horizontal="left", vertical="center")
+    ws.row_dimensions[BAND_ROW].height = 20
+
+    for i, (h, _, kind) in enumerate(ESC_COLS, start=1):
+        cc = ws.cell(HEAD_ROW, i, h)
+        cc.font = HDR_F
+        cc.fill = (HDR_FILL if kind == "in"
+                   else PatternFill("solid", fgColor="E2E2E2"))
+        cc.alignment = Alignment(horizontal="center", vertical="center",
+                                 wrap_text=True)
+        cc.border = Border(left=thin, right=thin, top=thin, bottom=med)
+    ws.row_dimensions[HEAD_ROW].height = 34
+
+    dv_j = DataValidation(type="list", formula1=f'"{",".join(ESC_JUDGE)}"',
+                          allow_blank=True)
+    dv_c = DataValidation(type="list", formula1='"✓"', allow_blank=True)
+    ws.add_data_validation(dv_j)
+    ws.add_data_validation(dv_c)
+
+    # 案件管理から引く列の対応（上申シートの見出し → 案件管理の見出し）
+    PULL = {"No": "No", "企業名": "企業名", "事業内容": "事業内容",
+            "業種区分": "業種区分", "譲渡価格": "譲渡価格",
+            "実態EBITDA": "実態EBITDA", MULT_H: MULT_H,
+            "売上": "売上", "総合判定": "総合判定", "達成率": "達成率",
+            "友井コメント（初期検討メモ）": "初期検討メモ",
+            "ステータス": "ステータス"}
+    V = d["総合判定"]
+    for r in range(FIRST, LAST + 1):
+        guard = f'IF(OR($B{r}="",$B{r}="—"),""'
+        ws[f"{E['上申区分']}{r}"] = (
+            f'=IF(案件管理!${d["No"]}{r}="","",'
+            f'IF(OR($A{r}="✓",LEFT(案件管理!${V}{r},2)="A："),"◎ 上申対象",'
+            f'IF(LEFT(案件管理!${V}{r},2)="B：","△ 要相談","—")))')
+        for h, src_h in PULL.items():
+            ws[f"{E[h]}{r}"] = f'={guard},案件管理!${d[src_h]}{r})'
+        for h, mark in (("×が付いた項目", "×"), ("要確認（－）の項目", "－")):
+            parts = "&".join(
+                f'IF(案件管理!${c_}{r}="{mark}","{n} ","")'
+                for n, c_ in zip(ITEM_NAMES, EVC))
+            ws[f"{E[h]}{r}"] = f'={guard},{parts})'
+        for i, (h, _, kind) in enumerate(ESC_COLS, start=1):
+            cc = ws.cell(r, i)
+            cc.font = BODY_F
+            cc.border = BOX
+            cc.fill = IN_FILL if kind == "in" else CALC_FILL
+            cc.alignment = Alignment(
+                vertical="top",
+                wrap_text=h in ("事業内容", "友井コメント（初期検討メモ）",
+                                "服部コメント", "指示後の次アクション",
+                                "×が付いた項目", "要確認（－）の項目"))
+        ws.cell(r, 1).alignment = Alignment(horizontal="center")
+        ws[f"{E['譲渡価格']}{r}"].number_format = "#,##0.0"
+        ws[f"{E['実態EBITDA']}{r}"].number_format = "#,##0.0"
+        ws[f"{E['売上']}{r}"].number_format = "#,##0.0"
+        ws[f"{E[MULT_H]}{r}"].number_format = '0.0"倍"'
+        ws[f"{E['達成率']}{r}"].number_format = "0%"
+        ws[f"{E['上申日']}{r}"].number_format = "yyyy/mm/dd"
+        dv_j.add(ws[f"{E['服部判断']}{r}"])
+        dv_c.add(ws[f"A{r}"])
+
+    for i, (h, w, _) in enumerate(ESC_COLS, start=1):
+        ws.column_dimensions[get_column_letter(i)].width = w
+    ws.freeze_panes = f"{E['事業内容']}{FIRST}"
+    b = E["上申区分"]
+    for txt, color in [("◎ 上申対象", "B7E1CD"), ("△ 要相談", "FFF2CC")]:
+        ws.conditional_formatting.add(
+            f"{b}{FIRST}:{b}{LAST}",
+            FormulaRule(formula=[f'EXACT({b}{FIRST},"{txt}")'],
+                        fill=PatternFill("solid", fgColor=color)))
+    ws.auto_filter.ref = f"A{HEAD_ROW}:{get_column_letter(len(ESC_COLS))}{LAST}"
+
+
+# ════════════════════════════════════════════════════════════════
+#  仲介会社管理シート
+# ════════════════════════════════════════════════════════════════
+MED_ATTRS = [("仲介会社名", 28), ("合計", 8), ("仲介重要度", 10), ("担当者", 10),
+             ("初回面談日", 11), ("NDA締結日", 13), ("備考", 24), ("手数料", 14),
+             ("算定方式", 14), ("着手金", 11), ("中間報酬", 11)]
+MED_TAIL = [("年間\n流入計", 9), ("年間\n合致計", 9), ("合致率", 9)]
+
+
+def build_mediators(ws, d):
+    n_attr = len(MED_ATTRS)
+    first_m = n_attr + 1                       # 月次列の開始（L）
+    ws["A1"] = ("※条件合致＝EV/EBITDAマルチプルが上限以下 かつ 実態EBITDAが範囲内 かつ "
+                "業種区分がNG業種以外。しきい値は判定基準タブ（下部のパラメータ）で変更できます。")
+    ws["A1"].font = NOTE_F
+    ws.merge_cells(f"A1:{get_column_letter(n_attr + 24 + 3)}1")
+
+    for i, (h, _) in enumerate(MED_ATTRS, start=1):
+        ws.merge_cells(start_row=2, start_column=i, end_row=3, end_column=i)
+        c = ws.cell(2, i, h)
+        c.font = HDR_F
+        c.fill = HDR_FILL
+        c.alignment = Alignment(horizontal="center", vertical="center",
+                                wrap_text=True)
+    for k, (y, m) in enumerate(MONTHS):
+        c0 = first_m + k * 2
+        ws.merge_cells(start_row=2, start_column=c0, end_row=2, end_column=c0 + 1)
+        c = ws.cell(2, c0, f"{y}年{m}月")
+        c.font = BAND_F
+        c.fill = PatternFill("solid", fgColor="3D6B8E")
+        c.alignment = Alignment(horizontal="center", vertical="center")
+        for off, lab in ((0, "流入\n案件数"), (1, "条件合致\n案件数")):
+            cc = ws.cell(3, c0 + off, lab)
+            cc.font = HDR_F
+            cc.fill = HDR_FILL
+            cc.alignment = Alignment(horizontal="center", vertical="center",
+                                     wrap_text=True)
+    tail0 = first_m + 24
+    for i, (h, _) in enumerate(MED_TAIL):
+        col = tail0 + i
+        ws.merge_cells(start_row=2, start_column=col, end_row=3, end_column=col)
+        c = ws.cell(2, col, h)
+        c.font = BAND_F
+        c.fill = PatternFill("solid", fgColor="2E6B4F")
+        c.alignment = Alignment(horizontal="center", vertical="center",
+                                wrap_text=True)
+    ws.row_dimensions[2].height = 20
+    ws.row_dimensions[3].height = 30
+
+    inflow = f'案件管理!${d["流入日"]}${FIRST}:${d["流入日"]}${LAST}'
+    med = f'案件管理!${d["仲介会社"]}${FIRST}:${d["仲介会社"]}${LAST}'
+    eb = f'案件管理!${d["実態EBITDA"]}${FIRST}:${d["実態EBITDA"]}${LAST}'
+    mu = f'案件管理!${d[MULT_H]}${FIRST}:${d[MULT_H]}${LAST}'
+    sec = f'案件管理!${d["業種区分"]}${FIRST}:${d["業種区分"]}${LAST}'
+
+    def month_args(y, m):
+        y2, m2 = (y + 1, 1) if m == 12 else (y, m + 1)
+        return (f'{inflow},">="&DATE({y},{m},1),'
+                f'{inflow},"<"&DATE({y2},{m2},1)')
+
+    # 合計行（4行目）
+    ws.cell(4, 1, "全社合計").font = HDR_F
+    ws.cell(4, 1).fill = PatternFill("solid", fgColor="F3F3F3")
+    ws.cell(4, 2, "合計").font = HDR_F
+    ws.cell(4, 2).fill = PatternFill("solid", fgColor="F3F3F3")
+    for i in range(1, tail0 + len(MED_TAIL)):
+        cc = ws.cell(4, i)
+        cc.fill = PatternFill("solid", fgColor="F3F3F3")
+        cc.border = BOX
+        cc.font = Font(name=FONT, size=10, bold=True, color=INK)
+    for c0 in range(first_m, tail0 + len(MED_TAIL)):
+        cl = get_column_letter(c0)
+        ws[f"{cl}4"] = f"=SUM({cl}{MED_FIRST}:{cl}{MED_LAST})"
+        ws[f"{cl}4"].font = Font(name=FONT, size=10, bold=True, color=INK)
+    rate_cl = get_column_letter(tail0 + 2)
+    in_cl, hit_cl = get_column_letter(tail0), get_column_letter(tail0 + 1)
+    ws[f"{rate_cl}4"] = (f'=IF({in_cl}4=0,"",{hit_cl}4/{in_cl}4)')
+    ws[f"{rate_cl}4"].number_format = "0%"
+
+    # 会社行
+    for j, rowdata in enumerate(MEDIATORS):
+        r = MED_FIRST + j
+        for i in range(1, n_attr + 1):
+            v = rowdata[i - 1] if i - 1 < len(rowdata) else None
+            cc = ws.cell(r, i)
+            if i == 2:
+                cc.fill = CALC_FILL
+            else:
+                cc.fill = IN_FILL
+                if v is not None:
+                    if i in (5, 6) and isinstance(v, str) and len(v) == 10 \
+                            and v[4] == "-":
+                        from datetime import date
+                        y_, m_, dd_ = (int(x) for x in v.split("-"))
+                        cc.value = date(y_, m_, dd_)
+                        cc.number_format = "yyyy/mm/dd"
+                    else:
+                        cc.value = v
+            cc.font = BODY_F
+            cc.border = BOX
+            cc.alignment = Alignment(vertical="top", wrap_text=(i == 7))
+        for k, (y, m) in enumerate(MONTHS):
+            c0 = first_m + k * 2
+            a = month_args(y, m)
+            ws.cell(r, c0).value = f"=COUNTIFS({a},{med},$A{r})"
+            ws.cell(r, c0 + 1).value = (
+                f"=COUNTIFS({a},{med},$A{r},"
+                f'{eb},">="&判定基準!$B${P_EB_LO},'
+                f'{eb},"<="&判定基準!$B${P_EB_HI},'
+                f'{mu},"<="&判定基準!$B${P_MULT},'
+                f'{sec},"<>"&判定基準!$B${P_EXCL})')
+            for off in (0, 1):
+                cc = ws.cell(r, c0 + off)
+                cc.font = BODY_F
+                cc.fill = CALC_FILL
+                cc.border = BOX
+                cc.alignment = Alignment(horizontal="center")
+        in_r = "+".join(get_column_letter(first_m + k * 2) + str(r)
+                        for k in range(12))
+        hit_r = "+".join(get_column_letter(first_m + k * 2 + 1) + str(r)
+                         for k in range(12))
+        ws[f"{in_cl}{r}"] = f"={in_r}"
+        ws[f"{hit_cl}{r}"] = f"={hit_r}"
+        ws[f"{rate_cl}{r}"] = f'=IF({in_cl}{r}=0,"",{hit_cl}{r}/{in_cl}{r})'
+        ws[f"{rate_cl}{r}"].number_format = "0%"
+        for cl in (in_cl, hit_cl, rate_cl):
+            cc = ws[f"{cl}{r}"]
+            cc.font = BODY_F
+            cc.fill = CALC_FILL
+            cc.border = BOX
+            cc.alignment = Alignment(horizontal="center")
+
+    for i, (h, w) in enumerate(MED_ATTRS, start=1):
+        ws.column_dimensions[get_column_letter(i)].width = w
+    for c0 in range(first_m, tail0):
+        ws.column_dimensions[get_column_letter(c0)].width = 9
+    for i, (h, w) in enumerate(MED_TAIL):
+        ws.column_dimensions[get_column_letter(tail0 + i)].width = w
+    ws.freeze_panes = "B4"
+    dv_r = DataValidation(type="list", formula1='"A,B,C"', allow_blank=True)
+    ws.add_data_validation(dv_r)
+    for r in range(MED_FIRST, MED_LAST + 1):
+        dv_r.add(ws.cell(r, 3))
+    ws.conditional_formatting.add(
+        f"C{MED_FIRST}:C{MED_LAST}",
+        FormulaRule(formula=[f'EXACT(C{MED_FIRST},"A")'],
+                    fill=PatternFill("solid", fgColor="B7E1CD")))
+
+
 def build_choices(ws):
     ws["A1"] = "選択肢（ドロップダウンの元データ）"
     ws["A1"].font = TITLE_F
-    for col, h in {"A": "仲介会社", "C": "業種区分", "E": "ステータス",
-                   "G": "評価"}.items():
+    ws["A2"] = None
+    cols = [("A", "業種区分", SECTORS, 34), ("C", "ステータス", STATUS, 16),
+            ("E", "評価", ["◯", "△〜◯", "△", "×〜△", "×", "－"], 8),
+            ("G", "服部判断", ESC_JUDGE, 18)]
+    for col, h, vals, w in cols:
         c = ws[f"{col}2"]
         c.value = h
         c.font = HDR_F
         c.fill = HDR_FILL
-    for col, vals in (("A", INTERMEDIARIES), ("C", SECTORS), ("E", STATUS),
-                      ("G", ["◯", "△〜◯", "△", "×〜△", "×", "－"])):
         for i, v in enumerate(vals, start=3):
             ws[f"{col}{i}"] = v
             ws[f"{col}{i}"].font = BODY_F
-    for col, w in [("A", 26), ("B", 2), ("C", 34), ("D", 2), ("E", 16),
-                   ("F", 2), ("G", 8)]:
         ws.column_dimensions[col].width = w
-    ws["A40"] = ("仲介会社は「仲介会社資料管理」フォルダの34社。"
-                 "増えたらここに足せば案件管理タブの選択肢に反映される。")
-    ws["A40"].font = NOTE_F
+    for col in ("B", "D", "F"):
+        ws.column_dimensions[col].width = 2
+    ws["A20"] = ("仲介会社の一覧はここには置いていない。仲介会社管理シートのA列が唯一の正で、"
+                 "案件管理の仲介会社ドロップダウンはそこを直接参照している。"
+                 "会社を増やすときは仲介会社管理シートに行を足し、"
+                 "tools/build_pipeline.py の MED_LAST が指す範囲を広げること。")
+    ws["A20"].font = NOTE_F
+    ws["A20"].alignment = Alignment(wrap_text=True, vertical="top")
+    ws.merge_cells("A20:G22")
 
 
 def build_criteria(ws):
@@ -395,19 +711,51 @@ def build_criteria(ws):
                    "異なるため、◯=5倍以下・△=7倍以下・×=8倍超の段階評価に畳んでいる。"
                    "統一の決定が出たら直すこと。").font = BODY_F
     ws.merge_cells("B27:E27")
-    for col, w in [("A", 16), ("B", 30), ("C", 30), ("D", 30), ("E", 34), ("F", 7)]:
+    ws.cell(PARAM_ROW - 2, 1, "条件合致の判定パラメータ").font = TITLE_F
+    ws.cell(PARAM_ROW - 1, 1,
+            "仲介会社管理シートの「条件合致案件数」は、この4つのしきい値で"
+            "案件管理タブを数えている。ここを直せば36社×12ヶ月すべてに効く。").font = NOTE_F
+    ws.merge_cells(start_row=PARAM_ROW - 1, start_column=1,
+                   end_row=PARAM_ROW - 1, end_column=5)
+    params = [
+        ("実態EBITDA 下限（百万円）", 50, "投資条件：調整後EBITDA 5,000万〜4億円"),
+        ("実態EBITDA 上限（百万円）", 400, "同上"),
+        ("EV/EBITDAマルチプル 上限（倍）", 7, "投資条件タブ No.5 の記載値。"
+                                              "友井タブは5倍、仲介向け資料は6倍で不一致"),
+        ("除外する業種区分", "NG業種7カテゴリ", "案件管理タブの業種区分の値と完全一致させる"),
+    ]
+    for i, (label, val, note) in enumerate(params, start=PARAM_ROW):
+        ws.cell(i, 1, label).font = BODY_F
+        c = ws.cell(i, 2, val)
+        c.font = Font(name=FONT, size=10, bold=True, color=BLUE_TXT)
+        c.fill = IN_FILL
+        c.border = BOX
+        c.alignment = Alignment(horizontal="center")
+        ws.cell(i, 3, note).font = NOTE_F
+        ws.merge_cells(start_row=i, start_column=3, end_row=i, end_column=5)
+
+    for col, w in [("A", 30), ("B", 24), ("C", 30), ("D", 30), ("E", 34), ("F", 7)]:
         ws.column_dimensions[col].width = w
 
 
 wb = Workbook()
 ws_deal = wb.active
 ws_deal.title = "案件管理"
+ws_esc = wb.create_sheet("友井→服部")
+ws_med = wb.create_sheet("仲介会社管理シート")
+ws_cri = wb.create_sheet("判定基準")
+ws_cho = wb.create_sheet("選択肢")
+
 build_deals(ws_deal)
-build_criteria(wb.create_sheet("判定基準"))
-build_choices(wb.create_sheet("選択肢"))
+build_escalation(ws_esc, L)
+build_mediators(ws_med, L)
+build_criteria(ws_cri)
+build_choices(ws_cho)
+
 out = "案件管理表_TeamEnergy.xlsx"
 wb.save(out)
 print("saved", out)
-print("列数", len(COLS), "／ 評価列", EVC[0], "〜", EVC[-1],
-      "／ Must", MUST, "／ 判定", VERDICT_C, RATE_C,
-      "／ 固定", ws_deal.freeze_panes)
+print(f"案件管理   列{len(COLS)} 評価{EVC[0]}〜{EVC[-1]} Must{MUST} 判定{VERDICT_C}{RATE_C}")
+print(f"友井→服部  列{len(ESC_COLS)} 行{FIRST}〜{LAST}（案件管理と1:1）")
+print(f"仲介会社   {len(MEDIATORS)}社 行{MED_FIRST}〜{MED_LAST} "
+      f"月次{MONTHS[0][0]}/{MONTHS[0][1]}〜{MONTHS[-1][0]}/{MONTHS[-1][1]}")
