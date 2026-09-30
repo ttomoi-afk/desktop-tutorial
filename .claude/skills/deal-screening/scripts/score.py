@@ -229,8 +229,10 @@ def judge(d):
     if vals:
         worst, lbl = max(vals)
         g = band_lt(worst, [10, 20, 30, 50])
-        detail = "／".join(f"{l} {v:.0f}%" for v, l in vals)
-        out["11"] = (g, f"{detail}（判定は{lbl} {worst:.0f}%）")
+        # 29.8% を「30%」と丸めると、境界（30%以上＝×〜△）と評価が食い違って見える。
+        # 小数があるときだけ表示する。
+        detail = "／".join(f"{l} {v:g}%" for v, l in vals)
+        out["11"] = (g, f"{detail}（判定は{lbl} {worst:g}%）")
     else:
         out["11"] = (UNKNOWN, "上位取引先の集中度の記載なし")
 
