@@ -28,6 +28,19 @@ def band(value, cuts, ascending_is_good=False):
     return GRADES[4]
 
 
+def band_lt(value, cuts):
+    """境界を次の段に落とす版。cuts は ◯/△〜◯/△/×〜△ の上限（その値を含まない）。
+
+    No.11 のように rubric が「10%未満／10%以上20%未満／…」と上限を含まない形で
+    書かれている項目に使う。band() は `<=` なので、ちょうど20%や30%を一段良い側に
+    入れてしまう。
+    """
+    for i, c in enumerate(cuts):
+        if value < c:
+            return GRADES[i]
+    return GRADES[4]
+
+
 def band_desc(value, cuts):
     """「大きいほど良い」指標。cuts は降順で ◯/△〜◯/△/×〜△ の下限。"""
     for i, c in enumerate(cuts):
@@ -82,8 +95,12 @@ def judge(d):
             # レバレッジでは埋まらない差なので × とする（6倍は No.5 の上限と揃える）。
             bare = d["equity_price"] + cost
             if bare <= 400:
-                out["1-2"] = (UNKNOWN, f"買収借入が未定。株式価値＋承継コスト"
-                                       f"{bare:,.0f}百万円（借入次第で4億円以下に収まる）")
+                # 買収借入は TE拠出額を減らす方向にしか働かないので、借入が未定でも
+                # 「株式価値＋承継コスト」が TE拠出額の上限になる。したがって
+                # band(bare) は借入がゼロでも保証できる評価であり、－ にはしない。
+                g = band(bare, [300, 400, 450, 500])
+                out["1-2"] = (g, f"買収借入が未定だが、株式価値＋承継コスト{bare:,.0f}百万円が"
+                                 f"TE拠出額の上限（借入が付けばこれより下がる）")
             else:
                 need = bare - 400
                 if has(d, "ebitda") and d["ebitda"] > 0 and need / d["ebitda"] > 6:
@@ -211,7 +228,7 @@ def judge(d):
     vals = [(v, lbl) for v, lbl in ((c, "上位顧客"), (s, "上位仕入先")) if v is not None]
     if vals:
         worst, lbl = max(vals)
-        g = band(worst, [10, 20, 30, 50])
+        g = band_lt(worst, [10, 20, 30, 50])
         detail = "／".join(f"{l} {v:.0f}%" for v, l in vals)
         out["11"] = (g, f"{detail}（判定は{lbl} {worst:.0f}%）")
     else:
