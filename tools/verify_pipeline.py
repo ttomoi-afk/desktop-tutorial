@@ -12,7 +12,7 @@ from openpyxl import load_workbook
 from xlformula import Book, evaluate, Err
 
 sys.path.insert(0, "/home/user/desktop-tutorial/.claude/skills/deal-screening/scripts")
-from score import total, ORDER, ev_calc, book_multiple   # noqa: E402
+from score import total, ORDER, ev_calc, book_multiple, MUST   # noqa: E402
 
 F = "案件管理表_TeamEnergy.xlsx"
 SH = "案件管理"
@@ -20,7 +20,8 @@ BAND_ROW, HEAD_ROW, FIRST, LAST = 3, 4, 5, 104
 BLANK = 8                       # 5=記入例 6,7=実案件 なので素の挙動は8行目で見る
 GRADES = ["◯", "△〜◯", "△", "×〜△", "×", "－"]
 ITEM_NAMES = ["1-1", "1-2", "1-3", "2", "3", "4", "5", "8-1", "8-2", "9", "11", "12"]
-MUST_NAMES = ["1-1", "1-2", "2", "5"]
+# Must は score.py を唯一の正とする。ここに書き写すと付け替えのたびに二重管理になる。
+MUST_NAMES = [n for n in ITEM_NAMES if n in MUST]
 fails = []
 
 
@@ -384,9 +385,14 @@ _d = {"企業名": "取込テスト株式会社", "事業内容": "ビルメン�
       "仲介会社": "株式会社ストライク", "仲介担当者": "三浦様",
       "譲渡価格": 900, "実態EBITDA": 160, "売上": 1800,
       "簿価NetCash": 120, "平均必要運転資金": 80,
-      "★1-1": "◯", "★1-2": "△", "1-3": "◯", "★2": "◯", "3": "△", "4": "◯",
-      "★5": "◯", "8-1": "◯", "8-2": "◯", "9": "△〜◯", "11": "△〜◯", "12": "△",
       "ステータス": "初期検討中"}
+# 評価12列は★の有無が Must の付け替えで変わるので、見出しを引き当ててから入れる。
+# 名前を直書きすると Must を動かすたびにこの検証が落ちる。
+_evals = {"1-1": "◯", "1-2": "△", "1-3": "◯", "2": "◯", "3": "△", "4": "◯",
+          "5": "◯", "8-1": "◯", "8-2": "◯", "9": "△〜◯", "11": "△〜◯", "12": "△"}
+_bare = {h.lstrip("★"): h for h in _ih}
+for _k, _v in _evals.items():
+    _d[_bare[_k]] = _v
 for _h, _v in _d.items():
     _si.cell(_IDR, _ih[_h]).value = _v
 for _i, _q in enumerate(["質問A", "質問B", "質問C"]):

@@ -13,7 +13,9 @@ import sys
 
 GRADES = ["◯", "△〜◯", "△", "×〜△", "×"]
 SCORE = {"◯": 2.0, "△〜◯": 1.5, "△": 1.0, "×〜△": 0.5, "×": 0.0}
-MUST = {"1-1", "1-2", "2", "5"}
+MUST = {"1-1", "1-3", "2", "5"}
+BUDGET = 2500.0            # 買収予算（グループ全体の自己資金枠。百万円）
+RATIO_CUTS = [0.20, 0.30, 0.40, 0.50]   # 枠に占める割合 ◯/△〜◯/△/×〜△ の上限
 UNKNOWN = "－"
 
 
@@ -80,37 +82,24 @@ def judge(d):
     """定量6項目を判定。戻りは {no: (評価, 根拠1行)}。"""
     out = {}
 
-    # --- 1-2 TE拠出額 4億円以下か -------------------------------------
+    # --- 1-2 1件あたりの資金負担（買収予算25億円に占める割合）-------
+    # 金額の上限は置かない。枠に対する重さで見る。Must ではない。
     if has(d, "equity_price"):
-        cost = d.get("deal_cost", 0)
-        if "debt_financing" in d and d["debt_financing"] is not None:
-            te = d["equity_price"] + cost - d["debt_financing"]
-            g = band(te, [300, 400, 450, 500])
-            out["1-2"] = (g, f"TE拠出額 {te:,.0f}百万円"
-                             f"（株式価値{d['equity_price']:,.0f}＋承継コスト{cost:,.0f}"
-                             f"−借入{d['debt_financing']:,.0f}）")
+        import cash_need
+        _, led = cash_need.build(d)
+        if led["net"] is None:
+            out["1-2"] = (UNKNOWN, "所要資金を積み上げられない")
         else:
-            # 借入未定。株式価値のみで4億超なら借入前提でも厳しい。
-            # さらに、4億円に収めるのに必要な借入が実態EBITDAの6倍を超えるなら
-            # レバレッジでは埋まらない差なので × とする（6倍は No.5 の上限と揃える）。
-            bare = d["equity_price"] + cost
-            if bare <= 400:
-                # 買収借入は TE拠出額を減らす方向にしか働かないので、借入が未定でも
-                # 「株式価値＋承継コスト」が TE拠出額の上限になる。したがって
-                # band(bare) は借入がゼロでも保証できる評価であり、－ にはしない。
-                g = band(bare, [300, 400, 450, 500])
-                out["1-2"] = (g, f"買収借入が未定だが、株式価値＋承継コスト{bare:,.0f}百万円が"
-                                 f"TE拠出額の上限（借入が付けばこれより下がる）")
-            else:
-                need = bare - 400
-                if has(d, "ebitda") and d["ebitda"] > 0 and need / d["ebitda"] > 6:
-                    out["1-2"] = (GRADES[4],
-                                  f"株式価値＋承継コスト{bare:,.0f}百万円。4億円に収めるには"
-                                  f"借入{need:,.0f}百万円が必要で、実態EBITDA{d['ebitda']:,.1f}の"
-                                  f"{need / d['ebitda']:.1f}年分。レバレッジでは埋まらない")
-                else:
-                    out["1-2"] = (GRADES[3], f"買収借入が未定。株式価値＋承継コストのみで"
-                                             f"{bare:,.0f}百万円（4億円超）")
+            fin = d.get("debt_financing") or 0
+            te = led["net"] - fin
+            ratio = te / BUDGET
+            g = band(ratio, RATIO_CUTS)
+            src = ("ネット所要資金" if not led["missing"]
+                   else "所要資金（" + "・".join(m[0] for m in led["missing"]) + "が未確認の下限値）")
+            fin_txt = f"−買収借入{fin:,.0f}" if fin else "（買収借入は未定のため上限値）"
+            out["1-2"] = (g, f"TE自己資金拠出額 {te:,.0f}百万円＝買収予算"
+                             f"{BUDGET:,.0f}の{ratio:.1%}"
+                             f"（{src}{led['net']:,.0f}{fin_txt}）")
     else:
         out["1-2"] = (UNKNOWN, "希望株式価値の記載なし")
 
@@ -318,7 +307,7 @@ def summary(d):
 
 LABELS = {
     "1-1": "投資ポリシー／業種ターゲットとの整合",
-    "1-2": "投資ポリシー／TE拠出額4億円以下",
+    "1-2": "投資ポリシー／1件あたりの資金負担",
     "1-3": "投資ポリシー／非キャッシュ性資産",
     "2": "安定黒字か",
     "3": "付加価値は高いか",
