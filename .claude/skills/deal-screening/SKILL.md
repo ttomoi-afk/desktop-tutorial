@@ -26,6 +26,10 @@ description: Screen an incoming M&A deal against Team Energy's 投資条件 and 
    定量6項目（1-2／1-3／2／3／5／11）と総合判定が出る。
 4. **定性判定** — 残る6項目（1-1／4／8-1／8-2／9／12）を rubric の定義に当てて
    自分で付ける。根拠は概要書の記述に紐づけ、推測で埋めない。
+4.5 **所要資金** — `python3 scripts/cash_need.py deal.json`。譲渡価格とは別に
+   「譲渡日に用意する額」と「回収後のネット」を出す。現預金と有利子負債は
+   必ず分けて入れる（NetCash の1本値からは作れない）。既存借入を返済する／
+   承継するの両方を並べる。定義は `references/acquisition-funding.md`。
 5. **出力** — 下の4ブロックをこの順に返す。ブロック4は案件管理表へ貼るTSV。
 
 ## 出力フォーマット
