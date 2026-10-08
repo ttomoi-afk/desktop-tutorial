@@ -7,3 +7,7 @@ out/案件管理表_TeamEnergy_新レイアウト.xlsx
 
 # 議事録を反映した版も実案件入り。リポジトリには置かない
 out/案件管理表_TeamEnergy_議事録反映.xlsx
+
+# 13件版・貼り付けブロックも実案件入り
+out/案件管理表_TeamEnergy_13件.xlsx
+out/blocks_jwill.txt

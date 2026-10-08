@@ -175,10 +175,11 @@ def build(layout, paste):
                                 q_count=len(qrows), blocks=n)
 
 
-def verify(layout, paste, info):
-    """ブロックを実際に貼った状態を作り、全数式を評価して結果を出す。"""
+def verify(layout, paste, info, save=None):
+    """ブロックを実際に貼った状態を作り、全数式を評価して結果を出す。
+    save を渡すと、検証に使ったその状態をそのまま残す（手元の統合版の更新用）。"""
     from xlformula import Book, evaluate, Err
-    tmp = "_paste_verify.xlsx"
+    tmp = save or "_paste_verify.xlsx"
     shutil.copy(layout, tmp)
     wb = load_workbook(tmp)
     wd, wq = wb[SH_DEAL], wb[SH_Q]
@@ -209,10 +210,23 @@ def verify(layout, paste, info):
     b = Book(wb2, maxrow=Q_LAST + 20)
     ws, D = wb2[SH_DEAL], head_map(wb2[SH_DEAL], DEAL_HEAD)
     print(f"── 貼り付け後の {SH_DEAL} {drow}行目 ──")
-    for h in ("No", "企業名", "EV/EBITDAマルチプル", "参考：簿価ベース倍率",
-              "売上レンジ", "総合判定", "達成率", "未解決質問"):
-        if h not in D:
-            continue
+    # 見出し名が変わっても落とさない。見当たらない見出しは名前を出して分かるようにする
+    # （「総合判定」→「AI総合判定」の改名で、肝心の判定が黙って表示されなくなった）
+    want = ["No", "企業名", "EV/EBITDAマルチプル", "参考：簿価ベース倍率",
+            "売上レンジ", ("AI総合判定", "総合判定"), "達成率", "未解決質問"]
+    heads = []
+    for h in want:
+        if isinstance(h, tuple):
+            hit = next((x for x in h if x in D), None)
+            if hit is None:
+                print(f"   【見出しが見つからない】{' / '.join(h)}")
+            else:
+                heads.append(hit)
+        elif h in D:
+            heads.append(h)
+        else:
+            print(f"   【見出しが見つからない】{h}")
+    for h in heads:
         v = ws.cell(drow, D[h]).value
         if is_formula(v):
             v = evaluate(b, SH_DEAL, formula_text(v))
@@ -227,7 +241,10 @@ def verify(layout, paste, info):
                     except Err:
                         errs += 1
     print(f"── 全数式のエラー: {errs} 件")
-    os.remove(tmp)
+    if save:
+        print(f"── 貼り付け済みの状態を {save} に保存した")
+    else:
+        os.remove(tmp)
     return errs
 
 
@@ -238,6 +255,8 @@ def main():
     ap.add_argument("--paste", required=True, help="deal と questions を書いたJSON")
     ap.add_argument("--out", required=True)
     ap.add_argument("--verify", action="store_true")
+    ap.add_argument("--save", metavar="XLSX",
+                    help="検証した貼り付け済みの状態を残す（--verify が必要）")
     a = ap.parse_args()
     paste = json.load(io.open(a.paste, encoding="utf-8"))
     text, info = build(a.layout, paste)
@@ -245,8 +264,10 @@ def main():
     print(f"{a.out} を作成：案件No {info['deal_no']} / "
           f"{SH_DEAL} {info['deal_row']}行目 / {SH_Q} {info['q_row']}行目から"
           f"{info['q_count']}件 / ブロック{info['blocks']}個")
+    if a.save and not a.verify:
+        raise SystemExit("--save は --verify と一緒に指定する")
     if a.verify:
-        if verify(a.layout, paste, info):
+        if verify(a.layout, paste, info, save=a.save):
             raise SystemExit("数式エラーあり")
 
 
