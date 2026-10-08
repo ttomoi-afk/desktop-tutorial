@@ -16,7 +16,8 @@ answers.json
 
 案件Noと Q# で行を引くので、行番号は書かない。質問文・分類・優先度・関連項目は
 触らない（関連項目の修正を明示したときだけ直す）。既に回答が入っている行に
-別の回答を書こうとしたら止まる。
+別の回答を書こうとしたら止まる。前の回答を残したまま書き足すときは
+`"追記": true` を付ける（「／【10/8追記】…」の形で後ろに足し、回答日は新しい日付に）。
 """
 import argparse
 import datetime
@@ -88,11 +89,16 @@ def main():
             if state not in STATES:
                 raise SystemExit(f"状態が選択肢外: {state}")
             cur = ws[f'{H["回答"]}{r}'].value
-            if cur and cur != ans["回答"]:
-                raise SystemExit(f"Q{ans['Q']}（行{r}）には既に別の回答がある: {cur[:40]}")
             body = ans["回答"]
             if src and src not in body:
                 body = f"{body}【出所】{src}"
+            if ans.get("追記"):
+                d = as_date(ans.get("回答日")) or asked
+                tag = f"【{d.month}/{d.day}追記】" if d else "【追記】"
+                body = f"{cur}／{tag}{body}" if cur else f"{tag}{body}"
+            elif cur and cur != body and cur != ans["回答"]:
+                raise SystemExit(f"Q{ans['Q']}（行{r}）には既に別の回答がある: {cur[:40]}"
+                                 "（書き足すなら \"追記\": true）")
             print(f"   Q{ans['Q']:>2}（行{r}） {state:<8} {body[:46]}…")
             if a.dry_run:
                 continue
