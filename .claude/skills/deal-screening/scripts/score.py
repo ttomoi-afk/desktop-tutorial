@@ -67,8 +67,22 @@ def ev_calc(d):
         return None
     real_nc = d["book_net_cash"] - d["avg_wc"]
     ev = d["equity_price"] - real_nc
-    cost = d.get("deal_cost", 0)
-    return real_nc, ev, cost, ev / d["ebitda"], (ev + cost) / d["ebitda"]
+    return real_nc, ev, deal_cost(d), ev / d["ebitda"], (ev + deal_cost(d)) / d["ebitda"]
+
+
+def deal_cost(d):
+    """承継コスト。提示値が無ければ cash_need と同じ概算（レーマン＋DD）を使う。
+
+    以前は未入力を 0 として②倍率を出していたため、No.5 と所要資金のはしご
+    （No.1-2）で同じ案件に別々の承継コストを当てていた。
+    """
+    if d.get("deal_cost") is not None:
+        return float(d["deal_cost"])
+    import cash_need
+    price = d["equity_price"]
+    fee = max(cash_need.lehman(price),
+              d.get("broker_fee_min") or cash_need.DEFAULT_BROKER_MIN)
+    return fee + (d.get("dd_cost") or cash_need.dd_estimate(price))
 
 
 def book_multiple(d):
