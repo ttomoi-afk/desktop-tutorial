@@ -3,10 +3,11 @@
 
 タブ構成
   案件管理            1行=1案件。企業名・事業内容＋数値＋青塗り12項目の◯△×＋判定＋進行
+                      4〜6行に判定基準を敷いて見出しごと固定。判定はAI総合判定（自動）と
+                      友井判定（手入力A/B/C）の2本
   取込                Claudeが出したTSVを貼る場所。1回の取込＝1案件。
                       Apps Script（gas/案件取込.gs）が案件管理と質問リストへ振り分ける
   質問リスト           1行=1質問。仲介の案件担当者に聞く文面と、回答で動く評価項目
-  友井→服部           上席に上げる案件だけを案件管理から自動で抜き出す
   仲介会社管理シート    36社の属性と、月次の流入／条件合致件数（案件管理から自動集計）
   判定基準            ルーブリックの閾値と、条件合致の判定パラメータ
   選択肢              ドロップダウンの元データ
@@ -44,9 +45,15 @@ MULT_H = "EV/EBITDA\nマルチプル"      # 見出しは2行だが f-string 内
 REF_H = "参考：簿価\nベース倍率"
 WC_H = "平均必要\n運転資金"
 
-BAND_ROW, HEAD_ROW = 3, 4
-FIRST, LAST = 5, 104            # 5=記入例 6=実案件 7〜104=入力用
+# 3=帯 4〜6=判定基準（◯／△／×の3行）7=列見出し 8〜107=明細
+# 判定基準タブを見に行かずに済むよう、基準を見出しの直上に置いて見出しごと固定する。
+BAND_ROW = 3
+CRIT_O, CRIT_D, CRIT_X = 4, 5, 6
+HEAD_ROW = 7
+FIRST, LAST = 8, 107            # 8=記入例 9,10=実案件 11〜107=入力用
+EVAL_W = 7.0                    # ◯△×12列の幅。基準帯の文字が3行で収まる幅
 GRADE_LIST = "◯,△〜◯,△,×〜△,×,－"
+TOMOI_LIST = "A,B,C"            # 友井判定（手入力）のドロップダウン
 GRADE_COLORS = [("◯", "B7E1CD"), ("△〜◯", "D9EAD3"), ("△", "FFF2CC"),
                 ("×〜△", "FCE5CD"), ("×", "F4C7C3"), ("－", "EFEFEF")]
 SALES_MIN, SALES_MAX = 300, 3000
@@ -63,6 +70,7 @@ IN_Q_HEAD, IN_Q_FIRST, IN_Q_LAST = 9, 10, 59
 IN_LOG_ROW = 61
 MED_FIRST = 5                     # 仲介会社の先頭行
 MED_LAST = MED_FIRST + len(MEDIATORS) - 1
+# 選択肢タブの「服部判断」に出す語。上申シート自体は廃止したが語は残す。
 ESC_JUDGE = ["進める", "条件付きで進める", "追加検討", "見送り"]
 
 # 判定基準タブの「条件合致の判定パラメータ」の先頭行。ここを起点に
@@ -87,36 +95,50 @@ SECTORS = ["重点①シニア", "重点②AI・DXで伸ばせる業種", "重�
 STATUS = ["未着手", "初期検討中", "追加情報待ち", "NDA締結", "トップ面談", "意向表明",
           "基本合意", "DD", "最終契約", "クロージング", "見送り", "先方都合で終了"]
 
-# 12項目: (短い見出し, 吹き出しに出す評価軸と基準, Must か)
+# 12項目: (短い見出し, 吹き出しに出す評価軸と基準, Must か,
+#          基準帯に出す◯, 同△, 同×)
+# 基準帯の3文字列は列幅7に3行で収まる長さ（全角9文字まで）に詰めてある。
 ITEMS = [
     ("1-1", "投資ポリシーとの合致／業種ターゲットとの整合\n"
-            "◯ 重点業種①②③に直接該当／△ 追加B群で罠を回避できる形／× NG業種7カテゴリ・追加C群", True),
+            "◯ 重点業種①②③に直接該当／△ 追加B群で罠を回避できる形／× NG業種7カテゴリ・追加C群", True,
+     "重点①②③", "追加B群", "NG7・追加C群"),
     ("1-2", "投資ポリシーとの合致／1件あたりの資金負担\n"
             "TE自己資金拠出額（ネット所要資金−買収借入）が買収予算25億円に占める割合\n"
-            "◯ 20%以下（5億円）／△ 30〜40%（7.5〜10億円）／× 50%超（12.5億円超）", False),
+            "◯ 20%以下（5億円）／△ 30〜40%（7.5〜10億円）／× 50%超（12.5億円超）", False,
+     "20%以下", "30〜40%", "50%超"),
     ("1-3", "投資ポリシーとの合致／非キャッシュ性資産が重くないか\n"
-            "（有形固定資産＋棚卸）÷実態EBITDA　◯ 2.0倍以下／△ 3.0〜5.0倍／× 8.0倍超", True),
+            "（有形固定資産＋棚卸）÷実態EBITDA　◯ 2.0倍以下／△ 3.0〜5.0倍／× 8.0倍超", True,
+     "2.0倍以下", "3〜5倍", "8倍超"),
     ("2", "安定黒字か／実態EBITDAが3期連続黒字か\n"
-          "◯ 3期連続黒字かつ増加基調／△ 直近が前期比▲20%以上／× 2期以上赤字", True),
+          "◯ 3期連続黒字かつ増加基調／△ 直近が前期比▲20%以上／× 2期以上赤字", True,
+     "3期黒字で増加", "直近▲20%超", "2期以上赤字"),
     ("3", "付加価値は高いか／3期連続で粗利率30%以上か\n"
-          "◯ 3期すべて30%以上／△ 3期平均25〜30%／× 3期平均20%未満・5pt以上低下", False),
+          "◯ 3期すべて30%以上／△ 3期平均25〜30%／× 3期平均20%未満・5pt以上低下", False,
+     "3期30%以上", "平均25〜30%", "平均20%未満"),
     ("4", "永続性は高いか／市場は10年後も残り続けるか\n"
-          "◯ 人口動態・法定需要が後押し／△ 横ばい・代替技術の影響が読めない／× 構造的に消える", False),
+          "◯ 人口動態・法定需要が後押し／△ 横ばい・代替技術の影響が読めない／× 構造的に消える", False,
+     "法定・人口が後押し", "横ばい", "10年で消える"),
     ("5", "価格は割高ではないか／②(EV＋承継コスト)/EBITDA\n"
           "EV＝譲渡価格−実質NetCash（＝簿価NetCash−平均必要運転資金）\n"
-          "◯ 5.0倍以下／△ 6.0〜7.0倍／× 8.0倍超", True),
+          "◯ 5.0倍以下／△ 6.0〜7.0倍／× 8.0倍超", True,
+     "②5.0倍以下", "②6〜7倍", "②8倍超"),
     ("8-1", "事業ボラティリティは低いか／ストック型かフロー型か\n"
-            "◯ ストック比率70%以上／△ リピート中心だが契約なし／× スポット・案件単位が主", False),
+            "◯ ストック比率70%以上／△ リピート中心だが契約なし／× スポット・案件単位が主", False,
+     "ストック70%超", "リピートのみ", "スポット主"),
     ("8-2", "事業ボラティリティは低いか／流行り廃りはあるか\n"
-            "◯ 生活必需・法定需要／△ 一部商材がトレンド依存／× 嗜好・流行・立地が売上を左右", False),
+            "◯ 生活必需・法定需要／△ 一部商材がトレンド依存／× 嗜好・流行・立地が売上を左右", False,
+     "生活必需・法定", "一部トレンド", "嗜好・流行・立地"),
     ("9", "売却理由／隠された大きなリスクは無いか\n"
-          "◯ 高齢・後継者不在で業績と整合／△ 理由が一般的で裏付け不足／× 業績悪化・係争の兆候と符合", False),
+          "◯ 高齢・後継者不在で業績と整合／△ 理由が一般的で裏付け不足／× 業績悪化・係争の兆候と符合", False,
+     "高齢・後継者不在", "裏付け不足", "業績悪化と符合"),
     ("11", "特定取引先に依存していないか／上位1社の売上比率・仕入比率（悪い方）\n"
-           "◯ 10%未満／△ 20〜30%／× 50%以上・代替不能な単一発注先", False),
+           "◯ 10%未満／△ 20〜30%／× 50%以上・代替不能な単一発注先", False,
+     "上位1社10%未満", "20〜30%", "50%以上"),
     ("12", "特定人材に依存していないか／依存人材の代替可能性\n"
-           "◯ 社長不在でも運営可／△ 社長の営業依存（顧問就任で緩和）／× 有資格者が社長のみ・職人依存", False),
+           "◯ 社長不在でも運営可／△ 社長の営業依存（顧問就任で緩和）／× 有資格者が社長のみ・職人依存", False,
+     "社長不在でも可", "社長の営業依存", "社長のみ有資格"),
 ]
-ITEM_NAMES = [s for s, _, _ in ITEMS]
+ITEM_NAMES = [it[0] for it in ITEMS]
 
 # (見出し, 幅, 種別)  種別 in=入力 / calc=数式 / eval=◯△× / hide=内部計算
 # 並びは「1画面で読める順」。先頭からステータスまでで約230文字幅＝1画面に収まる。
@@ -126,8 +148,9 @@ COLS = (
     + [("事業内容", 30, "in"), ("業種区分", 18, "in")]
     + [("譲渡価格", 9, "in"), ("実態EBITDA", 10, "in"), (MULT_H, 11, "calc"),
        ("売上", 9, "in")]
-    + [(("★\n" if m else "") + s_, 5.0, "eval") for s_, _, m in ITEMS]
-    + [("総合判定", 16, "calc"), ("達成率", 8, "calc"), ("未解決\n質問", 7, "calc")]
+    + [(("★\n" if it[2] else "") + it[0], EVAL_W, "eval") for it in ITEMS]
+    + [("AI総合判定", 16, "calc"), ("友井判定", 8, "manual"),
+       ("達成率", 8, "calc"), ("未解決\n質問", 7, "calc")]
     + [("ステータス", 12, "in"), ("次アクション", 26, "in"), ("期限", 10, "in"),
        ("意向表明期限", 11, "in"), ("初期検討メモ", 34, "in"),
        ("見送り理由", 26, "in")]
@@ -145,10 +168,11 @@ L = IDX
 EV_FIRST = next(i for i, (_, _, k) in enumerate(COLS, start=1) if k == "eval")
 EV_LAST = EV_FIRST + len(ITEMS) - 1
 EVC = [get_column_letter(c) for c in range(EV_FIRST, EV_LAST + 1)]
-MUST = [EVC[i] for i, (_, _, m) in enumerate(ITEMS) if m]
+MUST = [EVC[i] for i, it in enumerate(ITEMS) if it[2]]
 SCORE_C, JUDGED_C = L["得点"], L["判定済"]
 NX_C, MUSTX_C = L["×件数"], L["Must×"]
-VERDICT_C, RATE_C = L["総合判定"], L["達成率"]
+VERDICT_C, RATE_C = L["AI総合判定"], L["達成率"]
+TOMOI_C = L["友井判定"]
 OPENQ_C = L["未解決\n質問"]
 
 BANDS = [  # (開始見出し, 終了見出し, ラベル, 色)
@@ -157,7 +181,7 @@ BANDS = [  # (開始見出し, 終了見出し, ラベル, 色)
     ("譲渡価格", "売上", "主要数値（単位：百万円）", "3D6B8E"),
     (COLS[EV_FIRST - 1][0], COLS[EV_LAST - 1][0],
      "初期検討（投資条件タブ 青塗り12項目）　★=Must", "1F4E79"),
-    ("総合判定", "未解決\n質問", "判定", "2E6B4F"),
+    ("AI総合判定", "未解決\n質問", "判定（AI＝自動／友井＝手入力）", "2E6B4F"),
     ("ステータス", "見送り理由", "進行管理", "6B7F8C"),
     ("流入日", "備考", "補足（仲介・価格の内訳・保管先）", "9AA5AD"),
 ]
@@ -166,14 +190,90 @@ BANDS = [  # (開始見出し, 終了見出し, ラベル, 色)
 def eval_rng(r):
     return f"${EVC[0]}{r}:${EVC[-1]}{r}"
 
+# 基準帯（4〜6行）に出す文章。◯△×12項目だけは列ごとに3行で書き、
+# それ以外のグループは帯の幅いっぱいに1枠でまとめる。
+# キーは BANDS のラベルと一致させる（ずれたら build_deals が KeyError で落ちる）。
+CRIT_ROWS = [(CRIT_O, "◯ ＝ 2.0点", 3, "B7E1CD"),
+             (CRIT_D, "△ ＝ 1.0点", 4, "FFF2CC"),
+             (CRIT_X, "× ＝ 0点", 5, "F4C7C3")]
+CRIT_NOTE_FILL = PatternFill("solid", fgColor="FAFAFA")
+CRIT_NOTES = {
+    "案件情報":
+        "業種区分は選択肢タブの8区分から選ぶ。\n"
+        "NG業種7カテゴリ・追加C群を選んだ案件は 1-1 が×（＝Mustなので総合C）。",
+    "主要数値（単位：百万円）":
+        "EV ＝ 譲渡価格 −（簿価NetCash − 平均必要運転資金）\n"
+        "マルチプル② ＝（EV ＋ 承継コスト）÷ 実態EBITDA。7倍超は赤く出る。\n"
+        f"売上の目安は {SALES_MIN:,}〜{SALES_MAX:,} 百万円。"
+        "青塗り外の条件なので◯△×には入れず、範囲外を赤く出すだけ。",
+    "判定（AI＝自動／友井＝手入力）":
+        "A：進める ＝ ×ゼロ かつ 達成率75%以上\n"
+        "B：追加情報 ＝ 上記以外。判定済が6項目未満のときは達成率に関わらずB\n"
+        "C：見送り ＝ Must（1-1・1-3・2・5）に×が1つ以上、または全体で×が2項目以上\n"
+        "友井判定はAI判定を手で上書きする欄（A／B／C）。"
+        "AI判定の頭文字と違う字を入れると、その案件だけ紫に変わる。",
+    "進行管理":
+        "スコアは ◯2.0／△〜◯1.5／△1.0／×〜△0.5／×0。\n"
+        "－ は判定不能。加算もせず達成率の分母にも入れない（情報が足りない案件は"
+        "達成率が高く出やすいので、判定済の数も一緒に見る）。\n"
+        "達成率 ＝ 得点 ÷（判定済 × 2）。",
+    "補足（仲介・価格の内訳・保管先）":
+        "ルーブリックの正本は .claude/skills/deal-screening/references/rubric.md。"
+        "この帯はその写しなので、閾値を変えるときは両方直すこと。\n"
+        "買収に必要な金額の積み上げ（譲渡日に用意する額／ネット所要資金）は "
+        "references/acquisition-funding.md。\n"
+        "仲介会社管理シートの「条件合致案件数」のしきい値は判定基準タブの下部にある。",
+}
 
-def build_deals(ws):
+
+def build_criteria_band(ws):
+    """判定基準を列見出しの直上に敷く。見出しごと固定するので、
+    どの案件行までスクロールしても◯△×の基準が目に入る。"""
+    for row, label, idx, color in CRIT_ROWS:
+        ws.merge_cells(f'{L["No"]}{row}:{L["企業名"]}{row}')
+        c = ws[f'{L["No"]}{row}']
+        c.value = label
+        c.font = Font(name=FONT, size=10, bold=True, color=INK)
+        c.fill = PatternFill("solid", fgColor=color)
+        c.alignment = Alignment(horizontal="right", vertical="center")
+        c.border = BOX
+        for i, it in enumerate(ITEMS):
+            cc = ws[f"{EVC[i]}{row}"]
+            cc.value = it[idx]
+            cc.font = Font(name=FONT, size=8, color=INK)
+            cc.fill = PatternFill("solid", fgColor=color)
+            cc.alignment = Alignment(horizontal="center", vertical="center",
+                                     wrap_text=True)
+            cc.border = BOX
+        ws.row_dimensions[row].height = 33
+        ws.row_dimensions[row].outlineLevel = 1   # 畳めるようにしておく
+
+    for start, end, label, _ in BANDS:
+        note = CRIT_NOTES.get(label)
+        if note is None:
+            continue
+        ws.merge_cells(f"{L[start]}{CRIT_O}:{L[end]}{CRIT_X}")
+        c = ws[f"{L[start]}{CRIT_O}"]
+        c.value = note
+        c.font = NOTE_F
+        c.fill = CRIT_NOTE_FILL
+        c.alignment = Alignment(horizontal="left", vertical="top",
+                                wrap_text=True)
+        for r in range(CRIT_O, CRIT_X + 1):
+            for cl in range(ws[f"{L[start]}1"].column, ws[f"{L[end]}1"].column + 1):
+                ws.cell(r, cl).border = BOX
+
+
+def build_deals(ws, samples=True):
     ws["A1"] = "案件管理（初期検討まで1ページ）"
     ws["A1"].font = TITLE_F
-    ws["A2"] = ("【凡例】薄い黄色＝入力欄、灰色＝自動計算（触らない）。金額は百万円。"
-                "◯△×の12列は右クリック→メモで評価基準が出ます。"
-                "5行目は架空の記入例（削除可）、6行目は実案件の入力済みサンプル。"
-                "得点・判定済などの内部計算列は右端に隠してあります。")
+    ws["A2"] = (f"【凡例】薄い黄色＝入力欄、灰色＝自動計算（触らない）。金額は百万円。"
+                f"{CRIT_O}〜{CRIT_X}行目が判定基準で、見出しごと固定してあるので"
+                f"どこまでスクロールしても見えます（左の＋−で畳めます）。"
+                f"もっと詳しい基準は◯△×の見出しを右クリック→メモ。"
+                f"判定はAI総合判定（自動）と友井判定（手入力のA／B／C）の2本立て。"
+                f"{FIRST}行目は架空の記入例（削除可）、{FIRST + 1}行目以降が実案件。"
+                f"得点・判定済などの内部計算列は右端に隠してあります。")
     ws["A2"].font = NOTE_F
 
     # 帯（グループ見出し）
@@ -187,21 +287,30 @@ def build_deals(ws):
         cell.alignment = Alignment(horizontal="center", vertical="center")
     ws.row_dimensions[BAND_ROW].height = 18
 
+    build_criteria_band(ws)
+
     # 列見出し
     for i, (h, _, kind) in enumerate(COLS, start=1):
         c = ws.cell(HEAD_ROW, i, h)
         c.font = HDR_F
-        c.fill = HDR_FILL if kind in ("in", "eval") else PatternFill(
+        c.fill = HDR_FILL if kind in ("in", "eval", "manual") else PatternFill(
             "solid", fgColor="E2E2E2")
         c.alignment = Alignment(horizontal="center", vertical="center",
                                 wrap_text=True)
         c.border = Border(left=thin, right=thin, top=thin, bottom=med)
     ws.row_dimensions[HEAD_ROW].height = 34
     # 12項目の見出しに評価基準をメモで付ける（短縮名だけでは伝わらないため）
-    for i, (short, tip, must) in enumerate(ITEMS):
+    for i, (short, tip, must, *_) in enumerate(ITEMS):
         c = ws[f"{EVC[i]}{HEAD_ROW}"]
         body = ("【Must】×が1つでも付けば総合C\n" if must else "") + tip
         c.comment = Comment(body, "deal-screening", height=150, width=430)
+    ws[f"{TOMOI_C}{HEAD_ROW}"].comment = Comment(
+        "友井さんが手で付ける総合判定（A／B／C）。\n"
+        "AI総合判定はルーブリックの機械的な集計なので、"
+        "業種の毛色・代表判断・交渉余地のような数字に落ちない論点は反映されない。\n"
+        "ここに入れた字がAI総合判定の頭文字と違うと、そのセルが紫になる。\n"
+        "A＝進める／B＝追加情報を取得して再判定／C＝見送り",
+        "deal-screening", height=130, width=360)
 
     dv_g = DataValidation(type="list", formula1=f'"{GRADE_LIST}"', allow_blank=True,
                           showErrorMessage=True, errorTitle="評価の入力",
@@ -217,7 +326,10 @@ def build_deals(ws):
     dv_t = DataValidation(type="list",
                           formula1=f"=選択肢!$C$3:$C${2 + len(STATUS)}",
                           allow_blank=True)
-    for dv in (dv_g, dv_i, dv_s, dv_t):
+    dv_m = DataValidation(type="list", formula1=f'"{TOMOI_LIST}"', allow_blank=True,
+                          showErrorMessage=True, errorTitle="友井判定の入力",
+                          error="A／B／C から選んでください")
+    for dv in (dv_g, dv_i, dv_s, dv_t, dv_m):
         ws.add_data_validation(dv)
 
     for r in range(FIRST, LAST + 1):
@@ -226,8 +338,8 @@ def build_deals(ws):
             c = ws.cell(r, i)
             c.font = BODY_F
             c.border = BOX
-            c.fill = IN_FILL if kind in ("in", "eval") else CALC_FILL
-            if kind == "eval":
+            c.fill = IN_FILL if kind in ("in", "eval", "manual") else CALC_FILL
+            if kind in ("eval", "manual"):
                 c.alignment = Alignment(horizontal="center", vertical="center")
             else:
                 c.alignment = Alignment(
@@ -281,6 +393,7 @@ def build_deals(ws):
         dv_i.add(ws[f'{L["仲介会社"]}{r}'])
         dv_s.add(ws[f'{L["業種区分"]}{r}'])
         dv_t.add(ws[f'{L["ステータス"]}{r}'])
+        dv_m.add(ws[f"{TOMOI_C}{r}"])
 
     # 記入例（架空）と実案件
     ex = {"No": 1, "企業名": "（記入例）株式会社サンプル配食サービス",
@@ -331,8 +444,9 @@ def build_deals(ws):
     # 1-1 は「チェーン展開／動物で通常の飲食とは毛色が違う」との代表判断で △
     real2_g = ["△", "×〜△", "◯", "×〜△", "△〜◯", "△", "◯", "×〜△", "×", "×〜△",
                "－", "×〜△"]
-    for row, data, grades in ((FIRST, ex, ex_g), (FIRST + 1, real, real_g),
-                              (FIRST + 2, real2, real2_g)):
+    rows = (((FIRST, ex, ex_g), (FIRST + 1, real, real_g),
+             (FIRST + 2, real2, real2_g)) if samples else ())
+    for row, data, grades in rows:
         for h, v in data.items():
             c = ws[f"{L[h]}{row}"]
             c.value = v
@@ -363,6 +477,16 @@ def build_deals(ws):
             f"{VERDICT_C}{FIRST}:{VERDICT_C}{LAST}",
             FormulaRule(formula=[f'LEFT({VERDICT_C}{FIRST},2)="{pre}"'],
                         fill=PatternFill("solid", fgColor=color)))
+    # 先に入れた規則の方が優先される。食い違いの紫を A/B/C の色より前に置く。
+    tm = f"{TOMOI_C}{FIRST}:{TOMOI_C}{LAST}"
+    ws.conditional_formatting.add(tm, FormulaRule(
+        formula=[f'AND({TOMOI_C}{FIRST}<>"",{VERDICT_C}{FIRST}<>"",'
+                 f'{TOMOI_C}{FIRST}<>LEFT({VERDICT_C}{FIRST},1))'],
+        fill=PatternFill("solid", fgColor="D9D2E9"), stopIfTrue=True))
+    for letter, color in [("A", "B7E1CD"), ("B", "FFF2CC"), ("C", "F4C7C3")]:
+        ws.conditional_formatting.add(tm, FormulaRule(
+            formula=[f'EXACT({TOMOI_C}{FIRST},"{letter}")'],
+            fill=PatternFill("solid", fgColor=color)))
     sr = L["売上レンジ"]
     ws.conditional_formatting.add(
         f"{sr}{FIRST}:{sr}{LAST}",
@@ -570,135 +694,6 @@ def build_questions(ws, d):
 
 
 # ════════════════════════════════════════════════════════════════
-#  友井→服部（上席に上げる案件）
-# ════════════════════════════════════════════════════════════════
-# 案件管理の 5〜104 行と 1:1 で対応させる。配列数式（FILTER 等）は
-# openpyxl で書くと Excel 側で展開されないため使わず、行ごとの IF で表現する。
-ESC_COLS = [
-    ("上申\n手動✓", 7, "in"),
-    ("上申区分", 13, "calc"),
-    ("No", 5, "link"),
-    ("企業名", 22, "link"),
-    ("事業内容", 30, "link"),
-    ("業種区分", 18, "link"),
-    ("譲渡価格", 9, "link"),
-    ("実態EBITDA", 10, "link"),
-    (MULT_H, 11, "link"),
-    ("売上", 9, "link"),
-    ("総合判定", 16, "link"),
-    ("達成率", 8, "link"),
-    ("×が付いた項目", 20, "calc"),
-    ("要確認（－）の項目", 20, "calc"),
-    ("友井コメント（初期検討メモ）", 36, "link"),
-    ("ステータス", 12, "link"),
-    ("上申日", 10, "in"),
-    ("服部判断", 15, "in"),
-    ("服部コメント", 36, "in"),
-    ("指示後の次アクション", 30, "in"),
-]
-
-
-def build_escalation(ws, d):
-    """d = 案件管理の列レター辞書（L）"""
-    E = {}
-    for i, (h, _, _) in enumerate(ESC_COLS, start=1):
-        E.setdefault(h, get_column_letter(i))
-    ws["A1"] = "友井 → 服部（上席に上げる案件）"
-    ws["A1"].font = TITLE_F
-    ws["A2"] = ("案件管理タブの5〜104行と同じ行番号で対応しています。"
-                "総合判定がAなら自動で「◎ 上申対象」、Bなら「△ 要相談」。"
-                "Cの案件と未入力行は空欄になります。"
-                "判定に関わらず上げたい案件は、A列に ✓ を入れてください。"
-                "白地の列（上申日・服部判断・服部コメント・指示後の次アクション）だけが入力欄で、"
-                "残りは案件管理からの自動反映です。")
-    ws["A2"].font = NOTE_F
-    ws["A2"].alignment = Alignment(wrap_text=True, vertical="top")
-    ws.merge_cells(f"A2:{get_column_letter(len(ESC_COLS))}2")
-    ws.row_dimensions[2].height = 30
-
-    ws[f"A{BAND_ROW}"] = (f"上申対象の件数： ◎ "
-                          f"")
-    ws[f"A{BAND_ROW}"].value = None
-    cnt = (f'="◎ 上申対象 "&COUNTIF($B${FIRST}:$B${LAST},"◎ 上申対象")'
-           f'&" 件　／　△ 要相談 "&COUNTIF($B${FIRST}:$B${LAST},"△ 要相談")&" 件"')
-    c = ws[f"A{BAND_ROW}"]
-    c.value = cnt
-    c.font = Font(name=FONT, size=11, bold=True, color=INK)
-    ws.merge_cells(f"A{BAND_ROW}:{get_column_letter(len(ESC_COLS))}{BAND_ROW}")
-    ws[f"A{BAND_ROW}"].fill = PatternFill("solid", fgColor="E8F0E4")
-    ws[f"A{BAND_ROW}"].alignment = Alignment(horizontal="left", vertical="center")
-    ws.row_dimensions[BAND_ROW].height = 20
-
-    for i, (h, _, kind) in enumerate(ESC_COLS, start=1):
-        cc = ws.cell(HEAD_ROW, i, h)
-        cc.font = HDR_F
-        cc.fill = (HDR_FILL if kind == "in"
-                   else PatternFill("solid", fgColor="E2E2E2"))
-        cc.alignment = Alignment(horizontal="center", vertical="center",
-                                 wrap_text=True)
-        cc.border = Border(left=thin, right=thin, top=thin, bottom=med)
-    ws.row_dimensions[HEAD_ROW].height = 34
-
-    dv_j = DataValidation(type="list", formula1=f'"{",".join(ESC_JUDGE)}"',
-                          allow_blank=True)
-    dv_c = DataValidation(type="list", formula1='"✓"', allow_blank=True)
-    ws.add_data_validation(dv_j)
-    ws.add_data_validation(dv_c)
-
-    # 案件管理から引く列の対応（上申シートの見出し → 案件管理の見出し）
-    PULL = {"No": "No", "企業名": "企業名", "事業内容": "事業内容",
-            "業種区分": "業種区分", "譲渡価格": "譲渡価格",
-            "実態EBITDA": "実態EBITDA", MULT_H: MULT_H,
-            "売上": "売上", "総合判定": "総合判定", "達成率": "達成率",
-            "友井コメント（初期検討メモ）": "初期検討メモ",
-            "ステータス": "ステータス"}
-    V = d["総合判定"]
-    for r in range(FIRST, LAST + 1):
-        guard = f'IF(OR($B{r}="",$B{r}="—"),""'
-        ws[f"{E['上申区分']}{r}"] = (
-            f'=IF(案件管理!${d["No"]}{r}="","",'
-            f'IF(OR($A{r}="✓",LEFT(案件管理!${V}{r},2)="A："),"◎ 上申対象",'
-            f'IF(LEFT(案件管理!${V}{r},2)="B：","△ 要相談","—")))')
-        for h, src_h in PULL.items():
-            ws[f"{E[h]}{r}"] = f'={guard},案件管理!${d[src_h]}{r})'
-        for h, mark in (("×が付いた項目", "×"), ("要確認（－）の項目", "－")):
-            parts = "&".join(
-                f'IF(案件管理!${c_}{r}="{mark}","{n} ","")'
-                for n, c_ in zip(ITEM_NAMES, EVC))
-            ws[f"{E[h]}{r}"] = f'={guard},{parts})'
-        for i, (h, _, kind) in enumerate(ESC_COLS, start=1):
-            cc = ws.cell(r, i)
-            cc.font = BODY_F
-            cc.border = BOX
-            cc.fill = IN_FILL if kind == "in" else CALC_FILL
-            cc.alignment = Alignment(
-                vertical="top",
-                wrap_text=h in ("事業内容", "友井コメント（初期検討メモ）",
-                                "服部コメント", "指示後の次アクション",
-                                "×が付いた項目", "要確認（－）の項目"))
-        ws.cell(r, 1).alignment = Alignment(horizontal="center")
-        ws[f"{E['譲渡価格']}{r}"].number_format = "#,##0.0"
-        ws[f"{E['実態EBITDA']}{r}"].number_format = "#,##0.0"
-        ws[f"{E['売上']}{r}"].number_format = "#,##0.0"
-        ws[f"{E[MULT_H]}{r}"].number_format = '0.0"倍"'
-        ws[f"{E['達成率']}{r}"].number_format = "0%"
-        ws[f"{E['上申日']}{r}"].number_format = "yyyy/mm/dd"
-        dv_j.add(ws[f"{E['服部判断']}{r}"])
-        dv_c.add(ws[f"A{r}"])
-
-    for i, (h, w, _) in enumerate(ESC_COLS, start=1):
-        ws.column_dimensions[get_column_letter(i)].width = w
-    ws.freeze_panes = f"{E['事業内容']}{FIRST}"
-    b = E["上申区分"]
-    for txt, color in [("◎ 上申対象", "B7E1CD"), ("△ 要相談", "FFF2CC")]:
-        ws.conditional_formatting.add(
-            f"{b}{FIRST}:{b}{LAST}",
-            FormulaRule(formula=[f'EXACT({b}{FIRST},"{txt}")'],
-                        fill=PatternFill("solid", fgColor=color)))
-    ws.auto_filter.ref = f"A{HEAD_ROW}:{get_column_letter(len(ESC_COLS))}{LAST}"
-
-
-# ════════════════════════════════════════════════════════════════
 #  仲介会社管理シート
 # ════════════════════════════════════════════════════════════════
 MED_ATTRS = [("仲介会社名", 28), ("合計", 8), ("仲介重要度", 10), ("担当者", 10),
@@ -880,8 +875,12 @@ def build_choices(ws):
 def build_criteria(ws):
     ws["A1"] = "判定基準（青塗り12項目のルーブリック抜粋）"
     ws["A1"].font = TITLE_F
-    ws["A2"] = ("正本は .claude/skills/deal-screening/references/rubric.md。"
-                "ここは参照用の写しなので、閾値を変えるときは rubric.md と両方直すこと。")
+    ws["A2"] = (f"この表の内容は案件管理タブの{CRIT_O}〜{CRIT_X}行目に短縮して敷いてある"
+                "ので、普段はそちらを見ればよい。このタブは全文の控えと、"
+                "下部の「条件合致の判定パラメータ」（仲介会社管理シートの集計が参照する"
+                "唯一の置き場）のために残している。"
+                "正本は .claude/skills/deal-screening/references/rubric.md。"
+                "閾値を変えるときは rubric.md・このタブ・案件管理タブの基準帯の3つを直すこと。")
     ws["A2"].font = NOTE_F
     rows = [
         ("No", "評価軸", "◯", "△", "×", "Must"),
@@ -967,30 +966,39 @@ def build_criteria(ws):
         ws.column_dimensions[col].width = w
 
 
-wb = Workbook()
-ws_deal = wb.active
-ws_deal.title = "案件管理"
-ws_in = wb.create_sheet("取込")
-ws_q = wb.create_sheet("質問リスト")
-ws_esc = wb.create_sheet("友井→服部")
-ws_med = wb.create_sheet("仲介会社管理シート")
-ws_cri = wb.create_sheet("判定基準")
-ws_cho = wb.create_sheet("選択肢")
+SHEETS = ["案件管理", "取込", "質問リスト", "仲介会社管理シート", "判定基準", "選択肢"]
 
-build_deals(ws_deal)
-build_intake(ws_in, L)
-build_questions(ws_q, L)
-build_escalation(ws_esc, L)
-build_mediators(ws_med, L)
-build_criteria(ws_cri)
-build_choices(ws_cho)
 
-out = "案件管理表_TeamEnergy.xlsx"
-wb.save(out)
-print("saved", out)
-print(f"案件管理   列{len(COLS)} 評価{EVC[0]}〜{EVC[-1]} Must{MUST} 判定{VERDICT_C}{RATE_C}")
-print(f"友井→服部  列{len(ESC_COLS)} 行{FIRST}〜{LAST}（案件管理と1:1）")
-print(f"取込       案件列{len([h for h,_,k in COLS if k in ('in','eval') and h!='No'])} / 質問行{IN_Q_FIRST}〜{IN_Q_LAST}")
-print(f"質問リスト  {len(QUESTIONS)}件 行{Q_FIRST}〜{Q_LAST}")
-print(f"仲介会社   {len(MEDIATORS)}社 行{MED_FIRST}〜{MED_LAST} "
-      f"月次{MONTHS[0][0]}/{MONTHS[0][1]}〜{MONTHS[-1][0]}/{MONTHS[-1][1]}")
+def build_book(samples=True):
+    wb = Workbook()
+    ws_deal = wb.active
+    ws_deal.title = SHEETS[0]
+    sh = {SHEETS[0]: ws_deal}
+    for name in SHEETS[1:]:
+        sh[name] = wb.create_sheet(name)
+    build_deals(sh["案件管理"], samples=samples)
+    build_intake(sh["取込"], L)
+    build_questions(sh["質問リスト"], L)
+    build_mediators(sh["仲介会社管理シート"], L)
+    build_criteria(sh["判定基準"])
+    build_choices(sh["選択肢"])
+    return wb
+
+
+def main():
+    wb = build_book()
+    out = "案件管理表_TeamEnergy.xlsx"
+    wb.save(out)
+    print("saved", out)
+    print(f"案件管理   列{len(COLS)} 評価{EVC[0]}〜{EVC[-1]} Must{MUST} "
+          f"判定{VERDICT_C}（AI）/{TOMOI_C}（友井）{RATE_C}")
+    print(f"           基準帯{CRIT_O}〜{CRIT_X}行 見出し{HEAD_ROW}行 明細{FIRST}〜{LAST}行")
+    print(f"取込       案件列{len([h for h, _, k in COLS if k in ('in', 'eval') and h != 'No'])}"
+          f" / 質問行{IN_Q_FIRST}〜{IN_Q_LAST}")
+    print(f"質問リスト  {len(QUESTIONS)}件 行{Q_FIRST}〜{Q_LAST}")
+    print(f"仲介会社   {len(MEDIATORS)}社 行{MED_FIRST}〜{MED_LAST} "
+          f"月次{MONTHS[0][0]}/{MONTHS[0][1]}〜{MONTHS[-1][0]}/{MONTHS[-1][1]}")
+
+
+if __name__ == "__main__":
+    main()

@@ -16,8 +16,11 @@ from score import total, ORDER, ev_calc, book_multiple, MUST   # noqa: E402
 
 F = "案件管理表_TeamEnergy.xlsx"
 SH = "案件管理"
-BAND_ROW, HEAD_ROW, FIRST, LAST = 3, 4, 5, 104
-BLANK = 8                       # 5=記入例 6,7=実案件 なので素の挙動は8行目で見る
+BAND_ROW = 3
+CRIT_O, CRIT_X = 4, 6           # 判定基準を敷いた帯（見出しの直上）
+HEAD_ROW, FIRST, LAST = 7, 8, 107
+BLANK = 11                      # 8=記入例 9,10=実案件 なので素の挙動は11行目で見る
+MANUAL = ["友井判定"]            # 手入力のみ。取込には出さない列
 GRADES = ["◯", "△〜◯", "△", "×〜△", "×", "－"]
 ITEM_NAMES = ["1-1", "1-2", "1-3", "2", "3", "4", "5", "8-1", "8-2", "9", "11", "12"]
 # Must は score.py を唯一の正とする。ここに書き写すと付け替えのたびに二重管理になる。
@@ -52,12 +55,13 @@ PRICE, EBITDA = COL["譲渡価格"], COL["実態EBITDA"]
 MULT, SALES = COL["EV/EBITDAマルチプル"], COL["売上"]
 BNC, WC = COL["簿価NetCash"], COL["平均必要運転資金"]
 REFM, RANGE = COL["参考：簿価ベース倍率"], COL["売上レンジ"]
-VERDICT, RATE = COL["総合判定"], COL["達成率"]
+VERDICT, RATE = COL["AI総合判定"], COL["達成率"]
+TOMOI = COL["友井判定"]
 OPENQ = COL["未解決質問"]
 
 print("① 列の並び")
 for h in ("No", "企業名", "事業内容", "業種区分", "譲渡価格", "実態EBITDA", "売上",
-          "総合判定", "達成率", "未解決質問", "得点", "Must×"):
+          "AI総合判定", "友井判定", "達成率", "未解決質問", "得点", "Must×"):
     if h not in COL:
         chk(f"見出し{h}", None, "存在すること")
 chk("12項目すべて存在", sorted(EVCOL), sorted(ITEM_NAMES))
@@ -82,7 +86,10 @@ for c in ws[HEAD_ROW]:
         break
 print(f"   評価列 {EV[0]}〜{EV[-1]}／Must {must}／固定 {ws.freeze_panes}")
 print(f"   先頭〜ステータスの幅 {prim:.0f}文字 ≒ {prim * 7:.0f}px")
-if prim > 240:
+# 先頭〜ステータスが1画面（フルHDで約1,850px）に収まるかの歯止め。
+# 判定基準を12列の上に敷くため評価列を5.0→7.0に広げ（＋24文字）、
+# 友井判定を足した（＋8文字）ので、元の217文字から249文字になっている。
+if prim > 255:
     fails.append(f"主要ブロックが広すぎる {prim:.0f}文字")
 
 # ② 空欄状態で全数式がエラーを出さないか
@@ -106,11 +113,11 @@ else:
 # ③ 入力済みの2行
 print("③ 入力済みの2行")
 for row, label, exp in (
-    (5, "記入例", {MULT: 4.7, REFM: 4.4, RANGE: "範囲内",
+    (FIRST, "記入例", {MULT: 4.7, REFM: 4.4, RANGE: "範囲内",
                    VERDICT: "A：進める", RATE: 0.854}),
-    (6, "実案件1 左官", {MULT: 19.4, REFM: 11.1, RANGE: "範囲内",
+    (FIRST + 1, "実案件1 左官", {MULT: 19.4, REFM: 11.1, RANGE: "範囲内",
                          VERDICT: "C：見送り（Must×）", RATE: 0.455}),
-    (7, "実案件2 動物カフェ", {MULT: 3.0, REFM: 3.0, RANGE: "範囲内",
+    (FIRST + 2, "実案件2 動物カフェ", {MULT: 3.0, REFM: 3.0, RANGE: "範囲内",
                               VERDICT: "B：追加情報を取得", RATE: 0.455}),
 ):
     bk = Book(wb, maxrow=LAST + 5)
@@ -122,18 +129,18 @@ for row, label, exp in (
         chk(f"{label} {col}{row}", got, want)
         out.append(f"{col}={got}")
     print(f"   {label}（{row}行目） " + " / ".join(str(x) for x in out))
-for row, want in ((5, 0.0), (6, 13.0), (7, 15.0)):
+for row, want in ((FIRST, 0.0), (FIRST + 1, 13.0), (FIRST + 2, 15.0)):
     bk = Book(wb, maxrow=max(LAST, 310))
     chk(f"未解決質問 {row}行", evaluate(bk, SH, ws[f"{OPENQ}{row}"].value), want)
-print("   未解決質問 5行=0 / 6行=13 / 7行=15")
+print(f"   未解決質問 {FIRST}行=0 / {FIRST + 1}行=13 / {FIRST + 2}行=15")
 
 # 実案件が score.py と一致するか
 d = {"equity_price": 60, "ebitda": 24.1, "book_net_cash": -206.9, "avg_wc": 200.4}
 bk = Book(wb, maxrow=LAST + 5)
 chk("実案件 倍率 vs score.py",
-    round(evaluate(bk, SH, ws[f"{MULT}6"].value), 1), round(ev_calc(d)[3], 1))
+    round(evaluate(bk, SH, ws[f"{MULT}{FIRST + 1}"].value), 1), round(ev_calc(d)[3], 1))
 chk("実案件 簿価倍率 vs score.py",
-    round(evaluate(bk, SH, ws[f"{REFM}6"].value), 1), round(book_multiple(d), 1))
+    round(evaluate(bk, SH, ws[f"{REFM}{FIRST + 1}"].value), 1), round(book_multiple(d), 1))
 
 # ④ 総合判定・達成率を score.py と突き合わせ
 print("④ 総合判定・達成率 vs score.py（乱数 5,000 件）")
@@ -195,7 +202,7 @@ if mism2:
 print(f"   不一致 {mism2} 件")
 
 # ⑥ 境界値と未入力
-print("⑥ 境界値（8行目＝未入力の行）")
+print(f"⑥ 境界値（{BLANK}行目＝未入力の行）")
 for sl, want in [(299.9, "下限未満（対象外）"), (300, "範囲内"), (3000, "範囲内"),
                  (3000.1, "上限超（対象外）")]:
     bk = Book(wb, maxrow=LAST + 5)
@@ -212,40 +219,54 @@ for label, sets in [("EBITDA=0", {PRICE: 100, EBITDA: 0, BNC: 0, WC: 0}),
     chk(f"総合判定 {label}", evaluate(bk, SH, ws[f"{VERDICT}{BLANK}"].value), "")
 print("   すべて空文字を返す（エラーにならない）")
 
-# ⑦ 友井→服部（上申シート）
-print("⑦ 友井→服部（上申シート）")
-we = wb["友井→服部"]
-EC = {}
-for c in we[HEAD_ROW]:
-    if c.value is not None:
-        EC.setdefault(str(c.value).replace("\n", ""), c.column_letter)
-bk = Book(wb, maxrow=LAST + 5)
-# 5行目=記入例（A判定）→ ◎ 上申対象 / 6行目=尾形工業（C判定）→ —
-chk("上申区分 5行", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}5"].value), "◎ 上申対象")
-chk("上申区分 6行", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}6"].value), "—")
-chk("企業名 5行", evaluate(bk, "友井→服部", we[f"{EC['企業名']}5"].value),
-    "（記入例）株式会社サンプル配食サービス")
-chk("企業名 6行（C判定は空）", evaluate(bk, "友井→服部", we[f"{EC['企業名']}6"].value), "")
-chk("×が付いた項目 5行", evaluate(bk, "友井→服部", we[f"{EC['×が付いた項目']}5"].value), "")
-chk("要確認 5行", evaluate(bk, "友井→服部", we[f"{EC['要確認（－）の項目']}5"].value), "")
-chk("上申区分 8行（未入力）", evaluate(bk, "友井→服部", we[f"{EC['上申区分']}8"].value), "")
-chk("上申区分 7行（動物カフェ・B判定）",
-    evaluate(bk, "友井→服部", we[f"{EC['上申区分']}7"].value), "△ 要相談")
-chk("×が付いた項目 7行", evaluate(bk, "友井→服部", we[f"{EC['×が付いた項目']}7"].value), "8-2 ")
-chk("要確認 7行", evaluate(bk, "友井→服部", we[f"{EC['要確認（－）の項目']}7"].value), "11 ")
-chk("集計行", evaluate(bk, "友井→服部", we[f"A{BAND_ROW}"].value),
-    "◎ 上申対象 1 件　／　△ 要相談 1 件")
-# 手動✓ で C判定でも拾えるか
-bk2 = Book(wb, maxrow=LAST + 5)
-bk2.set("友井→服部", "A6", "✓")
-chk("手動✓で6行が対象化", evaluate(bk2, "友井→服部", we[f"{EC['上申区分']}6"].value),
-    "◎ 上申対象")
-chk("手動✓後の企業名", evaluate(bk2, "友井→服部", we[f"{EC['企業名']}6"].value), "尾形工業株式会社")
-chk("手動✓後の×項目", evaluate(bk2, "友井→服部", we[f"{EC['×が付いた項目']}6"].value),
-    "1-1 5 ")
-chk("手動✓後の要確認", evaluate(bk2, "友井→服部", we[f"{EC['要確認（－）の項目']}6"].value),
-    "11 ")
-print("   自動判定・手動✓・×項目の抽出とも期待どおり")
+# ⑦ 判定基準の帯（4〜6行）と 友井判定の列
+print("⑦ 判定基準の帯と 友井判定")
+chk("自動リストアップのタブが無い",
+    [n for n in wb.sheetnames if "自動リストアップ" in n or n == "友井→服部"], [])
+chk("タブ構成", wb.sheetnames,
+    ["案件管理", "取込", "質問リスト", "仲介会社管理シート", "判定基準", "選択肢"])
+# 12項目の◯／△／× が見出しの直上3行に、列ズレなく入っているか
+for off, mark in ((0, "◯"), (1, "△"), (2, "×")):
+    row = CRIT_O + off
+    blank = [EVCOL[n] for n in ITEM_NAMES if not ws[f"{EVCOL[n]}{row}"].value]
+    chk(f"{mark}の基準が12列すべてに入っている", blank, [])
+    chk(f"{mark}の行見出し", str(ws[f"A{row}"].value).startswith(mark), True)
+chk("基準帯が見出しごと固定されている",
+    ws.freeze_panes.endswith(str(FIRST)) and CRIT_X < HEAD_ROW < FIRST, True)
+chk("基準帯が明細に混ざっていない", ws.auto_filter.ref.startswith(f"A{HEAD_ROW}:"), True)
+chk("基準帯は畳める（行グループ）",
+    [ws.row_dimensions[r].outlineLevel for r in range(CRIT_O, CRIT_X + 1)], [1, 1, 1])
+# 帯の文字が列幅3行に収まるか（全角2・半角1で数えて 幅×3 以内）
+_w = ws.column_dimensions[EVCOL["1-1"]].width
+_over = []
+for n in ITEM_NAMES:
+    for row in range(CRIT_O, CRIT_X + 1):
+        t = str(ws[f"{EVCOL[n]}{row}"].value)
+        u = sum(1 if ord(ch) < 0x2000 else 2 for ch in t)
+        if u > _w * 3:
+            _over.append((n, t, u))
+chk("基準帯の文字が3行に収まる", _over, [])
+# 友井判定：A/B/C のドロップダウンと、AI判定と食い違ったときの色
+_dvm = [dv for dv in ws.data_validations.dataValidation
+        if (dv.formula1 or "").strip('"') == "A,B,C"]
+chk("友井判定のドロップダウンがA,B,C", len(_dvm), 1)
+chk("友井判定が全明細行に効いている",
+    all(f"{TOMOI}{r}" in str(_dvm[0].sqref) for r in (FIRST, LAST)), True)
+chk("友井判定は数式ではない（手入力）",
+    [r for r in range(FIRST, LAST + 1)
+     if isinstance(ws[f"{TOMOI}{r}"].value, str)
+     and ws[f"{TOMOI}{r}"].value.startswith("=")], [])
+chk("友井判定の見出しメモ", ws[f"{TOMOI}{HEAD_ROW}"].comment is not None, True)
+_cf = [(str(rng.sqref), r) for rng, rules in ws.conditional_formatting._cf_rules.items()
+       for r in rules if str(rng.sqref).startswith(TOMOI)]
+chk("友井判定の色分けは4本（食い違い＋A/B/C）", len(_cf), 4)
+chk("食い違いの規則が最優先", min(r.priority for _, r in _cf),
+    next(r.priority for sq, r in _cf if "LEFT" in str(r.formula[0])))
+# 判定基準タブはパラメータの置き場として残っているか
+chk("判定基準タブのパラメータが生きている",
+    [wb["判定基準"][f"B{r}"].value for r in (32, 33, 34, 35)],
+    [50, 400, 7, "NG業種7カテゴリ"])
+print("   基準帯12項目×3段・固定・畳み込み・友井判定A/B/Cとも期待どおり")
 
 # ⑧ 仲介会社管理シート（案件管理からの自動集計）
 print("⑧ 仲介会社管理シート")
@@ -329,7 +350,7 @@ chk("Q#（No.3）", q3, list(range(1, 16)))
 # 状態を解決にすると案件管理のカウントが減る
 bk2 = Book(wb, maxrow=310)
 bk2.set("質問リスト", f'{QC["状態"]}4', "解決")
-chk("解決でカウントが減る", evaluate(bk2, SH, ws[f"{OPENQ}6"].value), 12.0)
+chk("解決でカウントが減る", evaluate(bk2, SH, ws[f"{OPENQ}{FIRST + 1}"].value), 12.0)
 # 全質問に優先度・分類・関連項目が入っているか
 for r in rows:
     for h in ("分類", "優先度", "何を確かめたいか", "質問（このまま読める文）"):
@@ -351,8 +372,8 @@ for nm, pat, want in [("IN_DEAL_HEAD", r"IN_DEAL_HEAD = (\d+)", "5"),
                       ("IN_Q_HEAD", r"IN_Q_HEAD = (\d+)", "9"),
                       ("IN_Q_FIRST", r"IN_Q_FIRST = (\d+)", "10"),
                       ("IN_Q_LAST", r"IN_Q_LAST = (\d+)", "59"),
-                      ("DEAL_HEAD_ROW", r"DEAL_HEAD_ROW = (\d+)", "4"),
-                      ("DEAL_FIRST", r"DEAL_FIRST = (\d+)", "5"),
+                      ("DEAL_HEAD_ROW", r"DEAL_HEAD_ROW = (\d+)", "7"),
+                      ("DEAL_FIRST", r"DEAL_FIRST = (\d+)", "8"),
                       ("Q_HEAD_ROW", r"Q_HEAD_ROW = (\d+)", "3"),
                       ("Q_FIRST", r"var Q_FIRST = (\d+)", "4")]:
     m = _re.search(pat, _gs)
@@ -368,7 +389,8 @@ _fcols = [h for h, c in _dh.items()
           and str(wb[SH].cell(FIRST, c).value).startswith("=")]
 chk("数式列が取込に混入していない", [h for h in _ih if h in _fcols], [])
 chk("取込に案件管理の入力列が揃っている",
-    [h for h in _dh if h not in _ih and h not in _fcols and h != "No"], [])
+    [h for h in _dh if h not in _ih and h not in _fcols and h != "No"
+     and h not in MANUAL], [])
 chk("質問見出しの対応", [h for h in _iq if h not in _qh], [])
 chk("評価12列が取込にある",
     len([h for h in _ih if h.lstrip("★") in
@@ -403,14 +425,14 @@ _wb.save("_verify_intake.xlsx")
 _wb2 = _lw("_verify_intake.xlsx")
 _b = Book(_wb2, maxrow=320)
 _ws, _DC = _wb2[SH], _hd(_wb2[SH], HEAD_ROW)
-chk("取込 行", _res["row"], 8)
+chk("取込 行", _res["row"], FIRST + 3)
 chk("取込 案件No", _res["no"], 4.0)
-chk("取込後の総合判定",
-    evaluate(_b, SH, _ws.cell(8, _DC["総合判定"]).value), "A：進める")
+chk("取込後のAI総合判定",
+    evaluate(_b, SH, _ws.cell(FIRST + 3, _DC["AI総合判定"]).value), "A：進める")
 chk("取込後の達成率",
-    round(evaluate(_b, SH, _ws.cell(8, _DC["達成率"]).value), 3), 0.833)
+    round(evaluate(_b, SH, _ws.cell(FIRST + 3, _DC["達成率"]).value), 3), 0.833)
 chk("取込後の未解決質問",
-    evaluate(_b, SH, _ws.cell(8, _DC["未解決質問"]).value), 3.0)
+    evaluate(_b, SH, _ws.cell(FIRST + 3, _DC["未解決質問"]).value), 3.0)
 _wq, _QC = _wb2["質問リスト"], _hd(_wb2["質問リスト"], 3)
 chk("質問の案件No", _wq.cell(32, _QC["案件No"]).value, 4.0)
 chk("質問のQ#", [_wq.cell(32 + i, _QC["Q#"]).value for i in range(3)], [1, 2, 3])
@@ -429,9 +451,10 @@ for _n in _wb2.sheetnames:
                 except Err:
                     _e += 1
 chk("取込後の数式エラー", _e, 0)
-for _r, _w in ((5, "A：進める"), (6, "C：見送り（Must×）"), (7, "B：追加情報を取得")):
+for _r, _w in ((FIRST, "A：進める"), (FIRST + 1, "C：見送り（Must×）"),
+               (FIRST + 2, "B：追加情報を取得")):
     chk(f"既存{_r}行が壊れていない",
-        evaluate(_b, SH, _ws.cell(_r, _DC["総合判定"]).value), _w)
+        evaluate(_b, SH, _ws.cell(_r, _DC["AI総合判定"]).value), _w)
 print("   見出しの対応・取込の実行・既存行の保全とも期待どおり")
 
 print()

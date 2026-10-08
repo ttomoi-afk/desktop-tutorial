@@ -36,9 +36,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 SH_DEAL, SH_Q = "案件管理", "質問リスト"
-DEAL_HEAD, DEAL_FIRST, DEAL_LAST = 4, 5, 104
+DEAL_HEAD, DEAL_FIRST, DEAL_LAST = 7, 8, 107
 Q_HEAD, Q_FIRST, Q_LAST = 3, 4, 303
 DATE_COLS = {"流入日", "期限", "意向表明期限", "聞いた日", "回答日"}
+# 友井さんが手で付ける列。AIが出すブロックには混ぜない。
+SKIP_COLS = {"友井判定"}
 Q_FIELDS = ["分類", "質問（このまま読める文）", "何を確かめたいか", "関連項目", "優先度"]
 
 
@@ -62,7 +64,10 @@ def head_map(ws, row):
 def input_runs(ws, head_row, probe_row):
     """数式が入っていない列を、連続する塊に分ける。塊ごとに1回貼る。"""
     cols = sorted(head_map(ws, head_row).values())
-    inp = [c for c in cols if not is_formula(ws.cell(probe_row, c).value)]
+    hm = head_map(ws, head_row)
+    skip = {hm[h] for h in SKIP_COLS if h in hm}
+    inp = [c for c in cols
+           if c not in skip and not is_formula(ws.cell(probe_row, c).value)]
     runs = []
     for c in inp:
         if runs and c == runs[-1][-1] + 1:

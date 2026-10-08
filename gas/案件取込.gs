@@ -22,8 +22,8 @@ var SH_DEAL = '案件管理';
 var SH_Q = '質問リスト';
 var SH_IN = '取込';
 
-var DEAL_HEAD_ROW = 4;      // 案件管理の見出し行
-var DEAL_FIRST = 5;         // 案件管理の明細先頭
+var DEAL_HEAD_ROW = 7;      // 案件管理の見出し行（4〜6行は判定基準の帯）
+var DEAL_FIRST = 8;         // 案件管理の明細先頭
 var Q_HEAD_ROW = 3;         // 質問リストの見出し行
 var Q_FIRST = 4;            // 質問リストの明細先頭
 

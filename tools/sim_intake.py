@@ -10,7 +10,7 @@ from openpyxl import load_workbook
 from xlformula import Book, evaluate
 
 SH_DEAL, SH_Q, SH_IN = "案件管理", "質問リスト", "取込"
-DEAL_HEAD_ROW, DEAL_FIRST = 4, 5
+DEAL_HEAD_ROW, DEAL_FIRST = 7, 8
 Q_HEAD_ROW, Q_FIRST = 3, 4
 IN_DEAL_HEAD, IN_DEAL_ROW = 5, 6
 IN_Q_HEAD, IN_Q_FIRST, IN_Q_LAST = 9, 10, 59
