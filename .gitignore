@@ -1,2 +1,6 @@
 __pycache__/
 *.pyc
+
+# 実案件の入った案件管理表は守秘義務の対象（IMに第三者公表を控える旨の記載あり）。
+# out/案件管理表_TeamEnergy.xlsx は build_pipeline.py が吐く空の表なので別。
+out/案件管理表_TeamEnergy_新レイアウト.xlsx
