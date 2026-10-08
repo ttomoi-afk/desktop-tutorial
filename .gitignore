@@ -27,3 +27,7 @@ out/blocks_fundate.txt
 # 大正村福祉の決算反映版と更新ブロックも実案件入り
 out/案件管理表_TeamEnergy_16件_大正村更新.xlsx
 out/blocks_taisho_fy26.txt
+
+# 17件版・エクスキューブの貼り付けブロックも実案件入り
+out/案件管理表_TeamEnergy_17件.xlsx
+out/blocks_xcube.txt
