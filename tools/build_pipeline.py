@@ -375,11 +375,13 @@ def build_deals(ws, samples=True):
             f'"B：追加情報を取得")))))')
         ws[f"{RATE_C}{r}"] = (f'=IF(${JUDGED_C}{r}=0,"",'
                               f'${SCORE_C}{r}/(${JUDGED_C}{r}*2))')
-        # 未解決の質問件数。状態が空欄（未質問）も未解決として数える
+        # 未解決の質問件数。状態が空欄（未質問）も未解決として数える。
+        # 列全体を数える：質問リストを下に伸ばしても数え漏れない
+        # （行を固定していたら、304行目より下の質問が数えられていなかった）
         ws[f"{OPENQ_C}{r}"] = (
             f'=IF($A{r}="","",COUNTIFS('
-            f'質問リスト!$A${Q_FIRST}:$A${Q_LAST},$A{r},'
-            f'質問リスト!${Q_STATE_C}${Q_FIRST}:${Q_STATE_C}${Q_LAST},"<>解決"))')
+            f'質問リスト!$A:$A,$A{r},'
+            f'質問リスト!${Q_STATE_C}:${Q_STATE_C},"<>解決"))')
         for h in ("譲渡価格", "実態EBITDA", "売上", "簿価NetCash", WC_H):
             ws[f"{L[h]}{r}"].number_format = "#,##0.0"
         for h in (MULT_H, REF_H):

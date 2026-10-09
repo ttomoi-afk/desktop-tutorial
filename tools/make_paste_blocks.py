@@ -36,8 +36,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 SH_DEAL, SH_Q = "案件管理", "質問リスト"
-DEAL_HEAD, DEAL_FIRST, DEAL_LAST = 7, 8, 107
-Q_HEAD, Q_FIRST, Q_LAST = 3, 4, 303
+DEAL_HEAD, DEAL_FIRST = 7, 8
+Q_HEAD, Q_FIRST = 3, 4
+# 最終行は決め打ちしない。シート側で行を伸ばしたら（数式を下までコピーしたら）
+# そこまで使う。layout を読んだときに prepared_last() で決める
+DEAL_LAST = Q_LAST = None
 DATE_COLS = {"流入日", "期限", "意向表明期限", "聞いた日", "回答日"}
 # 友井さんが手で付ける列。AIが出すブロックには混ぜない。
 SKIP_COLS = {"友井判定"}
@@ -75,6 +78,33 @@ def input_runs(ws, head_row, probe_row):
         else:
             runs.append([c])
     return runs
+
+
+def prepared_last(ws, head_row, first):
+    """数式が入っている最後の行。シートで用意済みの行はここまで。"""
+    hm = head_map(ws, head_row)
+    fcols = [c for c in hm.values() if is_formula(ws.cell(first, c).value)]
+    last = first
+    for r in range(first, ws.max_row + 1):
+        if any(is_formula(ws.cell(r, c).value) for c in fcols):
+            last = r
+    return last
+
+
+def set_limits(wb):
+    global DEAL_LAST, Q_LAST
+    DEAL_LAST = prepared_last(wb[SH_DEAL], DEAL_HEAD, DEAL_FIRST)
+    Q_LAST = prepared_last(wb[SH_Q], Q_HEAD, Q_FIRST)
+
+
+def openq_reach(wd, dh, row):
+    """案件管理の「未解決質問」が質問リストを何行目まで数えているか。列全体なら None。"""
+    import re
+    col = next((c for h, c in dh.items() if h.startswith("未解決")), None)
+    if col is None:
+        return None
+    m = re.search(r"\$?A\$?\d+:\$?A\$?(\d+)", formula_text(wd.cell(row, col).value) or "")
+    return int(m.group(1)) if m else None
 
 
 def next_deal_row(ws, no_col):
@@ -116,6 +146,7 @@ def coerce(head, raw):
 
 def build(layout, paste):
     wb = load_workbook(layout)
+    set_limits(wb)
     wd, wq = wb[SH_DEAL], wb[SH_Q]
     dh, qh = head_map(wd, DEAL_HEAD), head_map(wq, Q_HEAD)
     inv_d = {v: k for k, v in dh.items()}
@@ -131,7 +162,13 @@ def build(layout, paste):
     qrow, qseq = next_q_row(wq, qh["案件No"], qh["Q#"], dno)
     qs = paste.get("questions", [])
     if qrow + len(qs) - 1 > Q_LAST:
-        raise SystemExit("質問リストの行が埋まっています。行を足してください。")
+        raise SystemExit(f"質問リストの行が足りません（数式は{Q_LAST}行目まで）。"
+                         "数式の入った行を下へコピーして伸ばしてください。")
+    reach = openq_reach(wd, dh, DEAL_FIRST)
+    if reach is not None and qrow + len(qs) - 1 > reach:
+        print(f"【注意】案件管理の「未解決質問」は質問リスト{reach}行目までしか数えていません。"
+              f"今回の質問は{qrow}〜{qrow + len(qs) - 1}行目なので数え漏れます。"
+              "数式の範囲を列全体（$A:$A・$O:$O）に直してください。", file=sys.stderr)
 
     deal = dict(paste["deal"])
     deal["No"] = dno
