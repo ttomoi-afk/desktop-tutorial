@@ -43,3 +43,7 @@ out/blocks_eureka_ichifuji.txt
 # 20件版・旭東みらいテクノロジーの貼り付けブロックも実案件入り
 out/案件管理表_TeamEnergy_20件.xlsx
 out/blocks_kyokuto.txt
+
+# No.6（イーストライズ・トランスポート）の更新ブロックと更新後の統合版も実案件入り
+out/blocks_eastrise_No6.txt
+out/案件管理表_TeamEnergy_20件_No6更新.xlsx
