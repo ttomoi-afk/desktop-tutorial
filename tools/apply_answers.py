@@ -27,8 +27,10 @@ import os
 from openpyxl import load_workbook
 from openpyxl.styles import Font
 
+from make_paste_blocks import prepared_last
+
 SH_Q = "質問リスト"
-Q_HEAD, Q_FIRST, Q_LAST = 3, 4, 303
+Q_HEAD, Q_FIRST = 3, 4
 STATES = ["未質問", "回答待ち", "回答済", "追加確認が必要", "解決"]
 FONT = Font(name="Arial", size=10, color="141414")
 
@@ -62,6 +64,8 @@ def main():
     wb = load_workbook(a.src)
     ws = wb[SH_Q]
     H = head_map(ws, Q_HEAD)
+    # 最終行は決め打ちしない（シートで質問リストを伸ばしても全行を引く）
+    Q_LAST = prepared_last(ws, Q_HEAD, Q_FIRST)
 
     for path in a.answers:
         with open(path, encoding="utf-8") as fh:
