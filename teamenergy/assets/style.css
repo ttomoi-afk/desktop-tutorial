@@ -945,3 +945,59 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
   .pmap-dot { transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform .5s cubic-bezier(.2,.7,.15,1) .6s; }
   .fadein.is-visible .pmap-dot { transform: none; }
 }
+
+/* ---------- Group: ロゴのグリッドと会社概要ダイアログ ---------- */
+.group { background: var(--paper); }
+.area-list { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+.area-chip { display: inline-flex; align-items: baseline; gap: 8px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); font-size: 12px; color: var(--ink-soft); letter-spacing: .04em; }
+.area-chip b { font-weight: 600; font-size: 13px; letter-spacing: .08em; color: var(--ink); }
+.logo-grid { margin-top: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.logo-tile { width: 100%; min-height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 28px 20px 18px; background: var(--white); border: 1px solid var(--line); position: relative; cursor: pointer; text-align: center; color: var(--ink); transition: border-color .3s, transform .3s, box-shadow .3s; }
+.logo-tile:hover, .logo-tile:focus-visible { border-color: var(--magma); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(26,20,18,.08); outline: none; }
+.logo-area { position: absolute; top: 10px; left: 14px; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); }
+.logo-tile::before, .logo-tile::after { content: ""; position: absolute; top: 18px; right: 16px; background: var(--ink-faint); transition: background .3s; }
+.logo-tile::before { width: 12px; height: 1px; }
+.logo-tile::after { width: 1px; height: 12px; top: 12.5px; right: 21.5px; }
+.logo-tile:hover::before, .logo-tile:hover::after { background: var(--magma); }
+.logo-img { height: 56px; display: flex; align-items: center; justify-content: center; }
+.logo-img img { max-height: 56px; max-width: 180px; width: auto; height: auto; }
+.logo-name { font-size: 13px; color: var(--ink-soft); letter-spacing: .04em; line-height: 1.5; }
+@media (max-width: 767px) {
+  .area-chip { padding: 5px 11px; font-size: 11px; } .area-chip b { font-size: 12px; }
+  .logo-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .logo-tile { min-height: 126px; padding: 24px 12px 14px; gap: 10px; }
+  .logo-img { height: 44px; } .logo-img img { max-height: 44px; max-width: 130px; }
+  .logo-name { font-size: 12px; }
+}
+
+/* 全体リセットで margin:0 になるため、中央寄せを明示する */
+.co-dialog { margin: auto; border: 0; padding: 0; background: transparent; width: min(720px, calc(100vw - 32px)); max-width: none; max-height: none; font-family: var(--jp); color: var(--ink); letter-spacing: .06em; }
+.co-dialog::backdrop { background: rgba(26,20,18,.6); }
+.co-dialog-inner { position: relative; background: var(--white); padding: 44px 48px 40px; max-height: calc(100vh - 48px); overflow: auto; }
+.co-close { position: absolute; top: 14px; right: 14px; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--white); transition: border-color .3s, background .3s; }
+.co-close span::before, .co-close span::after { content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 1.5px; background: var(--ink); transform: translate(-50%, -50%) rotate(45deg); }
+.co-close span::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.co-close:hover { border-color: var(--magma); background: var(--magma); }
+.co-close:hover span::before, .co-close:hover span::after { background: var(--white); }
+.co-logo { height: 60px; display: flex; align-items: center; margin-bottom: 22px; }
+.co-logo img { max-height: 60px; max-width: 220px; width: auto; height: auto; }
+.co-area { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; font-size: 13px; }
+.co-area .en { font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--magma); }
+.co-area small { font-size: 12px; color: var(--ink-faint); }
+.co-name { margin-top: 8px; font-size: 26px; font-weight: 700; letter-spacing: .08em; line-height: 1.4; }
+.co-en { margin-top: 2px; font-size: 15px; letter-spacing: .1em; color: var(--ink-faint); }
+.co-summary { margin-top: 16px; font-size: 15px; line-height: 1.9; }
+.co-facts { margin-top: 18px; display: grid; grid-template-columns: 96px 1fr; border-top: 1px solid var(--line); }
+.co-facts dt, .co-facts dd { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.7; }
+.co-facts dt { color: var(--ink-faint); }
+.co-links { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px 28px; }
+body.co-open { overflow: hidden; }
+@media (max-width: 767px) {
+  .co-dialog-inner { padding: 30px 20px 26px; max-height: calc(100vh - 24px); }
+  .co-name { font-size: 22px; }
+  .co-facts { grid-template-columns: 80px 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .co-dialog[open] { animation: co-in .35s cubic-bezier(.2,.7,.15,1); }
+  @keyframes co-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+}

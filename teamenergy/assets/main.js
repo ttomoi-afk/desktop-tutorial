@@ -83,6 +83,42 @@
   window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   window.addEventListener('resize', onScroll);
 
+  /* ---------- グループ会社: ロゴを押すと会社概要のダイアログ ---------- */
+  var coDialog = document.getElementById('co-dialog');
+  if (coDialog) {
+    var coBody = document.getElementById('co-dialog-body');
+    var lastTile = null;
+    var openCo = function (id, tile) {
+      var src = document.getElementById('co-' + id);
+      if (!src) return;
+      coBody.innerHTML = '';
+      var clone = src.cloneNode(true);
+      clone.removeAttribute('id');
+      var img = tile && tile.querySelector('.logo-img img');
+      if (img) {
+        var fig = document.createElement('p');
+        fig.className = 'co-logo';
+        fig.appendChild(img.cloneNode(true));
+        clone.insertBefore(fig, clone.firstChild);
+      }
+      coBody.appendChild(clone);
+      lastTile = tile;
+      if (typeof coDialog.showModal === 'function') coDialog.showModal(); else coDialog.setAttribute('open', '');
+      document.body.classList.add('co-open');
+      coDialog.querySelector('.co-close').focus();
+    };
+    var closeCo = function () { if (coDialog.open) coDialog.close(); else coDialog.removeAttribute('open'); };
+    document.querySelectorAll('.logo-tile').forEach(function (b) {
+      b.addEventListener('click', function () { openCo(b.getAttribute('data-co'), b); });
+    });
+    coDialog.querySelector('.co-close').addEventListener('click', closeCo);
+    coDialog.addEventListener('click', function (e) { if (e.target === coDialog) closeCo(); }); /* 背景クリックで閉じる */
+    coDialog.addEventListener('close', function () {
+      document.body.classList.remove('co-open');
+      if (lastTile) lastTile.focus();
+    });
+  }
+
   /* ---------- 数字のカウントアップ(見えた時に一度だけ) ---------- */
   var counters = document.querySelectorAll('[data-count]');
   if (counters.length) {
