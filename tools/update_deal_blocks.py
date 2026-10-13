@@ -157,25 +157,25 @@ def blocks(wb, info, writes):
 
     def emit(sheet, ws, inv, run, rows, label):
         nonlocal n
+        table = [[cell_text(inv[c], writes.get((sheet, r, inv[c]), ws.cell(r, c).value)) for c in run]
+                 for r in rows]
+        run, table = mpb.trim_blank_lead(run, table)
+        if not run:
+            return
         n += 1
         cols = [inv[c] for c in run]
         addr = f"{get_column_letter(run[0])}{rows[0]}"
         out.write(f"━━━ ブロック{n}：「{sheet}」の {addr} をクリックして貼る"
                   f"（{len(run)}列 × {len(rows)}行・{label}）\n")
         out.write("  列順：" + " / ".join(cols) + "\n")
-        for r in rows:
-            vals = []
-            for c, h in zip(run, cols):
-                v = writes.get((sheet, r, h), ws.cell(r, c).value)
-                vals.append(cell_text(h, v))
+        for vals in table:
             out.write("\t".join(vals) + "\n")
         out.write("\n")
 
-    # 案件管理：変える列を含む塊だけ。No 列は外す
+    # 案件管理：変える列を含む塊だけ。No 列も今の値で含め、新規の案件と同じくA列から貼る形にする
+    # （B列始まりだとA列に貼ってしまい1列ずれる。No.6で実際に起きた）
     drow = info["deal_row"]
-    no_col = dh["No"]
     for run in mpb.input_runs(wd, mpb.DEAL_HEAD, drow):
-        run = [c for c in run if c != no_col]
         if run and any((mpb.SH_DEAL, drow, inv_d[c]) in writes for c in run):
             emit(mpb.SH_DEAL, wd, inv_d, run, [drow], "上書き")
 

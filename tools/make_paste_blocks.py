@@ -107,6 +107,17 @@ def openq_reach(wd, dh, row):
     return int(m.group(1)) if m else None
 
 
+def trim_blank_lead(run, rows):
+    """先頭の列が全行とも空欄なら外す。
+
+    空欄から始まる行はコピーのときに行頭のタブが落ちやすく、落ちると貼り先が1列左にずれる
+    （No.6の回答の1行目で実際に起きた）。全行空欄の列は貼っても何も変わらないので外してよい。
+    """
+    while run and all(r[0] == "" for r in rows):
+        run, rows = run[1:], [r[1:] for r in rows]
+    return run, rows
+
+
 def next_deal_row(ws, no_col):
     row = DEAL_FIRST
     mx = 0
@@ -189,24 +200,32 @@ def build(layout, paste):
 
     n = 0
     for run in input_runs(wd, DEAL_HEAD, drow):
+        rows = [[str(coerce(inv_d[c], deal.get(inv_d[c], ""))) for c in run]]
+        run, rows = trim_blank_lead(run, rows)
+        if not run:
+            continue
         n += 1
         addr = f"{get_column_letter(run[0])}{drow}"
         cols = [inv_d[c] for c in run]
         out.write(f"━━━ ブロック{n}：「{SH_DEAL}」の {addr} をクリックして貼る"
                   f"（{len(run)}列 × 1行）\n")
         out.write("  列順：" + " / ".join(cols) + "\n")
-        out.write("\t".join(str(coerce(h, deal.get(h, ""))) for h in cols) + "\n\n")
+        out.write("\t".join(rows[0]) + "\n\n")
     for run in input_runs(wq, Q_HEAD, qrow):
         if not qrows:
             break
+        rows = [[str(coerce(inv_q[c], m.get(inv_q[c], ""))) for c in run] for m in qrows]
+        run, rows = trim_blank_lead(run, rows)
+        if not run:
+            continue
         n += 1
         addr = f"{get_column_letter(run[0])}{qrow}"
         cols = [inv_q[c] for c in run]
         out.write(f"━━━ ブロック{n}：「{SH_Q}」の {addr} をクリックして貼る"
                   f"（{len(run)}列 × {len(qrows)}行）\n")
         out.write("  列順：" + " / ".join(cols) + "\n")
-        for m in qrows:
-            out.write("\t".join(str(coerce(h, m.get(h, ""))) for h in cols) + "\n")
+        for vals in rows:
+            out.write("\t".join(vals) + "\n")
         out.write("\n")
     return out.getvalue(), dict(deal_row=drow, deal_no=dno, q_row=qrow,
                                 q_count=len(qrows), blocks=n)
