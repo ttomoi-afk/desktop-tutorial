@@ -47,3 +47,9 @@ out/blocks_kyokuto.txt
 # No.6（イーストライズ・トランスポート）の更新ブロックと更新後の統合版も実案件入り
 out/blocks_eastrise_No6.txt
 out/案件管理表_TeamEnergy_20件_No6更新.xlsx
+
+# SAMOEDO'Sの口コミ集計・今期分析（実案件入り）
+out/SAMOEDOS_口コミ集計と今期分析.xlsx
+
+# No.6の貼り付けずれの直し方（実案件入り）
+out/fix_No6_貼り付けずれ.txt
