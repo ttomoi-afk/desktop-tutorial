@@ -53,3 +53,6 @@ out/SAMOEDOS_口コミ集計と今期分析.xlsx
 
 # No.6の貼り付けずれの直し方（実案件入り）
 out/fix_No6_貼り付けずれ.txt
+
+# EAGLE（No.21）の貼り付けブロック（実案件入り）
+out/blocks_eagle.txt

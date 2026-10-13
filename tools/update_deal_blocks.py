@@ -175,7 +175,8 @@ def blocks(wb, info, writes):
     # 案件管理：変える列を含む塊だけ。No 列も今の値で含め、新規の案件と同じくA列から貼る形にする
     # （B列始まりだとA列に貼ってしまい1列ずれる。No.6で実際に起きた）
     drow = info["deal_row"]
-    for run in mpb.input_runs(wd, mpb.DEAL_HEAD, drow):
+    # 列の見分けは用意済みの先頭行で行う（宛先の行は数式が上書きされていることがある）
+    for run in mpb.input_runs(wd, mpb.DEAL_HEAD, mpb.DEAL_FIRST):
         if run and any((mpb.SH_DEAL, drow, inv_d[c]) in writes for c in run):
             emit(mpb.SH_DEAL, wd, inv_d, run, [drow], "上書き")
 
@@ -193,7 +194,7 @@ def blocks(wb, info, writes):
     # 質問リスト：追加の質問（数式の列は外す）
     if new_rows:
         rows = sorted(new_rows)
-        for run in mpb.input_runs(wq, mpb.Q_HEAD, rows[0]):
+        for run in mpb.input_runs(wq, mpb.Q_HEAD, mpb.Q_FIRST):
             emit(mpb.SH_Q, wq, inv_q, run, rows, "新規")
     return out.getvalue(), n
 

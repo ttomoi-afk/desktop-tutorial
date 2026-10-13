@@ -107,6 +107,31 @@ def openq_reach(wd, dh, row):
     return int(m.group(1)) if m else None
 
 
+def whole_column(f):
+    """未解決質問の COUNTIFS を列全体の参照に直した式。"""
+    import re
+    return re.sub(r"('?質問リスト'?!)\$?([A-Z]+)\$?\d+:\$?([A-Z]+)\$?\d+", r"\1$\2:$\3", f)
+
+
+def missing_formulas(ws, head_row, first, rows):
+    """用意済みのはずの数式が消えているセルと、写し元のセル。
+
+    貼り付けで数式を上書きされた行がある（案件管理の参考：簿価ベース倍率が25・26行目で
+    消えていた）。ブロックは数式の列を外して作るので、消えた数式は貼っても戻らない。
+    """
+    hm = head_map(ws, head_row)
+    fcols = sorted(c for c in hm.values() if is_formula(ws.cell(first, c).value))
+    out = []
+    for r in rows:
+        for c in fcols:
+            if is_formula(ws.cell(r, c).value):
+                continue
+            src = next((s for s in range(r - 1, first - 1, -1)
+                        if is_formula(ws.cell(s, c).value)), first)
+            out.append((f"{get_column_letter(c)}{src}", f"{get_column_letter(c)}{r}"))
+    return out
+
+
 def trim_blank_lead(run, rows):
     """先頭の列が全行とも空欄なら外す。
 
@@ -118,27 +143,43 @@ def trim_blank_lead(run, rows):
     return run, rows
 
 
+def used(ws, r, cols):
+    """手入力の列のどれかに値があれば使用中の行。
+
+    No 列だけで見ると、No を貼り忘れた行（No.6の質問296〜304行目で実際に起きた）を
+    空き行と取り違えて上書きしてしまう。
+    """
+    for c in cols:
+        v = ws.cell(r, c).value
+        if v not in ("", None) and not is_formula(v):
+            return True
+    return False
+
+
 def next_deal_row(ws, no_col):
     row = DEAL_FIRST
     mx = 0
+    cols = [c for run in input_runs(ws, DEAL_HEAD, DEAL_FIRST) for c in run]
     for r in range(DEAL_FIRST, DEAL_LAST + 1):
+        if not used(ws, r, cols):
+            continue
+        row = r + 1
         v = ws.cell(r, no_col).value
-        if v not in ("", None) and not is_formula(v):
-            row = r + 1
-            try:
-                mx = max(mx, float(v))
-            except (TypeError, ValueError):
-                pass
+        try:
+            mx = max(mx, float(v))
+        except (TypeError, ValueError):
+            pass
     return row, int(mx) + 1
 
 
 def next_q_row(ws, no_col, seq_col, deal_no):
     row, seq = Q_FIRST, 0
+    cols = [c for run in input_runs(ws, Q_HEAD, Q_FIRST) for c in run]
     for r in range(Q_FIRST, Q_LAST + 1):
-        v = ws.cell(r, no_col).value
-        if v in ("", None) or is_formula(v):
+        if not used(ws, r, cols):
             continue
         row = r + 1
+        v = ws.cell(r, no_col).value
         try:
             if float(v) == float(deal_no):
                 seq = max(seq, float(ws.cell(r, seq_col).value or 0))
@@ -175,11 +216,20 @@ def build(layout, paste):
     if qrow + len(qs) - 1 > Q_LAST:
         raise SystemExit(f"質問リストの行が足りません（数式は{Q_LAST}行目まで）。"
                          "数式の入った行を下へコピーして伸ばしてください。")
+    notes = []
     reach = openq_reach(wd, dh, DEAL_FIRST)
     if reach is not None and qrow + len(qs) - 1 > reach:
-        print(f"【注意】案件管理の「未解決質問」は質問リスト{reach}行目までしか数えていません。"
-              f"今回の質問は{qrow}〜{qrow + len(qs) - 1}行目なので数え漏れます。"
-              "数式の範囲を列全体（$A:$A・$O:$O）に直してください。", file=sys.stderr)
+        notes.append(f"「{SH_DEAL}」の未解決質問は{SH_Q}の{reach}行目までしか数えていません"
+                     f"（今回の質問は{qrow}〜{qrow + len(qs) - 1}行目）。{SH_DEAL}で"
+                     f"「$A$4:$A${reach}」→「$A:$A」、「$O$4:$O${reach}」→「$O:$O」を"
+                     "検索と置換で全部置き換えてください。")
+    fixes = [(SH_DEAL, a, b) for a, b in missing_formulas(wd, DEAL_HEAD, DEAL_FIRST, [drow])]
+    fixes += [(SH_Q, a, b) for a, b in
+              missing_formulas(wq, Q_HEAD, Q_FIRST, range(qrow, qrow + len(qs)))]
+    for sh, a, b in fixes:
+        notes.append(f"「{sh}」の {b} の数式が消えています。{a} をコピーして {b} に貼ってください。")
+    for t in notes:
+        print("【注意】" + t, file=sys.stderr)
 
     deal = dict(paste["deal"])
     deal["No"] = dno
@@ -197,9 +247,15 @@ def build(layout, paste):
     out.write("数式が入っている列は各ブロックから外してあるので、"
               "指定セルを1つクリックして貼れば数式は壊れません。\n")
     out.write("貼る順番は問いません。\n\n")
+    if notes:
+        out.write("━━━ 貼る前に（シート側の直し）\n")
+        for i, t in enumerate(notes, 1):
+            out.write(f"  {i}. {t}\n")
+        out.write("\n")
 
     n = 0
-    for run in input_runs(wd, DEAL_HEAD, drow):
+    # 列の見分けは用意済みの先頭行で行う。宛先の行で見ると、数式が消えた列を入力列と取り違える
+    for run in input_runs(wd, DEAL_HEAD, DEAL_FIRST):
         rows = [[str(coerce(inv_d[c], deal.get(inv_d[c], ""))) for c in run]]
         run, rows = trim_blank_lead(run, rows)
         if not run:
@@ -211,7 +267,7 @@ def build(layout, paste):
                   f"（{len(run)}列 × 1行）\n")
         out.write("  列順：" + " / ".join(cols) + "\n")
         out.write("\t".join(rows[0]) + "\n\n")
-    for run in input_runs(wq, Q_HEAD, qrow):
+    for run in input_runs(wq, Q_HEAD, Q_FIRST):
         if not qrows:
             break
         rows = [[str(coerce(inv_q[c], m.get(inv_q[c], ""))) for c in run] for m in qrows]
@@ -228,7 +284,8 @@ def build(layout, paste):
             out.write("\t".join(vals) + "\n")
         out.write("\n")
     return out.getvalue(), dict(deal_row=drow, deal_no=dno, q_row=qrow,
-                                q_count=len(qrows), blocks=n)
+                                q_count=len(qrows), blocks=n,
+                                fixes=fixes, reach=reach if notes and reach else None)
 
 
 def verify(layout, paste, info, save=None):
@@ -251,6 +308,18 @@ def verify(layout, paste, info, save=None):
             ws.cell(row, col).value = datetime.date(y, m, d)
         else:
             ws.cell(row, col).value = v
+
+    # 「貼る前に」の直しも済ませた状態で確かめる
+    from openpyxl.formula.translate import Translator
+    for sh, a, b in info.get("fixes", []):
+        f = formula_text(wb[sh][a].value)
+        wb[sh][b].value = Translator(f, origin=a).translate_formula(b)
+    if info.get("reach"):
+        col = next(c for h, c in dh.items() if h.startswith("未解決"))
+        for r in range(DEAL_FIRST, DEAL_LAST + 1):
+            v = wd.cell(r, col).value
+            if is_formula(v):
+                wd.cell(r, col).value = whole_column(formula_text(v))
 
     put(wd, dh, drow, "No", dno)
     for h, v in paste["deal"].items():
