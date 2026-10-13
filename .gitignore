@@ -56,3 +56,6 @@ out/fix_No6_貼り付けずれ.txt
 
 # EAGLE（No.21）の貼り付けブロック（実案件入り）
 out/blocks_eagle.txt
+
+# 10/13の現物を整理した版（No.18・19・21の追加、No.6のずれ直し等。実案件入り）
+out/案件管理表_TeamEnergy_v2_整理版_1013.xlsx
