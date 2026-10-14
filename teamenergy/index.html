@@ -97,8 +97,8 @@
   <section class="group" id="group">
     <div class="sec-inner fadein">
       <h2 class="sec-title">Group</h2>
-      <p class="sec-lead">6つの事業領域、18社の事業会社。＋を押すと傘下各社、各社を押すと概要が開きます。</p>
-      <!-- 事業領域(中間持株会社)のアコーディオン。見出しは各社ロゴ(未着の領域は文字)。開くと傘下各社のタイル、押すと .co-detail をダイアログに複製(main.js) -->
+      <p class="sec-lead">6つの事業領域、18社の事業会社。＋を押すと各社のサイトをご覧いただけます。</p>
+      <!-- 事業領域(中間持株会社)のアコーディオン。見出しは各社ロゴ(assets/img/logos/te-*.png)。開くと傘下各社へのリンク。URL 未確認の会社はリンクなし -->
       <div class="biz-acc stg" id="biz-acc">
         <div class="biz-acc-item" id="biz-gi">
           <button type="button" class="biz-acc-trigger" aria-expanded="false" aria-controls="biz-acc-1" aria-label="Team Energy GI の傘下各社を開く">
@@ -107,14 +107,9 @@
             <span class="biz-plus" aria-hidden="true"></span>
           </button>
           <div class="biz-acc-body" id="biz-acc-1" aria-hidden="true">
-            <div class="biz-acc-inner">
-              <ul class="logo-grid logo-grid-sub">
-            <li><button type="button" class="logo-tile" data-co="bywill" aria-haspopup="dialog" aria-controls="co-dialog">
-              <span class="logo-img"><img src="assets/img/logos/bywill.svg" alt="株式会社バイウィル" loading="lazy"></span>
-              <span class="logo-name">株式会社バイウィル</span>
-            </button></li>
-              </ul>
-            </div>
+            <nav class="biz-acc-inner biz-acc-links">
+              <a href="https://www.bywill.co.jp/" class="biz-acc-link" target="_blank" rel="noopener">㈱バイウィル</a>
+            </nav>
           </div>
         </div>
         <div class="biz-acc-item" id="biz-geo">
@@ -124,14 +119,9 @@
             <span class="biz-plus" aria-hidden="true"></span>
           </button>
           <div class="biz-acc-body" id="biz-acc-2" aria-hidden="true">
-            <div class="biz-acc-inner">
-              <ul class="logo-grid logo-grid-sub">
-            <li><button type="button" class="logo-tile" data-co="geodreams" aria-haspopup="dialog" aria-controls="co-dialog">
-              <span class="logo-img"><img src="assets/img/logos/geodreams.svg" alt="株式会社GeoDreams" loading="lazy"></span>
-              <span class="logo-name">株式会社GeoDreams</span>
-            </button></li>
-              </ul>
-            </div>
+            <nav class="biz-acc-inner biz-acc-links">
+              <a href="https://www.geodreams.co.jp/" class="biz-acc-link" target="_blank" rel="noopener">㈱GeoDreams</a>
+            </nav>
           </div>
         </div>
         <div class="biz-acc-item" id="biz-ai">
@@ -141,22 +131,11 @@
             <span class="biz-plus" aria-hidden="true"></span>
           </button>
           <div class="biz-acc-body" id="biz-acc-3" aria-hidden="true">
-            <div class="biz-acc-inner">
-              <ul class="logo-grid logo-grid-sub">
-            <li><button type="button" class="logo-tile" data-co="canal-ai" aria-haspopup="dialog" aria-controls="co-dialog">
-              <span class="logo-img"><img src="assets/img/logos/canal-ai.svg" alt="株式会社キャナルAI" loading="lazy"></span>
-              <span class="logo-name">株式会社キャナルAI</span>
-            </button></li>
-            <li><button type="button" class="logo-tile" data-co="scale-ai" aria-haspopup="dialog" aria-controls="co-dialog">
-              <span class="logo-img"><img src="assets/img/logos/scale-ai.svg" alt="株式会社スケールエーアイ" loading="lazy"></span>
-              <span class="logo-name">株式会社スケールエーアイ</span>
-            </button></li>
-            <li><button type="button" class="logo-tile" data-co="miracre-ai" aria-haspopup="dialog" aria-controls="co-dialog">
-              <span class="logo-img"><img src="assets/img/logos/miracre-ai.svg" alt="MIRACRE AI株式会社" loading="lazy"></span>
-              <span class="logo-name">MIRACRE AI株式会社</span>
-            </button></li>
-              </ul>
-            </div>
+            <nav class="biz-acc-inner biz-acc-links">
+              <a href="https://canal-ai.com/" class="biz-acc-link" target="_blank" rel="noopener">㈱キャナルAI</a>
+              <a href="https://startai.jp/" class="biz-acc-link" target="_blank" rel="noopener">㈱スケールエーアイ<small>スタートAI</small></a>
+              <a href="http://www.miracreai.com/" class="biz-acc-link" target="_blank" rel="noopener">MIRACRE AI㈱</a>
+            </nav>
           </div>
         </div>
         <div class="biz-acc-item" id="biz-gli">
@@ -166,14 +145,9 @@
             <span class="biz-plus" aria-hidden="true"></span>
           </button>
           <div class="biz-acc-body" id="biz-acc-4" aria-hidden="true">
-            <div class="biz-acc-inner">
-              <ul class="logo-grid logo-grid-sub">
-            <li><button type="button" class="logo-tile" data-co="team-glocal" aria-haspopup="dialog" aria-controls="co-dialog">
-              <span class="logo-img"><img src="assets/img/logos/team-glocal.svg" alt="Team Glocal株式会社" loading="lazy"></span>
-              <span class="logo-name">Team Glocal株式会社</span>
-            </button></li>
-              </ul>
-            </div>
+            <nav class="biz-acc-inner biz-acc-links">
+              <span class="biz-acc-link is-plain">Team Glocal㈱</span>
+            </nav>
           </div>
         </div>
         <div class="biz-acc-item" id="biz-growth">
@@ -183,22 +157,12 @@
             <span class="biz-plus" aria-hidden="true"></span>
           </button>
           <div class="biz-acc-body" id="biz-acc-5" aria-hidden="true">
-            <div class="biz-acc-inner">
-              <ul class="logo-grid logo-grid-sub">
-            <li><button type="button" class="logo-tile" data-co="aile" aria-haspopup="dialog" aria-controls="co-dialog">
-              <span class="logo-img"><img src="assets/img/logos/aile.png" alt="株式会社AILE" loading="lazy"></span>
-              <span class="logo-name">株式会社AILE</span>
-            </button></li>
-            <li><button type="button" class="logo-tile" data-co="any" aria-haspopup="dialog" aria-controls="co-dialog">
-              <span class="logo-img"><img src="assets/img/logos/any.svg" alt="株式会社ANY" loading="lazy"></span>
-              <span class="logo-name">株式会社ANY</span>
-            </button></li>
-            <li><button type="button" class="logo-tile" data-co="teshikaga" aria-haspopup="dialog" aria-controls="co-dialog">
-              <span class="logo-img"><img src="assets/img/logos/teshikaga.svg" alt="弟子屈チャレンジ株式会社" loading="lazy"></span>
-              <span class="logo-name">弟子屈チャレンジ株式会社</span>
-            </button></li>
-              </ul>
-            </div>
+            <nav class="biz-acc-inner biz-acc-links">
+              <a href="https://www.esthe-aile.com/" class="biz-acc-link" target="_blank" rel="noopener">㈱AILE</a>
+              <span class="biz-acc-link is-plain">㈱ANY</span>
+              <a href="https://nuppukotte.com/" class="biz-acc-link" target="_blank" rel="noopener">弟子屈チャレンジ㈱<small>NUPPUKOTTE</small></a>
+              <a href="cases/teshikaga.html" class="biz-acc-link">弟子屈チャレンジの取り組み<small>事例</small></a>
+            </nav>
           </div>
         </div>
         <div class="biz-acc-item" id="biz-am">
@@ -208,88 +172,8 @@
           </div>
         </div>
       </div>
-      <div class="co-details" hidden>
-        <article class="co-detail" id="co-bywill">
-          <p class="co-area"><span class="en">Team Energy GI</span><small>脱炭素・環境支援事業</small></p>
-          <h3 class="co-name">株式会社バイウィル</h3>
-          <p class="co-en en">BY WILL</p>
-          <p class="co-summary">第一地銀45行・基礎自治体60以上と連携し、地域の脱炭素・環境貢献につながる環境クレジット創出事業を展開。企業と地域双方の立場から、カーボンニュートラルの実現を支援しています。</p>
-          <dl class="co-facts"><dt>事業内容</dt><dd>環境クレジットの創出・流通、脱炭素支援</dd><dt>設立</dt><dd>2023年</dd><dt>資金調達</dt><dd>シリーズA・Bラウンドで累計約30億円</dd></dl>
-          <p class="co-links"><a class="btn" href="https://www.bywill.co.jp/" target="_blank" rel="noopener">公式サイト</a></p>
-        </article>
-        <article class="co-detail" id="co-geodreams">
-          <p class="co-area"><span class="en">Team Energy Geo</span><small>地熱発電と再生可能エネルギーの開発</small></p>
-          <h3 class="co-name">株式会社GeoDreams</h3>
-          <p class="co-en en">GeoDreams</p>
-          <p class="co-summary">次世代型地熱発電「クローズドループ」の事業化を目指す地熱開発会社。独自の掘削技術と探査技術を軸に、北海道八雲町での地熱開発を推進しています。</p>
-          <dl class="co-facts"><dt>事業内容</dt><dd>クローズドループ地熱発電の開発、掘削・探査・メンテナンス</dd><dt>設立</dt><dd>2022年1月</dd><dt>所在地</dt><dd>東京都千代田区</dd><dt>トピック</dt><dd>JOGMEC 次世代地熱発電のFS調査に採択</dd></dl>
-          <p class="co-links"><a class="btn" href="https://www.geodreams.co.jp/" target="_blank" rel="noopener">公式サイト</a></p>
-        </article>
-        <article class="co-detail" id="co-canal-ai">
-          <p class="co-area"><span class="en">Team Energy AI総研</span><small>AI・DXの実装と生産性向上</small></p>
-          <h3 class="co-name">株式会社キャナルAI</h3>
-          <p class="co-en en">Canal AI</p>
-          <p class="co-summary">AI研修・AI人材育成・AI経営コンサルティングを手がける、Team Energy AI総研の100%子会社。</p>
-          <dl class="co-facts"><dt>事業内容</dt><dd>AI研修、AI人材育成、AI経営コンサルティング</dd><dt>設立</dt><dd>2024年7月</dd><dt>所在地</dt><dd>京都府京都市下京区</dd><dt>資本関係</dt><dd>Team Energy AI総研 100%</dd></dl>
-          <p class="co-links"><a class="btn" href="https://canal-ai.com/" target="_blank" rel="noopener">公式サイト</a></p>
-        </article>
-        <article class="co-detail" id="co-scale-ai">
-          <p class="co-area"><span class="en">Team Energy AI総研</span><small>AI・DXの実装と生産性向上</small></p>
-          <h3 class="co-name">株式会社スケールエーアイ</h3>
-          <p class="co-en en">SCALE AI</p>
-          <p class="co-summary">生成AIの速習プログラム「スタートAI」を運営するAI教育会社。経営者・ビジネスパーソンが生成AIを実務で使いこなすための講座を提供しています。</p>
-          <dl class="co-facts"><dt>事業内容</dt><dd>AI教育事業「スタートAI」の運営</dd><dt>設立</dt><dd>2024年8月</dd><dt>所在地</dt><dd>東京都新宿区</dd><dt>資本関係</dt><dd>スケールアイ 51%／Team Energy AI総研 49%</dd></dl>
-          <p class="co-links"><a class="btn" href="https://startai.jp/" target="_blank" rel="noopener">公式サイト</a></p>
-        </article>
-        <article class="co-detail" id="co-miracre-ai">
-          <p class="co-area"><span class="en">Team Energy AI総研</span><small>AI・DXの実装と生産性向上</small></p>
-          <h3 class="co-name">MIRACRE AI株式会社</h3>
-          <p class="co-en en">MIRACRE AI</p>
-          <p class="co-summary">人事・組織の課題に精通するMIRACREATIONとのジョイントベンチャー。「HAIR（Human-AI Resource）」の視座から、人材開発・組織開発・事業開発で「人×AI」の共創を支援します。</p>
-          <dl class="co-facts"><dt>事業内容</dt><dd>人材開発、組織開発、事業開発</dd><dt>設立</dt><dd>2025年6月</dd><dt>所在地</dt><dd>大阪府大阪市中央区北浜</dd><dt>資本関係</dt><dd>MIRACREATION 51%／Team Energy AI総研 49%</dd></dl>
-          <p class="co-links"><a class="btn" href="http://www.miracreai.com/" target="_blank" rel="noopener">公式サイト</a></p>
-        </article>
-        <article class="co-detail" id="co-team-glocal">
-          <p class="co-area"><span class="en">Team Energy GLI</span><small>地域・自治体との連携事業</small></p>
-          <h3 class="co-name">Team Glocal株式会社</h3>
-          <p class="co-en en">Team Glocal</p>
-          <p class="co-summary">自治体や地方金融機関と連携し、地域の事業づくりと地域創生に取り組む会社。</p>
-          <dl class="co-facts"><dt>事業内容</dt><dd>地域創生事業、自治体・地方金融機関との連携</dd><dt>所在地</dt><dd>大阪府大阪市中央区北浜</dd></dl>
-        </article>
-        <article class="co-detail" id="co-aile">
-          <p class="co-area"><span class="en">Team Energy Growth</span><small>事業の立ち上げと承継事業の運営</small></p>
-          <h3 class="co-name">株式会社AILE</h3>
-          <p class="co-en en">AILE</p>
-          <p class="co-summary">エステティックサロンの運営と、美容機器・化粧品の販売を手がける、Team Energy Growthの100%子会社。</p>
-          <dl class="co-facts"><dt>事業内容</dt><dd>エステティックサロンの経営、美容機器・化粧品の販売</dd><dt>資本関係</dt><dd>Team Energy Growth 100%</dd></dl>
-          <p class="co-links"><a class="btn" href="https://www.esthe-aile.com/" target="_blank" rel="noopener">公式サイト</a></p>
-        </article>
-        <article class="co-detail" id="co-any">
-          <p class="co-area"><span class="en">Team Energy Growth</span><small>事業の立ち上げと承継事業の運営</small></p>
-          <h3 class="co-name">株式会社ANY</h3>
-          <p class="co-en en">ANY</p>
-          <p class="co-summary">化粧品の企画開発と補正下着事業、新業態のエステサロンを展開する、Team Energy Growthの100%子会社。</p>
-          <dl class="co-facts"><dt>事業内容</dt><dd>化粧品の企画開発、補正下着事業、エステサロンの運営</dd><dt>設立</dt><dd>2023年3月</dd><dt>資本関係</dt><dd>Team Energy Growth 100%</dd></dl>
-        </article>
-        <article class="co-detail" id="co-teshikaga">
-          <p class="co-area"><span class="en">Team Energy Growth</span><small>事業の立ち上げと承継事業の運営</small></p>
-          <h3 class="co-name">弟子屈チャレンジ株式会社</h3>
-          <p class="co-en en">Teshikaga Challenge</p>
-          <p class="co-summary">北海道弟子屈町で、摩周湖に最も近いホテル「Nature Base Hotel NUPPUKOTTE」を運営。2025年7月に全室スイートの環境文化拠点としてリニューアルしました。</p>
-          <dl class="co-facts"><dt>事業内容</dt><dd>ホテル運営（Nature Base Hotel NUPPUKOTTE）</dd><dt>設立</dt><dd>2022年</dd><dt>所在地</dt><dd>北海道川上郡弟子屈町</dd></dl>
-          <p class="co-links"><a class="btn" href="https://nuppukotte.com/" target="_blank" rel="noopener">公式サイト</a><a class="btn" href="cases/teshikaga.html">事例を見る</a></p>
-        </article>
-      </div>
     </div>
   </section>
-
-  <!-- グループ会社の概要ダイアログ(中身は main.js が .co-detail から複製) -->
-  <dialog class="co-dialog" id="co-dialog" aria-label="グループ会社の概要">
-    <div class="co-dialog-inner">
-      <button type="button" class="co-close" aria-label="閉じる"><span></span></button>
-      <div class="co-dialog-body" id="co-dialog-body"></div>
-    </div>
-  </dialog>
 
 
 
