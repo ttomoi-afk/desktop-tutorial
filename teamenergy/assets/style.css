@@ -365,7 +365,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .biz-logo img { height: 34px; width: auto; max-width: min(320px, 60vw); }
 .biz-logo-text .en { font-size: 24px; font-weight: 600; letter-spacing: .06em; line-height: 1.2; }
 .biz-desc { flex: 1; font-size: 14px; color: var(--ink-soft); letter-spacing: .06em; }
-.biz-plus { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); position: relative; transition: background .3s, border-color .3s; }
+.biz-plus { flex: none; margin-left: auto; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); position: relative; transition: background .3s, border-color .3s; }
 .biz-plus::before, .biz-plus::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ink); transition: transform .3s, background .3s; }
 .biz-plus::before { width: 16px; height: 1.5px; transform: translate(-50%, -50%); }
 .biz-plus::after { width: 1.5px; height: 16px; transform: translate(-50%, -50%); }
