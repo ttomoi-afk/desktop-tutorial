@@ -59,3 +59,7 @@ out/blocks_eagle.txt
 
 # 10/13の現物を整理した版（No.18・19・21の追加、No.6のずれ直し等。実案件入り）
 out/案件管理表_TeamEnergy_v2_整理版_1013.xlsx
+
+# 心斎橋リフォーム（No.22）の貼り付けブロックと、それを足した整理版（実案件入り）
+out/blocks_shinsaibashi.txt
+out/案件管理表_TeamEnergy_v2_整理版_1014.xlsx
