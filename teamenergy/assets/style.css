@@ -356,39 +356,41 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
   .focus-item { padding: 28px 0; border-bottom: 1px solid var(--line); }
 }
 
-/* ---------- 事業会社アコーディオン(組織図の下) ---------- */
+/* ---------- 事業領域のアコーディオン(見出しは中間持株会社のロゴ) ---------- */
 .biz-acc { margin-top: 24px; border-top: 1px solid var(--ink); }
 .biz-acc-item { border-bottom: 1px solid var(--line); }
-.biz-acc-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0; }
-.biz-acc-text { display: block; font-family: var(--en); font-size: 26px; font-weight: 600; letter-spacing: .06em; line-height: 1.3; transition: color .3s; }
-.biz-acc-text:hover { color: var(--magma); }
-.biz-acc-text small { display: block; margin-top: 6px; font-family: var(--jp); font-size: 14px; font-weight: 400; letter-spacing: .06em; color: var(--ink-soft); }
-.biz-acc-trigger { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); position: relative; transition: background .3s, border-color .3s; }
-.biz-acc-trigger span::before, .biz-acc-trigger span::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ink); transition: transform .3s, background .3s; }
-.biz-acc-trigger span::before { width: 16px; height: 1.5px; transform: translate(-50%, -50%); }
-.biz-acc-trigger span::after { width: 1.5px; height: 16px; transform: translate(-50%, -50%); }
-.biz-acc-trigger:hover { background: var(--ink); }
-.biz-acc-trigger:hover span::before, .biz-acc-trigger:hover span::after { background: var(--white); }
-.biz-acc-trigger[aria-expanded="true"] { background: var(--magma); border-color: var(--magma); }
-.biz-acc-trigger[aria-expanded="true"] span::before, .biz-acc-trigger[aria-expanded="true"] span::after { background: var(--white); }
-.biz-acc-trigger[aria-expanded="true"] span::after { transform: translate(-50%, -50%) rotate(90deg); }
+.biz-acc-trigger, .biz-acc-static { width: 100%; display: flex; align-items: center; gap: 28px; padding: 22px 0; text-align: left; color: var(--ink); }
+.biz-acc-trigger { cursor: pointer; }
+.biz-logo { flex: none; height: 34px; display: flex; align-items: center; }
+.biz-logo img { height: 34px; width: auto; max-width: min(320px, 60vw); }
+.biz-logo-text .en { font-size: 24px; font-weight: 600; letter-spacing: .06em; line-height: 1.2; }
+.biz-desc { flex: 1; font-size: 14px; color: var(--ink-soft); letter-spacing: .06em; }
+.biz-plus { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); position: relative; transition: background .3s, border-color .3s; }
+.biz-plus::before, .biz-plus::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ink); transition: transform .3s, background .3s; }
+.biz-plus::before { width: 16px; height: 1.5px; transform: translate(-50%, -50%); }
+.biz-plus::after { width: 1.5px; height: 16px; transform: translate(-50%, -50%); }
+.biz-acc-trigger:hover .biz-plus { background: var(--ink); }
+.biz-acc-trigger:hover .biz-plus::before, .biz-acc-trigger:hover .biz-plus::after { background: var(--white); }
+.biz-acc-trigger[aria-expanded="true"] .biz-plus { background: var(--magma); border-color: var(--magma); }
+.biz-acc-trigger[aria-expanded="true"] .biz-plus::before, .biz-acc-trigger[aria-expanded="true"] .biz-plus::after { background: var(--white); }
+.biz-acc-trigger[aria-expanded="true"] .biz-plus::after { transform: translate(-50%, -50%) rotate(90deg); }
 .biz-acc-trigger:focus-visible { outline: 2px solid var(--magma); outline-offset: 3px; }
 .biz-acc-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s ease; }
 .biz-acc-body > * { overflow: hidden; min-height: 0; }
 .biz-acc-body.is-open { grid-template-rows: 1fr; }
-.biz-acc-links { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
-/* 下余白は要素として持たせる(paddingだと閉じても高さが残るため) */
-.biz-acc-links::after { content: ""; display: block; grid-column: 1 / -1; height: 16px; }
-.biz-acc-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border: 1px solid var(--line); background: var(--white); font-size: 15px; letter-spacing: .04em; transition: border-color .3s, color .3s; }
-.biz-acc-link::after { content: ""; flex: none; width: 7px; height: 7px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
-.biz-acc-link:hover { color: var(--magma); border-color: var(--magma); }
-.biz-acc-link small { margin-left: auto; font-family: var(--en); font-size: 14px; letter-spacing: .1em; color: var(--ink-faint); }
+/* 傘下各社のタイル。影が切れないよう余白は ul 側に持ち、閉じた時の高さは .biz-acc-inner が 0 になる */
+.biz-acc-inner { min-height: 0; }
+.logo-grid-sub { margin: 0 -8px; padding: 6px 8px 26px; grid-template-columns: repeat(4, 1fr); }
+.logo-grid-sub .logo-tile { min-height: 128px; padding: 22px 16px 16px; }
+@media (max-width: 1023px) { .logo-grid-sub { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 767px) {
   .biz-acc { margin-top: 20px; }
-  .biz-acc-header { padding: 20px 0; }
-  .biz-acc-text { font-size: 18px; }
-  .biz-acc-trigger { width: 40px; height: 40px; }
-  .biz-acc-links { grid-template-columns: 1fr; }
+  .biz-acc-trigger, .biz-acc-static { flex-wrap: wrap; gap: 8px 16px; padding: 18px 0; }
+  .biz-logo { height: 26px; } .biz-logo img { height: 26px; max-width: 70vw; }
+  .biz-logo-text .en { font-size: 19px; }
+  .biz-desc { flex-basis: 100%; order: 3; font-size: 13px; }
+  .biz-plus { width: 38px; height: 38px; margin-left: auto; }
+  .logo-grid-sub { grid-template-columns: 1fr 1fr; padding-bottom: 20px; }
 }
 
 /* ---------- Results ---------- */
@@ -947,10 +949,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 }
 
 /* ---------- Group: ロゴのグリッドと会社概要ダイアログ ---------- */
-.group { background: var(--paper); }
-.area-list { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
-.area-chip { display: inline-flex; align-items: baseline; gap: 8px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); font-size: 12px; color: var(--ink-soft); letter-spacing: .04em; }
-.area-chip b { font-weight: 600; font-size: 13px; letter-spacing: .08em; color: var(--ink); }
+.group { background: var(--white); } /* 各社ロゴは白地前提 */
 .logo-grid { margin-top: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .logo-tile { width: 100%; min-height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 28px 20px 18px; background: var(--white); border: 1px solid var(--line); position: relative; cursor: pointer; text-align: center; color: var(--ink); transition: border-color .3s, transform .3s, box-shadow .3s; }
 .logo-tile:hover, .logo-tile:focus-visible { border-color: var(--magma); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(26,20,18,.08); outline: none; }
@@ -963,7 +962,6 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .logo-img img { max-height: 56px; max-width: 180px; width: auto; height: auto; }
 .logo-name { font-size: 13px; color: var(--ink-soft); letter-spacing: .04em; line-height: 1.5; }
 @media (max-width: 767px) {
-  .area-chip { padding: 5px 11px; font-size: 11px; } .area-chip b { font-size: 12px; }
   .logo-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .logo-tile { min-height: 126px; padding: 24px 12px 14px; gap: 10px; }
   .logo-img { height: 44px; } .logo-img img { max-height: 44px; max-width: 130px; }
