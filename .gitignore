@@ -1,83 +1,8 @@
 __pycache__/
 *.pyc
 
-# 実案件の入った案件管理表は守秘義務の対象（IMに第三者公表を控える旨の記載あり）。
-# out/案件管理表_TeamEnergy.xlsx は build_pipeline.py が吐く空の表なので別。
-out/案件管理表_TeamEnergy_新レイアウト.xlsx
-
-# 議事録を反映した版も実案件入り。リポジトリには置かない
-out/案件管理表_TeamEnergy_議事録反映.xlsx
-
-# 13件版・貼り付けブロックも実案件入り
-out/案件管理表_TeamEnergy_13件.xlsx
-out/blocks_jwill.txt
-
-# 14件版・PlusGの貼り付けブロックも実案件入り
-out/案件管理表_TeamEnergy_14件.xlsx
-out/blocks_plusg.txt
-
-# 15件版・PJ-ambitionの貼り付けブロックも実案件入り
-out/案件管理表_TeamEnergy_15件.xlsx
-out/blocks_ambition.txt
-
-# 16件版・ファンデイトの貼り付けブロックも実案件入り
-out/案件管理表_TeamEnergy_16件.xlsx
-out/blocks_fundate.txt
-
-# 大正村福祉の決算反映版と更新ブロックも実案件入り
-out/案件管理表_TeamEnergy_16件_大正村更新.xlsx
-out/blocks_taisho_fy26.txt
-
-# 17件版・エクスキューブの貼り付けブロックも実案件入り
-out/案件管理表_TeamEnergy_17件.xlsx
-out/blocks_xcube.txt
-
-# 18件版・EUREKAの貼り付けブロックも実案件入り
-out/案件管理表_TeamEnergy_18件.xlsx
-out/blocks_eureka.txt
-
-# 19件版・EUREKA（作り直し）と一冨士本店の貼り付けブロックも実案件入り
-out/案件管理表_TeamEnergy_19件.xlsx
-out/blocks_eureka_ichifuji.txt
-
-# 20件版・旭東みらいテクノロジーの貼り付けブロックも実案件入り
-out/案件管理表_TeamEnergy_20件.xlsx
-out/blocks_kyokuto.txt
-
-# No.6（イーストライズ・トランスポート）の更新ブロックと更新後の統合版も実案件入り
-out/blocks_eastrise_No6.txt
-out/案件管理表_TeamEnergy_20件_No6更新.xlsx
-
-# SAMOEDO'Sの口コミ集計・今期分析（実案件入り）
-out/SAMOEDOS_口コミ集計と今期分析.xlsx
-
-# No.6の貼り付けずれの直し方（実案件入り）
-out/fix_No6_貼り付けずれ.txt
-
-# EAGLE（No.21）の貼り付けブロック（実案件入り）
-out/blocks_eagle.txt
-
-# 10/13の現物を整理した版（No.18・19・21の追加、No.6のずれ直し等。実案件入り）
-out/案件管理表_TeamEnergy_v2_整理版_1013.xlsx
-
-# 心斎橋リフォーム（No.22）の貼り付けブロックと、それを足した整理版（実案件入り）
-out/blocks_shinsaibashi.txt
-out/案件管理表_TeamEnergy_v2_整理版_1014.xlsx
-
-# プチスポーツ（No.23）の貼り付けブロックと、No.23まで足した整理版（実案件入り）
-out/blocks_petit.txt
-out/案件管理表_TeamEnergy_v2_整理版_No23まで.xlsx
-
-# ビューティースタイル（No.24）の貼り付けブロックと、No.24まで足した整理版（実案件入り）
-out/blocks_beautystyle.txt
-out/案件管理表_TeamEnergy_v2_整理版_No24まで.xlsx
-
-# BLUCO.Inc（No.25）の貼り付けブロックと、No.25まで足した整理版（実案件入り）
-out/blocks_bluco.txt
-out/案件管理表_TeamEnergy_v2_整理版_No25まで.xlsx
-
-# BLUCO（No.25）の口コミ・評判調査（実案件入り）
-out/BLUCO_口コミ・評判調査.xlsx
-
-# 保育・児発をNG❽に、エリアを追加基準にした整理版（実案件入り）
-out/案件管理表_TeamEnergy_v2_整理版_エリア追加.xlsx
+# 実案件の入ったファイル（案件管理表の現物・貼り付けブロック・調査メモ等）は守秘義務の対象。
+# out/ に置くがリポジトリには入れない。ファイル名や社名もここには書かない。
+# build_pipeline.py が吐く雛形だけは追跡する。
+out/*
+!out/案件管理表_TeamEnergy.xlsx
