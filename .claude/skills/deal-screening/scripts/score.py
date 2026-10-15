@@ -17,6 +17,9 @@ MUST = {"1-1", "1-3", "2", "5"}
 BUDGET = 2500.0            # 買収予算（グループ全体の自己資金枠。百万円）
 RATIO_CUTS = [0.20, 0.30, 0.40, 0.50]   # 枠に占める割合 ◯/△〜◯/△/×〜△ の上限
 UNKNOWN = "－"
+# エリア（追加基準）。事業の所在がここなら◯、それ以外は△。×は付けない
+SHUTOKEN = ["東京", "神奈川", "埼玉", "千葉"]                 # 首都圏＝1都3県
+KANSAI = ["大阪", "京都", "兵庫", "奈良", "滋賀", "和歌山"]    # 関西＝2府4県
 
 
 def band(value, cuts, ascending_is_good=False):
@@ -93,7 +96,7 @@ def book_multiple(d):
 
 
 def judge(d):
-    """定量6項目を判定。戻りは {no: (評価, 根拠1行)}。"""
+    """定量項目（1-2／1-3／2／3／5／11／エリア）を判定。戻りは {no: (評価, 根拠1行)}。"""
     out = {}
 
     # --- 1-2 1件あたりの資金負担（買収予算25億円に占める割合）-------
@@ -239,6 +242,22 @@ def judge(d):
     else:
         out["11"] = (UNKNOWN, "上位取引先の集中度の記載なし")
 
+    # --- エリア（追加基準）-------------------------------------------------
+    # 事業の所在（売上の過半、不明なら拠点数の過半）の都道府県で見る。本社の登記地ではない。
+    # 複数の地域にまたがる案件は、どこで判定したかを area_note に書く。
+    pref = d.get("prefecture")
+    note = d.get("area_note", "")
+    if pref:
+        p = str(pref).strip()
+        region = ("首都圏" if any(p.startswith(x) for x in SHUTOKEN)
+                  else "関西" if any(p.startswith(x) for x in KANSAI) else None)
+        if region:
+            out["エリア"] = ("◯", f"{p}（{region}）" + (f"。{note}" if note else ""))
+        else:
+            out["エリア"] = ("△", f"{p}（首都圏・関西の外）" + (f"。{note}" if note else ""))
+    else:
+        out["エリア"] = (UNKNOWN, "事業の所在の記載なし")
+
     return out
 
 
@@ -332,13 +351,15 @@ LABELS = {
     "9": "売却理由",
     "11": "特定取引先に依存していないか",
     "12": "特定人材に依存していないか",
+    "エリア": "所在エリア（首都圏・関西か）",
 }
-ORDER = ["1-1", "1-2", "1-3", "2", "3", "4", "5", "8-1", "8-2", "9", "11", "12"]
+# 青塗り12項目＋エリア（2026/10/15追加。Mustではなく×も付かない）
+ORDER = ["1-1", "1-2", "1-3", "2", "3", "4", "5", "8-1", "8-2", "9", "11", "12", "エリア"]
 QUALITATIVE = ["1-1", "4", "8-1", "8-2", "9", "12"]
 
 
 def total(grades):
-    """grades = {no: 評価}。12項目そろっていなくても計算する。"""
+    """grades = {no: 評価}。全項目そろっていなくても計算する。"""
     judged = [g for g in grades.values() if g in SCORE]
     pts = sum(SCORE[g] for g in judged)
     n = len(judged)

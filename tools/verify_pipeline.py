@@ -22,7 +22,9 @@ HEAD_ROW, FIRST, LAST = 7, 8, 107
 BLANK = 11                      # 8=記入例 9,10=実案件 なので素の挙動は11行目で見る
 MANUAL = ["友井判定"]            # 手入力のみ。取込には出さない列
 GRADES = ["◯", "△〜◯", "△", "×〜△", "×", "－"]
-ITEM_NAMES = ["1-1", "1-2", "1-3", "2", "3", "4", "5", "8-1", "8-2", "9", "11", "12"]
+# 評価項目は score.py の ORDER が唯一の正（青塗り12項目＋エリア）
+ITEM_NAMES = list(ORDER)
+NI = len(ITEM_NAMES)
 # Must は score.py を唯一の正とする。ここに書き写すと付け替えのたびに二重管理になる。
 MUST_NAMES = [n for n in ITEM_NAMES if n in MUST]
 fails = []
@@ -64,17 +66,17 @@ for h in ("No", "企業名", "事業内容", "業種区分", "譲渡価格", "�
           "AI総合判定", "友井判定", "達成率", "未解決質問", "得点", "Must×"):
     if h not in COL:
         chk(f"見出し{h}", None, "存在すること")
-chk("12項目すべて存在", sorted(EVCOL), sorted(ITEM_NAMES))
+chk(f"{NI}項目すべて存在", sorted(EVCOL), sorted(ITEM_NAMES))
 must = [ITEM_NAMES[i] for i, c in enumerate(EV)
         if str(ws[f"{c}{HEAD_ROW}"].value).startswith("★")]
 chk("Must項目", must, MUST_NAMES)
 chk("評価列が連続", [ws[f"{c}{HEAD_ROW}"].column for c in EV],
     list(range(ws[f"{EV[0]}{HEAD_ROW}"].column,
-               ws[f"{EV[0]}{HEAD_ROW}"].column + 12)))
+               ws[f"{EV[0]}{HEAD_ROW}"].column + NI)))
 hidden = [c for c in (COL["得点"], COL["判定済"], COL["×件数"], COL["Must×"])
           if ws.column_dimensions[c].hidden]
 chk("内部計算列を隠す", len(hidden), 4)
-chk("12項目の見出しメモ", sum(1 for c in EV if ws[f"{c}{HEAD_ROW}"].comment is not None), 12)
+chk(f"{NI}項目の見出しメモ", sum(1 for c in EV if ws[f"{c}{HEAD_ROW}"].comment is not None), NI)
 prim = 0
 for c in ws[HEAD_ROW]:
     if c.value is None:
@@ -89,7 +91,8 @@ print(f"   先頭〜ステータスの幅 {prim:.0f}文字 ≒ {prim * 7:.0f}px"
 # 先頭〜ステータスが1画面（フルHDで約1,850px）に収まるかの歯止め。
 # 判定基準を12列の上に敷くため評価列を5.0→7.0に広げ（＋24文字）、
 # 友井判定を足した（＋8文字）ので、元の217文字から249文字になっている。
-if prim > 255:
+# 2026/10/15 にエリア（＋7文字）を足して256文字。
+if prim > 263:
     fails.append(f"主要ブロックが広すぎる {prim:.0f}文字")
 
 # ② 空欄状態で全数式がエラーを出さないか
@@ -114,11 +117,11 @@ else:
 print("③ 入力済みの2行")
 for row, label, exp in (
     (FIRST, "記入例", {MULT: 4.7, REFM: 4.4, RANGE: "範囲内",
-                   VERDICT: "A：進める", RATE: 0.854}),
+                   VERDICT: "A：進める", RATE: 0.865}),
     (FIRST + 1, "実案件1 左官", {MULT: 19.4, REFM: 11.1, RANGE: "範囲内",
-                         VERDICT: "C：見送り（Must×）", RATE: 0.455}),
+                         VERDICT: "C：見送り（Must×）", RATE: 0.5}),
     (FIRST + 2, "実案件2 動物カフェ", {MULT: 3.0, REFM: 3.0, RANGE: "範囲内",
-                              VERDICT: "B：追加情報を取得", RATE: 0.455}),
+                              VERDICT: "B：追加情報を取得", RATE: 0.458}),
 ):
     bk = Book(wb, maxrow=LAST + 5)
     out = []
@@ -147,11 +150,11 @@ print("④ 総合判定・達成率 vs score.py（乱数 5,000 件）")
 random.seed(11)
 mism = 0
 for _ in range(5000):
-    k = random.choice([0, 1, 2, 3, 5, 6, 7, 12, 12])
-    idx = random.sample(range(12), k)
-    g = {ORDER[i]: "－" for i in range(12)}
+    k = random.choice([0, 1, 2, 3, 5, 6, 7, NI - 1, NI, NI])
+    idx = random.sample(range(NI), k)
+    g = {ORDER[i]: "－" for i in range(NI)}
     bk = Book(wb, maxrow=LAST + 5)
-    for i in range(12):
+    for i in range(NI):
         v = random.choice(GRADES[:5]) if i in idx else "－"
         g[ORDER[i]] = v
         bk.set(SH, f"{EV[i]}{BLANK}", v)
@@ -225,11 +228,11 @@ chk("自動リストアップのタブが無い",
     [n for n in wb.sheetnames if "自動リストアップ" in n or n == "友井→服部"], [])
 chk("タブ構成", wb.sheetnames,
     ["案件管理", "取込", "質問リスト", "仲介会社管理シート", "判定基準", "選択肢"])
-# 12項目の◯／△／× が見出しの直上3行に、列ズレなく入っているか
+# 評価項目の◯／△／× が見出しの直上3行に、列ズレなく入っているか
 for off, mark in ((0, "◯"), (1, "△"), (2, "×")):
     row = CRIT_O + off
     blank = [EVCOL[n] for n in ITEM_NAMES if not ws[f"{EVCOL[n]}{row}"].value]
-    chk(f"{mark}の基準が12列すべてに入っている", blank, [])
+    chk(f"{mark}の基準が{NI}列すべてに入っている", blank, [])
     chk(f"{mark}の行見出し", str(ws[f"A{row}"].value).startswith(mark), True)
 chk("基準帯が見出しごと固定されている",
     ws.freeze_panes.endswith(str(FIRST)) and CRIT_X < HEAD_ROW < FIRST, True)
@@ -265,8 +268,8 @@ chk("食い違いの規則が最優先", min(r.priority for _, r in _cf),
 # 判定基準タブはパラメータの置き場として残っているか
 chk("判定基準タブのパラメータが生きている",
     [wb["判定基準"][f"B{r}"].value for r in (32, 33, 34, 35)],
-    [50, 400, 7, "NG業種7カテゴリ"])
-print("   基準帯12項目×3段・固定・畳み込み・友井判定A/B/Cとも期待どおり")
+    [50, 400, 7, "NG業種8カテゴリ"])
+print(f"   基準帯{NI}項目×3段・固定・畳み込み・友井判定A/B/Cとも期待どおり")
 
 # ⑧ 仲介会社管理シート（案件管理からの自動集計）
 print("⑧ 仲介会社管理シート")
@@ -392,9 +395,8 @@ chk("取込に案件管理の入力列が揃っている",
     [h for h in _dh if h not in _ih and h not in _fcols and h != "No"
      and h not in MANUAL], [])
 chk("質問見出しの対応", [h for h in _iq if h not in _qh], [])
-chk("評価12列が取込にある",
-    len([h for h in _ih if h.lstrip("★") in
-         ("1-1", "1-2", "1-3", "2", "3", "4", "5", "8-1", "8-2", "9", "11", "12")]), 12)
+chk(f"評価{NI}列が取込にある",
+    len([h for h in _ih if h.lstrip("★") in ITEM_NAMES]), NI)
 
 # 実際に取込を通して、数式が壊れず判定まで出るか
 import datetime as _dt                                        # noqa: E402
