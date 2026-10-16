@@ -192,59 +192,56 @@
     <div class="sec-inner fadein">
       <h2 class="sec-title">Portfolio</h2>
       <p class="sec-lead">ポートフォリオと実績</p>
-      <!-- 左: 目標と数字、右: 企業価値のグラフ。縦に積まず横に並べて余白を減らす -->
+      <!-- 企業名・具体例は出さない(2026-10-16 指示)。左: 目標と数字、右: 100億円企業4社(創出済)とユニコーン3社(目標)の図 -->
       <div class="results-top">
         <div class="results-summary">
           <p class="results-catch">ユニコーン企業を3社<br class="pc">創出するために、<br>100億円企業を創り続ける。</p>
           <dl class="records-list stg">
-            <div class="records-row"><dt><span class="en" data-count="4">4</span><small>社</small></dt><dd>100億円企業</dd></div>
+            <div class="records-row"><dt><span class="en" data-count="4">4</span><small>社</small></dt><dd>創出した100億円企業</dd></div>
+            <div class="records-row"><dt><span class="en" data-count="2">2</span><small>社</small></dt><dd>上場・売却によるEXIT</dd></div>
           </dl>
         </div>
       <figure class="chart-fig chart-fig-wide">
-        <figcaption><strong>各社の企業価値の規模</strong></figcaption>
-        <svg class="chart chart-cols chart-soft" viewBox="0 0 640 280" role="img" aria-labelledby="pft" aria-describedby="pfd"><title id="pft">ポートフォリオ各社の企業価値の規模</title><desc id="pfd">4社の企業価値を相対的な棒の長さで示す。左から歴史の順に、ふるさと熱電、レジル、バイウィル、GeoDreams。金額は非表示</desc>
-        <line class="ch-grid" x1="40" y1="232.0" x2="600" y2="232.0"/>
-        <g class="col col-exit" tabindex="0"><title>ふるさと熱電（EXIT済）</title><rect x="96.0" y="179.5" width="28" height="52.5" rx="4"/>
-        <text class="ch-tag" x="110.0" y="167.5" text-anchor="middle">BUY OUT</text>
-        <text class="ch-label" x="110.0" y="256" text-anchor="middle">ふるさと熱電</text></g>
-        <g class="col col-exit" tabindex="0"><title>レジル（EXIT済）</title><rect x="236.0" y="50.0" width="28" height="182.0" rx="4"/>
-        <text class="ch-tag" x="250.0" y="38.0" text-anchor="middle">IPO・TOB</text>
-        <text class="ch-label" x="250.0" y="256" text-anchor="middle">レジル</text></g>
-        <g class="col col-plan" tabindex="0"><title>バイウィル（未上場）</title><rect x="376.0" y="191.8" width="28" height="40.2" rx="4"/>
-        <text class="ch-label" x="390.0" y="256" text-anchor="middle">バイウィル</text></g>
-        <g class="col col-plan" tabindex="0"><title>GeoDreams（未上場）</title><rect x="516.0" y="141.0" width="28" height="91.0" rx="4"/>
-        <text class="ch-label" x="530.0" y="256" text-anchor="middle">GeoDreams</text></g>
+        <figcaption><strong>100億円企業の創出実績と、その先の目標</strong></figcaption>
+        <svg class="chart chart-cols chart-soft chart-goal" viewBox="0 0 640 280" role="img" aria-labelledby="pft" aria-describedby="pfd"><title id="pft">100億円企業の創出実績と目標</title><desc id="pfd">企業価値100億円の線を超えた4本の柱で創出済みの100億円企業4社を、点線の3本の柱で目標とするユニコーン企業3社を示す</desc>
+        <line class="ch-grid" x1="40" y1="232" x2="600" y2="232"/>
+        <line class="ch-ref" x1="40" y1="128" x2="600" y2="128"/>
+        <text class="ch-ref-label" x="600" y="118" text-anchor="end">企業価値 100億円</text>
+        <line class="ch-ref ch-ref-goal" x1="40" y1="44" x2="600" y2="44"/>
+        <text class="ch-ref-label" x="600" y="34" text-anchor="end">ユニコーン</text>
+        <g class="col col-exit" tabindex="0"><title>100億円企業 1社目（創出済）</title><rect x="76" y="112" width="28" height="120" rx="4"/></g>
+        <g class="col col-exit" tabindex="0"><title>100億円企業 2社目（創出済）</title><rect x="146" y="96" width="28" height="136" rx="4"/></g>
+        <g class="col col-exit" tabindex="0"><title>100億円企業 3社目（創出済）</title><rect x="216" y="118" width="28" height="114" rx="4"/></g>
+        <g class="col col-exit" tabindex="0"><title>100億円企業 4社目（創出済）</title><rect x="286" y="104" width="28" height="128" rx="4"/></g>
+        <g class="col col-goal" tabindex="0"><title>ユニコーン企業 1社目（目標）</title><rect x="396" y="44" width="28" height="188" rx="4"/></g>
+        <g class="col col-goal" tabindex="0"><title>ユニコーン企業 2社目（目標）</title><rect x="466" y="44" width="28" height="188" rx="4"/></g>
+        <g class="col col-goal" tabindex="0"><title>ユニコーン企業 3社目（目標）</title><rect x="536" y="44" width="28" height="188" rx="4"/></g>
+        <text class="ch-tag" x="195" y="254" text-anchor="middle">RESULT</text>
+        <text class="ch-label" x="195" y="276" text-anchor="middle">100億円企業 4社</text>
+        <text class="ch-tag ch-tag-goal" x="480" y="254" text-anchor="middle">NEXT</text>
+        <text class="ch-label" x="480" y="276" text-anchor="middle">ユニコーン企業 3社</text>
         </svg>
-        <p class="pf-legend"><span><i class="key key-exit"></i>EXIT済（2社）</span><span><i class="key key-plan"></i>未上場（2社）</span></p>
-        <details class="chart-table"><summary>表で見る</summary>
-          <table><thead><tr><th>会社</th><th>状況</th><th>備考</th></tr></thead><tbody><tr><td>ふるさと熱電</td><td>EXIT済</td><td>ベースロードキャピタルへ売却</td></tr><tr><td>レジル</td><td>EXIT済</td><td>2024年 東証グロース上場。その後、ベインキャピタルへ売却</td></tr><tr><td>バイウィル</td><td>未上場</td><td>累計約30億円を調達</td></tr><tr><td>GeoDreams</td><td>未上場</td><td>クローズドループ地熱の開発</td></tr></tbody></table>
-        </details>
+        <p class="pf-legend"><span><i class="key key-exit"></i>創出した100億円企業（4社）</span><span><i class="key key-goal"></i>目標：ユニコーン企業（3社）</span></p>
       </figure>
       </div>
-      <div class="pf-grid pf-grid-4 stg">
+      <div class="pf-grid pf-grid-3 stg">
         <article class="pf-card is-exit">
           <p class="pf-kind">EXIT</p>
-          <h3 class="pf-name">ふるさと熱電</h3>
-          <p class="pf-call">ベースロードキャピタルへ売却</p>
-          <p class="pf-desc">地域と共生する地熱発電所の運営。日本初のSPCモデル</p>
-        </article>
-        <article class="pf-card is-exit">
-          <p class="pf-kind">EXIT</p>
-          <h3 class="pf-name"><a href="https://rezil.co.jp/" target="_blank" rel="noopener">REZIL</a></h3>
-          <p class="pf-call">2024年 東証グロース上場。その後、ベインキャピタルへ売却</p>
-          <p class="pf-desc">マンション一括受電のパイオニア</p>
+          <h3 class="pf-name"><span class="en" data-count="2">2</span><small>社</small></h3>
+          <p class="pf-call">上場・売却を実現</p>
+          <p class="pf-desc">創出した100億円企業のうち2社は、株式上場と投資ファンドへの売却に至りました。</p>
         </article>
         <article class="pf-card is-plan">
-          <p class="pf-kind">未上場</p>
-          <h3 class="pf-name"><a href="https://www.bywill.co.jp/" target="_blank" rel="noopener">BY WILL</a></h3>
-          <p class="pf-call">累計約30億円を調達</p>
-          <p class="pf-desc">地銀45行・自治体60超と連携する環境クレジット創出事業</p>
+          <p class="pf-kind">Growing</p>
+          <h3 class="pf-name"><span class="en" data-count="2">2</span><small>社</small></h3>
+          <p class="pf-call">次の上場・売却へ</p>
+          <p class="pf-desc">残る2社は、経営者とともに次の成長段階へ。資金調達と事業拡大を進めています。</p>
         </article>
-        <article class="pf-card is-plan">
-          <p class="pf-kind">未上場</p>
-          <h3 class="pf-name">GeoDreams</h3>
-          <p class="pf-call">クローズドループ地熱の開発</p>
-          <p class="pf-desc">次世代型地熱発電の掘削・探査・運営を一貫して担う</p>
+        <article class="pf-card is-goal">
+          <p class="pf-kind">Next</p>
+          <h3 class="pf-name"><span class="en" data-count="3">3</span><small>社</small></h3>
+          <p class="pf-call">ユニコーン企業を創出する</p>
+          <p class="pf-desc">100億円企業を10社。その先に、企業価値1,000億円を超えるユニコーン企業を3社。</p>
         </article>
       </div>
     </div>

@@ -951,3 +951,17 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
   .pmap-dot { transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform .5s cubic-bezier(.2,.7,.15,1) .6s; }
   .fadein.is-visible .pmap-dot { transform: none; }
 }
+
+/* Portfolio: 企業名を出さない構成(2026-10-16) */
+.chart .ch-ref { stroke: var(--magma); stroke-width: 1; stroke-dasharray: 4 4; opacity: .7; }
+.chart .ch-ref-goal { stroke: var(--ink-faint); }
+.chart .ch-ref-label { font-size: 12px; fill: var(--ink-faint); letter-spacing: .06em; }
+.chart .col-goal rect { fill: none; stroke: var(--ink-faint); stroke-width: 1.2; stroke-dasharray: 5 4; }
+.chart .col-goal:hover rect, .chart .col-goal:focus rect { fill: rgba(210,70,28,.06); stroke: var(--magma); }
+.chart .ch-tag-goal { fill: var(--ink-faint); }
+.pf-legend .key-goal { background: none; border: 1.2px dashed var(--ink-faint); }
+.pf-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.pf-card .pf-name .en { font-family: var(--num); font-size: 40px; font-weight: 300; letter-spacing: .02em; }
+.pf-card .pf-name small { margin-left: 4px; font-family: var(--jp); font-size: 14px; font-weight: 500; }
+.pf-card.is-goal .pf-kind { color: var(--ink); }
+@media (max-width: 767px) { .pf-grid-3 { grid-template-columns: 1fr; } .chart-goal .ch-ref-label { font-size: 15px; } .chart-goal .ch-tag { font-size: 12px; } .chart-goal .ch-label { font-size: 15px; } }
