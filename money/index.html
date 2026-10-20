@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>マネーノート — 個人用資金管理</title>
+<meta name="description" content="毎月の収支・遊びのお金・ギャンブルの資金を1つで管理する個人用アプリ。給料に対していくら使えたかが一目でわかり、共有コードで他の人からも見られます。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="マネーノート">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<link rel="icon" href="./icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<div class="app" id="app">
+  <header class="app-top">
+    <button class="conn-badge c-local" id="connBadge" data-action="open-settings" aria-label="接続状態・設定"><span class="dot"></span>ローカル</button>
+    <div class="month-nav" aria-label="表示する月">
+      <button class="mn-btn" data-action="month-prev" aria-label="前の月">‹</button>
+      <button class="mn-label" id="monthLabel" data-action="month-today" title="今月に戻る">—</button>
+      <button class="mn-btn" data-action="month-next" aria-label="次の月">›</button>
+    </div>
+    <button class="top-btn" data-action="open-settings" aria-label="設定">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg>設定
+    </button>
+  </header>
+
+  <div class="ro-banner" id="roBanner" hidden>閲覧専用で表示しています（編集はできません）</div>
+
+  <div class="screens">
+    <section class="screen is-active" id="s-home" role="tabpanel" aria-label="今月"><div id="home-body"></div></section>
+    <section class="screen" id="s-history" role="tabpanel" aria-label="履歴" hidden><div id="history-body"></div></section>
+    <section class="screen" id="s-gamble" role="tabpanel" aria-label="ギャンブル" hidden><div id="gamble-body"></div></section>
+  </div>
+
+  <button class="fab" id="fab" data-action="add-entry" aria-label="明細を追加">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+
+  <nav class="tabbar" role="tablist" aria-label="画面切替">
+    <button class="tab is-active" data-action="tab" data-target="s-home" role="tab" aria-selected="true">今月<span class="u"></span></button>
+    <button class="tab" data-action="tab" data-target="s-history" role="tab" aria-selected="false">履歴<span class="u"></span></button>
+    <button class="tab" data-action="tab" data-target="s-gamble" role="tab" aria-selected="false">ギャンブル<span class="u"></span></button>
+  </nav>
+</div>
+
+<!-- 明細の追加・編集 -->
+<div class="sheet-back" id="eeSheetBack"></div>
+<div class="sheet" id="eeSheet" role="dialog" aria-modal="true" aria-labelledby="ee-heading">
+  <div class="sheet-content">
+    <div class="sheet-grip" aria-hidden="true"></div>
+    <div class="sheet-head"><div class="sheet-title" id="ee-heading">明細を追加</div><button class="sheet-close" data-action="close-entry">閉じる</button></div>
+    <div class="field"><label>種類</label>
+      <div class="seg-ctl" id="ee-group">
+        <button type="button" class="seg-opt g-life" data-group="life">生活</button>
+        <button type="button" class="seg-opt g-play" data-group="play">遊び</button>
+        <button type="button" class="seg-opt g-gamble" data-group="gamble">ギャンブル</button>
+        <button type="button" class="seg-opt g-income" data-group="income">収入</button>
+      </div></div>
+    <div class="row2">
+      <div class="field"><label for="ee-category">カテゴリ</label><select class="input" id="ee-category"></select></div>
+      <div class="field"><label for="ee-date">日付</label><input class="input" type="date" id="ee-date"></div>
+    </div>
+    <div class="field" id="ee-amount-field"><label for="ee-amount">金額（円）</label><input class="input input-num" type="number" inputmode="numeric" min="0" step="1" id="ee-amount" placeholder="0"></div>
+    <div class="row2" id="ee-gamble-fields" hidden>
+      <div class="field"><label for="ee-stake">投入（賭けた額）</label><input class="input input-num" type="number" inputmode="numeric" min="0" step="1" id="ee-stake" placeholder="0"></div>
+      <div class="field"><label for="ee-payout">払戻（戻った額）</label><input class="input input-num" type="number" inputmode="numeric" min="0" step="1" id="ee-payout" placeholder="0"></div>
+    </div>
+    <div class="gamble-net" id="ee-net" hidden></div>
+    <div class="field"><label for="ee-memo">メモ</label><input class="input" id="ee-memo" placeholder="例: 住之江 12R / 同僚と飲み" autocomplete="off"></div>
+    <div class="sheet-actions">
+      <button class="btn btn-danger" id="ee-delete" data-action="delete-entry" hidden>削除</button>
+      <button class="btn btn-primary" style="margin-left:auto" data-action="save-entry">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 設定 -->
+<div class="sheet-back" id="setSheetBack"></div>
+<div class="sheet" id="setSheet" role="dialog" aria-modal="true" aria-label="設定"><div class="sheet-content"></div></div>
+
+<input type="file" id="importFile" accept="application/json" hidden>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
