@@ -1,8 +1,8 @@
 // test-store.mjs — 集計ロジックの自己テスト。`node money/test-store.mjs` で実行。
 // 依存なし。失敗があれば終了コード1。
 import {
-  normalizeEntry, deriveMonth, deriveGamble, deriveTrend, listMonths, monthAdd,
-  toBook, fromBook, sampleState, fmtYen, fmtSigned, createStore,
+  normalizeEntry, deriveMonth, deriveGamble, deriveTrend, deriveMembers, listMonths, monthAdd,
+  toBook, fromBook, sampleState, fmtYen, fmtSigned, createStore, budgetsFor, normalizeMember,
 } from './store.js';
 
 let ok = 0, ng = 0;
@@ -22,7 +22,7 @@ eq('マイナス金額は 0', normalizeEntry({ id: 'd', date: '2026-10-01', grou
 // ── deriveMonth
 const E = (o) => normalizeEntry({ id: Math.random().toString(36).slice(2), ...o });
 const state = {
-  meta: {}, settings: { budgets: { life: 100000, play: 20000, gamble: 10000 }, allowGambleRebet: true },
+  meta: {}, settings: { budgets: { life: 100000, play: 20000, gamble: 10000 }, allowGambleRebet: true }, members: [],
   entries: [
     E({ date: '2026-10-25', group: 'income', category: '給料', amount: 300000 }),
     E({ date: '2026-10-26', group: 'income', category: '副収入', amount: 20000 }),
@@ -87,6 +87,50 @@ eq('推移は古い順 n ヶ月', tr.map((t) => t.ym), ['2026-08', '2026-09', '2
 eq('推移の収支', tr.map((t) => t.balance), [0, 250000, 192000]);
 eq('月一覧は新しい順＋今月', listMonths(state, '2026-11-02'), ['2026-11', '2026-10', '2026-09']);
 
+// ── ふたり（メンバー）
+const A = normalizeMember({ id: 'mA', name: 'わたし', budgets: { life: 100000, play: 20000, gamble: 10000 } }, 0);
+const B = normalizeMember({ id: 'mB', name: 'パートナー', budgets: { life: 80000, play: 10000, gamble: 5000 } }, 1);
+const two = {
+  meta: {}, settings: { allowGambleRebet: true }, members: [A, B],
+  entries: [
+    E({ memberId: 'mA', date: '2026-10-25', group: 'income', category: '給料', amount: 300000 }),
+    E({ memberId: 'mA', date: '2026-10-01', group: 'life', category: '家賃', amount: 70000 }),
+    E({ memberId: 'mA', date: '2026-10-07', group: 'gamble', category: 'ボートレース', stake: 8000, payout: 2000 }),
+    E({ memberId: 'mB', date: '2026-10-20', group: 'income', category: '給料', amount: 200000 }),
+    E({ memberId: 'mB', date: '2026-10-05', group: 'life', category: '食費', amount: 30000 }),
+    E({ memberId: 'mB', date: '2026-10-06', group: 'play', category: '趣味', amount: 15000 }),
+  ],
+};
+eq('一人の予算は本人の分', budgetsFor(two, 'mB'), { life: 80000, play: 10000, gamble: 5000 });
+eq('ふたりの予算は合計', budgetsFor(two, 'all'), { life: 180000, play: 30000, gamble: 15000 });
+eq('メンバー無しは settings.budgets', budgetsFor(state, 'all'), { life: 100000, play: 20000, gamble: 10000 });
+const mA = deriveMonth(two, '2026-10', 'mA'), mB = deriveMonth(two, '2026-10', 'mB'), mAll = deriveMonth(two, '2026-10', 'all');
+eq('わたしだけの件数', mA.count, 3);
+eq('わたしの給料', mA.salary, 300000);
+eq('パートナーの残り', mB.allocation.left, 200000 - 30000 - 15000);
+eq('ふたり合算の給料', mAll.salary, 500000);
+eq('ふたり合算の支出', mAll.expense, 70000 + 8000 + 30000 + 15000);
+eq('ふたり合算の遊び予算オーバー', mAll.budgets.find((b) => b.key === 'play').over, false);
+eq('パートナーは遊び予算オーバー', mB.budgets.find((b) => b.key === 'play').over, true);
+eq('ギャンブルは本人だけ', deriveGamble(two, '2026-10', 'mB').count, 0);
+eq('推移も本人だけ', deriveTrend(two, '2026-10', 1, 'mA')[0].expense, 78000);
+const cmp = deriveMembers(two, '2026-10');
+eq('比較は order 順', cmp.map((c) => c.member.name), ['わたし', 'パートナー']);
+eq('比較の残り', cmp.map((c) => c.left), [300000 - 70000 - 6000, 155000]);
+
+// 旧データ互換：author からメンバーを起こす
+const legacy = fromBook({ entries: {
+  e1: { id: 'e1', date: '2026-10-01', group: 'life', amount: 100, author: 'とも' },
+  e2: { id: 'e2', date: '2026-10-02', group: 'play', amount: 200, author: 'あい' },
+  e3: { id: 'e3', date: '2026-10-03', group: 'play', amount: 300, author: 'とも' },
+} });
+eq('author ごとにメンバーが出来る', legacy.members.map((m) => m.name), ['とも', 'あい']);
+eq('明細はメンバーに紐づく', legacy.entries.filter((e) => e.memberId === legacy.members[0].id).length, 2);
+const solo = fromBook({ members: { m1: { id: 'm1', name: 'A' } }, entries: { e1: { id: 'e1', date: '2026-10-01', group: 'life', amount: 1 } } });
+eq('メンバーが一人なら未割当はその人に', solo.entries[0].memberId, 'm1');
+eq('メンバー無し・author無しは未割当', fromBook({ entries: { e1: { id: 'e1', date: '2026-10-01', group: 'life', amount: 1 } } }).entries[0].memberId, '');
+yes('サンプルは二人', sampleState('2026-10-20').members.length === 2 && sampleState('2026-10-20').entries.every((e) => e.memberId));
+
 // ── toBook / fromBook
 const book = toBook(state);
 yes('book.entries は id キー', !Array.isArray(book.entries) && Object.keys(book.entries).length === 9);
@@ -94,6 +138,8 @@ const back = fromBook(book);
 eq('往復で件数が保たれる', back.entries.length, 9);
 eq('設定の既定値が補われる', back.settings.salaryDay, 25);
 eq('null からは空', fromBook(null).entries.length, 0);
+yes('book.members は id キー', !Array.isArray(toBook(two).members) && Object.keys(toBook(two).members).length === 2);
+eq('members も往復', fromBook(toBook(two)).members.map((m) => m.name), ['わたし', 'パートナー']);
 yes('サンプルには給料とギャンブルがある', sampleState('2026-10-20').entries.some((e) => e.category === '給料') && sampleState('2026-10-20').entries.some((e) => e.group === 'gamble'));
 
 // ── 表示
@@ -113,6 +159,14 @@ const p3 = st.setSettings({ budgets: { play: 5 } });
 eq('設定パッチは budgets をマージ', [p3.path, p3.value.budgets.play, p3.value.budgets.life], ['settings', 5, 120000]);
 st.useCache('t1'); st.upsertEntry({ date: '2026-10-02', group: 'play', amount: 1 });
 const st2 = createStore(); yes('キャッシュから復元', st2.useCache('t1') && st2.state.entries.length === 1);
+const pm = st.upsertMember({ name: 'とも', budgets: { play: 1 } });
+yes('メンバー追加パッチ', pm.path.startsWith('members/') && pm.value.budgets.play === 1 && pm.value.budgets.life === 120000);
+const pm2 = st.upsertMember({ id: pm.value.id, name: 'とも2' });
+eq('メンバー更新は予算を保つ', [pm2.value.name, pm2.value.budgets.play], ['とも2', 1]);
+st.upsertEntry({ date: '2026-10-03', group: 'life', amount: 1, memberId: pm.value.id });
+eq('明細が残る人は消せない', st.deleteMember(pm.value.id), null);
+const pm3 = st.upsertMember({ name: 'あい' });
+eq('明細の無い人は消せる', st.deleteMember(pm3.value.id), { path: 'members/' + pm3.value.id, value: null });
 
 console.log(`${ok} passed, ${ng} failed`);
 process.exit(ng ? 1 : 0);

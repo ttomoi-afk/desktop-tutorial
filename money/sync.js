@@ -8,7 +8,8 @@
 
 const ROOT = 'money';
 const count = (o) => (o ? Object.keys(o).length : 0);
-const isEmptyBook = (b) => !b || !count(b.entries);
+// メンバーだけ登録して明細がまだ無い帳簿も「空」ではない（上書きしない）
+const isEmptyBook = (b) => !b || (!count(b.entries) && !count(b.members));
 
 function applyPath(book, path, value) {
   const parts = path.split('/');
@@ -104,6 +105,7 @@ export function createSync({ store, onStatus }) {
           }
           if (!isEmptyBook(book)) store.setFromBook(book);
           else if (book && (book.settings || book.meta)) store.setFromBook(book); // 明細を全消しした状態も反映
+          else if (book === null && seeded) store.setFromBook(null);               // 帳簿ごと消された
         },
         onStatus: setStatus,
       });

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>マネーノート — 個人用資金管理</title>
-<meta name="description" content="毎月の収支・遊びのお金・ギャンブルの資金を1つで管理する個人用アプリ。給料に対していくら使えたかが一目でわかり、共有コードで他の人からも見られます。">
+<title>マネーノート — ふたりの資金管理</title>
+<meta name="description" content="毎月の収支・遊びのお金・ギャンブルの資金をふたりで共有して管理するアプリ。それぞれの給料に対していくら使えたかが一目でわかり、共有コードで同じ帳簿をリアルタイムに見られます。">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#ffffff">
 <meta name="mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
   </header>
 
   <div class="ro-banner" id="roBanner" hidden>閲覧専用で表示しています（編集はできません）</div>
+  <div class="who-bar" id="whoBar" role="tablist" aria-label="だれの集計を見るか"></div>
 
   <div class="screens">
     <section class="screen is-active" id="s-home" role="tabpanel" aria-label="今月"><div id="home-body"></div></section>
@@ -67,6 +68,7 @@
         <button type="button" class="seg-opt g-gamble" data-group="gamble">ギャンブル</button>
         <button type="button" class="seg-opt g-income" data-group="income">収入</button>
       </div></div>
+    <div class="field" id="ee-member-field"><label>だれの</label><div class="seg-ctl mem" id="ee-member"></div></div>
     <div class="row2">
       <div class="field"><label for="ee-category">カテゴリ</label><select class="input" id="ee-category"></select></div>
       <div class="field"><label for="ee-date">日付</label><input class="input" type="date" id="ee-date"></div>
@@ -88,6 +90,10 @@
 <!-- 設定 -->
 <div class="sheet-back" id="setSheetBack"></div>
 <div class="sheet" id="setSheet" role="dialog" aria-modal="true" aria-label="設定"><div class="sheet-content"></div></div>
+
+<!-- メンバー編集 / 「あなたはどちら？」 -->
+<div class="sheet-back z2" id="enSheetBack"></div>
+<div class="sheet z2" id="enSheet" role="dialog" aria-modal="true" aria-label="編集"><div class="sheet-content"></div></div>
 
 <input type="file" id="importFile" accept="application/json" hidden>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
