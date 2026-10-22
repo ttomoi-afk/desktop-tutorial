@@ -227,7 +227,7 @@ print("⑦ 判定基準の帯と 友井判定")
 chk("自動リストアップのタブが無い",
     [n for n in wb.sheetnames if "自動リストアップ" in n or n == "友井→服部"], [])
 chk("タブ構成", wb.sheetnames,
-    ["案件管理", "取込", "質問リスト", "仲介会社管理シート", "判定基準", "選択肢"])
+    ["案件管理", "推薦案件", "取込", "質問リスト", "仲介会社管理シート", "判定基準", "選択肢"])
 # 評価項目の◯／△／× が見出しの直上3行に、列ズレなく入っているか
 for off, mark in ((0, "◯"), (1, "△"), (2, "×")):
     row = CRIT_O + off
@@ -458,6 +458,80 @@ for _r, _w in ((FIRST, "A：進める"), (FIRST + 1, "C：見送り（Must×）"
     chk(f"既存{_r}行が壊れていない",
         evaluate(_b, SH, _ws.cell(_r, _DC["AI総合判定"]).value), _w)
 print("   見出しの対応・取込の実行・既存行の保全とも期待どおり")
+
+# ⑪ 推薦案件（服部さんへ推薦する案件のまとめ。1列＝1件）
+print("⑪ 推薦案件")
+import recommend as _RC                                       # noqa: E402
+from relayout_live import repoint_text as _rpt                # noqa: E402
+from score import deal_cost as _deal_cost                     # noqa: E402
+_wr = wb["推薦案件"]
+_R = _RC.ROW
+for _k, _lab, _kind, _ in _RC.SPEC:
+    if _lab is not None and _kind != "band":
+        chk(f"推薦案件 {_R[_k]}行のラベル", str(_wr[f"A{_R[_k]}"].value), _lab)
+chk("推薦案件 用意した列", _RC.tab_columns(_wr)[0][-1], "AE")
+chk("推薦案件 貼り付け先が連続", [_R[k] for k in _RC.PASTE_KEYS],
+    list(range(_R["no"], _R["no"] + len(_RC.PASTE_KEYS))))
+import build_pipeline as _BP                                  # noqa: E402
+_dv = [d.formula1 or "" for d in _wr.data_validations.dataValidation]
+chk("服部判断のドロップダウン", any(all(w in f for w in _BP.ESC_JUDGE) for f in _dv), True)
+# 案件管理の列を付け替えるとき（migrate_layout）に、この表の参照も付け替えられる形か
+_bad = 0
+for _row in _wr.iter_rows():
+    for _c in _row:
+        if isinstance(_c.value, str) and "案件管理" in _c.value:
+            try:
+                _rpt(_c.value, {}, {})
+            except SystemExit:
+                _bad += 1
+chk("推薦案件の案件管理参照が付け替えられる形", _bad, 0)
+
+_bk = Book(wb, maxrow=320)
+
+
+def _rv(col, key):
+    return evaluate(_bk, "推薦案件", _wr[f"{col}{_R[key]}"].value)
+
+
+# B列＝記入例（案件管理8行目の No.1）
+chk("推薦 企業名", _rv("B", "name"), ws[f"{COL['企業名']}{FIRST}"].value)
+chk("推薦 AI判定", _rv("B", "ai"), evaluate(_bk, SH, ws[f"{VERDICT}{FIRST}"].value))
+chk("推薦 13項目", [_rv("B", f"g{n}") for n in ITEM_NAMES],
+    [ws[f"{c}{FIRST}"].value for c in EV])
+chk("推薦 達成率", round(_rv("B", "rate"), 3), round(evaluate(_bk, SH, ws[f"{RATE}{FIRST}"].value), 3))
+chk("推薦 ①", round(_rv("B", "m1"), 3), round(evaluate(_bk, SH, ws[f"{MULT}{FIRST}"].value), 3))
+_d = {"equity_price": ws[f"{PRICE}{FIRST}"].value, "ebitda": ws[f"{EBITDA}{FIRST}"].value,
+      "book_net_cash": ws[f"{BNC}{FIRST}"].value, "avg_wc": ws[f"{WC}{FIRST}"].value}
+_cost = _deal_cost(_d)
+chk("推薦 承継コスト（概算）", round(_rv("B", "cost"), 3), round(_cost, 3))
+chk("推薦 ②", round(_rv("B", "m2"), 3), round(ev_calc(_d)[4], 3))
+_rnc = _d["book_net_cash"] - _d["avg_wc"]
+chk("推薦 TE目線（低い方）", round(_rv("B", "lo"), 3), round(5 * _d["ebitda"] - _cost + _rnc, 3))
+chk("推薦 TE目線（高い方）", round(_rv("B", "hi"), 3), round(7 * _d["ebitda"] - _cost + _rnc, 3))
+# 提示額を入れたら概算より優先する
+_bk.set("推薦案件", f"B{_R['cost_in']}", 33.3)
+chk("推薦 承継コスト（提示額）", _rv("B", "cost"), 33.3)
+chk("推薦 ②（提示額）", round(_rv("B", "m2"), 3),
+    round((_d["equity_price"] - _rnc + 33.3) / _d["ebitda"], 3))
+# C列＝No.2（質問13件）、D列＝案件管理に無い番号、E列＝空欄
+_bk.set("推薦案件", f"C{_R['no']}", 2.0)
+_bk.set("推薦案件", f"D{_R['no']}", 999.0)
+_wq = wb["質問リスト"]
+_qh = {str(c.value).replace("\n", ""): c.column_letter for c in _wq[3] if c.value}
+_must = sum(1 for r in range(4, 304)
+            if _wq[f"{_qh['案件No']}{r}"].value in (2, 2.0)
+            and _wq[f"{_qh['優先度']}{r}"].value == "必須")
+chk("推薦 未解決の質問（No.2）", _rv("C", "openq"), 13.0)
+chk("推薦 うち必須（No.2）", _rv("C", "mustq"), float(_must))
+chk("推薦 見出し（No.2）", evaluate(_bk, "推薦案件", _wr["C5"].value),
+    "No.2　" + str(ws[f"{COL['企業名']}{FIRST + 1}"].value))
+chk("推薦 案件管理に無い番号", (_rv("D", "name"), _rv("D", "ai"), _rv("D", "m2")),
+    ("（案件管理に無い番号）", "", ""))
+_blank = {k: _rv("E", k) for k, _, kind, _ in _RC.SPEC
+          if kind not in ("band",) and not kind.startswith("in")}
+chk("推薦 空欄の列はすべて空", [k for k, v in _blank.items() if v != ""], [])
+print(f"   ラベル・ドロップダウン・記入例（①②・承継コスト・目線）・No.2の質問数・"
+      f"無い番号・空欄の列とも期待どおり（質問 No.2 必須{_must}件）")
 
 print()
 print("=" * 62)

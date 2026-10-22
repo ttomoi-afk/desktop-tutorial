@@ -5,6 +5,8 @@
   案件管理            1行=1案件。企業名・事業内容＋数値＋青塗り12項目とエリアの◯△×＋判定＋進行
                       4〜6行に判定基準を敷いて見出しごと固定。判定はAI総合判定（自動）と
                       友井判定（手入力A/B/C）の2本
+  推薦案件            服部さんへ推薦する案件を1列＝1件で横に並べたまとめ。案件Noを入れると
+                      案件管理と質問リストから自動で埋まる（tools/recommend.py）
   取込                Claudeが出したTSVを貼る場所。1回の取込＝1案件。
                       Apps Script（gas/案件取込.gs）が案件管理と質問リストへ振り分ける
   質問リスト           1行=1質問。仲介の案件担当者に聞く文面と、回答で動く評価項目
@@ -70,7 +72,7 @@ IN_Q_HEAD, IN_Q_FIRST, IN_Q_LAST = 9, 10, 59
 IN_LOG_ROW = 61
 MED_FIRST = 5                     # 仲介会社の先頭行
 MED_LAST = MED_FIRST + len(MEDIATORS) - 1
-# 選択肢タブの「服部判断」に出す語。上申シート自体は廃止したが語は残す。
+# 「服部判断」の語。推薦案件タブのドロップダウンと選択肢タブに出す。
 ESC_JUDGE = ["進める", "条件付きで進める", "追加検討", "見送り"]
 
 # 判定基準タブの「条件合致の判定パラメータ」の先頭行。ここを起点に
@@ -989,7 +991,7 @@ def build_criteria(ws):
         ws.column_dimensions[col].width = w
 
 
-SHEETS = ["案件管理", "取込", "質問リスト", "仲介会社管理シート", "判定基準", "選択肢"]
+SHEETS = ["案件管理", "推薦案件", "取込", "質問リスト", "仲介会社管理シート", "判定基準", "選択肢"]
 
 
 def build_book(samples=True):
@@ -1005,6 +1007,11 @@ def build_book(samples=True):
     build_mediators(sh["仲介会社管理シート"], L)
     build_criteria(sh["判定基準"])
     build_choices(sh["選択肢"])
+    # 推薦案件は案件管理・質問リストの列を引くので、両方の列が決まってから作る
+    import recommend
+    cols = recommend.build_recommend(sh["推薦案件"], L, QC)
+    if samples:
+        recommend.fill_sample(sh["推薦案件"], cols[0])
     return wb
 
 
