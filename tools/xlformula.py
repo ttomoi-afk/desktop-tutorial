@@ -8,6 +8,7 @@ LibreOffice がこのコンテナで起動しないため recalc.py が使えな
 import datetime
 import re
 from openpyxl.utils import column_index_from_string, get_column_letter
+from openpyxl.worksheet.formula import ArrayFormula
 
 TOKEN = re.compile(r"""
     (?P<str>"(?:[^"]|"")*")
@@ -341,6 +342,10 @@ class Book:
         if not re.search(r"\d", a):          # 列だけの参照は範囲扱い
             return self.range(sheet, ref, ref)
         v = self.raw(sheet, a)
+        # Googleスプレッドシートを往復した現物では INDEX を使う式が配列数式で書き出される。
+        # 参照先がそれでも中の式を評価する（そのまま返すと参照元が #VALUE! になる）
+        if isinstance(v, ArrayFormula):
+            v = v.text
         if isinstance(v, str) and v.startswith("="):
             self.depth += 1
             if self.depth > 40:

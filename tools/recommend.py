@@ -397,7 +397,7 @@ def evaluate_tab(path, cols, maxrow):
             if not is_formula(v):
                 continue
             try:
-                got[key] = evaluate(b, SH, v)
+                got[key] = evaluate(b, SH, v.text if isinstance(v, ArrayFormula) else v)
             except Err as e:
                 errs += 1
                 got[key] = f"#ERR {e.kind}"
