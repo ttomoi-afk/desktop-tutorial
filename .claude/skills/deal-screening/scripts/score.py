@@ -127,6 +127,8 @@ def judge(d):
         g = band(mult, [2.0, 3.0, 5.0, 8.0])
         out["1-3"] = (g, f"(有形固定資産{d.get('ppe',0):,.0f}＋棚卸{d.get('inventory',0):,.0f})"
                          f"÷実態EBITDA{d['ebitda']:,.0f} = {mult:.1f}倍")
+    elif has(d, "ebitda") and d["ebitda"] <= 0:
+        out["1-3"] = (UNKNOWN, f"実態EBITDAが0以下（{d['ebitda']:,.1f}）のため倍率を算出できない")
     else:
         out["1-3"] = (UNKNOWN, "有形固定資産／棚卸資産または実態EBITDAの記載なし")
 
@@ -218,6 +220,8 @@ def judge(d):
         out["5"] = (g, f"①EV/EBITDA {m1:.1f}倍／②(EV＋承継コスト)/EBITDA {m2:.1f}倍"
                        f"（EV {ev:,.0f}＝株式価値{d['equity_price']:,.0f}{nc}"
                        f"、承継コスト{cost:,.0f}）")
+    elif has(d, "ebitda") and d["ebitda"] <= 0:
+        out["5"] = (UNKNOWN, f"実態EBITDAが0以下（{d['ebitda']:,.1f}）のため倍率を算出できない")
     else:
         missing = [k for k in ("equity_price", "ebitda", "book_net_cash", "avg_wc")
                    if not has(d, k)]
