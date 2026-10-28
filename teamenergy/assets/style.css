@@ -965,3 +965,27 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .pf-card .pf-name small { margin-left: 4px; font-family: var(--jp); font-size: 14px; font-weight: 500; }
 .pf-card.is-goal .pf-kind { color: var(--ink); }
 @media (max-width: 767px) { .pf-grid-3 { grid-template-columns: 1fr; } .chart-goal .ch-ref-label { font-size: 15px; } .chart-goal .ch-tag { font-size: 12px; } .chart-goal .ch-label { font-size: 15px; } }
+
+/* Portfolio: 成長の道のり(2026-10-28) */
+.records-row dd .records-sub { display: block; margin-top: 4px; font-size: 12px; color: var(--ink-faint); }
+.records-row.is-goal dt .en { color: var(--ink-faint); }
+.road { margin-top: 4px; display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; padding: 0; }
+.road-step { position: relative; padding: 24px 18px 22px 0; border-top: 2px solid var(--magma); }
+.road-step.is-goal { border-top-color: transparent; background-image: linear-gradient(to right, var(--ink-faint) 50%, transparent 50%); background-size: 10px 2px; background-repeat: repeat-x; background-position: 0 -0px; }
+.road-step::before { content: ""; position: absolute; left: 0; top: -7px; width: 12px; height: 12px; border-radius: 50%; background: var(--magma); }
+.road-step.is-goal::before { background: var(--paper); border: 1.5px dashed var(--ink-faint); box-sizing: border-box; }
+.road-num { display: block; font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .14em; color: var(--magma); }
+.road-step.is-goal .road-num { color: var(--ink-faint); }
+.road-step strong { display: block; margin-top: 10px; font-size: 17px; font-weight: 700; letter-spacing: .06em; line-height: 1.5; }
+.road-step > span { display: block; margin-top: 8px; font-size: 13px; line-height: 1.8; color: var(--ink-soft); }
+.road-badge { display: inline-flex; align-items: baseline; gap: 3px; margin-top: 14px; padding: 6px 12px; font-style: normal; font-size: 12px; letter-spacing: .06em; color: var(--white); background: var(--magma); border-radius: 999px; }
+.road-badge b { font-family: var(--num); font-size: 18px; font-weight: 400; line-height: 1; }
+.road-step.is-goal .road-badge { color: var(--ink); background: none; border: 1px dashed var(--ink-faint); }
+@media (max-width: 1023px) { .results-top .chart-fig-wide { max-width: none; } }
+@media (max-width: 767px) {
+  .road { grid-template-columns: 1fr; border-left: 2px solid var(--magma); }
+  .road-step { padding: 0 0 26px 22px; border-top: 0; }
+  .road-step.is-goal { background: none; margin-left: -2px; border-left: 2px dashed var(--ink-faint); padding-bottom: 0; }
+  .road-step::before { left: -7px; top: 2px; }
+  .road-step.is-goal::before { left: -7px; }
+}
