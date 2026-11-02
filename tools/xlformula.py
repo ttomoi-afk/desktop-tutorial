@@ -298,6 +298,10 @@ def compare(a, o, b):
 
 
 def countif_match(cell, crit):
+    if crit is None:
+        # 空のセルを条件に渡すと Excel は 0 として扱い、空欄には当たらない。Googleスプレッドシートも
+        # 空欄を数えない（仲介会社管理シートの空き行は、仲介会社が未記入の案件があっても0件）
+        crit = 0.0
     if isinstance(crit, str):
         m = re.match(r"^(<=|>=|<>|<|>|=)(.*)$", crit)
         if m:

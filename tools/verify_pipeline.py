@@ -227,7 +227,8 @@ print("⑦ 判定基準の帯と 友井判定")
 chk("自動リストアップのタブが無い",
     [n for n in wb.sheetnames if "自動リストアップ" in n or n == "友井→服部"], [])
 chk("タブ構成", wb.sheetnames,
-    ["案件管理", "推薦案件", "取込", "質問リスト", "仲介会社管理シート", "判定基準", "選択肢"])
+    ["案件管理", "推薦案件", "取込", "質問リスト", "一次情報", "仲介会社管理シート", "判定基準",
+     "選択肢"])
 # 評価項目の◯／△／× が見出しの直上3行に、列ズレなく入っているか
 for off, mark in ((0, "◯"), (1, "△"), (2, "×")):
     row = CRIT_O + off
@@ -321,6 +322,51 @@ chk("パラメータ連動（下限20・倍率25倍・除外なし）maX",
 chk("パラメータ連動（除外なし）Anyglo",
     evaluate(bk4, "仲介会社管理シート", wm.cell(ag, 13).value), 1.0)
 print("   月次・年間計・合致率・パラメータ連動とも期待どおり")
+
+# 一次情報（ネームクリア依頼の手前の母数）。一次情報タブの受信日（B）と仲介会社（C）を数える
+print("⑧' 一次情報タブと、仲介会社管理シートの一次情報の列")
+wi = wb["一次情報"]
+chk("一次情報の受信日・仲介会社がB・C列", [wi["B3"].value, wi["C3"].value], ["受信日", "仲介会社"])
+chk("一次情報の仲介会社DVが管理シートを参照",
+    any("仲介会社管理シート" in (dv.formula1 or "") and "C4" in str(dv.sqref)
+        for dv in wi.data_validations.dataValidation), True)
+inf_cols = [c for c in range(1, wm.max_column + 1) if wm.cell(3, c).value == "一次情報"]
+chk("一次情報の月次12列が合致率の右に続く", inf_cols, list(range(tail + 3, tail + 15)))
+ann, ncr = tail + 15, tail + 16
+chk("年間一次情報計・ネームクリア率の見出し",
+    [str(wm.cell(2, c).value).replace("\n", "") for c in (ann, ncr)],
+    ["年間一次情報計", "ネームクリア率"])
+chk("一次情報の月が流入と同じ並び",
+    [wm.cell(2, c).value for c in inf_cols],
+    [wm.cell(2, 12 + k * 2).value for k in range(12)])
+
+
+def infv(book, r, c):
+    return evaluate(book, "仲介会社管理シート", wm.cell(r, c).value)
+
+
+# 記入例：maX は9月に3件（うち2件が案件管理に流入）、Anyglo は10月に1件
+sep, oct_ = inf_cols[0], inf_cols[1]
+chk("maX 2026年9月 一次情報", infv(bk, mx, sep), 3.0)
+chk("maX 2026年10月 一次情報", infv(bk, mx, oct_), 0.0)
+chk("maX 年間一次情報計", infv(bk, mx, ann), 3.0)
+chk("maX ネームクリア率（流入2÷一次情報3）", round(infv(bk, mx, ncr), 3), 0.667)
+chk("Anyglo 2026年10月 一次情報", infv(bk, ag, oct_), 1.0)
+chk("Anyglo ネームクリア率", infv(bk, ag, ncr), 1.0)
+chk("レコフ 年間一次情報計", infv(bk, rk, ann), 0.0)
+chk("レコフ ネームクリア率（0除算回避）", infv(bk, rk, ncr), "")
+chk("全社合計 2026年9月 一次情報", infv(bk, 4, sep), 3.0)
+chk("全社合計 年間一次情報計", infv(bk, 4, ann), 4.0)
+chk("全社合計 ネームクリア率（流入3÷一次情報4）", infv(bk, 4, ncr), 0.75)
+# 行を足せば数が動く。名称が正式名称と違う行は数えない（月次集計が0件になる理由）
+bk5 = Book(wb, maxrow=max(LAST, 200) + 5)
+for addr, v in (("B8", wi["B4"].value.replace(month=11)), ("C8", "株式会社レコフ"),
+                ("B9", wi["B4"].value.replace(month=11)), ("C9", "レコフ")):
+    bk5.set("一次情報", addr, v)
+nov = inf_cols[2]
+chk("行を足すと レコフ 2026年11月 が1件（略称の行は数えない）", infv(bk5, rk, nov), 1.0)
+chk("レコフ ネームクリア率（流入0÷一次情報1）", infv(bk5, rk, ncr), 0.0)
+print("   見出し・月の並び・月次・年間計・ネームクリア率・行の追加とも期待どおり")
 
 # ⑨ 質問リスト
 print("⑨ 質問リスト")

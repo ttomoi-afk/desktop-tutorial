@@ -10,7 +10,10 @@
   取込                Claudeが出したTSVを貼る場所。1回の取込＝1案件。
                       Apps Script（gas/案件取込.gs）が案件管理と質問リストへ振り分ける
   質問リスト           1行=1質問。仲介の案件担当者に聞く文面と、回答で動く評価項目
-  仲介会社管理シート    36社の属性と、月次の流入／条件合致件数（案件管理から自動集計）
+  一次情報            仲介から友井・sourcing@ 宛てに届いた案件情報（メルマガを除く）。1行=1案件
+                      （tools/make_inflow_blocks.py で現物へ追記する）
+  仲介会社管理シート    36社の属性と、月次の流入／条件合致件数（案件管理から自動集計）、
+                      その手前の一次情報の件数とネームクリア率（一次情報タブから自動集計）
   判定基準            ルーブリックの閾値と、条件合致の判定パラメータ
   選択肢              ドロップダウンの元データ
 
@@ -72,6 +75,17 @@ IN_Q_HEAD, IN_Q_FIRST, IN_Q_LAST = 9, 10, 59
 IN_LOG_ROW = 61
 MED_FIRST = 5                     # 仲介会社の先頭行
 MED_LAST = MED_FIRST + len(MEDIATORS) - 1
+# 一次情報タブ：仲介会社から友井・sourcing@ 宛てに届いた案件情報を1件1行で残す（メルマガは除く）。
+# 案件管理に載るのはネームクリアを依頼した案件だけなので、その手前の母数をここで数える。
+# 仲介会社管理シートの月次「一次情報」はこのタブの受信日と仲介会社を数える。
+INF_SH = "一次情報"
+INF_HEAD, INF_FIRST, INF_LAST = 3, 4, 1003
+INF_COLS = [("No", 5), ("受信日", 11), ("仲介会社", 28), ("担当者", 10), ("宛先", 9),
+            ("件名", 46), ("案件の要点", 34), ("資料", 10), ("経路", 16),
+            ("案件管理No", 9), ("備考", 28), ("メール", 16)]
+INF_TO = ["友井", "ソーシング", "両方"]
+INF_MATERIAL = ["NN", "本文のみ", "IM・概要書", "リンク", "その他"]
+INF_ROUTE = ["仲介から", "問い合わせへの返信", "その他"]
 # 「服部判断」の語。推薦案件タブのドロップダウンと選択肢タブに出す。
 ESC_JUDGE = ["進める", "条件付きで進める", "追加検討", "見送り"]
 
@@ -723,6 +737,36 @@ MED_ATTRS = [("仲介会社名", 28), ("合計", 8), ("仲介重要度", 10), ("
              ("初回面談日", 11), ("NDA締結日", 13), ("備考", 24), ("手数料", 14),
              ("算定方式", 14), ("着手金", 11), ("中間報酬", 11)]
 MED_TAIL = [("年間\n流入計", 9), ("年間\n合致計", 9), ("合致率", 9)]
+# 流入（＝ネームクリア依頼）の手前の母数。月次12列のあとに年間計と、流入÷一次情報の率
+MED_INF_TAIL = [("年間\n一次情報計", 10), ("ネーム\nクリア率", 9)]
+INF_BAND = "5B4A8B"
+
+
+def inf_heads():
+    """一次情報の列（月次12＋年間計＋ネームクリア率）の2行目・3行目の見出し。"""
+    row2 = [f"{y}年{m}月" for y, m in MONTHS] + [h for h, _ in MED_INF_TAIL]
+    row3 = ["一次情報"] * len(MONTHS) + [""] * len(MED_INF_TAIL)
+    return row2, row3
+
+
+def inf_formulas(r, c0, in_cl, first=MED_FIRST, last=MED_LAST, total=False):
+    """一次情報の列の式を左から返す。c0＝月次の先頭列の番号、in_cl＝年間流入計の列。
+    total なら4行目（全社合計）。現物への貼り付け（make_inflow_blocks.py）も同じ式を使う。"""
+    cols = [get_column_letter(c0 + k) for k in range(len(MONTHS))]
+    ann = get_column_letter(c0 + len(MONTHS))
+    if total:
+        out = [f"=SUM({cl}{first}:{cl}{last})" for cl in cols]
+        out.append(f"=SUM({ann}{first}:{ann}{last})")
+    else:
+        out = []
+        for y, m in MONTHS:
+            y2, m2 = (y + 1, 1) if m == 12 else (y, m + 1)
+            out.append(f'=COUNTIFS({INF_SH}!$B:$B,">="&DATE({y},{m},1),'
+                       f'{INF_SH}!$B:$B,"<"&DATE({y2},{m2},1),'
+                       f"{INF_SH}!$C:$C,$A{r})")
+        out.append(f"=SUM({cols[0]}{r}:{cols[-1]}{r})")
+    out.append(f'=IF({ann}{r}=0,"",{in_cl}{r}/{ann}{r})')
+    return out
 
 
 def build_mediators(ws, d):
@@ -762,6 +806,22 @@ def build_mediators(ws, d):
         c.fill = PatternFill("solid", fgColor="2E6B4F")
         c.alignment = Alignment(horizontal="center", vertical="center",
                                 wrap_text=True)
+    inf0 = tail0 + len(MED_TAIL)               # 一次情報の月次列の開始（AM）
+    inf_end = inf0 + len(MONTHS) + len(MED_INF_TAIL)
+    for k, (h2, h3) in enumerate(zip(*inf_heads())):
+        col = inf0 + k
+        if not h3:
+            ws.merge_cells(start_row=2, start_column=col, end_row=3, end_column=col)
+        c = ws.cell(2, col, h2)
+        c.font = BAND_F
+        c.fill = PatternFill("solid", fgColor=INF_BAND)
+        c.alignment = Alignment(horizontal="center", vertical="center",
+                                wrap_text=True)
+        if h3:
+            cc = ws.cell(3, col, h3)
+            cc.font = HDR_F
+            cc.fill = HDR_FILL
+            cc.alignment = Alignment(horizontal="center", vertical="center")
     ws.row_dimensions[2].height = 20
     ws.row_dimensions[3].height = 30
 
@@ -781,7 +841,7 @@ def build_mediators(ws, d):
     ws.cell(4, 1).fill = PatternFill("solid", fgColor="F3F3F3")
     ws.cell(4, 2, "合計").font = HDR_F
     ws.cell(4, 2).fill = PatternFill("solid", fgColor="F3F3F3")
-    for i in range(1, tail0 + len(MED_TAIL)):
+    for i in range(1, inf_end):
         cc = ws.cell(4, i)
         cc.fill = PatternFill("solid", fgColor="F3F3F3")
         cc.border = BOX
@@ -794,6 +854,9 @@ def build_mediators(ws, d):
     in_cl, hit_cl = get_column_letter(tail0), get_column_letter(tail0 + 1)
     ws[f"{rate_cl}4"] = (f'=IF({in_cl}4=0,"",{hit_cl}4/{in_cl}4)')
     ws[f"{rate_cl}4"].number_format = "0%"
+    for k, f in enumerate(inf_formulas(4, inf0, in_cl, total=True)):
+        ws.cell(4, inf0 + k).value = f
+    ws.cell(4, inf_end - 1).number_format = "0%"
 
     # 会社行
     for j, rowdata in enumerate(MEDIATORS):
@@ -847,6 +910,14 @@ def build_mediators(ws, d):
             cc.fill = CALC_FILL
             cc.border = BOX
             cc.alignment = Alignment(horizontal="center")
+        for k, f in enumerate(inf_formulas(r, inf0, in_cl)):
+            cc = ws.cell(r, inf0 + k)
+            cc.value = f
+            cc.font = BODY_F
+            cc.fill = CALC_FILL
+            cc.border = BOX
+            cc.alignment = Alignment(horizontal="center")
+        ws.cell(r, inf_end - 1).number_format = "0%"
 
     for i, (h, w) in enumerate(MED_ATTRS, start=1):
         ws.column_dimensions[get_column_letter(i)].width = w
@@ -854,6 +925,10 @@ def build_mediators(ws, d):
         ws.column_dimensions[get_column_letter(c0)].width = 9
     for i, (h, w) in enumerate(MED_TAIL):
         ws.column_dimensions[get_column_letter(tail0 + i)].width = w
+    for c0 in range(inf0, inf0 + len(MONTHS)):
+        ws.column_dimensions[get_column_letter(c0)].width = 9
+    for i, (h, w) in enumerate(MED_INF_TAIL):
+        ws.column_dimensions[get_column_letter(inf0 + len(MONTHS) + i)].width = w
     ws.freeze_panes = "B4"
     dv_r = DataValidation(type="list", formula1='"A,B,C"', allow_blank=True)
     ws.add_data_validation(dv_r)
@@ -863,6 +938,64 @@ def build_mediators(ws, d):
         f"C{MED_FIRST}:C{MED_LAST}",
         FormulaRule(formula=[f'EXACT(C{MED_FIRST},"A")'],
                     fill=PatternFill("solid", fgColor="B7E1CD")))
+
+
+INF_NOTE = ("仲介会社から友井・sourcing@ 宛てに届いた案件情報を1件1行で残す。号・新着一覧の一斉配信（メルマガ）は入れない。"
+            "同じ仲介の同じ案件は最初に届いた日の1行だけ（IM・概要書・再送は続報なので足さない）。"
+            "1通で複数の案件なら案件ごとに行を分ける。仲介会社は仲介会社管理シートA列の正式名称"
+            "（違うと月次集計が0件になる）。ネームクリアを依頼したら案件管理のNoを入れる。")
+
+
+def build_inflow(ws, samples=True):
+    last = get_column_letter(len(INF_COLS))
+    ws["A1"] = "一次情報（メルマガを除く）"
+    ws["A1"].font = TITLE_F
+    ws["A2"] = INF_NOTE
+    ws["A2"].font = NOTE_F
+    ws["A2"].alignment = Alignment(wrap_text=True, vertical="top")
+    ws.merge_cells(f"A2:{last}2")
+    ws.row_dimensions[2].height = 30
+    col = {}
+    for i, (h, w) in enumerate(INF_COLS, start=1):
+        c = ws.cell(INF_HEAD, i, h)
+        c.font = HDR_F
+        c.fill = HDR_FILL
+        c.border = BOX
+        c.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        ws.column_dimensions[get_column_letter(i)].width = w
+        col[h] = get_column_letter(i)
+    rng = lambda h: f"{col[h]}{INF_FIRST}:{col[h]}{INF_LAST}"   # noqa: E731
+    for h, f1 in (("仲介会社", f"=仲介会社管理シート!$A${MED_FIRST}:$A${MED_LAST}"),
+                  ("宛先", '"' + ",".join(INF_TO) + '"'),
+                  ("資料", '"' + ",".join(INF_MATERIAL) + '"'),
+                  ("経路", '"' + ",".join(INF_ROUTE) + '"')):
+        dv = DataValidation(type="list", formula1=f1, allow_blank=True)
+        ws.add_data_validation(dv)
+        dv.add(rng(h))
+    for r in range(INF_FIRST, INF_FIRST + 20):
+        ws[f"{col['受信日']}{r}"].number_format = "yyyy/mm/dd"
+    ws.freeze_panes = f"A{INF_FIRST}"
+    ws.auto_filter.ref = f"A{INF_HEAD}:{last}{INF_LAST}"
+    if not samples:
+        return
+    # 架空の例。maX は9月に3件（うち2件をネームクリア）、Anyglo は10月に1件
+    ex = [(date(2026, 9, 10), "株式会社maXアドバイザリー", "友井", "（記入例）【M&A案件のご紹介】配食サービス（関西）",
+           "高齢者向け配食／関西／EBITDA約1億円", "NN", 1),
+          (date(2026, 9, 18), "株式会社maXアドバイザリー", "ソーシング", "（記入例）【M&A案件】ビル管理（首都圏）",
+           "ビル管理／首都圏／売上10億円", "本文のみ", None),
+          (date(2026, 9, 25), "株式会社maXアドバイザリー", "友井", "（記入例）【M&A案件】建設工事（千葉）",
+           "建設工事／千葉／EBITDA約2,000万円", "NN", 2),
+          (date(2026, 10, 2), "株式会社Anyglo", "両方", "（記入例）飲食チェーンのご紹介",
+           "飲食チェーン／九州／5店舗", "リンク", None)]
+    for i, (d, med, to, subj, gist, mat, no) in enumerate(ex):
+        r = INF_FIRST + i
+        vals = {"No": i + 1, "受信日": d, "仲介会社": med, "担当者": "（例）", "宛先": to,
+                "件名": subj, "案件の要点": gist, "資料": mat, "経路": "仲介から",
+                "案件管理No": no, "備考": "架空の例。使い始めるときに削除してください"}
+        for h, v in vals.items():
+            c = ws[f"{col[h]}{r}"]
+            c.value = v
+            c.font = Font(name=FONT, size=10, color=BLUE_TXT)
 
 
 def build_choices(ws):
@@ -991,7 +1124,8 @@ def build_criteria(ws):
         ws.column_dimensions[col].width = w
 
 
-SHEETS = ["案件管理", "推薦案件", "取込", "質問リスト", "仲介会社管理シート", "判定基準", "選択肢"]
+SHEETS = ["案件管理", "推薦案件", "取込", "質問リスト", INF_SH, "仲介会社管理シート", "判定基準",
+          "選択肢"]
 
 
 def build_book(samples=True):
@@ -1004,6 +1138,7 @@ def build_book(samples=True):
     build_deals(sh["案件管理"], samples=samples)
     build_intake(sh["取込"], L)
     build_questions(sh["質問リスト"], L)
+    build_inflow(sh[INF_SH], samples=samples)
     build_mediators(sh["仲介会社管理シート"], L)
     build_criteria(sh["判定基準"])
     build_choices(sh["選択肢"])
@@ -1027,7 +1162,9 @@ def main():
           f" / 質問行{IN_Q_FIRST}〜{IN_Q_LAST}")
     print(f"質問リスト  {len(QUESTIONS)}件 行{Q_FIRST}〜{Q_LAST}")
     print(f"仲介会社   {len(MEDIATORS)}社 行{MED_FIRST}〜{MED_LAST} "
-          f"月次{MONTHS[0][0]}/{MONTHS[0][1]}〜{MONTHS[-1][0]}/{MONTHS[-1][1]}")
+          f"月次{MONTHS[0][0]}/{MONTHS[0][1]}〜{MONTHS[-1][0]}/{MONTHS[-1][1]}"
+          f"（流入・条件合致・一次情報）")
+    print(f"一次情報   列{len(INF_COLS)} 見出し{INF_HEAD}行 明細{INF_FIRST}〜{INF_LAST}行")
 
 
 if __name__ == "__main__":
