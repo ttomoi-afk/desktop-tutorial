@@ -165,9 +165,7 @@ def blocks(wb, info, writes):
         n += 1
         cols = [inv[c] for c in run]
         addr = f"{get_column_letter(run[0])}{rows[0]}"
-        out.write(f"━━━ ブロック{n}：「{sheet}」の {addr} をクリックして貼る"
-                  f"（{len(run)}列 × {len(rows)}行・{label}）\n")
-        out.write("  列順：" + " / ".join(cols) + "\n")
+        mpb.write_head(out, n, f"「{sheet}」の {addr} をクリックして貼る", cols, len(rows), label)
         for vals in table:
             out.write("\t".join(vals) + "\n")
         out.write("\n")

@@ -31,6 +31,7 @@ import datetime
 import io
 import json
 import os
+import re
 import shutil
 import sys
 
@@ -40,7 +41,7 @@ from openpyxl.utils import get_column_letter
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import build_pipeline as B                                    # noqa: E402
-from make_paste_blocks import is_formula, head_map           # noqa: E402
+from make_paste_blocks import is_formula, head_map, write_head  # noqa: E402
 
 SH_MED = "仲介会社管理シート"
 MED_HEAD = 2                      # 見出しは2・3行目（2行目＝月、3行目＝流入／条件合致／一次情報）
@@ -92,6 +93,8 @@ class MedLayout:
                    + [c.column for c in ws[3] if c.value is not None])
         self.inf0 = inf[0] if inf else used + 1
         self.width = len(B.MONTHS) + len(B.MED_INF_TAIL)
+        # Googleスプレッドシートの書き出しは列数がシートの枠そのものになる。足りていれば列を足す手順は要らない
+        self.need_cols = max(0, self.inf0 + self.width - 1 - ws.max_column)
 
     def free_rows(self, n):
         rows = [r for r in range(self.first, self.last + 1)
@@ -106,7 +109,7 @@ class MedLayout:
         out = {}
         row2, row3 = B.inf_heads()
         for k, (h2, h3) in enumerate(zip(row2, row3)):
-            out[(2, self.inf0 + k)] = norm(h2)
+            out[(2, self.inf0 + k)] = as_text(norm(h2))
             out[(3, self.inf0 + k)] = h3
         in_cl = get_column_letter(self.in_col)
         for r in range(4, self.last + 1):
@@ -184,13 +187,17 @@ def plan(layout, spec):
     return wb, med, inf, fresh, dup, new_brokers
 
 
-def tsv_block(out, n, title, cols, rows):
-    width = max(len(r) for r in rows)
-    out.write(f"━━━ ブロック{n}：{title}（{width}列 × {len(rows)}行）\n")
-    out.write("  列順：" + " / ".join(cols) + "\n")
+def tsv_block(out, n, title, cols, rows, label=""):
+    """見出し1行のすぐ下にデータだけを置く（見出しの書き方は make_paste_blocks と共通）。"""
+    write_head(out, n, title, cols, len(rows), label)
     for vals in rows:
         out.write("\t".join(cell_text(v) for v in vals) + "\n")
     out.write("\n")
+
+
+def as_text(label):
+    """「2026年9月」はGoogleスプレッドシートが日付に変えてしまうので、先頭に ' を付けて文字のまま貼る。"""
+    return "'" + label if re.match(r"^\d{4}年\d{1,2}月$", label) else label
 
 
 def build(layout, spec):
@@ -206,12 +213,12 @@ def build(layout, spec):
     if not inf.exists:
         prep.append(f"シートを1枚追加して、名前を「{B.INF_SH}」にする"
                     "（画面左下の＋ → 新しいタブをダブルクリックして名前を変更）。")
-    if not med.has_inf:
+    if not med.has_inf and med.need_cols:
+        n_add = med.need_cols
         a, z = get_column_letter(med.inf0), get_column_letter(med.inf0 + med.width - 1)
-        prep.append(f"「{SH_MED}」の右端に列を{med.width}列足す（{get_column_letter(med.inf0 - 1)}列の"
-                    f"見出しを右クリック →「右に1列挿入」を、{a}〜{z}列ができるまで。"
-                    f"または {get_column_letter(med.inf0 - med.width)}〜{get_column_letter(med.inf0 - 1)}"
-                    f"の{med.width}列を選んで右クリック →「右に{med.width}列挿入」）。")
+        last = get_column_letter(med.inf0 + med.width - 1 - n_add)
+        prep.append(f"「{SH_MED}」の右端に列を{n_add}列足す（{a}〜{z}列を使う。{last}列の見出しを"
+                    f"右クリック →「右に1列挿入」を繰り返すか、{n_add}列を選んで「右に{n_add}列挿入」）。")
     if prep:
         out.write("━━━ 貼る前に（1回だけ）\n")
         for i, t in enumerate(prep, 1):
@@ -221,9 +228,9 @@ def build(layout, spec):
     if not inf.exists:
         n += 1
         blank = [""] * (len(HEADS) - 1)
-        tsv_block(out, n, f"「{B.INF_SH}」の A1 をクリックして貼る",
-                  ["1行目タイトル", "2行目説明", "3行目見出し"],
-                  [["一次情報（メルマガを除く）"] + blank, [B.INF_NOTE] + blank, HEADS])
+        tsv_block(out, n, f"「{B.INF_SH}」の A1 をクリックして貼る", HEADS,
+                  [["一次情報（メルマガを除く）"] + blank, [B.INF_NOTE] + blank, HEADS],
+                  "1行目タイトル・2行目説明・3行目見出し")
     if not med.has_inf:
         cells = med.setup_cells()
         cols = [norm(h) for h in B.inf_heads()[0]]
@@ -266,7 +273,8 @@ def verify(layout, spec, info, save=None):
         inf = InfLayout(wb)
     if not med.has_inf:
         for (r, c), v in med.setup_cells().items():
-            med.ws.cell(r, c).value = v
+            # 先頭の ' は「文字として貼る」の印で、Googleスプレッドシートはセルに残さない
+            med.ws.cell(r, c).value = v[1:] if isinstance(v, str) and v.startswith("'") else v
         med = MedLayout(wb[SH_MED])
     for r, b in zip(med.free_rows(len(info["new_brokers"])), info["new_brokers"]):
         med.ws.cell(r, 1).value = b

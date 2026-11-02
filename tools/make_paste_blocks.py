@@ -132,6 +132,18 @@ def missing_formulas(ws, head_row, first, rows):
     return out
 
 
+def write_head(out, n, where, cols, nrows, label=""):
+    """ブロックの見出し。列の並びも同じ行に書き、データの直前には何も置かない。
+
+    以前は見出しの下に「列順：…」の行があり、その行ごとコピーされて貼り先が1〜2行ずれた
+    （一次情報の初回の貼り付けで、仲介会社管理シートの式が隣の会社の行に入った）。
+    """
+    span = f"{cols[0]}〜{cols[-1]}" if len(cols) > 1 else cols[0]
+    extra = f"・{label}" if label else ""
+    out.write(f"━━━ ブロック{n}：{where}（{len(cols)}列 × {nrows}行{extra}／{span}）"
+              "　※次の行から空行の手前までをコピー\n")
+
+
 def trim_blank_lead(run, rows):
     """先頭の列が全行とも空欄なら外す。
 
@@ -263,9 +275,7 @@ def build(layout, paste):
         n += 1
         addr = f"{get_column_letter(run[0])}{drow}"
         cols = [inv_d[c] for c in run]
-        out.write(f"━━━ ブロック{n}：「{SH_DEAL}」の {addr} をクリックして貼る"
-                  f"（{len(run)}列 × 1行）\n")
-        out.write("  列順：" + " / ".join(cols) + "\n")
+        write_head(out, n, f"「{SH_DEAL}」の {addr} をクリックして貼る", cols, 1)
         out.write("\t".join(rows[0]) + "\n\n")
     for run in input_runs(wq, Q_HEAD, Q_FIRST):
         if not qrows:
@@ -277,9 +287,7 @@ def build(layout, paste):
         n += 1
         addr = f"{get_column_letter(run[0])}{qrow}"
         cols = [inv_q[c] for c in run]
-        out.write(f"━━━ ブロック{n}：「{SH_Q}」の {addr} をクリックして貼る"
-                  f"（{len(run)}列 × {len(qrows)}行）\n")
-        out.write("  列順：" + " / ".join(cols) + "\n")
+        write_head(out, n, f"「{SH_Q}」の {addr} をクリックして貼る", cols, len(qrows))
         for vals in rows:
             out.write("\t".join(vals) + "\n")
         out.write("\n")
