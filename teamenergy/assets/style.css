@@ -836,7 +836,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 @media (max-width: 767px) { .pf-grid { grid-template-columns: 1fr; border-left: 0; } .pf-card { border-right: 0; padding: 24px 0; } .results-catch { margin-top: 28px; } .chart-cols .ch-label { font-size: 21px; } .chart-cols .ch-tick { font-size: 19px; } .chart-cols .ch-value { font-size: 26px; } .chart-cols .ch-tag { font-size: 17px; } }
 
 /* ---------- 数字の書体(年・金額・目盛・日付など) ---------- */
-.record-num .en, .ceo-timeline dt, .results-year, .news-date, .criteria-list dd .en, .case-tl-year, .chart .ch-tick, .chart .ch-value, .chart-table table, .experience-num .record-num .en, .case-facts dd, .company-info dd, .copyright, .pmap-num { font-family: var(--num); letter-spacing: .02em; }
+.record-num .en, .ceo-timeline dt, .results-year, .news-date, .criteria-list dd .en, .case-tl-year, .chart .ch-tick, .chart .ch-value, .chart-table table, .experience-num .record-num .en, .case-facts dd, .copyright, .pmap-num { font-family: var(--num); letter-spacing: .02em; }
 .record-num .en { font-size: 64px; font-weight: 300; }
 .ceo-timeline dt { font-size: 15px; font-weight: 500; }
 .news-date { font-size: 15px; font-weight: 500; }
