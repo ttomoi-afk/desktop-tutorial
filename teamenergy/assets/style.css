@@ -85,9 +85,9 @@ button { font: inherit; cursor: pointer; background: none; border: 0; }
 }
 .sec-title + .sec-lead { margin-top: 8px; color: var(--ink-soft); font-size: 16px; }
 
-section { padding: 64px 0; }
+section { padding: 88px 0; }
 @media (max-width: 767px) {
-  section { padding: 44px 0; }
+  section { padding: 56px 0; }
   .sec-title { font-size: 28px; }
 }
 
@@ -331,7 +331,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 }
 
 /* ---------- Concept ---------- */
-.about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
+.about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 44px; }
 .about-catch { font-size: 28px; font-weight: 500; line-height: 1.6; letter-spacing: .08em; margin-bottom: 18px; }
 .about-body p + p { margin-top: 1.4em; }
 .about-manifesto { font-size: 20px; font-weight: 500; line-height: 2; letter-spacing: .08em; }
@@ -357,7 +357,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 }
 
 /* ---------- 事業領域のアコーディオン(見出しは中間持株会社のロゴ) ---------- */
-.biz-acc { margin-top: 24px; border-top: 1px solid var(--ink); }
+.biz-acc { margin-top: 44px; border-top: 1px solid var(--ink); }
 .biz-acc-item { border-bottom: 1px solid var(--line); }
 .biz-acc-trigger, .biz-acc-static { width: 100%; display: flex; align-items: center; gap: 28px; padding: 22px 0; text-align: left; color: var(--ink); }
 .biz-acc-trigger { cursor: pointer; }
@@ -454,7 +454,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 @media (max-width: 767px) { .story { flex-basis: 78vw; } }
 
 /* ---------- ニュース ---------- */
-.news-list { margin-top: 24px; border-top: 1px solid var(--line); }
+.news-list { margin-top: 32px; border-top: 1px solid var(--line); }
 .news-list li { border-bottom: 1px solid var(--line); }
 .news-list a {
   display: grid;
@@ -495,8 +495,8 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .join-facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin-top: 14px; font-size: 15px; }
 .join-facts dt { color: rgba(255,255,255,.55); }
 .join-facts dd { color: var(--white); }
-.join-txt { margin-top: 16px; max-width: 640px; font-size: 15px; color: rgba(255,255,255,.7); }
-.join .sec-btn { margin-top: 20px; }
+.join-txt { margin-top: 28px; max-width: 640px; font-size: 15px; color: rgba(255,255,255,.7); }
+.join .sec-btn { margin-top: 28px; }
 .join-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 .join-door { border-top: 1px solid rgba(255,255,255,.25); padding-top: 28px; }
 .join-door h3 { font-size: 18px; font-weight: 500; letter-spacing: .1em; }
@@ -506,7 +506,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 @media (max-width: 767px) { .join-grid { grid-template-columns: 1fr; } }
 
 /* ---------- フッター ---------- */
-.footer { padding: 56px 0 28px; }
+.footer { padding: 88px 0 32px; }
 .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: start; }
 .footer-grid-single { grid-template-columns: 1fr; max-width: 760px; }
 .footer h2 { font-family: var(--en); font-weight: 500; font-size: 36px; letter-spacing: .12em; }
@@ -533,7 +533,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .footer-links a:hover { color: var(--magma); }
 .copyright { font-family: var(--en); font-size: 15px; font-weight: 500; letter-spacing: .12em; color: var(--ink-faint); text-align: right; line-height: 1.6; }
 @media (max-width: 767px) {
-  .footer { padding-top: 48px; }
+  .footer { padding-top: 72px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
   .copyright { text-align: left; }
 }
@@ -619,7 +619,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .member-lead .member-name { font-size: 32px; }
 .member-lead .member-bio { margin-top: 16px; font-size: 15px; }
 .member-lead .ceo-timeline { margin-top: 28px; }
-.member-row { margin-top: 28px; padding-top: 36px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.member-row { margin-top: 32px; padding-top: 48px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
 .member-row .member-photo { margin-right: 22px; }
 .member-row .member-romaji { right: -22px; font-size: 14px; letter-spacing: .2em; }
 .member-row .member-role { font-size: 13px; }
@@ -830,13 +830,13 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 .pf-legend .key { display: inline-block; width: 12px; height: 12px; border-radius: 2px; }
 .pf-legend .key-exit { background: var(--magma); }
 .pf-legend .key-plan { background: #f0c4b1; }
-.pf-grid { margin-top: 32px; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-.pf-card { padding: 22px 20px 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.pf-grid { margin-top: 44px; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.pf-card { padding: 28px 22px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .pf-kind { font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
 .pf-card.is-exit .pf-kind { color: var(--magma); }
 .pf-name { margin-top: 8px; font-family: var(--en), var(--jp); font-size: 22px; font-weight: 600; letter-spacing: .04em; line-height: 1.2; }
-.pf-call { margin-top: 10px; font-size: 15px; font-weight: 700; line-height: 1.7; color: var(--ink); }
-.pf-desc { margin-top: 6px; font-size: 14px; line-height: 1.8; color: var(--ink-soft); }
+.pf-call { margin-top: 12px; font-size: 15px; font-weight: 700; line-height: 1.7; color: var(--ink); }
+.pf-desc { margin-top: 12px; font-size: 14px; line-height: 1.85; color: var(--ink-soft); }
 @media (max-width: 1023px) { .pf-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 767px) { .pf-grid { grid-template-columns: 1fr; border-left: 0; } .pf-card { border-right: 0; padding: 24px 0; } .results-catch { margin-top: 28px; } .chart-cols .ch-label { font-size: 21px; } .chart-cols .ch-tick { font-size: 19px; } .chart-cols .ch-value { font-size: 26px; } .chart-cols .ch-tag { font-size: 17px; } }
 
@@ -952,40 +952,11 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
   .fadein.is-visible .pmap-dot { transform: none; }
 }
 
-/* Portfolio: 企業名を出さない構成(2026-10-16) */
-.chart .ch-ref { stroke: var(--magma); stroke-width: 1; stroke-dasharray: 4 4; opacity: .7; }
-.chart .ch-ref-goal { stroke: var(--ink-faint); }
-.chart .ch-ref-label { font-size: 12px; fill: var(--ink-faint); letter-spacing: .06em; }
-.chart .col-goal rect { fill: none; stroke: var(--ink-faint); stroke-width: 1.2; stroke-dasharray: 5 4; }
-.chart .col-goal:hover rect, .chart .col-goal:focus rect { fill: rgba(210,70,28,.06); stroke: var(--magma); }
-.chart .ch-tag-goal { fill: var(--ink-faint); }
-.pf-legend .key-goal { background: none; border: 1.2px dashed var(--ink-faint); }
-.pf-grid-3 { grid-template-columns: repeat(3, 1fr); }
-.pf-card .pf-name .en { font-family: var(--num); font-size: 40px; font-weight: 300; letter-spacing: .02em; }
-.pf-card .pf-name small { margin-left: 4px; font-family: var(--jp); font-size: 14px; font-weight: 500; }
-.pf-card.is-goal .pf-kind { color: var(--ink); }
-@media (max-width: 767px) { .pf-grid-3 { grid-template-columns: 1fr; } .chart-goal .ch-ref-label { font-size: 15px; } .chart-goal .ch-tag { font-size: 12px; } .chart-goal .ch-label { font-size: 15px; } }
 
-/* Portfolio: 成長の道のり(2026-10-28) */
-.records-row dd .records-sub { display: block; margin-top: 4px; font-size: 12px; color: var(--ink-faint); }
-.records-row.is-goal dt .en { color: var(--ink-faint); }
-.road { margin-top: 4px; display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; padding: 0; }
-.road-step { position: relative; padding: 24px 18px 22px 0; border-top: 2px solid var(--magma); }
-.road-step.is-goal { border-top-color: transparent; background-image: linear-gradient(to right, var(--ink-faint) 50%, transparent 50%); background-size: 10px 2px; background-repeat: repeat-x; background-position: 0 -0px; }
-.road-step::before { content: ""; position: absolute; left: 0; top: -7px; width: 12px; height: 12px; border-radius: 50%; background: var(--magma); }
-.road-step.is-goal::before { background: var(--paper); border: 1.5px dashed var(--ink-faint); box-sizing: border-box; }
-.road-num { display: block; font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .14em; color: var(--magma); }
-.road-step.is-goal .road-num { color: var(--ink-faint); }
-.road-step strong { display: block; margin-top: 10px; font-size: 17px; font-weight: 700; letter-spacing: .06em; line-height: 1.5; }
-.road-step > span { display: block; margin-top: 8px; font-size: 13px; line-height: 1.8; color: var(--ink-soft); }
-.road-badge { display: inline-flex; align-items: baseline; gap: 3px; margin-top: 14px; padding: 6px 12px; font-style: normal; font-size: 12px; letter-spacing: .06em; color: var(--white); background: var(--magma); border-radius: 999px; }
-.road-badge b { font-family: var(--num); font-size: 18px; font-weight: 400; line-height: 1; }
-.road-step.is-goal .road-badge { color: var(--ink); background: none; border: 1px dashed var(--ink-faint); }
-@media (max-width: 1023px) { .results-top .chart-fig-wide { max-width: none; } }
-@media (max-width: 767px) {
-  .road { grid-template-columns: 1fr; border-left: 2px solid var(--magma); }
-  .road-step { padding: 0 0 26px 22px; border-top: 0; }
-  .road-step.is-goal { background: none; margin-left: -2px; border-left: 2px dashed var(--ink-faint); padding-bottom: 0; }
-  .road-step::before { left: -7px; top: 2px; }
-  .road-step.is-goal::before { left: -7px; }
-}
+/* Portfolio 詳細版(2026-11-04): 100億円の基準線、社名リンク */
+.chart .ch-ref { stroke: var(--magma); stroke-width: 1; stroke-dasharray: 4 4; opacity: .7; }
+.chart .ch-ref-label { font-size: 12px; fill: var(--ink-faint); letter-spacing: .06em; }
+.pf-legend-note { color: var(--ink-faint); }
+.pf-name a { display: inline-flex; align-items: center; gap: 8px; }
+.pf-ext { width: 9px; height: 9px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); opacity: .6; }
+@media (max-width: 767px) { .chart-exit .ch-ref-label { font-size: 16px; } }
