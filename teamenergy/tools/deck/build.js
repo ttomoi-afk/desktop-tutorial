@@ -76,7 +76,7 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
     hline(s, M + 0.3, 4.6, 1.2, HEX.accent1, 1.5);
     text(s, 'Team Energy株式会社', { x: M + 0.3, y: 4.8, w: 6.8, h: 0.5, fontSize: 20, bold: true, objectName: '社名' });
     text(s, '2026年10月', { x: M + 0.3, y: 5.35, w: 6.8, h: 0.4, fontSize: 12, color: C.text2, objectName: '日付' });
-    text(s, '〒530-0011 大阪府大阪市北区大深町6 グラングリーン大阪北館 JAM BASE 9階 916号室', { x: M + 0.3, y: 6.6, w: 7.0, h: 0.3, fontSize: 9.5, color: C.text2, objectName: '住所' });
+    text(s, '〒530-0011 大阪府大阪市北区大深町5-54 グラングリーン大阪パークタワー8階', { x: M + 0.3, y: 6.6, w: 7.0, h: 0.3, fontSize: 9.5, color: C.text2, objectName: '住所' });
     s.addNotes('表紙');
   };
 
@@ -103,7 +103,7 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
       [th('会社名'), td('Team Energy株式会社（総称：Team Energy Group）')],
       [th('設立'), td('2012年5月')],
       [th('代表者'), td('代表取締役 グループCEO　中村 誠司')],
-      [th('本社'), td('〒530-0011 大阪府大阪市北区大深町6 グラングリーン大阪北館 JAM BASE 9階 916号室')],
+      [th('本社'), td('〒530-0011 大阪府大阪市北区大深町5-54 グラングリーン大阪パークタワー8階')],
       [th('東京オフィス'), td('〒160-0014 東京都新宿区内藤町1-82 プルニエ')],
       [th('事業内容'), td('事業育成・新規事業創出を軸に、複数事業をグループ各社にて展開')],
       [th('グループ'), td('6つの事業領域（GI／Geo／AI総研／GLI／Growth／AM）、18社の事業会社')],
@@ -355,7 +355,7 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
     s.addImage({ path: IMG('te-logo.png'), x: (W - lw) / 2, y: 1.7, w: lw, h: lh, objectName: 'ロゴ' });
     text(s, 'Team Energy株式会社', { x: 0, y: 3.55, w: W, h: 0.5, fontSize: 18, bold: true, align: 'center', objectName: '社名' });
     text(s, [
-      { text: '本社　〒530-0011 大阪府大阪市北区大深町6 グラングリーン大阪北館 JAM BASE 9階 916号室', options: { breakLine: true } },
+      { text: '本社　〒530-0011 大阪府大阪市北区大深町5-54 グラングリーン大阪パークタワー8階', options: { breakLine: true } },
       { text: '東京オフィス　〒160-0014 東京都新宿区内藤町1-82 プルニエ', options: { breakLine: true } },
       { text: 'M&A・事業承継に関するお問い合わせ　sourcing@teamenergy.co.jp' },
     ], { x: 0, y: 4.2, w: W, h: 1.2, fontSize: 11, color: C.text2, align: 'center', lineSpacingMultiple: 1.6, objectName: '連絡先' });
