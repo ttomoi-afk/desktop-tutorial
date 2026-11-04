@@ -132,8 +132,9 @@ section { padding: 88px 0; }
   justify-content: space-between;
   mix-blend-mode: multiply; /* 白地の上ではそのまま、動画の上でも沈む */
 }
-.header-logo a, .footer-logo { display: inline-flex; align-items: center; gap: 14px; font-family: var(--logo); font-weight: 600; font-size: 26px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
-.logo-mark { width: 44px; height: 44px; }
+.header-logo a, .footer-logo { display: inline-flex; align-items: center; color: var(--ink); }
+/* 公式ロゴ(横組み)。縦横比は AI データのまま(548.73:66.42)。高さだけ指定する */
+.logo-h { display: block; height: 40px; width: 330px; color: inherit; }
 .gnav { display: flex; align-items: center; gap: 40px; }
 .gnav ul { display: flex; gap: 28px; }
 .gnav a { font-family: var(--en); font-size: 15px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; position: relative; padding: 4px 0; }
@@ -153,8 +154,7 @@ section { padding: 88px 0; }
 
 @media (max-width: 1023px) {
   .header { padding: 20px 20px; mix-blend-mode: normal; }
-  .header-logo a { font-size: 23px; gap: 10px; }
-  .logo-mark { width: 36px; height: 36px; }
+  .logo-h { height: 30px; width: 248px; }
   .nav-toggle { display: block; }
   .gnav {
     position: fixed; inset: 0; background: var(--white);
@@ -526,8 +526,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
   border-top: 1px solid var(--line);
   padding-top: 24px;
 }
-.footer-logo { font-size: 20px; }
-.footer-logo .logo-mark { width: 34px; height: 34px; }
+.footer-logo .logo-h { height: 34px; width: 281px; }
 .footer-links { display: flex; gap: 28px; }
 .footer-links a { font-family: var(--en); font-size: 15px; font-weight: 600; letter-spacing: .16em; color: var(--ink-soft); }
 .footer-links a:hover { color: var(--magma); }
