@@ -230,3 +230,4 @@
 - Drive「8LOGO_TeamEnergy」の `8LOGO_OL TE横字.AI`（横組みの公式ロゴ）を pdftocairo でベクターのまま SVG に変換し、各ページ冒頭に `<symbol id="te-logo">` として埋め込み。ヘッダー・フッターは `<svg class="logo-h"><use href="#te-logo"/></svg>`。マークと「TEAM ENERGY」の比率・文字サイズ・間隔は AI データのまま（viewBox 548.73×66.42）。文字は currentColor で、動画の上では白
 - 以前の手描き近似 SVG（logo-mark.svg）とテキスト＋Jost の組み合わせは廃止。logo-mark.svg は公式マーク単体に差し替え（ファビコン・apple-touch-icon も更新）。会社紹介資料用の te-logo-h.png も公式データから再生成（資料本体は未再生成）
 - 大きさ: ヘッダー高さ40px（SP 30px）、フッター34px
+- 2026-11-05: GeoDreams の SBI 出資（2026年9月、SBIグループを引受先とするプレシリーズA、金額非公開）を Portfolio のカード・表と News に追加。GeoDreams のサイトはこの環境から開けず、The Bridge・創業手帳の報道ベース。発表日・文言は要確認
