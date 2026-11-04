@@ -143,7 +143,7 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
     ], { x: M, y: y + 1.32, w: 4.6, h: 1.5, fontSize: 10, color: C.text1, paraSpaceAfter: 4, lineSpacingMultiple: 1.2, objectName: '実績' });
     const X = 5.3, Wd = W - X - M;
     sub(s, 'プロフィール', X, 1.2, 4);
-    text(s, '省エネ事業で株式会社メリックスを創業後、2004年に中央電力株式会社を設立。2012年にTeam Energy株式会社を設立。経営歴34年で58社を設立し、その多くを統合・廃止。失敗した会社の数は経営者仲間の中でも「自称トップ」。その一方で、企業価値100億円を超える企業を4社創出し、レジル（旧 中央電力）を上場・売却まで導く。', { x: X, y: 1.6, w: Wd, h: 1.5, fontSize: 12, lineSpacingMultiple: 1.45, objectName: '略歴' });
+    text(s, '省エネ事業で株式会社メリックスを創業後、2004年に中央電力株式会社を設立。2012年にTeam Energy株式会社を設立。経営歴30年で58社を設立し、その多くを統合・廃止。失敗した会社の数は経営者仲間の中でも「自称トップ」。その一方で、企業価値100億円を超える企業を4社創出し、レジル（旧 中央電力）を上場・売却まで導く。', { x: X, y: 1.6, w: Wd, h: 1.5, fontSize: 12, lineSpacingMultiple: 1.45, objectName: '略歴' });
     sub(s, '経歴', X, 3.3, 4);
     table(s, [
       [td('1993年', { bold: true }), td('省エネに関わる事業を開始')],
