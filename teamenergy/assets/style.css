@@ -954,9 +954,5 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 
 
 /* Portfolio 詳細版(2026-11-04): 100億円の基準線、社名リンク */
-.chart .ch-ref { stroke: var(--magma); stroke-width: 1; stroke-dasharray: 4 4; opacity: .7; }
-.chart .ch-ref-label { font-size: 12px; fill: var(--ink-faint); letter-spacing: .06em; }
-.pf-legend-note { color: var(--ink-faint); }
 .pf-name a { display: inline-flex; align-items: center; gap: 8px; }
 .pf-ext { width: 9px; height: 9px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); opacity: .6; }
-@media (max-width: 767px) { .chart-exit .ch-ref-label { font-size: 16px; } }
