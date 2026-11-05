@@ -6,3 +6,6 @@ __pycache__/
 # build_pipeline.py が吐く雛形だけは追跡する。
 out/*
 !out/案件管理表_TeamEnergy.xlsx
+
+# make_paste_blocks.py --verify が作業ディレクトリに残す検算用の写し（実案件が入る）
+_paste_verify.xlsx
