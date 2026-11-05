@@ -151,6 +151,9 @@ def judge(d):
         seq = "→".join(f"{v:,.0f}" for v in e3)
         if neg >= 2:
             out["2"] = (GRADES[4], f"実態EBITDA {seq}（{neg}期赤字）")
+        elif e3[2] <= 0:
+            # rubric: 実態調整後に直近期が赤字なら、赤字が1期でも ×
+            out["2"] = (GRADES[4], f"実態EBITDA {seq}（実態調整後も直近期が赤字）")
         elif neg == 1:
             out["2"] = (GRADES[3], f"実態EBITDA {seq}（1期赤字）")
         elif e3[2] >= max(e3):
