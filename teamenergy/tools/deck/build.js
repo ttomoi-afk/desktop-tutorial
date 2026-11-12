@@ -98,7 +98,7 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
   const slideProfile = (sec) => {
     const s = newSlide('BASE', sec);
     s.addText('会社概要', { placeholder: 'title' });
-    const TW = 8.2;
+    const TW = 7.6;
     table(s, [
       [th('会社名'), td('Team Energy株式会社（総称：Team Energy Group）')],
       [th('設立'), td('2012年5月')],
@@ -110,19 +110,20 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
     ], { x: M, y: 1.25, w: TW, colW: [1.7, TW - 1.7], rowH: 0.74, fontSize: 11.5 });
     // 右: ロゴと沿革
     const X = M + TW + 0.45, Wd = W - X - M;
-    const lw = 2.0, lh = lw * RATIO['te-logo.png'];
-    s.addImage({ path: IMG('te-logo.png'), x: X + (Wd - lw) / 2, y: 1.2, w: lw, h: lh, objectName: 'ロゴ' });
-    sub(s, '沿革', X, 2.6, Wd);
+    const lw = 1.7, lh = lw * RATIO['te-logo.png'];
+    s.addImage({ path: IMG('te-logo.png'), x: X + (Wd - lw) / 2, y: 1.15, w: lw, h: lh, objectName: 'ロゴ' });
+    sub(s, '沿革', X, 2.3, Wd);
     table(s, [
       [td('2012年5月', { bold: true }), td('Team Energy株式会社を設立')],
       [td('2012年', { bold: true }), td('ふるさと熱電株式会社を設立')],
       [td('2022年', { bold: true }), td('株式会社GeoDreamsを設立')],
       [td('2022年', { bold: true }), td('弟子屈チャレンジ株式会社を設立')],
       [td('2023年', { bold: true }), td('株式会社バイウィルを設立')],
-      [td('2024年4月', { bold: true }), td('レジル株式会社が東証グロース上場')],
+      [td('2024年4月', { bold: true }), td('レジルが東証グロース上場。その後、ベインキャピタルによるTOB')],
       [td('2025年7月', { bold: true }), td('NUPPUKOTTE として再出発')],
       [td('2025年8月', { bold: true }), td('ふるさと熱電株式会社を売却')],
-    ], { x: X, y: 3.0, w: Wd, colW: [1.1, Wd - 1.1], rowH: 0.44, fontSize: 10 });
+      [td('2026年', { bold: true }), td('本社をグラングリーン大阪パークタワーへ移転')],
+    ], { x: X, y: 2.7, w: Wd, colW: [1.05, Wd - 1.05], rowH: 0.38, fontSize: 10 });
     s.addNotes('HPフッターの会社情報と、本資料内の出来事をまとめた沿革。');
   };
 
@@ -136,14 +137,14 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
     text(s, '中村 誠司', { x: M, y: y + 0.3, w: 4.0, h: 0.5, fontSize: 20, bold: true, objectName: '氏名' });
     sub(s, '主な実績', M, y + 0.95, 4.0);
     text(s, [
-      { text: 'レジル：2024年上場、ベインキャピタルへ売却', options: { bullet: true, breakLine: true } },
+      { text: 'レジル：2024年上場。その後、ベインキャピタルによるTOB（500億円規模）', options: { bullet: true, breakLine: true } },
       { text: 'ふるさと熱電：2025年8月、ベースロードキャピタルへ売却', options: { bullet: true, breakLine: true } },
-      { text: 'GeoDreams：2022年設立、八雲町で地熱開発を推進', options: { bullet: true, breakLine: true } },
+      { text: 'GeoDreams：2022年設立。2026年9月、SBIグループから出資', options: { bullet: true, breakLine: true } },
       { text: 'BY WILL：2023年設立、約30億円を調達', options: { bullet: true } },
     ], { x: M, y: y + 1.32, w: 4.6, h: 1.5, fontSize: 10, color: C.text1, paraSpaceAfter: 4, lineSpacingMultiple: 1.2, objectName: '実績' });
     const X = 5.3, Wd = W - X - M;
     sub(s, 'プロフィール', X, 1.2, 4);
-    text(s, '省エネ事業で株式会社メリックスを創業後、2004年に中央電力株式会社を設立。2012年にTeam Energy株式会社を設立。経営歴30年以上で58社を設立し、その多くを統合・廃止。失敗した会社の数は経営者仲間の中でも「自称トップ」。その一方で、企業価値100億円を超える企業を4社創出し、レジル（旧 中央電力）を上場・売却まで導く。', { x: X, y: 1.6, w: Wd, h: 1.5, fontSize: 12, lineSpacingMultiple: 1.45, objectName: '略歴' });
+    text(s, '省エネ事業で株式会社メリックスを創業後、2004年に中央電力株式会社を設立。2012年にTeam Energy株式会社を設立。経営歴30年以上で58社を設立し、その多くを統合・廃止。その一方で、企業価値100億円規模の企業を4社創出し、レジル（旧 中央電力）を上場・売却まで導く。', { x: X, y: 1.6, w: Wd, h: 1.5, fontSize: 12, lineSpacingMultiple: 1.45, objectName: '略歴' });
     sub(s, '経歴', X, 3.3, 4);
     table(s, [
       [td('1993年', { bold: true }), td('省エネに関わる事業を開始')],
@@ -151,7 +152,7 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
       [td('2004年', { bold: true }), td('中央電力株式会社を設立')],
       [td('2012年', { bold: true }), td('Team Energy株式会社を設立')],
       [td('2012年', { bold: true }), td('ふるさと熱電株式会社を設立')],
-      [td('2024年4月', { bold: true }), td('レジル株式会社（旧 中央電力）が東証グロース市場に上場')],
+      [td('2024年4月', { bold: true }), td('レジル株式会社（旧 中央電力）が東証グロース市場に上場。その後、ベインキャピタルによるTOB（500億円規模）')],
     ], { x: X, y: 3.7, w: Wd, colW: [1.4, Wd - 1.4], rowH: 0.5, fontSize: 11.5 });
     s.addNotes('HPのメンバー紹介（代表）。');
   };
@@ -217,7 +218,7 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
   const slideNumbers = (sec) => {
     const s = newSlide('BASE', sec);
     s.addText('数字で見る Team Energy', { placeholder: 'title' });
-    const stats = [['4', '社', '100億円企業', '企業価値100億円を超える企業を創出'], ['2', '社', '上場・売却によるEXIT', 'レジル、ふるさと熱電'], ['18', '社', 'グループの事業会社', '6つの事業領域に展開'], ['10', '社', '100億企業の目標', 'その先に、ユニコーン3社']];
+    const stats = [['4', '社', '100億円企業', '企業価値100億円規模の企業を創出'], ['2', '社', '上場・売却によるEXIT', 'レジル、ふるさと熱電'], ['18', '社', 'グループの事業会社', '6つの事業領域に展開'], ['10', '社', '100億企業の目標', 'その先に、ユニコーン3社']];
     stats.forEach((st, i) => {
       const x = M + i * 3.08, w = 2.9;
       if (i > 0) vline(s, x - 0.12, 1.35, 2.0);
@@ -228,7 +229,7 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
     sub(s, 'EXIT実績', M, 3.7, 6);
     table(s, [
       [th('会社名'), th('内容'), th('時期')],
-      [td('レジル株式会社（旧 中央電力）'), td('東証グロース市場に上場。その後、ベインキャピタルへ売却'), td('2024年4月 上場')],
+      [td('レジル株式会社（旧 中央電力）'), td('東証グロース市場に上場。その後、ベインキャピタルによるTOB（500億円規模）'), td('2024年4月 上場')],
       [td('ふるさと熱電株式会社'), td('ベースロードキャピタルへ売却。現在はベースロードジャパンが運営'), td('2025年8月')],
     ], { x: M, y: 4.1, w: W - 2 * M, colW: [3.4, 6.5, 2.43], rowH: 0.5, fontSize: 11.5 });
     s.addShape(pres.ShapeType.rect, { x: M, y: 5.9, w: W - 2 * M, h: 0.75, fill: { color: C.background2 }, line: { color: HEX.lt2, width: 0 }, objectName: '一言枠' });
@@ -271,13 +272,13 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
   const slidePortfolio = (sec) => {
     const s = newSlide('BASE', sec);
     s.addText('主な投資先・実績', { placeholder: 'title' });
-    text(s, 'これまでに企業価値100億円を超える企業を4社創出し、うち2社は上場・売却によるEXITに至っています。', { x: M, y: 1.15, w: 12.3, h: 0.35, fontSize: 12, color: C.text2, objectName: '説明' });
+    text(s, 'これまでに4社が企業価値100億円規模に育ち、うち2社は上場・売却によるEXITに至っています。', { x: M, y: 1.15, w: 12.3, h: 0.35, fontSize: 12, color: C.text2, objectName: '説明' });
     table(s, [
       [th('会社名'), th('設立'), th('事業内容'), th('状況')],
       [td('ふるさと熱電株式会社'), td('2012年'), td('地域と共生する地熱発電所の運営。日本初のSPCモデルでの地熱発電所を開設'), td('EXIT　2025年8月、ベースロードキャピタルへ売却', { color: HEX.accent1, bold: true })],
-      [td('レジル株式会社（旧 中央電力）'), td('2004年'), td('マンション一括受電のパイオニア。電力コスト削減と快適な住環境を提供し、エネルギーDX事業も展開'), td('EXIT　2024年4月 東証グロース上場。その後、ベインキャピタルへ売却', { color: HEX.accent1, bold: true })],
+      [td('レジル株式会社（旧 中央電力）'), td('2004年'), td('マンション一括受電のパイオニア。電力コスト削減と快適な住環境を提供し、エネルギーDX事業も展開'), td('EXIT　2024年4月 東証グロース上場。その後、ベインキャピタルによるTOB（500億円規模）', { color: HEX.accent1, bold: true })],
       [td('株式会社バイウィル'), td('2023年'), td('第一地銀45行・基礎自治体60以上と連携した環境クレジット創出事業'), td('未上場　シリーズA・Bラウンドで累計約30億円を調達')],
-      [td('株式会社GeoDreams'), td('2022年'), td('次世代型地熱発電「クローズドループ」の開発。掘削・探査・メンテナンスを一貫して担う'), td('未上場　JOGMEC 次世代地熱発電のFS調査に採択')],
+      [td('株式会社GeoDreams'), td('2022年'), td('次世代型地熱発電「クローズドループ」の開発。掘削・探査・メンテナンスを一貫して担う'), td('未上場　2026年9月、SBIグループを引受先とするプレシリーズAの資金調達を実施')],
     ], { x: M, y: 1.65, w: W - 2 * M, colW: [2.9, 1.0, 4.9, 3.53], rowH: 0.86, fontSize: 11.5 });
     text(s, '※ 各社の企業価値・売却金額は非公表です。', { x: M, y: 6.15, w: 12, h: 0.3, fontSize: 10, color: C.text2, objectName: '注記' });
     s.addNotes('HPのPortfolioセクション。');
