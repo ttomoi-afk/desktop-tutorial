@@ -120,7 +120,6 @@ const RATIO = { 'te-logo.png': 1367 / 2410, 'ceo-nakamura.jpg': 890 / 1350, 'coo
       [td('2022年', { bold: true }), td('弟子屈チャレンジ株式会社を設立')],
       [td('2023年', { bold: true }), td('株式会社バイウィルを設立')],
       [td('2024年4月', { bold: true }), td('レジルが東証グロース上場。その後、ベインキャピタルによるTOB')],
-      [td('2025年7月', { bold: true }), td('NUPPUKOTTE として再出発')],
       [td('2025年8月', { bold: true }), td('ふるさと熱電株式会社を売却')],
       [td('2026年', { bold: true }), td('本社をグラングリーン大阪パークタワーへ移転')],
     ], { x: X, y: 2.7, w: Wd, colW: [1.05, Wd - 1.05], rowH: 0.38, fontSize: 10 });
