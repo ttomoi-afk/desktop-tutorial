@@ -245,3 +245,4 @@
 - ナビに STORY / RECRUIT を追加（gnav の間隔を 24px に）。フッターのリンクに Story / Message / Recruit / M&A。メンバー紹介の代表カードに「経営人生を読む」「代表メッセージ」ボタン
 - 応募窓口は未定のため「公開時に掲載」の一文。転機の写真は「写真準備中」の枠
 - 制作資料は Claude Docs（https://claude.ai/artifact/CYGjithgVwzjvE2L575rmF）
+- 2026-11-24: 「案件窓口 友井 大勢」をサイト全体から削除（M&Aページのフッター文言と会社情報の行、Story/Message/Recruit の会社情報）。会社紹介資料の窓口も担当者名なしに

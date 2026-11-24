@@ -356,7 +356,7 @@ async function unifyJapaneseFont(file) {
     ], { x: X, y: 3.05, w: Wd, colW: [1.1, Wd - 1.1], rowH: 0.55, fontSize: 11 });
     s.addShape(pres.ShapeType.rect, { x: X, y: 5.55, w: Wd, h: 1.1, fill: { color: C.background2 }, line: { color: HEX.accent5, width: 0.5 }, objectName: '窓口枠' });
     text(s, 'お問い合わせ窓口', { x: X + 0.2, y: 5.65, w: Wd - 0.4, h: 0.3, fontSize: 11, bold: true, objectName: '窓口ラベル' });
-    text(s, 'sourcing@teamenergy.co.jp（担当：友井 大勢）', { x: X + 0.2, y: 5.95, w: Wd - 0.4, h: 0.3, fontSize: 12, objectName: '窓口メール' });
+    text(s, 'sourcing@teamenergy.co.jp', { x: X + 0.2, y: 5.95, w: Wd - 0.4, h: 0.3, fontSize: 12, objectName: '窓口メール' });
     text(s, '仲介会社・金融機関・オーナー経営者の皆さまからお受けしています。', { x: X + 0.2, y: 6.27, w: Wd - 0.4, h: 0.3, fontSize: 10, color: C.text2, objectName: '窓口説明' });
     s.addNotes('M&Aページの要約。投資条件などの詳細は記載しない。');
   };
