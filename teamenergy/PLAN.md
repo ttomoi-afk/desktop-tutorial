@@ -246,3 +246,4 @@
 - 応募窓口は未定のため「公開時に掲載」の一文。転機の写真は「写真準備中」の枠
 - 制作資料は Claude Docs（https://claude.ai/artifact/CYGjithgVwzjvE2L575rmF）
 - 2026-11-24: 「案件窓口 友井 大勢」をサイト全体から削除（M&Aページのフッター文言と会社情報の行、Story/Message/Recruit の会社情報）。会社紹介資料の窓口も担当者名なしに
+- 2026-11-24: 「経営者募集（Recruit）」は採用ではなく事業への挑戦として書きたいとの指示で、ページ名を Challenge（経営者として、事業に挑む）に変更。recruit.html → challenge.html、ナビ CHALLENGE、フッター Challenge、ボタン「経営者として挑む」、末尾セクションは Apply → First Step、「応募」の語を外し「これは採用ではなく、一人の経営者として事業に挑むための入口」の一文を追加

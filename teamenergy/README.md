@@ -1,7 +1,7 @@
 # Team Energy コーポレートサイト 編集用一式
 
 ## 中身
-- `index.html` トップ、`sourcing.html` M&A、`story.html` 代表の経営人生、`message.html` 代表メッセージ、`recruit.html` 経営者募集、`cases/teshikaga.html` 事例、`404.html`
+- `index.html` トップ、`sourcing.html` M&A、`story.html` 代表の経営人生、`message.html` 代表メッセージ、`challenge.html` 経営者として事業に挑む、`cases/teshikaga.html` 事例、`404.html`
 - `assets/` CSS（style.css）・JavaScript（main.js）・画像・動画
 - `data/news.json` ニュース、`data/stories.json` ストーリーズ（JSONを書き換えるだけで更新できます）
 - `docs/` 会社紹介資料（PowerPoint・PDF）
