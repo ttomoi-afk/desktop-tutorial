@@ -136,7 +136,7 @@ section { padding: 88px 0; }
 /* 公式ロゴ(横組み)。縦横比は AI データのまま(548.73:66.42)。高さだけ指定する */
 .logo-h { display: block; height: 40px; width: 330px; color: inherit; }
 .gnav { display: flex; align-items: center; gap: 40px; }
-.gnav ul { display: flex; gap: 28px; }
+.gnav ul { display: flex; gap: 24px; }
 .gnav a { font-family: var(--en); font-size: 15px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; position: relative; padding: 4px 0; }
 .gnav a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px; background: var(--magma); transition: width .3s; }
 .gnav a:hover::after { width: 100%; }
@@ -527,7 +527,7 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
   padding-top: 24px;
 }
 .footer-logo .logo-h { height: 34px; width: 281px; }
-.footer-links { display: flex; gap: 28px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 12px 28px; }
 .footer-links a { font-family: var(--en); font-size: 15px; font-weight: 600; letter-spacing: .16em; color: var(--ink-soft); }
 .footer-links a:hover { color: var(--magma); }
 .copyright { font-family: var(--en); font-size: 15px; font-weight: 500; letter-spacing: .12em; color: var(--ink-faint); text-align: right; line-height: 1.6; }
@@ -950,3 +950,66 @@ body.is-scrolled:not(.on-dark-hero) .header { background: rgba(255,255,255,.86);
 /* Portfolio 詳細版(2026-11-04): 100億円の基準線、社名リンク */
 .pf-name a { display: inline-flex; align-items: center; gap: 8px; }
 .pf-ext { width: 9px; height: 9px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); opacity: .6; }
+
+/* Story / Message / Recruit（2026-11-24）。トップ・M&Aページと同じ部品で世界観を揃える */
+.page-hero-eyebrow { font-family: var(--en); font-size: 14px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--magma); }
+.page-hero-eyebrow + .page-hero-copy { margin-top: 20px; }
+h1.page-hero-copy { font-weight: 500; }
+.story-hero-grid { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; align-items: center; }
+.story-lead { max-width: none; line-height: 2.1; }
+.story-sign { margin-top: 20px; font-size: 14px; letter-spacing: .08em; color: var(--ink-soft); }
+.story-hero-photo { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; background: var(--paper); }
+.story-hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 30%; }
+.turning-points { background: var(--white); }
+.tp-list { margin-top: 44px; list-style: none; padding: 0; border-top: 1px solid var(--ink); }
+.tp-item { display: grid; grid-template-columns: 140px 260px 1fr; gap: 36px; padding: 40px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.tp-age { display: flex; align-items: baseline; gap: 4px; margin: 0; }
+.tp-age .en { font-family: var(--num); font-size: 44px; font-weight: 300; line-height: 1; letter-spacing: .02em; color: var(--magma); }
+.tp-age small { font-size: 14px; color: var(--ink-soft); }
+.tp-photo { aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--ink-faint); background: var(--paper); font-size: 13px; letter-spacing: .1em; color: var(--ink-faint); }
+.tp-photo img { width: 100%; height: 100%; object-fit: cover; }
+.tp-body h3 { font-size: 22px; font-weight: 500; letter-spacing: .06em; line-height: 1.5; }
+.tp-body p { margin-top: 14px; font-size: 15px; line-height: 1.95; color: var(--ink-soft); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 16px 40px; }
+.join .btn { border-color: rgba(255,255,255,.6); }
+.join .btn:hover { color: var(--magma); border-color: var(--magma); }
+.member-links { margin-top: 32px; }
+.message { background: var(--white); }
+.msg-body { max-width: 760px; }
+.msg-body p { font-size: 16px; line-height: 2.2; }
+.msg-body p + p { margin-top: 28px; }
+.msg-lead { font-size: clamp(20px, 2vw, 26px) !important; font-weight: 500; line-height: 1.8 !important; letter-spacing: .06em; }
+.msg-close { font-size: clamp(18px, 1.8vw, 22px) !important; font-weight: 500; line-height: 1.8 !important; letter-spacing: .06em; }
+.msg-sign { margin-top: 48px !important; font-size: 15px !important; letter-spacing: .08em; color: var(--ink-soft); }
+.message .sec-btn { margin-top: 56px; }
+.doors { background: var(--paper); }
+.door-grid { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.door { padding: 36px 32px 40px; background: var(--white); border: 1px solid var(--line); }
+.door-num { font-family: var(--en); font-size: 15px; font-weight: 600; letter-spacing: .2em; color: var(--magma); }
+.door h3 { margin-top: 14px; font-size: 22px; font-weight: 500; letter-spacing: .06em; line-height: 1.5; }
+.door p { margin-top: 16px; font-size: 15px; line-height: 1.9; color: var(--ink-soft); }
+.door-note { margin-top: 24px; font-size: 15px; color: var(--ink-soft); }
+.why-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.offer { background: var(--white); }
+.voice { background: var(--paper); padding-top: 0; }
+.quote-block { margin: 0; padding: 44px 48px; background: var(--white); border-left: 2px solid var(--magma); }
+.quote-block p { font-size: clamp(18px, 1.8vw, 22px); font-weight: 500; line-height: 1.9; letter-spacing: .06em; }
+.quote-block footer { margin-top: 20px; font-size: 14px; color: var(--ink-soft); }
+.quote-block footer a { border-bottom: 1px solid var(--line); }
+.quote-block footer a:hover { color: var(--magma); border-color: var(--magma); }
+.apply-note { color: rgba(255,255,255,.5); font-size: 14px; }
+@media (max-width: 1023px) {
+  .story-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .story-hero-photo { max-width: 480px; }
+  .tp-item { grid-template-columns: 110px 1fr; gap: 24px 28px; }
+  .tp-photo { grid-column: 2; max-width: 360px; }
+  .tp-body { grid-column: 2; }
+  .why-grid.cols-4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 767px) {
+  .tp-item { grid-template-columns: 1fr; gap: 16px; padding: 28px 0; }
+  .tp-photo, .tp-body { grid-column: auto; }
+  .door-grid { grid-template-columns: 1fr; }
+  .why-grid.cols-4 { grid-template-columns: 1fr; }
+  .quote-block { padding: 28px 24px; }
+}

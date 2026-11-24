@@ -16,6 +16,9 @@
 site/
   index.html             トップ（Concept / Group / Portfolio / People / News / M&A導線）
   sourcing.html          M&A・事業承継ページ（問い合わせ窓口を含む）
+  story.html             代表 中村誠司の経営人生（冒頭メッセージ・6つの転機・結び）
+  message.html           代表メッセージ（経営者候補向け）
+  recruit.html           経営者募集（2つの入口・求める経営者像・提供するもの・応募）
   cases/teshikaga.html   事例ページ（弟子屈チャレンジ）
   404.html               Not Found（パスはドメイン直下からの絶対パス）
   robots.txt / sitemap.xml
@@ -90,6 +93,9 @@ site/
 ## 6. 未確定・要確認（友井に確認）
 
 - 杉野氏の写真（現在「写真準備中」）
+- story.html の6つの転機の写真（当時の写真・事業資料・製品写真・現場写真。今は「写真準備中」の枠）
+- recruit.html の応募窓口（メールアドレスまたはフォーム。今は「公開時に掲載」の一文）
+- story.html の年数・数字（起業年 1993/1994/1995 の揺れ、58歳、約75社、売上10億円・200億円、特許件数）は本人・社内資料で確定
 - 事業領域ロゴ（te-*.png）の高解像度版。今は約35px 高の画像を拡大しているため高精細画面でややぼやける
 - 東京オフィスの住所（Web 検索ベース）
 - Team Glocal、ANY の公式サイト URL（現在リンクなし）

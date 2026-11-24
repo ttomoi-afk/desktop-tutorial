@@ -9,7 +9,7 @@ OUT=dist/site
 rm -rf dist
 mkdir -p "$OUT"
 
-FILES=(index.html sourcing.html 404.html robots.txt sitemap.xml)
+FILES=(index.html sourcing.html story.html message.html recruit.html 404.html robots.txt sitemap.xml)
 DIRS=(assets cases data)
 
 for f in "${FILES[@]}"; do cp "$f" "$OUT/"; done
