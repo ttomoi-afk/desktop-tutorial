@@ -46,10 +46,10 @@ for rel in re.findall(r'<script src="(?:\.\./)?(assets/[^"]+\.js)"></script>', (
     html = html.replace('<script src="' + data_uri(rel) + '"></script>', '<script>\n' + (ROOT / rel).read_text() + '\n</script>')
 html = html.replace('<a href="./">', '<a href="#">')
 # ページ間リンクを公開URLへ(指定がなければ無効化)
-for target in ['index.html', 'sourcing.html', 'cases/teshikaga.html', '../index.html', '../sourcing.html']:
+for target in ['index.html', 'sourcing.html', 'story.html', 'message.html', 'recruit.html', 'cases/teshikaga.html', '../index.html', '../sourcing.html', '../story.html', '../message.html', '../recruit.html']:
     repl = links.get(target, links.get(target.replace('../', ''), '#'))  # 下層ページの ../ 付きリンクも同じ指定で置換
     html = re.sub(r'href="' + re.escape(target) + r'(#[^"]*)?"', lambda m: 'href="' + (repl + (m.group(1) or '') if repl != '#' else (m.group(1) or '#')) + '"', html)
-titles = {'index.html': 'Team Energy', 'sourcing.html': 'Team Energy For Intermediaries', 'cases/teshikaga.html': 'Teshikaga Challenge Case', 'proto/hero.html': 'Hero Prototype'}
+titles = {'index.html': 'Team Energy', 'sourcing.html': 'Team Energy For Intermediaries', 'cases/teshikaga.html': 'Teshikaga Challenge Case', 'story.html': 'Team Energy Story', 'message.html': 'Team Energy Message', 'recruit.html': 'Team Energy Recruit', 'proto/hero.html': 'Hero Prototype'}
 html = re.sub(r'<title>.*?</title>', '<title>' + titles.get(page, 'Team Energy') + '</title>', html)
 
 # Artifact 用に <head>/<body> の骨組みを外し、本文だけにする
